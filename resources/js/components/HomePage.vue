@@ -17,6 +17,8 @@
             appUrl="https://mistermisteroo.ru"
             appDescription="Videoblog page"
             footer="Laravel / MySQL" />
+        
+        <FooterCard />
     </div>
 </template>
 <script>
