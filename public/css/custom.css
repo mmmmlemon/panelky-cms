@@ -1,0 +1,32 @@
+/* tags */
+h1 {
+    font-size: 2.90rem;
+}
+
+a, a:hover {
+    color: white;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover{
+    color: rgb(182, 225, 250);
+}
+
+/* styles */
+.bigCard {
+    background-color: rgb(93, 107, 124);
+    color:white;
+}
+
+.textVertical {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+/* fonts */
+
+.font14pt{
+    font-size: 14pt;
+}
+

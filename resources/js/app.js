@@ -10,6 +10,10 @@ window.Vue = require('vue').default;
 
 import router from './router';
 
+//иморты компонентов
+import BigCard from './components/HomePage/BigCard.vue';
+Vue.component('BigCard', BigCard);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
