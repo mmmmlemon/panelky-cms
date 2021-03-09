@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Http\Controllers;
+use Storage;
+
+use Illuminate\Http\Request;
+
+// контроллер для тестирования функционала сайта
+class TestController extends Controller
+{
+    //saveJson
+    public function saveJson()
+    {
+        $json = [];
+
+        for($i = 0; $i < 50; $i++)
+        {
+            $randomNum = rand(0,100);
+
+            array_push($json, $randomNum);
+        }
+    
+        try {
+            Storage::disk('local')->put('saveJson.json', json_encode($json));
+        } catch (Throwable $e) {
+            report($e);
+    
+            return "not success";
+        }
+
+        return "success";
+    }
+
+    //readJson
+    public function readJson()
+    {
+        try { 
+            $json = Storage::disk('local')->get('saveJson.json');
+        } catch (Throwable $e) {
+            return "not success";
+        }
+    
+
+        dd(json_decode($json));
+    }
+}

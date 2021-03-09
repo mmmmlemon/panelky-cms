@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->where('any','.*');
+// тесты
+Route::get('/saveJson', [TestController::class, 'saveJson'])->where('any', '.*');
+Route::get('/readJson', [TestController::class, 'readJson'])->where('any', '.*');
+
+//ссылка на любую страницу ведет на страницу index, которая показывает vue-router
+Route::get('/{any}', [HomeController::class, 'index'])->where('any','.*');
