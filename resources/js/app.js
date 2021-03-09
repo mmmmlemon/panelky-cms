@@ -7,15 +7,11 @@
 require('./bootstrap');
 
 window.Vue = require('vue').default;
-
+import Vue from 'vue';
 import router from './router';
 
 //иморты компонентов
-
-//Navigation 
-import Nav from './components/Navigation/Nav.vue';
-Vue.component('Nav', Nav);
-
+//./
 import HeaderCard from './components/HomePage/HeaderCard.vue';
 Vue.component('HeaderCard', HeaderCard);
 
@@ -23,8 +19,14 @@ import ProjectCard from './components/HomePage/ProjectCard.vue';
 Vue.component('ProjectCard', ProjectCard);
 
 import FooterCard from './components/HomePage/FooterCard.vue';
-import Vue from 'vue';
 Vue.component('FooterCard', FooterCard);
+
+//Navigation 
+import Nav from './components/Navigation/Nav.vue';
+Vue.component('Nav', Nav);
+
+import NavButton from './components/Navigation/NavButton';
+Vue.component('NavButton', NavButton);
 
 /**
  * The following block of code may be used to automatically register your
