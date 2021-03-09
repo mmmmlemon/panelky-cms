@@ -1,21 +1,26 @@
 <template>
-    <div style="height:100%;">
-        <BigCard 
-            appName="Zhuravskiy Egor"
-            appDescription="A junior programmer"
-            fullDescription="I programm programms with programming languages very programmaly and programmasticly." 
-            footer="Below are some of my projects. Check 'em out!" />
+    <div style="height:100%;" class="row justify-content-center">
 
-        <BigCard 
+        <HeaderCard 
+            myName="Egor Zhuravskiy"
+            myOccupation="A junior programmer"
+            aboutMe="I program programms very programmaly and programmaticly"
+            footerText="Check out my projects!"/>
+
+        <ProjectCard
+            type='left'
             appName="SpotiFYI"
             appUrl="http://spotifyi.ru"
-            appDescription="Music statistics for Spotify" 
+            appDescription="Music statistics for Spotify"
+            fullDescription="An application for Spotify users that provides them an ability to see their music habits and statistic in an accesible form. " 
             footer="Laravel / Vue.js / Spotify API"/>
 
-        <BigCard 
+        <ProjectCard 
+            type='right'
             appName="Weird Web-Site of [Mr. o_O]"
             appUrl="https://mistermisteroo.ru"
             appDescription="Videoblog page"
+            fullDescription="A CMS for videos and images."
             footer="Laravel / MySQL" />
         
         <FooterCard />

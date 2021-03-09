@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h1 class="text-center">About</h1>
+    <div style="height:100%;" class="row justify-content-center">
+       <HeaderCard myName="About" myOccupation="This site" aboutMe="Some info here and there" footerText="Very cool"/>
     </div>
 </template>
 <script>

@@ -11,10 +11,15 @@ window.Vue = require('vue').default;
 import router from './router';
 
 //иморты компонентов
-import BigCard from './components/HomePage/BigCard.vue';
-Vue.component('BigCard', BigCard);
+
+import HeaderCard from './components/HomePage/HeaderCard.vue';
+Vue.component('HeaderCard', HeaderCard);
+
+import ProjectCard from './components/HomePage/ProjectCard.vue';
+Vue.component('ProjectCard', ProjectCard);
 
 import FooterCard from './components/HomePage/FooterCard.vue';
+import Vue from 'vue';
 Vue.component('FooterCard', FooterCard);
 
 /**

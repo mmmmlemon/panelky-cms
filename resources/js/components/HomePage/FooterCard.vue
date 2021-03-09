@@ -1,5 +1,5 @@
 <template>
-    <div class="h-75 bigCard d-flex justify-content-center row" :style="{backgroundColor: randomColor}">
+    <div class="h-75 w-75 bigCard d-flex justify-content-center row">
         <div class="div-12 textVertical">
             <h1 class="text-center textVertical">
                 <p class="text-center textVertical font14pt">{{footerTitle}}</p>
@@ -37,24 +37,5 @@ export default {
         contactTitle: { type: String, default: 'Contact me' },
         contactEmail: { type: String, default: 'contact@mail.com' }
     },
-
-    methods: {
-        //сгенерировать случайный цвет для фона
-        generateBackgroundColor: function(event){
-            var randomColor = Math.floor(Math.random()*16777215).toString(16);
-
-            console.log(randomColor)
-            return "#"+randomColor;
-        },
-    },
-
-    computed: {
-        //случайный цвет для фона
-        randomColor() {
-            return this.generateBackgroundColor();
-        }
-    },
-
-
 }
 </script>

@@ -1,0 +1,20 @@
+@font-face {
+    font-family: "Montserrat";
+    src: url("../fonts/Montserrat-Regular.ttf");
+   }
+
+
+   h1, h6 {
+       font-family: Montserrat;
+   }
+
+.font14pt{
+    font-size: 14pt;
+}
+
+.font18pt{
+    font-size: 18pt;
+}
+
+
+
