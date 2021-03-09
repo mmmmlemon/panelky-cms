@@ -4,23 +4,23 @@
     <div class="h-75 w-75 bigCard d-flex justify-content-center row borderUnderline">
         <div class="div-12 textVertical">
             <!-- имя автора -->
-            <h1 class="text-center textVertical">
+            <h1 class="text-center textVertical goUpAnim">
                 <b>{{myName}}</b>
             </h1>
-            <hr>
+            <hr class="goUpAnim">
             <!-- род занятий -->
-            <p class="text-center textVertical font14pt">
+            <p class="text-center textVertical font14pt fadeInAnim">
                 {{myOccupation}}
             </p>
-            <hr>
+            <hr class="fadeInAnim">
             <!-- о себе -->
-            <p class="text-center font14pt">
+            <p class="text-center font14pt fadeInAnim">
                 {{aboutMe}}
             </p>
             <br>
             <br>
             <!-- нижний текст -->
-            <h6 class="text-center font14pt">
+            <h6 class="text-center font14pt goUpAnim">
                 <b>{{footerText}}</b>
             </h6>
         </div>

@@ -38212,19 +38212,21 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "div-12 textVertical" }, [
-        _c("h1", { staticClass: "text-center textVertical" }, [
+        _c("h1", { staticClass: "text-center textVertical goUpAnim" }, [
           _c("b", [_vm._v(_vm._s(_vm.myName))])
         ]),
         _vm._v(" "),
-        _c("hr"),
+        _c("hr", { staticClass: "goUpAnim" }),
         _vm._v(" "),
-        _c("p", { staticClass: "text-center textVertical font14pt" }, [
-          _vm._v("\n            " + _vm._s(_vm.myOccupation) + "\n        ")
-        ]),
+        _c(
+          "p",
+          { staticClass: "text-center textVertical font14pt fadeInAnim" },
+          [_vm._v("\n            " + _vm._s(_vm.myOccupation) + "\n        ")]
+        ),
         _vm._v(" "),
-        _c("hr"),
+        _c("hr", { staticClass: "fadeInAnim" }),
         _vm._v(" "),
-        _c("p", { staticClass: "text-center font14pt" }, [
+        _c("p", { staticClass: "text-center font14pt fadeInAnim" }, [
           _vm._v("\n            " + _vm._s(_vm.aboutMe) + "\n        ")
         ]),
         _vm._v(" "),
@@ -38232,7 +38234,7 @@ var render = function() {
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
-        _c("h6", { staticClass: "text-center font14pt" }, [
+        _c("h6", { staticClass: "text-center font14pt goUpAnim" }, [
           _c("b", [_vm._v(_vm._s(_vm.footerText))])
         ])
       ])
