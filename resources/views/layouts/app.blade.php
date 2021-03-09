@@ -23,19 +23,8 @@
     <link href="{{ asset('css/animations.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        <ul class="nav justify-content-center font18pt" style="margin-top:15px;">
-            <li class="nav-item">
-              <router-link class="nav-link active" aria-current="page" to="/">Home</a>
-            </li>
-            <li class="nav-item">
-                <router-link class="nav-link active" aria-current="page" to="/about">About</a>
-            </li>
-        </ul>
-        
-        <main class="col-12 vh-100">
-            @yield('content')
-        </main>
+    <div id="app"> 
+        @yield('content')
     </div>
 </body>
 </html>

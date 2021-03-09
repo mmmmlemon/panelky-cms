@@ -12,6 +12,10 @@ import router from './router';
 
 //иморты компонентов
 
+//Navigation 
+import Nav from './components/Navigation/Nav.vue';
+Vue.component('Nav', Nav);
+
 import HeaderCard from './components/HomePage/HeaderCard.vue';
 Vue.component('HeaderCard', HeaderCard);
 
