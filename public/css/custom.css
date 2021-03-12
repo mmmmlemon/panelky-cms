@@ -42,11 +42,16 @@ a:hover{
 }
 
 .projectImage {
-    width: 90%;
+    width: 50%;
+    /* height:100%; */
     border-radius: 15px;
     -webkit-box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.55);
     -moz-box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.55);
     box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.55);
+}
+
+.projectLogo {
+    width:20%;
 }
 
 .navButton {
@@ -82,8 +87,8 @@ a:hover{
 }
 
 /* margins, paddings, width, height */
-.w-85 {
-    width: 85%;
+.w-90 {
+    width: 90%;
 }
 
 .marginVerticalSmall {

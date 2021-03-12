@@ -4,13 +4,14 @@
     <div style="z-index: -1;" class="h-75 w-75 bigCard d-flex justify-content-center row borderUnderline">
         <div class="row justify-content-center" v-if="type=='left'">
             <div class="col-12 col-md-5 text-center textVertical">
-                <h1 class="text-center textVertical">
+                <h1 class="text-center textVertical font3-8rem">
                     <b>{{appName}}</b>
                 </h1>
+                <img src="/stock/spoti_logo.png" class="projectLogo" alt="">
                 <br>
-                <p class="text-center textVertical font14pt">{{appDescription}}</p>
+                <p class="text-center textVertical font2rem">{{appDescription}}</p>
                 <br>
-                <p class="text-center">{{fullDescription}}</p>
+                <p class="text-center font1-2rem">{{fullDescription}}</p>
                 <hr>
                 <h6 class="text-center"><b>{{footer}}</b></h6>
                 <br>
@@ -21,21 +22,22 @@
                 </button>
             </div>
             <div class="col-12 col-md-6 text-center textVertical">
-                <img src="/stock/spoti.png" class="projectImage" alt="">
+                <img src="/stock/spoti.jpg" class="projectImage" alt="">
             </div>
         </div>
         <div class="row justify-content-center" v-else-if="type=='right'">
             <div class="col-12 col-md-6 text-center textVertical">
-                <img src="/stock/mr.png" class="projectImage" alt="">
+                <img src="/stock/mr.jpg" class="projectImage" alt="">
             </div>
             <div class="col-12 col-md-5 text-center textVertical">
-                <h1 class="text-center textVertical">
+                <h1 class="text-center textVertical font3-8rem">
                     <b>{{appName}}</b>
                 </h1>
+                <img src="/stock/mr_logo.png" class="projectLogo" alt="">
                 <br>
-                <p class="text-center textVertical font14pt">{{appDescription}}</p>
+                <p class="text-center textVertical font2rem">{{appDescription}}</p>
                 <br>
-                <p class="text-center">{{fullDescription}}</p>
+                <p class="text-center font1-2rem">{{fullDescription}}</p>
                 <hr>
                 <h6 class="text-center"><b>{{footer}}</b></h6>
                 <br>

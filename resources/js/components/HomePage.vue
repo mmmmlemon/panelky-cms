@@ -3,9 +3,9 @@
 
         <HeaderCard 
             myName="Egor Zhuravskiy"
-            myOccupation="A junior programmer"
-            aboutMe="I program programms very programmaly and programmaticly"
-            footerText="Check out my projects!"/>
+            myOccupation="PHP, JavaScript & Python developer"
+            aboutMe="High quality web applications for you and your family and your pet parrot 🦜 (squawk squawk)"
+            footerText="Here are some of my projects"/>
 
         <ProjectCard id="spotifyi"
             type='left'

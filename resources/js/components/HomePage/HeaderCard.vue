@@ -1,26 +1,50 @@
 // HeaderCard
 // карточка с общей информацией о владельце сайта и его роде занятий
 <template>
-    <div class="h-75 w-85 bigCard d-flex justify-content-center row borderUnderline">
-        <div class="div-12 textVertical">
+    <div class="h-100 w-90 bigCard d-flex justify-content-center row borderUnderline">
+        <!-- для десктопа -->
+        <div class="d-none d-md-block div-12 textVertical">
             <!-- имя автора -->
-            <h1 class="text-center textVertical goUpAnim">
+            <h1 class="text-center textVertical goUpAnim font5rem">
                 <b>{{myName}}</b>
             </h1>
             <hr class="goUpAnim">
             <!-- род занятий -->
-            <p class="text-center textVertical font14pt fadeInAnim">
+            <p class="text-center textVertical fadeInAnim font2-5rem">
                 {{myOccupation}}
             </p>
             <hr class="fadeInAnim">
             <!-- о себе -->
-            <p class="text-center font14pt fadeInAnim">
+            <p class="text-center fadeInAnim font1-8rem">
                 {{aboutMe}}
             </p>
             <br>
             <br>
             <!-- нижний текст -->
-            <h6 class="text-center font14pt goUpAnim">
+            <h6 class="text-center goUpAnim font1-8rem">
+                <b>{{footerText}}</b>
+            </h6>
+        </div>
+        <!-- для мобилок -->
+        <div class="d-block d-md-none div-12 textVertical">
+            <!-- имя автора -->
+            <h1 class="text-center textVertical goUpAnim font2-5rem">
+                <b>{{myName}}</b>
+            </h1>
+            <hr class="goUpAnim">
+            <!-- род занятий -->
+            <p class="text-center textVertical fadeInAnim font1-8rem">
+                {{myOccupation}}
+            </p>
+            <hr class="fadeInAnim">
+            <!-- о себе -->
+            <p class="text-center fadeInAnim font1-2rem">
+                {{aboutMe}}
+            </p>
+            <br>
+            <br>
+            <!-- нижний текст -->
+            <h6 class="text-center goUpAnim font1-2rem">
                 <b>{{footerText}}</b>
             </h6>
         </div>

@@ -1997,6 +1997,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     myName: {
@@ -2031,6 +2055,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -39144,9 +39170,10 @@ var render = function() {
       _c("HeaderCard", {
         attrs: {
           myName: "Egor Zhuravskiy",
-          myOccupation: "A junior programmer",
-          aboutMe: "I program programms very programmaly and programmaticly",
-          footerText: "Check out my projects!"
+          myOccupation: "PHP, JavaScript & Python developer",
+          aboutMe:
+            "High quality web applications for you and your family and your pet parrot 🦜 (squawk squawk)",
+          footerText: "Here are some of my projects"
         }
       }),
       _vm._v(" "),
@@ -39296,25 +39323,27 @@ var render = function() {
     "div",
     {
       staticClass:
-        "h-75 w-85 bigCard d-flex justify-content-center row borderUnderline"
+        "h-100 w-90 bigCard d-flex justify-content-center row borderUnderline"
     },
     [
-      _c("div", { staticClass: "div-12 textVertical" }, [
-        _c("h1", { staticClass: "text-center textVertical goUpAnim" }, [
-          _c("b", [_vm._v(_vm._s(_vm.myName))])
-        ]),
+      _c("div", { staticClass: "d-none d-md-block div-12 textVertical" }, [
+        _c(
+          "h1",
+          { staticClass: "text-center textVertical goUpAnim font5rem" },
+          [_c("b", [_vm._v(_vm._s(_vm.myName))])]
+        ),
         _vm._v(" "),
         _c("hr", { staticClass: "goUpAnim" }),
         _vm._v(" "),
         _c(
           "p",
-          { staticClass: "text-center textVertical font14pt fadeInAnim" },
+          { staticClass: "text-center textVertical fadeInAnim font2-5rem" },
           [_vm._v("\n            " + _vm._s(_vm.myOccupation) + "\n        ")]
         ),
         _vm._v(" "),
         _c("hr", { staticClass: "fadeInAnim" }),
         _vm._v(" "),
-        _c("p", { staticClass: "text-center font14pt fadeInAnim" }, [
+        _c("p", { staticClass: "text-center fadeInAnim font1-8rem" }, [
           _vm._v("\n            " + _vm._s(_vm.aboutMe) + "\n        ")
         ]),
         _vm._v(" "),
@@ -39322,7 +39351,37 @@ var render = function() {
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
-        _c("h6", { staticClass: "text-center font14pt goUpAnim" }, [
+        _c("h6", { staticClass: "text-center goUpAnim font1-8rem" }, [
+          _c("b", [_vm._v(_vm._s(_vm.footerText))])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "d-block d-md-none div-12 textVertical" }, [
+        _c(
+          "h1",
+          { staticClass: "text-center textVertical goUpAnim font2-5rem" },
+          [_c("b", [_vm._v(_vm._s(_vm.myName))])]
+        ),
+        _vm._v(" "),
+        _c("hr", { staticClass: "goUpAnim" }),
+        _vm._v(" "),
+        _c(
+          "p",
+          { staticClass: "text-center textVertical fadeInAnim font1-8rem" },
+          [_vm._v("\n            " + _vm._s(_vm.myOccupation) + "\n        ")]
+        ),
+        _vm._v(" "),
+        _c("hr", { staticClass: "fadeInAnim" }),
+        _vm._v(" "),
+        _c("p", { staticClass: "text-center fadeInAnim font1-2rem" }, [
+          _vm._v("\n            " + _vm._s(_vm.aboutMe) + "\n        ")
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("h6", { staticClass: "text-center goUpAnim font1-2rem" }, [
           _c("b", [_vm._v(_vm._s(_vm.footerText))])
         ])
       ])
@@ -39366,19 +39425,26 @@ var render = function() {
               "div",
               { staticClass: "col-12 col-md-5 text-center textVertical" },
               [
-                _c("h1", { staticClass: "text-center textVertical" }, [
-                  _c("b", [_vm._v(_vm._s(_vm.appName))])
-                ]),
+                _c(
+                  "h1",
+                  { staticClass: "text-center textVertical font3-8rem" },
+                  [_c("b", [_vm._v(_vm._s(_vm.appName))])]
+                ),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "projectLogo",
+                  attrs: { src: "/stock/spoti_logo.png", alt: "" }
+                }),
                 _vm._v(" "),
                 _c("br"),
                 _vm._v(" "),
-                _c("p", { staticClass: "text-center textVertical font14pt" }, [
+                _c("p", { staticClass: "text-center textVertical font2rem" }, [
                   _vm._v(_vm._s(_vm.appDescription))
                 ]),
                 _vm._v(" "),
                 _c("br"),
                 _vm._v(" "),
-                _c("p", { staticClass: "text-center" }, [
+                _c("p", { staticClass: "text-center font1-2rem" }, [
                   _vm._v(_vm._s(_vm.fullDescription))
                 ]),
                 _vm._v(" "),
@@ -39417,19 +39483,26 @@ var render = function() {
               "div",
               { staticClass: "col-12 col-md-5 text-center textVertical" },
               [
-                _c("h1", { staticClass: "text-center textVertical" }, [
-                  _c("b", [_vm._v(_vm._s(_vm.appName))])
-                ]),
+                _c(
+                  "h1",
+                  { staticClass: "text-center textVertical font3-8rem" },
+                  [_c("b", [_vm._v(_vm._s(_vm.appName))])]
+                ),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "projectLogo",
+                  attrs: { src: "/stock/mr_logo.png", alt: "" }
+                }),
                 _vm._v(" "),
                 _c("br"),
                 _vm._v(" "),
-                _c("p", { staticClass: "text-center textVertical font14pt" }, [
+                _c("p", { staticClass: "text-center textVertical font2rem" }, [
                   _vm._v(_vm._s(_vm.appDescription))
                 ]),
                 _vm._v(" "),
                 _c("br"),
                 _vm._v(" "),
-                _c("p", { staticClass: "text-center" }, [
+                _c("p", { staticClass: "text-center font1-2rem" }, [
                   _vm._v(_vm._s(_vm.fullDescription))
                 ]),
                 _vm._v(" "),
@@ -39473,7 +39546,7 @@ var staticRenderFns = [
       [
         _c("img", {
           staticClass: "projectImage",
-          attrs: { src: "/stock/spoti.png", alt: "" }
+          attrs: { src: "/stock/spoti.jpg", alt: "" }
         })
       ]
     )
@@ -39488,7 +39561,7 @@ var staticRenderFns = [
       [
         _c("img", {
           staticClass: "projectImage",
-          attrs: { src: "/stock/mr.png", alt: "" }
+          attrs: { src: "/stock/mr.jpg", alt: "" }
         })
       ]
     )
