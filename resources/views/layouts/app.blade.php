@@ -23,7 +23,7 @@
     <link href="{{ asset('css/animations.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
 </head>
-<body>
+<body >
     <div id="app"> 
         @yield('content')
     </div>

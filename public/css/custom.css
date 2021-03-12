@@ -64,8 +64,9 @@ a:hover{
     -webkit-box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.85);
     -moz-box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.85);
     box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.85);
-    transition: right 0.3s ease-in-out;
+    transition: right 0.3s ease-in-out, opacity 0.4s ease-in-out;
     z-index: 2;
+    opacity: 0;
 }
 
 .blackHR {
