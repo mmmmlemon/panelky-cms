@@ -2164,7 +2164,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      navMenuRight: '-500px'
+    };
+  },
+  methods: {
+    showNavMenu: function showNavMenu() {
+      if (isMobile()) {
+        alert('poo');
+      }
+
+      this.navMenuRight = '0px';
+    },
+    closeNavMenu: function closeNavMenu() {
+      this.navMenuRight = '-500px';
+    }
+  }
+});
 
 /***/ }),
 
@@ -38361,6 +38402,7 @@ var render = function() {
       _vm._v(" "),
       _c("ProjectCard", {
         attrs: {
+          id: "spotifyi",
           type: "left",
           appName: "SpotiFYI",
           appUrl: "http://spotifyi.ru",
@@ -38564,7 +38606,8 @@ var render = function() {
     "div",
     {
       staticClass:
-        "h-75 w-75 bigCard d-flex justify-content-center row borderUnderline"
+        "h-75 w-75 bigCard d-flex justify-content-center row borderUnderline",
+      staticStyle: { "z-index": "-1" }
     },
     [
       _vm.type == "left"
@@ -38787,18 +38830,94 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticStyle: { "z-index": "2" } }, [
+    _c(
+      "button",
+      {
+        staticClass: "btn navButton",
+        on: {
+          click: function($event) {
+            return _vm.showNavMenu()
+          }
+        }
+      },
+      [
+        _c("i", {
+          staticClass: "bi bi-three-dots-vertical",
+          staticStyle: { "font-size": "1.5rem", color: "white" }
+        })
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "col-12 col-md-2 navMenu",
+        style: { right: _vm.navMenuRight }
+      },
+      [
+        _c("div", { staticClass: "row justify-content-end" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn",
+              on: {
+                click: function($event) {
+                  return _vm.closeNavMenu()
+                }
+              }
+            },
+            [
+              _c("i", {
+                staticClass: "bi bi-x",
+                staticStyle: { "font-size": "1.5rem" }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._m(1)
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-outline-light navButton" }, [
-      _c("i", {
-        staticClass: "bi bi-list",
-        staticStyle: { "font-size": "1.5rem" }
-      })
+    return _c("div", { staticClass: "col-12" }, [
+      _c("br"),
+      _vm._v(" "),
+      _c("h6", { staticClass: "text-center" }, [_c("b", [_vm._v("Projects")])]),
+      _vm._v(" "),
+      _c("hr", { staticClass: "blackHR" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 text-center" }, [
+      _c("h6", [
+        _c("a", { staticClass: "blackA", attrs: { href: "#spotifyi" } }, [
+          _vm._v("SpotiFYI")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("h6", [_vm._v("Weird Web-Site of [Mr. o_O]")]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("h6", [_vm._v("Panelky")]),
+      _vm._v(" "),
+      _c("hr", { staticClass: "blackHR" }),
+      _vm._v(" "),
+      _c("h6", [_vm._v("Links")])
     ])
   }
 ]

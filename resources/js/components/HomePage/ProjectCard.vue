@@ -1,7 +1,7 @@
 // ProjectCard
 // Карточка для проекта
 <template>
-    <div class="h-75 w-75 bigCard d-flex justify-content-center row borderUnderline">
+    <div style="z-index: -1;" class="h-75 w-75 bigCard d-flex justify-content-center row borderUnderline">
         <div class="row justify-content-center" v-if="type=='left'">
             <div class="col-12 col-md-5 text-center textVertical">
                 <h1 class="text-center textVertical">

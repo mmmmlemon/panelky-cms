@@ -7,7 +7,7 @@
             aboutMe="I program programms very programmaly and programmaticly"
             footerText="Check out my projects!"/>
 
-        <ProjectCard
+        <ProjectCard id="spotifyi"
             type='left'
             appName="SpotiFYI"
             appUrl="http://spotifyi.ru"

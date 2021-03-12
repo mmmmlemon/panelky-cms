@@ -2,6 +2,7 @@
 /* tags */
 body {
     background-color: rgb(60, 60, 94);
+    z-index: -9999;
 }
 
 h1 {
@@ -48,10 +49,35 @@ a:hover{
     box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.55);
 }
 
-.navButton{
+.navButton {
     position: fixed;
     right: 5%;
     top: 2%;
+}
+
+.navMenu {
+    position: fixed;
+    right: 0%;
+    top: 0%;
+    height: 100%;
+    background-color: rgb(224, 224, 224);
+    -webkit-box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.85);
+    -moz-box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.85);
+    box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.85);
+    transition: right 0.3s ease-in-out;
+    z-index: 2;
+}
+
+.blackHR {
+    background-color: black;
+}
+
+.blackA {
+    color: black;
+}
+
+.blackA:hover {
+    color:rgb(72, 72, 116);
 }
 
 /* fonts */
