@@ -15,13 +15,16 @@
             </button>
             <!-- пункты меню -->
             <div class="col-12">
-                <br>
                 <!-- проекты -->
-                <h6 class="text-center"><b>Projects</b></h6>
+                <h6 class="text-center">
+                    <b>Projects</b>
+                </h6>
                 <hr class="blackHR">
             </div>
             <div class="col-12 text-center">
-                <h6><a href="#spotifyi" class="blackA" @click="closeNavMenu()">SpotiFYI</a></h6>
+                <h6>
+                    <a href="#spotifyi" class="blackA" @click="closeNavMenu()">SpotiFYI</a>
+                </h6>
                 <br>
                 <h6>Weird Web-Site of [Mr. o_O]</h6>
                 <br>

@@ -5,17 +5,17 @@
                 <p class="text-center textVertical font14pt">{{footerTitle}}</p>
                 <hr>
                 <div class="row">
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-4 marginVerticalSmall">
                         <a href="https://github.com/mmmmlemon" target="_blank">
                             <img src="git.png" alt="GitHub/mmmmlemon">
                         </a>  
                     </div>
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-4 marginVerticalSmall">
                         <a href="https://github.com/mmmmlemon" target="_blank">
                             <img src="kofi.png" width="64px" alt="">
                         </a>  
                     </div>
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-4 marginVerticalSmall">
                         <a href="https://github.com/mmmmlemon" target="_blank">
                             <img src="insta.png" width="64px" alt="">
                         </a>  

@@ -81,6 +81,14 @@ a:hover{
     color:rgb(72, 72, 116);
 }
 
-/* fonts */
+/* margins, paddings, width, height */
+.w-85 {
+    width: 85%;
+}
+
+.marginVerticalSmall {
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
 
 

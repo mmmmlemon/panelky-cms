@@ -26,6 +26,10 @@ Vue.component('ProjectCard', ProjectCard);
 import FooterCard from './components/HomePage/FooterCard.vue';
 Vue.component('FooterCard', FooterCard);
 
+//Misc
+import Error from './components/Misc/Error.vue';
+Vue.component('Error', Error);
+
 //Navigation 
 import Nav from './components/Navigation/Nav.vue';
 Vue.component('Nav', Nav);
