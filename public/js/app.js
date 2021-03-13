@@ -2110,22 +2110,83 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     type: {
       type: String,
       "default": 'left'
     },
-    appName: {
+    projectName: {
       type: String,
-      "default": 'App Name'
+      "default": 'project Name'
     },
-    appUrl: {
+    projectUrl: {
       type: String
     },
-    appDescription: {
+    projectDescription: {
       type: String,
-      "default": 'App description'
+      "default": 'project description'
     },
     fullDescription: {
       type: String
@@ -2150,6 +2211,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -39172,7 +39234,7 @@ var render = function() {
           myName: "Egor Zhuravskiy",
           myOccupation: "PHP, JavaScript & Python developer",
           aboutMe:
-            "High quality web applications for you and your family and your pet parrot 🦜 (squawk squawk)",
+            "High quality web projectlications for you and your family and your pet parrot 🦜 (squawk squawk)",
           footerText: "Here are some of my projects"
         }
       }),
@@ -39180,12 +39242,12 @@ var render = function() {
       _c("ProjectCard", {
         attrs: {
           id: "spotifyi",
-          type: "left",
-          appName: "SpotiFYI",
-          appUrl: "http://spotifyi.ru",
-          appDescription: "Music statistics for Spotify",
+          type: "leftd",
+          projectName: "SpotiFYI",
+          projectUrl: "http://spotifyi.ru",
+          projectDescription: "Music statistics for Spotify",
           fullDescription:
-            "An application for Spotify users that provides them an ability to see their music habits and statistic in an accesible form. ",
+            "An projectlication for Spotify users that provides them an ability to see their music habits and statistic in an accesible form. ",
           footer: "Laravel / Vue.js / Spotify API"
         }
       }),
@@ -39193,9 +39255,9 @@ var render = function() {
       _c("ProjectCard", {
         attrs: {
           type: "right",
-          appName: "Weird Web-Site of [Mr. o_O]",
-          appUrl: "https://mistermisteroo.ru",
-          appDescription: "Videoblog page",
+          projectName: "Weird Web-Site of [Mr. o_O]",
+          projectUrl: "https://mistermisteroo.ru",
+          projectDescription: "Videoblog page",
           fullDescription: "A CMS for videos and images.",
           footer: "Laravel / MySQL"
         }
@@ -39415,7 +39477,7 @@ var render = function() {
     "div",
     {
       staticClass:
-        "h-75 w-75 bigCard d-flex justify-content-center row borderUnderline",
+        "row h-75 w-75 d-flex justify-content-center borderUnderline",
       staticStyle: { "z-index": "-1" }
     },
     [
@@ -39423,12 +39485,15 @@ var render = function() {
         ? _c("div", { staticClass: "row justify-content-center" }, [
             _c(
               "div",
-              { staticClass: "col-12 col-md-5 text-center textVertical" },
+              {
+                staticClass:
+                  "d-none d-md-block col-12 col-md-5 text-center textVertical"
+              },
               [
                 _c(
                   "h1",
                   { staticClass: "text-center textVertical font3-8rem" },
-                  [_c("b", [_vm._v(_vm._s(_vm.appName))])]
+                  [_c("b", [_vm._v(_vm._s(_vm.projectName))])]
                 ),
                 _vm._v(" "),
                 _c("img", {
@@ -39439,7 +39504,7 @@ var render = function() {
                 _c("br"),
                 _vm._v(" "),
                 _c("p", { staticClass: "text-center textVertical font2rem" }, [
-                  _vm._v(_vm._s(_vm.appDescription))
+                  _vm._v(_vm._s(_vm.projectDescription))
                 ]),
                 _vm._v(" "),
                 _c("br"),
@@ -39463,30 +39528,85 @@ var render = function() {
                     attrs: { type: "button" }
                   },
                   [
-                    _c("a", { attrs: { href: _vm.appUrl, target: "_blank" } }, [
-                      _vm._v(
-                        "\n                    View project\n                "
-                      )
-                    ])
+                    _c(
+                      "a",
+                      { attrs: { href: _vm.projectUrl, target: "_blank" } },
+                      [
+                        _vm._v(
+                          "\n                    View project\n                "
+                        )
+                      ]
+                    )
                   ]
                 )
               ]
             ),
             _vm._v(" "),
-            _vm._m(0)
-          ])
-        : _vm.type == "right"
-        ? _c("div", { staticClass: "row justify-content-center" }, [
-            _vm._m(1),
+            _vm._m(0),
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col-12 col-md-5 text-center textVertical" },
+              {
+                staticClass: "d-block d-md-none col-12 text-center textVertical"
+              },
               [
                 _c(
                   "h1",
                   { staticClass: "text-center textVertical font3-8rem" },
-                  [_c("b", [_vm._v(_vm._s(_vm.appName))])]
+                  [_c("b", [_vm._v(_vm._s(_vm.projectName))])]
+                ),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "projectLogo",
+                  attrs: { src: "/stock/spoti_logo.png", alt: "" }
+                }),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-center textVertical font2rem" }, [
+                  _vm._v(_vm._s(_vm.projectDescription))
+                ]),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-lg btn-outline-light",
+                    attrs: { type: "button" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      { attrs: { href: _vm.projectUrl, target: "_blank" } },
+                      [
+                        _vm._v(
+                          "\n                    View project\n                "
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
+          ])
+        : _vm.type == "right"
+        ? _c("div", { staticClass: "row justify-content-center" }, [
+            _vm._m(2),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "d-none d-md-block col-12 col-md-5 text-center textVertical"
+              },
+              [
+                _c(
+                  "h1",
+                  { staticClass: "text-center textVertical font3-2rem" },
+                  [_c("b", [_vm._v(_vm._s(_vm.projectName))])]
                 ),
                 _vm._v(" "),
                 _c("img", {
@@ -39497,7 +39617,7 @@ var render = function() {
                 _c("br"),
                 _vm._v(" "),
                 _c("p", { staticClass: "text-center textVertical font2rem" }, [
-                  _vm._v(_vm._s(_vm.appDescription))
+                  _vm._v(_vm._s(_vm.projectDescription))
                 ]),
                 _vm._v(" "),
                 _c("br"),
@@ -39521,17 +39641,76 @@ var render = function() {
                     attrs: { type: "button" }
                   },
                   [
-                    _c("a", { attrs: { href: _vm.appUrl, target: "_blank" } }, [
-                      _vm._v(
-                        "\n                    View project\n                "
-                      )
-                    ])
+                    _c(
+                      "a",
+                      { attrs: { href: _vm.projectUrl, target: "_blank" } },
+                      [
+                        _vm._v(
+                          "\n                    View project\n                "
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "d-block d-md-none col-12 text-center textVertical"
+              },
+              [
+                _c("h1", { staticClass: "text-center textVertical font3rem" }, [
+                  _c("b", [_vm._v(_vm._s(_vm.projectName))])
+                ]),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "projectLogo",
+                  attrs: { src: "/stock/mr_logo.png", alt: "" }
+                }),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-center textVertical font2rem" }, [
+                  _vm._v(_vm._s(_vm.projectDescription))
+                ]),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _vm._m(3),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-lg btn-outline-light",
+                    attrs: { type: "button" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      { attrs: { href: _vm.projectUrl, target: "_blank" } },
+                      [
+                        _vm._v(
+                          "\n                    View project\n                "
+                        )
+                      ]
+                    )
                   ]
                 )
               ]
             )
           ])
-        : _c("div")
+        : _c(
+            "div",
+            { staticClass: "textVertical" },
+            [
+              _c("Error", {
+                attrs: { errorMessage: "Неверный параметр 'type'" }
+              })
+            ],
+            1
+          )
     ]
   )
 }
@@ -39542,7 +39721,10 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: "col-12 col-md-6 text-center textVertical" },
+      {
+        staticClass:
+          "d-none d-md-block col-12 col-md-6 text-center textVertical"
+      },
       [
         _c("img", {
           staticClass: "projectImage",
@@ -39557,11 +39739,50 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: "col-12 col-md-6 text-center textVertical" },
+      {
+        staticClass:
+          "d-block d-md-none col-12 col-md-6 text-center textVertical"
+      },
+      [
+        _c("img", {
+          staticClass: "projectImageMobile",
+          attrs: { src: "/stock/spoti_mobile.png", alt: "" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "d-none d-md-block col-12 col-md-6 text-center textVertical"
+      },
       [
         _c("img", {
           staticClass: "projectImage",
           attrs: { src: "/stock/mr.jpg", alt: "" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "d-block d-md-none col-12 col-md-6 text-center textVertical"
+      },
+      [
+        _c("img", {
+          staticClass: "projectImageMobile",
+          attrs: { src: "/stock/mr_mobile.png", alt: "" }
         })
       ]
     )
@@ -39593,17 +39814,22 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "alert alert-danger text-center marginVerticalSmall",
+        staticClass:
+          "alert alert-danger text-center marginVerticalSmall goUpAnim",
         attrs: { role: "alert" }
       },
-      [
-        _c("h4", [_vm._v("Ошибка")]),
-        _vm._v("\n        " + _vm._s(_vm.errorMessage) + "\n    ")
-      ]
+      [_vm._m(0), _vm._v("\n        " + _vm._s(_vm.errorMessage) + "\n    ")]
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", [_c("b", [_vm._v("Ошибка")])])
+  }
+]
 render._withStripped = true
 
 
