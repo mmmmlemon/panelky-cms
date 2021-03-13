@@ -1,3 +1,5 @@
+//FooterCard
+// футер с контактами и ссылками
 <template>
     <div class="h-75 w-75 bigCard d-flex justify-content-center row">
         <div class="div-12 textVertical">

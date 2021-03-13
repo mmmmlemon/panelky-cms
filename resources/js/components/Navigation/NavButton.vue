@@ -1,5 +1,5 @@
 // NavButton
-// кнопка навигации
+// кнопка навигации с боковым меню
 <template>
 <div style="z-index: 2;">
     <!-- кнопка меню -->
@@ -23,7 +23,7 @@
             </div>
             <div class="col-12 text-center">
                 <h6>
-                    <a href="#spotifyi" class="blackA" @click="closeNavMenu()">SpotiFYI</a>
+                    <a href="#spotifyi" @click="closeNavMenu()">SpotiFYI</a>
                 </h6>
                 <br>
                 <h6>Weird Web-Site of [Mr. o_O]</h6>

@@ -1,3 +1,5 @@
+//HomePage
+//домашняя страница
 <template>
     <div style="height:100%;" class="row justify-content-center">
 
@@ -8,7 +10,7 @@
             footerText="Here are some of my projects"/>
 
         <ProjectCard id="spotifyi"
-            type='leftd'
+            type='left'
             projectName="SpotiFYI"
             projectUrl="http://spotifyi.ru"
             projectDescription="Music statistics for Spotify"

@@ -11,6 +11,10 @@ h1 {
     text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5);
 }
 
+h6{
+    color: white;
+}
+
 a, a:hover {
     color: white;
     text-decoration: none;
@@ -78,6 +82,10 @@ a:hover{
     transition: right 0.3s ease-in-out, opacity 0.4s ease-in-out;
     z-index: 2;
     opacity: 0;
+}
+
+.navMenu a, .navMenu h6{
+    color: black;
 }
 
 .blackHR {

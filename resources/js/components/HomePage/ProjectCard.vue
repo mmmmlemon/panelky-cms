@@ -1,5 +1,5 @@
 // ProjectCard
-// Карточка для проекта
+// Карточка для проектов
 <template>
     <div style="z-index: -1;" class="row h-75 w-75 d-flex justify-content-center borderUnderline">
         <!-- карточка с описанием слева -->

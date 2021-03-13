@@ -1893,6 +1893,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
@@ -1908,6 +1910,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -39242,7 +39246,7 @@ var render = function() {
       _c("ProjectCard", {
         attrs: {
           id: "spotifyi",
-          type: "leftd",
+          type: "left",
           projectName: "SpotiFYI",
           projectUrl: "http://spotifyi.ru",
           projectDescription: "Music statistics for Spotify",
@@ -39810,17 +39814,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      {
-        staticClass:
-          "alert alert-danger text-center marginVerticalSmall goUpAnim",
-        attrs: { role: "alert" }
-      },
-      [_vm._m(0), _vm._v("\n        " + _vm._s(_vm.errorMessage) + "\n    ")]
-    )
-  ])
+  return _c(
+    "div",
+    {
+      staticClass:
+        "alert alert-danger text-center marginVerticalSmall goUpAnim",
+      attrs: { role: "alert" }
+    },
+    [_vm._m(0), _vm._v("\n    " + _vm._s(_vm.errorMessage) + "\n")]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -39968,7 +39970,6 @@ var render = function() {
               _c(
                 "a",
                 {
-                  staticClass: "blackA",
                   attrs: { href: "#spotifyi" },
                   on: {
                     click: function($event) {
