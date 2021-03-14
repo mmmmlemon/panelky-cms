@@ -1854,6 +1854,60 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/App.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/App.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  methods: {
+    // показать боковое меню
+    showNavMenu: function showNavMenu() {
+      if (this.$isMobile) {
+        this.$store.dispatch('setNavMenuStyle', {
+          'right': '0px',
+          'opacity': '1'
+        }); //отключаем скролл страницы
+        //пока открыто меню
+
+        document.body.style.overflow = 'hidden';
+      }
+    },
+    //закрыть боковое меню
+    closeNavMenu: function closeNavMenu() {
+      if (this.$isMobile) {
+        this.$store.dispatch('setNavMenuStyle', {
+          'right': '-500px',
+          'opacity': '0'
+        }); //если сайт открыт на телефоне, возвращаем скролл
+
+        document.body.style.overflow = 'visible';
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/HomePage.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/HomePage.vue?vue&type=script&lang=js& ***!
@@ -2319,9 +2373,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2329,11 +2380,18 @@ __webpack_require__.r(__webpack_exports__);
       navMenuOpacity: '0'
     };
   },
+  computed: {
+    navMenuStyle: function navMenuStyle() {
+      return this.$store.state.GlobalStates.navMenuStyle;
+    }
+  },
   methods: {
     // показать боковое меню
     showNavMenu: function showNavMenu() {
-      this.navMenuRight = '0px';
-      this.navMenuOpacity = '1'; // если сайт открыт на телефоне, то отключаем скролл страницы
+      this.$store.dispatch('setNavMenuStyle', {
+        'right': '0px',
+        'opacity': '1'
+      }); // если сайт открыт на телефоне, то отключаем скролл страницы
       //пока открыто меню
 
       if (this.$isMobile) {
@@ -2342,8 +2400,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     //закрыть боковое меню
     closeNavMenu: function closeNavMenu() {
-      this.navMenuOpacity = '0';
-      this.navMenuRight = '-500px'; //если сайт открыт на телефоне, возвращаем скролл
+      this.$store.dispatch('setNavMenuStyle', {
+        'right': '-500px',
+        'opacity': '0'
+      }); //если сайт открыт на телефоне, возвращаем скролл
 
       if (this.$isMobile) {
         document.body.style.overflow = 'visible';
@@ -2367,12 +2427,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store */ "./resources/js/store.js");
 /* harmony import */ var mobile_device_detect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! mobile-device-detect */ "./node_modules/mobile-device-detect/dist/index.js");
 /* harmony import */ var mobile_device_detect__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mobile_device_detect__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_HomePage_HeaderCard_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/HomePage/HeaderCard.vue */ "./resources/js/components/HomePage/HeaderCard.vue");
-/* harmony import */ var _components_HomePage_ProjectCard_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/HomePage/ProjectCard.vue */ "./resources/js/components/HomePage/ProjectCard.vue");
-/* harmony import */ var _components_HomePage_FooterCard_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/HomePage/FooterCard.vue */ "./resources/js/components/HomePage/FooterCard.vue");
-/* harmony import */ var _components_Misc_Error_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/Misc/Error.vue */ "./resources/js/components/Misc/Error.vue");
-/* harmony import */ var _components_Navigation_Nav_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/Navigation/Nav.vue */ "./resources/js/components/Navigation/Nav.vue");
-/* harmony import */ var _components_Navigation_NavButton__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/Navigation/NavButton */ "./resources/js/components/Navigation/NavButton.vue");
+/* harmony import */ var vue2_touch_events__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue2-touch-events */ "./node_modules/vue2-touch-events/index.js");
+/* harmony import */ var vue2_touch_events__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue2_touch_events__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _components_HomePage_HeaderCard_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/HomePage/HeaderCard.vue */ "./resources/js/components/HomePage/HeaderCard.vue");
+/* harmony import */ var _components_HomePage_ProjectCard_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/HomePage/ProjectCard.vue */ "./resources/js/components/HomePage/ProjectCard.vue");
+/* harmony import */ var _components_HomePage_FooterCard_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/HomePage/FooterCard.vue */ "./resources/js/components/HomePage/FooterCard.vue");
+/* harmony import */ var _components_Misc_Error_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/Misc/Error.vue */ "./resources/js/components/Misc/Error.vue");
+/* harmony import */ var _components_Navigation_Nav_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/Navigation/Nav.vue */ "./resources/js/components/Navigation/Nav.vue");
+/* harmony import */ var _components_Navigation_NavButton__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/Navigation/NavButton */ "./resources/js/components/Navigation/NavButton.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -2384,25 +2446,31 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"
 
 
  //иморты плагинов
+//isMobile
 
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.prototype.$isMobile = mobile_device_detect__WEBPACK_IMPORTED_MODULE_2__.isMobile; //иморты компонентов
+vue__WEBPACK_IMPORTED_MODULE_3__.default.prototype.$isMobile = mobile_device_detect__WEBPACK_IMPORTED_MODULE_2__.isMobile; //vue2-touch-events
+
+
+vue__WEBPACK_IMPORTED_MODULE_3__.default.use((vue2_touch_events__WEBPACK_IMPORTED_MODULE_4___default()), {
+  swipeTolerance: 100
+}); //иморты компонентов
 //./
 
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('HeaderCard', _components_HomePage_HeaderCard_vue__WEBPACK_IMPORTED_MODULE_4__.default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('HeaderCard', _components_HomePage_HeaderCard_vue__WEBPACK_IMPORTED_MODULE_5__.default);
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('ProjectCard', _components_HomePage_ProjectCard_vue__WEBPACK_IMPORTED_MODULE_5__.default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('ProjectCard', _components_HomePage_ProjectCard_vue__WEBPACK_IMPORTED_MODULE_6__.default);
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('FooterCard', _components_HomePage_FooterCard_vue__WEBPACK_IMPORTED_MODULE_6__.default); //Misc
-
-
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Error', _components_Misc_Error_vue__WEBPACK_IMPORTED_MODULE_7__.default); //Navigation 
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('FooterCard', _components_HomePage_FooterCard_vue__WEBPACK_IMPORTED_MODULE_7__.default); //Misc
 
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Nav', _components_Navigation_Nav_vue__WEBPACK_IMPORTED_MODULE_8__.default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Error', _components_Misc_Error_vue__WEBPACK_IMPORTED_MODULE_8__.default); //Navigation 
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('NavButton', _components_Navigation_NavButton__WEBPACK_IMPORTED_MODULE_9__.default);
+
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Nav', _components_Navigation_Nav_vue__WEBPACK_IMPORTED_MODULE_9__.default);
+
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('NavButton', _components_Navigation_NavButton__WEBPACK_IMPORTED_MODULE_10__.default);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -2533,14 +2601,29 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vuex__WEBPACK_IMPORTED_MODULE_2__.default); //глобальные стейты
 
 var GlobalStates = {
-  state: {},
+  state: {
+    //стиль бокового меню
+    navMenuStyle: {
+      'right': '-500px',
+      'opacity': '0'
+    }
+  },
   mutations: {
     //установить стейт
     setState: function setState(state, payload) {
       state[payload.state] = payload.value;
     }
   },
-  actions: {}
+  actions: {
+    //setNavMenuStyle
+    //изменить стили бокового меню (чтобы оно показалось или скрылось)
+    setNavMenuStyle: function setNavMenuStyle(context, values) {
+      context.commit('setState', {
+        state: 'navMenuStyle',
+        value: values
+      });
+    }
+  }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_2__.default.Store({
   modules: {
@@ -38563,15 +38646,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _App_vue_vue_type_template_id_332fccf4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./App.vue?vue&type=template&id=332fccf4& */ "./resources/js/components/App.vue?vue&type=template&id=332fccf4&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.vue?vue&type=script&lang=js& */ "./resources/js/components/App.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 ;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__.default)(
-  script,
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
   _App_vue_vue_type_template_id_332fccf4___WEBPACK_IMPORTED_MODULE_0__.render,
   _App_vue_vue_type_template_id_332fccf4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
@@ -38874,6 +38959,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_About_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./About.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/About.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_About_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/components/App.vue?vue&type=script&lang=js&":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/App.vue?vue&type=script&lang=js& ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./App.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/App.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -39203,7 +39304,32 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "container col-12 vh-100" },
-    [_c("Nav"), _vm._v(" "), _c("NavButton"), _vm._v(" "), _c("router-view")],
+    [
+      _c("Nav"),
+      _vm._v(" "),
+      _c("NavButton"),
+      _vm._v(" "),
+      _c("router-view", {
+        directives: [
+          {
+            name: "touch",
+            rawName: "v-touch:swipe.left",
+            value: _vm.showNavMenu,
+            expression: "showNavMenu",
+            arg: "swipe",
+            modifiers: { left: true }
+          },
+          {
+            name: "touch",
+            rawName: "v-touch:swipe.right",
+            value: _vm.closeNavMenu,
+            expression: "closeNavMenu",
+            arg: "swipe",
+            modifiers: { right: true }
+          }
+        ]
+      })
+    ],
     1
   )
 }
@@ -39922,109 +40048,100 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "button",
-      {
-        staticClass: "d-none d-md-block btn navButton",
-        staticStyle: { "z-index": "3" },
-        on: {
-          click: function($event) {
-            return _vm.showNavMenu()
+  return _c(
+    "div",
+    {
+      staticStyle: {
+        "background-color": "red",
+        position: "fixed",
+        heigth: "100%"
+      }
+    },
+    [
+      _c(
+        "button",
+        {
+          staticClass: "d-none d-md-block btn navButton",
+          staticStyle: { "z-index": "3" },
+          on: {
+            click: function($event) {
+              return _vm.showNavMenu()
+            }
           }
-        }
-      },
-      [
-        _c("i", {
-          staticClass: "bi bi-three-dots-vertical",
-          staticStyle: { "font-size": "1.5rem", color: "white" }
-        })
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "d-block d-md-none btn navButtonMobile",
-        staticStyle: { "z-index": "3" },
-        on: {
-          click: function($event) {
-            return _vm.showNavMenu()
+        },
+        [
+          _c("i", {
+            staticClass: "bi bi-three-dots-vertical",
+            staticStyle: { "font-size": "1.5rem", color: "white" }
+          })
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "col-12 col-md-2 navMenu",
+          style: {
+            right: _vm.navMenuStyle["right"],
+            opacity: _vm.navMenuStyle["opacity"],
+            zIndex: 4
           }
-        }
-      },
-      [
-        _c("i", {
-          staticClass: "bi bi-three-dots-vertical",
-          staticStyle: { "font-size": "1.5rem", color: "white" }
-        })
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "col-12 col-md-2 navMenu",
-        style: {
-          right: _vm.navMenuRight,
-          opacity: _vm.navMenuOpacity,
-          zIndex: 4
-        }
-      },
-      [
-        _c("div", { staticClass: "row justify-content-end" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn",
-              on: {
-                click: function($event) {
-                  return _vm.closeNavMenu()
-                }
-              }
-            },
-            [
-              _c("i", {
-                staticClass: "bi bi-x",
-                staticStyle: { "font-size": "1.5rem" }
-              })
-            ]
-          ),
-          _vm._v(" "),
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-12 text-center" }, [
-            _c("h6", [
-              _c(
-                "a",
-                {
-                  attrs: { href: "#spotifyi" },
-                  on: {
-                    click: function($event) {
-                      return _vm.closeNavMenu()
-                    }
+        },
+        [
+          _c("div", { staticClass: "row justify-content-end" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn",
+                on: {
+                  click: function($event) {
+                    return _vm.closeNavMenu()
                   }
-                },
-                [_vm._v("SpotiFYI")]
-              )
-            ]),
+                }
+              },
+              [
+                _c("i", {
+                  staticClass: "bi bi-x",
+                  staticStyle: { "font-size": "1.5rem" }
+                })
+              ]
+            ),
             _vm._v(" "),
-            _c("br"),
+            _vm._m(0),
             _vm._v(" "),
-            _c("h6", [_vm._v("Weird Web-Site of [Mr. o_O]")]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _c("h6", [_vm._v("Panelky")]),
-            _vm._v(" "),
-            _c("hr", { staticClass: "blackHR" }),
-            _vm._v(" "),
-            _c("h6", [_vm._v("Links")])
+            _c("div", { staticClass: "col-12 text-center" }, [
+              _c("h6", [
+                _c(
+                  "a",
+                  {
+                    attrs: { href: "#spotifyi" },
+                    on: {
+                      click: function($event) {
+                        return _vm.closeNavMenu()
+                      }
+                    }
+                  },
+                  [_vm._v("SpotiFYI")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("h6", [_vm._v("Weird Web-Site of [Mr. o_O]")]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("h6", [_vm._v("Panelky")]),
+              _vm._v(" "),
+              _c("hr", { staticClass: "blackHR" }),
+              _vm._v(" "),
+              _c("h6", [_vm._v("Links")])
+            ])
           ])
-        ])
-      ]
-    )
-  ])
+        ]
+      )
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -43306,6 +43423,392 @@ if (inBrowser && window.Vue) {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VueRouter);
+
+
+/***/ }),
+
+/***/ "./node_modules/vue2-touch-events/index.js":
+/*!*************************************************!*\
+  !*** ./node_modules/vue2-touch-events/index.js ***!
+  \*************************************************/
+/***/ ((module) => {
+
+/**
+ *
+ * @author    Jerry Bendy
+ * @since     4/12/2017
+ */
+
+function touchX(event) {
+    if(event.type.indexOf('mouse') !== -1){
+        return event.clientX;
+    }
+    return event.touches[0].clientX;
+}
+
+function touchY(event) {
+    if(event.type.indexOf('mouse') !== -1){
+        return event.clientY;
+    }
+    return event.touches[0].clientY;
+}
+
+var isPassiveSupported = (function() {
+    var supportsPassive = false;
+    try {
+        var opts = Object.defineProperty({}, 'passive', {
+            get: function() {
+                supportsPassive = true;
+            }
+        });
+        window.addEventListener('test', null, opts);
+    } catch (e) {}
+    return supportsPassive;
+})();
+
+// Save last touch time globally (touch start time or touch end time), if a `click` event triggered,
+// and the time near by the last touch time, this `click` event will be ignored. This is used for
+// resolve touch through issue.
+var globalLastTouchTime = 0;
+
+var vueTouchEvents = {
+    install: function (Vue, constructorOptions) {
+
+        var globalOptions = Object.assign({}, {
+            disableClick: false,
+            tapTolerance: 10,  // px
+            swipeTolerance: 30,  // px
+            touchHoldTolerance: 400,  // ms
+            longTapTimeInterval: 400,  // ms
+            touchClass: '',
+            namespace: 'touch'
+        }, constructorOptions);
+
+        function touchStartEvent(event) {
+            var $this = this.$$touchObj,
+                isTouchEvent = event.type.indexOf('touch') >= 0,
+                isMouseEvent = event.type.indexOf('mouse') >= 0,
+                $el = this;
+
+            if (isTouchEvent) {
+                globalLastTouchTime = event.timeStamp;
+            }
+
+            if (isMouseEvent && globalLastTouchTime && event.timeStamp - globalLastTouchTime < 350) {
+                return;
+            }
+
+            if ($this.touchStarted) {
+                return;
+            }
+
+            addTouchClass(this);
+
+            $this.touchStarted = true;
+
+            $this.touchMoved = false;
+            $this.swipeOutBounded = false;
+
+            $this.startX = touchX(event);
+            $this.startY = touchY(event);
+
+            $this.currentX = 0;
+            $this.currentY = 0;
+
+            $this.touchStartTime = event.timeStamp;
+
+            // Trigger touchhold event after `touchHoldTolerance`ms
+            $this.touchHoldTimer = setTimeout(function() {
+                $this.touchHoldTimer = null;
+                triggerEvent(event, $el, 'touchhold');
+            }, $this.options.touchHoldTolerance);
+
+            triggerEvent(event, this, 'start');
+        }
+
+        function touchMoveEvent(event) {
+            var $this = this.$$touchObj;
+
+            $this.currentX = touchX(event);
+            $this.currentY = touchY(event);
+
+            if (!$this.touchMoved) {
+                var tapTolerance = $this.options.tapTolerance;
+
+                $this.touchMoved = Math.abs($this.startX - $this.currentX) > tapTolerance ||
+                    Math.abs($this.startY - $this.currentY) > tapTolerance;
+
+                if($this.touchMoved){
+                    cancelTouchHoldTimer($this);
+                    triggerEvent(event, this, 'moved');
+                }
+
+            } else if (!$this.swipeOutBounded) {
+                var swipeOutBounded = $this.options.swipeTolerance;
+
+                $this.swipeOutBounded = Math.abs($this.startX - $this.currentX) > swipeOutBounded &&
+                    Math.abs($this.startY - $this.currentY) > swipeOutBounded;
+            }
+
+            if($this.touchMoved){
+                triggerEvent(event, this, 'moving');
+            }
+        }
+
+        function touchCancelEvent() {
+            var $this = this.$$touchObj;
+
+            cancelTouchHoldTimer($this);
+            removeTouchClass(this);
+
+            $this.touchStarted = $this.touchMoved = false;
+            $this.startX = $this.startY = 0;
+        }
+
+        function touchEndEvent(event) {
+            var $this = this.$$touchObj,
+                isTouchEvent = event.type.indexOf('touch') >= 0,
+                isMouseEvent = event.type.indexOf('mouse') >= 0;
+
+            if (isTouchEvent) {
+                globalLastTouchTime = event.timeStamp;
+            }
+
+            var touchholdEnd = isTouchEvent && !$this.touchHoldTimer;
+            cancelTouchHoldTimer($this);
+
+            $this.touchStarted = false;
+
+            removeTouchClass(this);
+
+            if (isMouseEvent && globalLastTouchTime && event.timeStamp - globalLastTouchTime < 350) {
+                return;
+            }
+
+            // Fix #33, Trigger `end` event when touch stopped
+            triggerEvent(event, this, 'end');
+
+            if (!$this.touchMoved) {
+                // detect if this is a longTap event or not
+                if ($this.callbacks.longtap && event.timeStamp - $this.touchStartTime > $this.options.longTapTimeInterval) {
+                    if (event.cancelable) {
+                        event.preventDefault();
+                    }
+                    triggerEvent(event, this, 'longtap');
+
+                } else if ($this.callbacks.touchhold && touchholdEnd) {
+                    if (event.cancelable) {
+                        event.preventDefault();
+                    }
+                    return;
+                } else {
+                    // emit tap event
+                    triggerEvent(event, this, 'tap');
+                }
+
+            } else if (!$this.swipeOutBounded) {
+                var swipeOutBounded = $this.options.swipeTolerance,
+                    direction,
+                    distanceY = Math.abs($this.startY - $this.currentY),
+                    distanceX = Math.abs($this.startX - $this.currentX);
+
+                if (distanceY > swipeOutBounded || distanceX > swipeOutBounded) {
+                    if (distanceY > swipeOutBounded) {
+                        direction = $this.startY > $this.currentY ? 'top' : 'bottom';
+                    } else {
+                        direction = $this.startX > $this.currentX ? 'left' : 'right';
+                    }
+
+                    // Only emit the specified event when it has modifiers
+                    if ($this.callbacks['swipe.' + direction]) {
+                        triggerEvent(event, this, 'swipe.' + direction, direction);
+                    } else {
+                        // Emit a common event when it has no any modifier
+                        triggerEvent(event, this, 'swipe', direction);
+                    }
+                }
+            }
+        }
+
+        function mouseEnterEvent() {
+            addTouchClass(this);
+        }
+
+        function mouseLeaveEvent() {
+            removeTouchClass(this);
+        }
+
+        function triggerEvent(e, $el, eventType, param) {
+            var $this = $el.$$touchObj;
+
+            // get the callback list
+            var callbacks = $this.callbacks[eventType] || [];
+            if (callbacks.length === 0) {
+                return null;
+            }
+
+            for (var i = 0; i < callbacks.length; i++) {
+                var binding = callbacks[i];
+
+                if (binding.modifiers.stop) {
+                    e.stopPropagation();
+                }
+
+                if (binding.modifiers.prevent && e.cancelable) {
+                    e.preventDefault();
+                }
+
+                // handle `self` modifier`
+                if (binding.modifiers.self && e.target !== e.currentTarget) {
+                    continue;
+                }
+
+                if (typeof binding.value === 'function') {
+                    if (param) {
+                        binding.value(param, e);
+                    } else {
+                        binding.value(e);
+                    }
+                }
+            }
+        }
+
+        function addTouchClass($el) {
+            var className = $el.$$touchObj.options.touchClass;
+            className && $el.classList.add(className);
+        }
+
+        function removeTouchClass($el) {
+            var className = $el.$$touchObj.options.touchClass;
+            className && $el.classList.remove(className);
+        }
+
+        function cancelTouchHoldTimer($this) {
+            if ($this.touchHoldTimer) {
+                clearTimeout($this.touchHoldTimer);
+                $this.touchHoldTimer = null;
+            }
+        }
+
+        function buildTouchObj($el, extraOptions) {
+            var touchObj = $el.$$touchObj || {
+                // an object contains all callbacks registered,
+                // key is event name, value is an array
+                callbacks: {},
+                // prevent bind twice, set to true when event bound
+                hasBindTouchEvents: false,
+                // default options, would be override by v-touch-options
+                options: globalOptions
+            };
+            if (extraOptions) {
+                touchObj.options = Object.assign({}, touchObj.options, extraOptions);
+            }
+            $el.$$touchObj = touchObj;
+            return $el.$$touchObj;
+        }
+
+        Vue.directive(globalOptions.namespace, {
+            bind: function ($el, binding) {
+                // build a touch configuration object
+                var $this = buildTouchObj($el);
+                // declare passive option for the event listener. Defaults to { passive: true } if supported
+                var passiveOpt = isPassiveSupported ? { passive: true } : false;
+                // register callback
+                var eventType = binding.arg || 'tap';
+                switch (eventType) {
+                    case 'swipe':
+                        var _m = binding.modifiers;
+                        if (_m.left || _m.right || _m.top || _m.bottom) {
+                            for (var i in binding.modifiers) {
+                                if (['left', 'right', 'top', 'bottom'].indexOf(i) >= 0) {
+                                    var _e = 'swipe.' + i;
+                                    $this.callbacks[_e] = $this.callbacks[_e] || [];
+                                    $this.callbacks[_e].push(binding);
+                                }
+                            }
+                        } else {
+                            $this.callbacks.swipe = $this.callbacks.swipe || [];
+                            $this.callbacks.swipe.push(binding);
+                        }
+                        break;
+                    
+                    case 'start':
+                    case 'moving':
+                        if (binding.modifiers.disablePassive) {
+                            // change the passive option for the moving event if disablePassive modifier exists
+                            passiveOpt = false;
+                        }
+                    // fallthrough
+                    default:
+                        $this.callbacks[eventType] = $this.callbacks[eventType] || [];
+                        $this.callbacks[eventType].push(binding);
+                }
+
+                // prevent bind twice
+                if ($this.hasBindTouchEvents) {
+                    return;
+                }
+
+                $el.addEventListener('touchstart', touchStartEvent, passiveOpt);
+                $el.addEventListener('touchmove', touchMoveEvent, passiveOpt);
+                $el.addEventListener('touchcancel', touchCancelEvent);
+                $el.addEventListener('touchend', touchEndEvent);
+
+                if (!$this.options.disableClick) {
+                    $el.addEventListener('mousedown', touchStartEvent);
+                    $el.addEventListener('mousemove', touchMoveEvent);
+                    $el.addEventListener('mouseup', touchEndEvent);
+                    $el.addEventListener('mouseenter', mouseEnterEvent);
+                    $el.addEventListener('mouseleave', mouseLeaveEvent);
+                }
+
+                // set bind mark to true
+                $this.hasBindTouchEvents = true;
+            },
+
+            unbind: function ($el) {
+                $el.removeEventListener('touchstart', touchStartEvent);
+                $el.removeEventListener('touchmove', touchMoveEvent);
+                $el.removeEventListener('touchcancel', touchCancelEvent);
+                $el.removeEventListener('touchend', touchEndEvent);
+
+                if ($el.$$touchObj && !$el.$$touchObj.options.disableClick) {
+                    $el.removeEventListener('mousedown', touchStartEvent);
+                    $el.removeEventListener('mousemove', touchMoveEvent);
+                    $el.removeEventListener('mouseup', touchEndEvent);
+                    $el.removeEventListener('mouseenter', mouseEnterEvent);
+                    $el.removeEventListener('mouseleave', mouseLeaveEvent);
+                }
+
+                // remove vars
+                delete $el.$$touchObj;
+            }
+        });
+
+        Vue.directive(globalOptions.namespace + '-class', {
+            bind: function ($el, binding) {
+                buildTouchObj($el, {
+                    touchClass: binding.value
+                });
+            }
+        });
+
+        Vue.directive(globalOptions.namespace + '-options', {
+            bind: function($el, binding) {
+                buildTouchObj($el, binding.value);
+            }
+        });
+    }
+};
+
+
+/*
+ * Exports
+ */
+if (true) {
+    module.exports = vueTouchEvents;
+
+} else {}
 
 
 /***/ }),

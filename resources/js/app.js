@@ -12,8 +12,13 @@ import router from './router';
 import store from './store';
 
 //иморты плагинов
+//isMobile
 import { isMobile } from 'mobile-device-detect';
 Vue.prototype.$isMobile = isMobile;
+//vue2-touch-events
+import Vue2TouchEvents from 'vue2-touch-events'
+Vue.use(Vue2TouchEvents, {swipeTolerance: 100,});
+
 
 //иморты компонентов
 //./

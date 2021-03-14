@@ -9,7 +9,8 @@ Vue.use(Vuex);
 //глобальные стейты
 const GlobalStates = {
     state: {
-
+        //стиль бокового меню
+        navMenuStyle: {'right':'-500px', 'opacity':'0'},
     },
 
     mutations: {
@@ -20,7 +21,11 @@ const GlobalStates = {
     },
 
     actions: {
-
+        //setNavMenuStyle
+        //изменить стили бокового меню (чтобы оно показалось или скрылось)
+        setNavMenuStyle(context, values){
+            context.commit('setState', {state:'navMenuStyle', value: values});
+        },
     }
 }
 
