@@ -2318,6 +2318,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -39918,11 +39922,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticStyle: { "z-index": "2" } }, [
+  return _c("div", [
     _c(
       "button",
       {
-        staticClass: "btn navButton",
+        staticClass: "d-none d-md-block btn navButton",
+        staticStyle: { "z-index": "3" },
+        on: {
+          click: function($event) {
+            return _vm.showNavMenu()
+          }
+        }
+      },
+      [
+        _c("i", {
+          staticClass: "bi bi-three-dots-vertical",
+          staticStyle: { "font-size": "1.5rem", color: "white" }
+        })
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "d-block d-md-none btn navButtonMobile",
+        staticStyle: { "z-index": "3" },
         on: {
           click: function($event) {
             return _vm.showNavMenu()
@@ -39941,7 +39965,11 @@ var render = function() {
       "div",
       {
         staticClass: "col-12 col-md-2 navMenu",
-        style: { right: _vm.navMenuRight, opacity: _vm.navMenuOpacity }
+        style: {
+          right: _vm.navMenuRight,
+          opacity: _vm.navMenuOpacity,
+          zIndex: 4
+        }
       },
       [
         _c("div", { staticClass: "row justify-content-end" }, [
