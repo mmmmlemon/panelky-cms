@@ -1,7 +1,7 @@
 // ProjectCard
 // Карточка для проектов
 <template>
-    <div style="z-index: -1;" class="row h-75 w-75 d-flex justify-content-center borderUnderline">
+    <div class="row h-75 w-75 d-flex justify-content-center borderUnderline zIndex-1">
         <!-- карточка с описанием слева -->
         <div v-if="type=='left'" class="row justify-content-center">
             <!-- для десктопа -->

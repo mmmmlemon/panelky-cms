@@ -1,23 +1,23 @@
 //FooterCard
 // футер с контактами и ссылками
 <template>
-    <div class="h-75 w-75 bigCard d-flex justify-content-center row">
+    <div class="row h-75 w-75 bigCard d-flex justify-content-center">
         <div class="div-12 textVertical">
             <h1 class="text-center textVertical">
                 <p class="text-center textVertical font14pt">{{footerTitle}}</p>
                 <hr>
                 <div class="row">
-                    <div class="col-12 col-md-4 marginVerticalSmall">
+                    <div class="col-12 col-md-4 mt-3">
                         <a href="https://github.com/mmmmlemon" target="_blank">
                             <img src="git.png" alt="GitHub/mmmmlemon">
                         </a>  
                     </div>
-                    <div class="col-12 col-md-4 marginVerticalSmall">
+                    <div class="col-12 col-md-4 mt-3">
                         <a href="https://github.com/mmmmlemon" target="_blank">
                             <img src="kofi.png" width="64px" alt="">
                         </a>  
                     </div>
-                    <div class="col-12 col-md-4 marginVerticalSmall">
+                    <div class="col-12 col-md-4 mt-3">
                         <a href="https://github.com/mmmmlemon" target="_blank">
                             <img src="insta.png" width="64px" alt="">
                         </a>  

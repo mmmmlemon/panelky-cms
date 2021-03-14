@@ -1,7 +1,7 @@
 //HomePage
 //домашняя страница
 <template>
-    <div style="height:100%;" class="row justify-content-center">
+    <div class="row h-100 justify-content-center">
 
         <HeaderCard 
             myName="Egor Zhuravskiy"
@@ -26,6 +26,7 @@
             footer="Laravel / MySQL" />
         
         <FooterCard />
+        
     </div>
 </template>
 <script>

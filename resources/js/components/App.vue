@@ -6,8 +6,7 @@
         <Nav />
         <NavButton />
         <router-view 
-            v-touch:swipe.left="showNavMenu"
-            v-touch:swipe.right="closeNavMenu">
+            v-touch:swipe.left="showNavMenu">
         </router-view>
     </div>
 </template>

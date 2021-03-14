@@ -1,7 +1,7 @@
 // HeaderCard
 // карточка с общей информацией о владельце сайта и его роде занятий
 <template>
-    <div class="h-100 w-90 bigCard d-flex justify-content-center row borderUnderline">
+    <div class="row h-100 width90pc bigCard d-flex justify-content-center borderUnderline">
         <!-- для десктопа -->
         <div class="d-none d-md-block div-12 textVertical">
             <!-- имя автора -->

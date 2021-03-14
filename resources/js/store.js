@@ -29,7 +29,6 @@ const GlobalStates = {
     }
 }
 
-
 export default new Vuex.Store({
     modules: {
         GlobalStates: GlobalStates,

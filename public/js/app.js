@@ -1877,7 +1877,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   methods: {
     // показать боковое меню
@@ -1919,6 +1918,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -2316,7 +2316,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
@@ -2373,13 +2372,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: function data() {
-    return {
-      navMenuRight: '-500px',
-      navMenuOpacity: '0'
-    };
-  },
   computed: {
     navMenuStyle: function navMenuStyle() {
       return this.$store.state.GlobalStates.navMenuStyle;
@@ -39261,10 +39270,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      staticClass: "row justify-content-center",
-      staticStyle: { height: "100%" }
-    },
+    { staticClass: "row h-50 justify-content-center" },
     [
       _c("HeaderCard", {
         attrs: {
@@ -39318,14 +39324,6 @@ var render = function() {
             expression: "showNavMenu",
             arg: "swipe",
             modifiers: { left: true }
-          },
-          {
-            name: "touch",
-            rawName: "v-touch:swipe.right",
-            value: _vm.closeNavMenu,
-            expression: "closeNavMenu",
-            arg: "swipe",
-            modifiers: { right: true }
           }
         ]
       })
@@ -39358,10 +39356,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      staticClass: "row justify-content-center",
-      staticStyle: { height: "100%" }
-    },
+    { staticClass: "row h-100 justify-content-center" },
     [
       _c("HeaderCard", {
         attrs: {
@@ -39427,7 +39422,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "h-75 w-75 bigCard d-flex justify-content-center row" },
+    { staticClass: "row h-75 w-75 bigCard d-flex justify-content-center" },
     [
       _c("div", { staticClass: "div-12 textVertical" }, [
         _c("h1", { staticClass: "text-center textVertical" }, [
@@ -39467,7 +39462,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12 col-md-4 marginVerticalSmall" }, [
+      _c("div", { staticClass: "col-12 col-md-4 mt-3" }, [
         _c(
           "a",
           { attrs: { href: "https://github.com/mmmmlemon", target: "_blank" } },
@@ -39475,7 +39470,7 @@ var staticRenderFns = [
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-md-4 marginVerticalSmall" }, [
+      _c("div", { staticClass: "col-12 col-md-4 mt-3" }, [
         _c(
           "a",
           { attrs: { href: "https://github.com/mmmmlemon", target: "_blank" } },
@@ -39483,7 +39478,7 @@ var staticRenderFns = [
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-md-4 marginVerticalSmall" }, [
+      _c("div", { staticClass: "col-12 col-md-4 mt-3" }, [
         _c(
           "a",
           { attrs: { href: "https://github.com/mmmmlemon", target: "_blank" } },
@@ -39519,7 +39514,7 @@ var render = function() {
     "div",
     {
       staticClass:
-        "h-100 w-90 bigCard d-flex justify-content-center row borderUnderline"
+        "row h-100 width90pc bigCard d-flex justify-content-center borderUnderline"
     },
     [
       _c("div", { staticClass: "d-none d-md-block div-12 textVertical" }, [
@@ -39611,8 +39606,7 @@ var render = function() {
     "div",
     {
       staticClass:
-        "row h-75 w-75 d-flex justify-content-center borderUnderline",
-      staticStyle: { "z-index": "-1" }
+        "row h-75 w-75 d-flex justify-content-center borderUnderline zIndex-1"
     },
     [
       _vm.type == "left"
@@ -39947,8 +39941,7 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass:
-        "alert alert-danger text-center marginVerticalSmall goUpAnim",
+      staticClass: "alert alert-danger text-center m-2 goUpAnim",
       attrs: { role: "alert" }
     },
     [_vm._m(0), _vm._v("\n    " + _vm._s(_vm.errorMessage) + "\n")]
@@ -39959,7 +39952,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h4", [_c("b", [_vm._v("Ошибка")])])
+    return _c("h4", [_c("b", [_vm._v("Error")])])
   }
 ]
 render._withStripped = true
@@ -39984,46 +39977,39 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "ul",
-    {
-      staticClass: "nav justify-content-center font18pt",
-      staticStyle: { "margin-top": "15px" }
-    },
-    [
-      _c(
-        "li",
-        { staticClass: "nav-item" },
-        [
-          _c(
-            "router-link",
-            {
-              staticClass: "nav-link active",
-              attrs: { "aria-current": "page", to: "/" }
-            },
-            [_vm._v("Home")]
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "li",
-        { staticClass: "nav-item" },
-        [
-          _c(
-            "router-link",
-            {
-              staticClass: "nav-link active",
-              attrs: { "aria-current": "page", to: "/about" }
-            },
-            [_vm._v("About")]
-          )
-        ],
-        1
-      )
-    ]
-  )
+  return _c("ul", { staticClass: "nav justify-content-center mt-3 font18pt" }, [
+    _c(
+      "li",
+      { staticClass: "nav-item" },
+      [
+        _c(
+          "router-link",
+          {
+            staticClass: "nav-link active",
+            attrs: { "aria-current": "page", to: "/" }
+          },
+          [_vm._v("Home")]
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "li",
+      { staticClass: "nav-item" },
+      [
+        _c(
+          "router-link",
+          {
+            staticClass: "nav-link active",
+            attrs: { "aria-current": "page", to: "/about" }
+          },
+          [_vm._v("About")]
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -40048,100 +40034,106 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticStyle: {
-        "background-color": "red",
-        position: "fixed",
-        heigth: "100%"
-      }
-    },
-    [
-      _c(
-        "button",
-        {
-          staticClass: "d-none d-md-block btn navButton",
-          staticStyle: { "z-index": "3" },
-          on: {
-            click: function($event) {
-              return _vm.showNavMenu()
-            }
+  return _c("div", [
+    _c(
+      "button",
+      {
+        staticClass: "d-none d-md-block navButton zIndex3",
+        on: {
+          click: function($event) {
+            return _vm.showNavMenu()
           }
-        },
-        [
-          _c("i", {
-            staticClass: "bi bi-three-dots-vertical",
-            staticStyle: { "font-size": "1.5rem", color: "white" }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "col-12 col-md-2 navMenu",
-          style: {
-            right: _vm.navMenuStyle["right"],
-            opacity: _vm.navMenuStyle["opacity"],
-            zIndex: 4
-          }
-        },
-        [
-          _c("div", { staticClass: "row justify-content-end" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn",
-                on: {
-                  click: function($event) {
-                    return _vm.closeNavMenu()
-                  }
+        }
+      },
+      [_c("i", { staticClass: "bi bi-three-dots-vertical" })]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "col-12 col-md-2 navMenu",
+        style: {
+          right: _vm.navMenuStyle["right"],
+          opacity: _vm.navMenuStyle["opacity"],
+          zIndex: 5
+        }
+      },
+      [
+        _c("div", { staticClass: "row justify-content-end" }, [
+          _c(
+            "button",
+            {
+              staticClass: "navButtonClose",
+              on: {
+                click: function($event) {
+                  return _vm.closeNavMenu()
                 }
-              },
-              [
-                _c("i", {
-                  staticClass: "bi bi-x",
-                  staticStyle: { "font-size": "1.5rem" }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _vm._m(0),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-12 text-center" }, [
-              _c("h6", [
-                _c(
-                  "a",
-                  {
-                    attrs: { href: "#spotifyi" },
-                    on: {
-                      click: function($event) {
-                        return _vm.closeNavMenu()
-                      }
+              }
+            },
+            [_c("i", { staticClass: "bi bi-x" })]
+          ),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12 text-center" }, [
+            _c("h6", [
+              _c(
+                "a",
+                {
+                  attrs: { href: "#spotifyi" },
+                  on: {
+                    click: function($event) {
+                      return _vm.closeNavMenu()
                     }
-                  },
-                  [_vm._v("SpotiFYI")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("h6", [_vm._v("Weird Web-Site of [Mr. o_O]")]),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("h6", [_vm._v("Panelky")]),
-              _vm._v(" "),
-              _c("hr", { staticClass: "blackHR" }),
-              _vm._v(" "),
-              _c("h6", [_vm._v("Links")])
-            ])
+                  }
+                },
+                [_vm._v("SpotiFYI")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("h6", [_vm._v("Weird Web-Site of [Mr. o_O]")]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("h6", [_vm._v("Panelky")]),
+            _vm._v(" "),
+            _c("hr")
+          ]),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12 text-center" }, [
+            _c("h6", [
+              _c(
+                "a",
+                {
+                  attrs: { href: "#spotifyi" },
+                  on: {
+                    click: function($event) {
+                      return _vm.closeNavMenu()
+                    }
+                  }
+                },
+                [_vm._v("GitHub")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("h6", [_vm._v("KoFi")]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("h6", [_vm._v("Instagramio")]),
+            _vm._v(" "),
+            _c("hr")
           ])
-        ]
-      )
-    ]
-  )
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -40151,7 +40143,17 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-12" }, [
       _c("h6", { staticClass: "text-center" }, [_c("b", [_vm._v("Projects")])]),
       _vm._v(" "),
-      _c("hr", { staticClass: "blackHR" })
+      _c("hr")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12" }, [
+      _c("h6", { staticClass: "text-center" }, [_c("b", [_vm._v("Links")])]),
+      _vm._v(" "),
+      _c("hr")
     ])
   }
 ]
