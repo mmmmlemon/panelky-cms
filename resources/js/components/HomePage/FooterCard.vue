@@ -6,27 +6,40 @@
             <h1 class="text-center textVertical">
                 <p class="text-center textVertical font14pt">{{footerTitle}}</p>
                 <hr>
-                <div class="row">
-                    <div class="col-12 col-md-4 mt-3">
+                <div class="row font21pt">
+                    <div class="col-12 col-md-12 mt-3">
                         <a href="https://github.com/mmmmlemon" target="_blank">
-                            <img src="git.png" alt="GitHub/mmmmlemon">
+                           <b>GitHub</b>
                         </a>  
                     </div>
-                    <div class="col-12 col-md-4 mt-3">
+                    <div class="col-12 col-md-12 mt-3">
                         <a href="https://github.com/mmmmlemon" target="_blank">
-                            <img src="kofi.png" width="64px" alt="">
+                            <b>Telegram</b>
                         </a>  
                     </div>
-                    <div class="col-12 col-md-4 mt-3">
+                    <div class="col-12 col-md-12 mt-3">
                         <a href="https://github.com/mmmmlemon" target="_blank">
-                            <img src="insta.png" width="64px" alt="">
+                            <b>TikTok</b>
                         </a>  
                     </div>
                 </div>
             </h1>
             <hr>
-            <p class="text-center">{{contactTitle}}</p>
-            <p class="text-center font18pt"><b><a :href="'mailto:'+contactEmail" target="_blank">{{contactEmail}}</a></b></p>
+            <br>
+            <p class="text-center font18pt">
+                <a :href="'mailto:'+contactEmail">
+                    <button type="button" class="btn btn-lg btn-outline-light">
+                        <span>{{contactTitle}}</span>
+                        <span aria-hidden="true">
+                            <i class="bi bi-at"></i>
+                        </span>
+                    </button>
+                </a>
+                <p class="text-center">
+                    <b>{{contactEmail}}</b>
+                </p>
+                <!-- <b><a :href="'mailto:'+contactEmail" target="_blank">{{contactEmail}}</a></b> -->
+            </p>
         </div>
        
     </div>

@@ -2044,6 +2044,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     footerTitle: {
@@ -39717,21 +39730,29 @@ var render = function() {
         _vm._v(" "),
         _c("hr"),
         _vm._v(" "),
-        _c("p", { staticClass: "text-center" }, [
-          _vm._v(_vm._s(_vm.contactTitle))
-        ]),
+        _c("br"),
         _vm._v(" "),
         _c("p", { staticClass: "text-center font18pt" }, [
-          _c("b", [
+          _c("a", { attrs: { href: "mailto:" + _vm.contactEmail } }, [
             _c(
-              "a",
+              "button",
               {
-                attrs: { href: "mailto:" + _vm.contactEmail, target: "_blank" }
+                staticClass: "btn btn-lg btn-outline-light",
+                attrs: { type: "button" }
               },
-              [_vm._v(_vm._s(_vm.contactEmail))]
+              [
+                _c("span", [_vm._v(_vm._s(_vm.contactTitle))]),
+                _vm._v(" "),
+                _vm._m(1)
+              ]
             )
           ])
-        ])
+        ]),
+        _c("p", { staticClass: "text-center" }, [
+          _c("b", [_vm._v(_vm._s(_vm.contactEmail))])
+        ]),
+        _vm._v(" "),
+        _c("p")
       ])
     ]
   )
@@ -39741,30 +39762,38 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12 col-md-4 mt-3" }, [
+    return _c("div", { staticClass: "row font21pt" }, [
+      _c("div", { staticClass: "col-12 col-md-12 mt-3" }, [
         _c(
           "a",
           { attrs: { href: "https://github.com/mmmmlemon", target: "_blank" } },
-          [_c("img", { attrs: { src: "git.png", alt: "GitHub/mmmmlemon" } })]
+          [_c("b", [_vm._v("GitHub")])]
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-md-4 mt-3" }, [
+      _c("div", { staticClass: "col-12 col-md-12 mt-3" }, [
         _c(
           "a",
           { attrs: { href: "https://github.com/mmmmlemon", target: "_blank" } },
-          [_c("img", { attrs: { src: "kofi.png", width: "64px", alt: "" } })]
+          [_c("b", [_vm._v("Telegram")])]
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-md-4 mt-3" }, [
+      _c("div", { staticClass: "col-12 col-md-12 mt-3" }, [
         _c(
           "a",
           { attrs: { href: "https://github.com/mmmmlemon", target: "_blank" } },
-          [_c("img", { attrs: { src: "insta.png", width: "64px", alt: "" } })]
+          [_c("b", [_vm._v("TikTok")])]
         )
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { attrs: { "aria-hidden": "true" } }, [
+      _c("i", { staticClass: "bi bi-at" })
     ])
   }
 ]

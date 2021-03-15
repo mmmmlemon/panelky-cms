@@ -9,12 +9,16 @@ h1, h6 {
 }
 
 /* pt */
-.font14pt{
+.font14pt {
     font-size: 14pt;
 }
 
-.font18pt{
+.font18pt {
     font-size: 18pt;
+}
+
+.font21pt {
+    font-size: 21pt;
 }
 
 /* rem */
