@@ -43,7 +43,11 @@
 	}
 }
 
-body {
+.animatedBackground{
+    background: linear-gradient(to right top, #133a74, #66326e, #902e53, #9d4230, #8e620f);
+    background-size: 400%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     animation: backgroundGradient 30s ease-in-out infinite;
 }
 
