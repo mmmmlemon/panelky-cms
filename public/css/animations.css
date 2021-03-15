@@ -30,3 +30,20 @@
     animation-name: fadeIn;
     animation-duration: 0.7s;
 }
+
+@keyframes backgroundGradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+body {
+    animation: backgroundGradient 30s ease-in-out infinite;
+}
+
