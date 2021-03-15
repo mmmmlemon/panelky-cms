@@ -42,6 +42,9 @@ Vue.component('Nav', Nav);
 import NavButton from './components/Navigation/NavButton';
 Vue.component('NavButton', NavButton);
 
+import NavScroll from './components/Navigation/NavScroll';
+Vue.component('NavScroll', NavScroll);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

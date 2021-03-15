@@ -5,6 +5,7 @@
     <div class="container col-12 vh-100">
         <Nav />
         <NavButton />
+        <NavScroll :navScrollStyle="navScrollStyle"/>
         <router-view 
             v-touch:swipe.left="showNavMenu">
         </router-view>
@@ -12,7 +13,38 @@
 </template>
 <script>
 export default {
+
+    created(){
+        window.addEventListener('scroll', this.handleNavScroll);
+    },
+
+    destroyed() {
+        window.removeEventListener('scroll', this.handleNavScroll);
+    },
+
+    data: function(){
+        return {
+            navScrollStyle: undefined,
+        }
+    },
+
     methods: {
+        //показать кнопку NavScroll при скролле вниз
+        //или спрятать при скролле вверх
+        handleNavScroll(event){
+
+            var height = window.innerHeight;
+
+            if(window.pageYOffset > height + height / 3)
+            {
+                this.navScrollStyle = { opacity: 1, zIndex: '3' };
+            }
+            else if (window.pageYOffset < height + height / 3)
+            {
+                this.navScrollStyle = { opacity: 0, zIndex: '-9999999' };
+            }
+        },
+
         // показать боковое меню
         showNavMenu: function() {
             if(this.$isMobile)
