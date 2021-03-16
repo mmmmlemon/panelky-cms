@@ -137,7 +137,14 @@ hr {
     position: absolute; 
     right: 3%; 
     top: 3%; 
-    height: 10%;
+}
+
+.fullscreenCard {
+    position: fixed; 
+    top:0; 
+    left: 5000px;
+    opacity: 0;
+    transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
 /* /////////////////////// */

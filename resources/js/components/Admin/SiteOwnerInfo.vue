@@ -27,16 +27,9 @@
                     </button>
                 </form>
             </div>
-
             <!-- превью -->
-            <div class="col-12 col-md-6 d-flex m-5 justify-content-center animatedBackground previewCard">
-                <HeaderCard :info="{name: name, occupation: occupation, aboutMe: aboutMe, footerText: footerText}" />
-                
-                <!-- кнопка развернуть на весь экран -->
-                <button class="btn btn-light fullscreenButton" title="Развернуть на полный экран" v-on:click="showFullscreenPreview">
-                    <i class="bi bi-arrows-fullscreen"></i>
-                </button>
-            </div>
+            <Preview :name="name" :occupation="occupation" :aboutMe="aboutMe" :footerText="footerText"/>
+
         </div>
 
 </template>
@@ -58,12 +51,5 @@ export default {
             footerText: '',
         }  
     },
-
-    methods: {
-        // 
-        showFullscreenPreview: function(){
-           alert("Show fullscreen!")
-        }
-    }
 }
 </script>
