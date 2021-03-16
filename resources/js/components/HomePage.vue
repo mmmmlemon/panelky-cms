@@ -4,10 +4,12 @@
     <div class="row h-100 justify-content-center">
 
         <HeaderCard 
-            myName="Egor Zhuravskiy"
-            myOccupation="PHP, JavaScript & Python developer"
-            aboutMe="High quality web projectlications for you and your family and your pet parrot 🦜 (squawk squawk)"
-            footerText="Here are some of my projects"/>
+            :info="{
+                'name': 'Egor Zhuravskiy',
+                'occupation': 'PHP, JavaScript & Python developer',
+                'aboutMe': 'High quality web projectlications for you and your family and your pet parrot 🦜 (squawk squawk)',
+                'footerText': 'Here are some of my projects',
+                }"/>
 
         <ProjectCard id="spotifyi"
             type='left'

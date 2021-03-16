@@ -51,3 +51,11 @@
     animation: backgroundGradient 30s ease-in-out infinite;
 }
 
+.animatedBackgroundAdmin{
+    background: linear-gradient(to right top, #273448, #3e3045, #4d2e38, #503129, #46381f);
+    background-size: 400%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    animation: backgroundGradient 30s ease-in-out infinite;
+}
+

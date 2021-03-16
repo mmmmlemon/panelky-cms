@@ -8,7 +8,9 @@ import HomePage from './components/HomePage.vue';
 import About from './components/About.vue';
 
 import AppAdmin from './components/AppAdmin.vue';
-import AdminControlPanel from './components/AdminControlPanel.vue';
+import SiteOwnerInfo from './components/Admin/SiteOwnerInfo.vue';
+
+//
 
 const routes = [
     //user side
@@ -36,8 +38,9 @@ const routes = [
             {
                 //admin home
                 path: '/admin',
-                component: AdminControlPanel,
-            }
+                component: SiteOwnerInfo,
+
+            },
         ]
     }
 ];

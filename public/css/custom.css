@@ -47,6 +47,12 @@ hr {
     border-width: 1px;
 }
 
+.borderLeft{
+    border-left-style: solid;
+    border-color: rgb(184, 179, 179);
+    border-width: 1px;
+}
+
 .projectImage {
     width: 50%;
     border-radius: 15px;
