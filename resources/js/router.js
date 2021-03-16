@@ -10,7 +10,8 @@ import About from './components/About.vue';
 import AppAdmin from './components/AppAdmin.vue';
 import SiteOwnerInfo from './components/Admin/SiteOwnerInfo.vue';
 
-//
+import PageNotFound from './components/Misc/PageNotFound.vue';
+
 
 const routes = [
     //user side
@@ -42,6 +43,15 @@ const routes = [
 
             },
         ]
+    },
+    // 404
+    {
+        path: '/404',
+        component: PageNotFound
+    },
+    {
+        path: '*',
+        redirect: '/404'
     }
 ];
 
