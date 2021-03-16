@@ -1879,16 +1879,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  computed: {
-    myInfo: function myInfo() {
-      return {
-        'name': 'Ivan Dzhdishkovich',
-        'occupation': 'A TikToker',
-        'aboutMe': 'I do TikToks and dissapoint my parents',
-        'footerText': 'BOTTOM TEXT'
-      };
-    }
+  data: function data() {
+    return {
+      name: '',
+      occupation: '',
+      aboutMe: '',
+      footerText: ''
+    };
+  },
+  created: function created() {
+    this.name = "Ivan Dzhishkovich";
+    this.occupation = "A TikToker";
+    this.aboutMe = "I do TikToks and dissapoint my parents";
+    this.footerText = "e";
   }
 });
 
@@ -39733,28 +39760,145 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center mt-5" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "col-12 col-md-4 mt-5" }, [
+      _c("form", [
+        _c("div", { staticClass: "mb-3" }, [
+          _c("h6", [_vm._v("Имя владельца сайта")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.name,
+                expression: "name"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.name = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-3" }, [
+          _c("h6", [_vm._v("Род занятий")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.occupation,
+                expression: "occupation"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.occupation },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.occupation = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-3" }, [
+          _c("h6", [_vm._v("О себе")]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.aboutMe,
+                expression: "aboutMe"
+              }
+            ],
+            staticClass: "form-control",
+            domProps: { value: _vm.aboutMe },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.aboutMe = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-3" }, [
+          _c("h6", [_vm._v("Нижний текст")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.footerText,
+                expression: "footerText"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.footerText },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.footerText = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-lg btn-block btn-outline-light",
+            attrs: { type: "submit" }
+          },
+          [_vm._v("\n                Сохранить\n            ")]
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "div",
       {
-        staticClass: "col-12 col-md-4 borderLeft d-flex justify-content-center"
+        staticClass:
+          "col-12 col-md-4 d-flex m-5 justify-content-center animatedBackground previewCard"
       },
-      [_c("HeaderCard", { attrs: { info: _vm.myInfo } })],
+      [
+        _c("HeaderCard", {
+          attrs: {
+            info: {
+              name: _vm.name,
+              occupation: _vm.occupation,
+              aboutMe: _vm.aboutMe,
+              footerText: _vm.footerText
+            }
+          }
+        })
+      ],
       1
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12 col-md-4" }, [
-      _c("h1", [_vm._v("Forms")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -39850,7 +39994,57 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
-      _vm._m(3),
+      _c("div", { staticClass: "col-8 " }, [
+        _c("ul", { staticClass: "nav nav-fill" }, [
+          _c(
+            "li",
+            { staticClass: "nav-item mr-2" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-block btn-light font14pt",
+                  attrs: { to: "/admin", "aria-current": "page" }
+                },
+                [_vm._v("Владелец сайта")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "li",
+            { staticClass: "nav-item mr-2" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-block btn-outline-light font14pt",
+                  attrs: { to: "/admin/projects" }
+                },
+                [_vm._v("Проекты")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "li",
+            { staticClass: "nav-item mr-2" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-block btn-outline-light font14pt",
+                  attrs: { to: "/admin/links" }
+                },
+                [_vm._v("Ссылки и контакты")]
+              )
+            ],
+            1
+          )
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-12" }, [_c("router-view")], 1)
     ])
@@ -39887,47 +40081,6 @@ var staticRenderFns = [
     return _c("a", { attrs: { href: "#exit" } }, [
       _vm._v("\n                    Выйти "),
       _c("i", { staticClass: "bi bi-box-arrow-right" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-8 " }, [
-      _c("ul", { staticClass: "nav nav-fill" }, [
-        _c("li", { staticClass: "nav-item mr-2" }, [
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-block btn-light font14pt",
-              attrs: { "aria-current": "page", href: "#" }
-            },
-            [_vm._v("Владелец сайта")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item mr-2" }, [
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-block btn-outline-light font14pt",
-              attrs: { href: "#" }
-            },
-            [_vm._v("Проекты")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item mr-2" }, [
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-block btn-outline-light font14pt",
-              attrs: { href: "#" }
-            },
-            [_vm._v("Ссылки и контакты")]
-          )
-        ])
-      ])
     ])
   }
 ]

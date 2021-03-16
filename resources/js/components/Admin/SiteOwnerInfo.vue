@@ -2,11 +2,34 @@
 //контрольная панель администратора сайта
 <template>
         <div class="row justify-content-center mt-5">
-            <div class="col-12 col-md-4">
-                <h1>Forms</h1>
+            <!-- форма редактирования -->
+            <div class="col-12 col-md-4 mt-5">
+                <form>
+                    <div class="mb-3">
+                        <h6>Имя владельца сайта</h6>
+                        <input v-model="name" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <h6>Род занятий</h6>
+                        <input v-model="occupation" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <h6>О себе</h6>
+                        <textarea v-model="aboutMe" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <h6>Нижний текст</h6>
+                        <input v-model="footerText" type="text" class="form-control">
+                    </div>
+
+                    <button type="submit" class="btn btn-lg btn-block btn-outline-light">
+                        Сохранить
+                    </button>
+                </form>
             </div>
-            <div class="col-12 col-md-4 borderLeft d-flex justify-content-center">
-                <HeaderCard :info="myInfo"/>
+            <!-- превью -->
+            <div class="col-12 col-md-4 d-flex m-5 justify-content-center animatedBackground previewCard">
+                <HeaderCard :info="{name: name, occupation: occupation, aboutMe: aboutMe, footerText: footerText}"/>
             </div>
         </div>
 
@@ -14,18 +37,22 @@
 </template>
 <script>
 export default {
- 
-    computed: {
-        myInfo: function(){
-            return {
-                'name': 'Ivan Dzhdishkovich',
-                'occupation': 'A TikToker',
-                'aboutMe': 'I do TikToks and dissapoint my parents',
-                'footerText': 'BOTTOM TEXT',
-            };
+
+    data: function(){
+        return {
+            name: '',
+            occupation: '',
+            aboutMe: '',
+            footerText: '',
         }
+        
+    },
+
+    created(){
+        this.name = "Ivan Dzhishkovich";
+        this.occupation = "A TikToker";
+        this.aboutMe = "I do TikToks and dissapoint my parents";
+        this.footerText = "e"
     }
-
-
 }
 </script>

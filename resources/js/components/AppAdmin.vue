@@ -27,13 +27,13 @@
             <div class="col-8 ">
                 <ul class="nav nav-fill">
                     <li class="nav-item mr-2">
-                        <a class="btn btn-block btn-light font14pt" aria-current="page" href="#">Владелец сайта</a>
+                        <router-link to="/admin" class="btn btn-block btn-light font14pt" aria-current="page">Владелец сайта</router-link>
                     </li>
                     <li class="nav-item mr-2">
-                        <a class="btn btn-block btn-outline-light font14pt" href="#">Проекты</a>
+                        <router-link to="/admin/projects" class="btn btn-block btn-outline-light font14pt">Проекты</router-link>
                     </li>
                     <li class="nav-item mr-2">
-                        <a class="btn btn-block btn-outline-light font14pt" href="#">Ссылки и контакты</a>
+                        <router-link to="/admin/links" class="btn btn-block btn-outline-light font14pt">Ссылки и контакты</router-link>
                     </li>
                 </ul>
             </div>
