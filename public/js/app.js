@@ -1902,7 +1902,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  created: function created() {
+    this.name = "Egor Zhuravskiy";
+    this.occupation = "PHP, JavaScript & Python developer";
+    this.aboutMe = "High quality web projectlications for you and your family and your pet parrot 🦜 (squawk squawk)";
+    this.footerText = "Here are some of my projects";
+  },
   data: function data() {
     return {
       name: '',
@@ -1911,11 +1922,11 @@ __webpack_require__.r(__webpack_exports__);
       footerText: ''
     };
   },
-  created: function created() {
-    this.name = "Ivan Dzhishkovich";
-    this.occupation = "A TikToker";
-    this.aboutMe = "I do TikToks and dissapoint my parents";
-    this.footerText = "e";
+  methods: {
+    // 
+    showFullscreenPreview: function showFullscreenPreview() {
+      alert("Show fullscreen!");
+    }
   }
 });
 
@@ -39872,7 +39883,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row justify-content-center mt-5" }, [
+  return _c("div", { staticClass: "row justify-content-center" }, [
     _c("div", { staticClass: "col-12 col-md-4 mt-5" }, [
       _c("form", [
         _c("div", { staticClass: "mb-3" }, [
@@ -39993,7 +40004,7 @@ var render = function() {
       "div",
       {
         staticClass:
-          "col-12 col-md-4 d-flex m-5 justify-content-center animatedBackground previewCard"
+          "col-12 col-md-6 d-flex m-5 justify-content-center animatedBackground previewCard"
       },
       [
         _c("HeaderCard", {
@@ -40005,7 +40016,17 @@ var render = function() {
               footerText: _vm.footerText
             }
           }
-        })
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-light fullscreenButton",
+            attrs: { title: "Развернуть на полный экран" },
+            on: { click: _vm.showFullscreenPreview }
+          },
+          [_c("i", { staticClass: "bi bi-arrows-fullscreen" })]
+        )
       ],
       1
     )
@@ -40400,7 +40421,7 @@ var render = function() {
         "row h-100 width90pc bigCard d-flex justify-content-center borderUnderline"
     },
     [
-      _c("div", { staticClass: "d-none d-md-block div-12 textVertical" }, [
+      _c("div", { staticClass: "d-none d-md-block textVertical" }, [
         _c(
           "h1",
           { staticClass: "text-center textVertical goUpAnim font5rem" },

@@ -3,7 +3,7 @@
 <template>
     <div class="row h-100 width90pc bigCard d-flex justify-content-center borderUnderline">
         <!-- для десктопа -->
-        <div class="d-none d-md-block div-12 textVertical">
+        <div class="d-none d-md-block textVertical">
             <!-- имя автора -->
             <h1 class="text-center textVertical goUpAnim font5rem">
                 <b>{{info['name']}}</b>

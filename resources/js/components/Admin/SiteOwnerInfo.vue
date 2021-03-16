@@ -1,7 +1,7 @@
 //AdminControlPanel
 //контрольная панель администратора сайта
 <template>
-        <div class="row justify-content-center mt-5">
+        <div class="row justify-content-center">       
             <!-- форма редактирования -->
             <div class="col-12 col-md-4 mt-5">
                 <form>
@@ -27,16 +27,28 @@
                     </button>
                 </form>
             </div>
+
             <!-- превью -->
-            <div class="col-12 col-md-4 d-flex m-5 justify-content-center animatedBackground previewCard">
-                <HeaderCard :info="{name: name, occupation: occupation, aboutMe: aboutMe, footerText: footerText}"/>
+            <div class="col-12 col-md-6 d-flex m-5 justify-content-center animatedBackground previewCard">
+                <HeaderCard :info="{name: name, occupation: occupation, aboutMe: aboutMe, footerText: footerText}" />
+                
+                <!-- кнопка развернуть на весь экран -->
+                <button class="btn btn-light fullscreenButton" title="Развернуть на полный экран" v-on:click="showFullscreenPreview">
+                    <i class="bi bi-arrows-fullscreen"></i>
+                </button>
             </div>
         </div>
-
 
 </template>
 <script>
 export default {
+
+    created(){
+        this.name = "Egor Zhuravskiy";
+        this.occupation = "PHP, JavaScript & Python developer";
+        this.aboutMe = "High quality web projectlications for you and your family and your pet parrot 🦜 (squawk squawk)";
+        this.footerText = "Here are some of my projects"
+    },
 
     data: function(){
         return {
@@ -44,15 +56,14 @@ export default {
             occupation: '',
             aboutMe: '',
             footerText: '',
-        }
-        
+        }  
     },
 
-    created(){
-        this.name = "Ivan Dzhishkovich";
-        this.occupation = "A TikToker";
-        this.aboutMe = "I do TikToks and dissapoint my parents";
-        this.footerText = "e"
+    methods: {
+        // 
+        showFullscreenPreview: function(){
+           alert("Show fullscreen!")
+        }
     }
 }
 </script>

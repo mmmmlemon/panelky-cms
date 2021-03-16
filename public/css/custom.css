@@ -128,9 +128,16 @@ hr {
     font-size: 35pt;
 }
 
-.previewCard{
+.previewCard {
     padding: 20px;
     border-radius: 10px;
+}
+
+.fullscreenButton {
+    position: absolute; 
+    right: 3%; 
+    top: 3%; 
+    height: 10%;
 }
 
 /* /////////////////////// */
