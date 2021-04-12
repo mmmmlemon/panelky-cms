@@ -22,7 +22,9 @@ Auth::routes();
 // тесты
 Route::get('/saveJson', [TestController::class, 'saveJson'])->where('any', '.*');
 Route::get('/readJson', [TestController::class, 'readJson'])->where('any', '.*');
+Route::post('/submitForm', [TestController::class, 'submitForm'])->where('any', '.*');
 
+//админ
 Route::get('/admin', [AdminController::class, 'index']);
 Route::get('/admin/{any}', [AdminController::class, 'index']);
 

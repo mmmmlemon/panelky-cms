@@ -43,4 +43,18 @@ class TestController extends Controller
 
         dd(json_decode($json));
     }
+
+    //submit form
+    public function submitForm(Request $request){
+        
+        $this->validate($request, [
+            'name' => 'required|string',
+            'occupation' => 'required|string',
+            'aboutMe' => 'required|string',
+            'footerText' => 'required|string'
+        ]);
+
+        return response()->json(null, 200);
+
+    }
 }
