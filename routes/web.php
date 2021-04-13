@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TestController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,11 +26,10 @@ Route::get('/readJson', [TestController::class, 'readJson'])->where('any', '.*')
 Route::post('/submitForm', [TestController::class, 'submitForm'])->where('any', '.*');
 
 //админ
+Route::post('/admin/saveSiteOwnerInfo', [AdminController::class, 'saveSiteOwnerInfo']);
 Route::get('/admin', [AdminController::class, 'index']);
 Route::get('/admin/{any}', [AdminController::class, 'index']);
 
-
-
 //ссылка на любую страницу ведет на страницу index, которая показывает vue-router
-Route::get('/{any}', [HomeController::class, 'index'])->where('any','.*');
+Route::get('/{all}', [HomeController::class, 'index'])->where('any', '.*');
 

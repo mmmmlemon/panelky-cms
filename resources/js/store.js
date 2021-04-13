@@ -2,6 +2,7 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 import { over } from 'lodash';
+import axios from 'axios';
 
 Vue.use(Vuex);
 
@@ -11,6 +12,8 @@ const GlobalStates = {
     state: {
         //стиль бокового меню
         navMenuStyle: {'right':'-500px', 'opacity':'0'},
+        //информация о владельце сайта
+        siteOwnerInfo: -1,
     },
 
     mutations: {
@@ -26,6 +29,17 @@ const GlobalStates = {
         setNavMenuStyle(context, values){
             context.commit('setState', {state:'navMenuStyle', value: values});
         },
+
+        //getSiteOwnerInfo
+        //получить информацию о владельце сайта
+        getSiteOwnerInfo(context){
+            axios.get('/api/getSiteOwnerInfo').then(response => {
+                if(response.data != false)
+                { context.commit('setState', {state: 'siteOwnerInfo', value: response.data}); }
+                else
+                { context.commit('setState', {state: 'siteOwnerInfo', value: false}); }
+            })
+        }
     }
 }
 

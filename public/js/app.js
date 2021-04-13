@@ -1972,34 +1972,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   created: function created() {
-    this.name = "Egor Zhuravskiy";
-    this.occupation = "PHP, JavaScript & Python developer";
-    this.aboutMe = "High quality web projectlications for you and your family and your pet parrot 🦜 (squawk squawk)";
-    this.footerText = "Here are some of my projects";
+    this.$store.dispatch('getSiteOwnerInfo'); // this.name = "Egor Zhuravskiy";
+    // this.occupation = "PHP, JavaScript & Python developer";
+    // this.aboutMe = "High quality web projectlications for you and your family and your pet parrot 🦜 (squawk squawk)";
+    // this.footerText = "Here are some of my projects"
   },
   data: function data() {
     return {
       errors: {},
-      fields: {},
       name: '',
       occupation: '',
       aboutMe: '',
-      footerText: ''
+      bottomText: ''
     };
+  },
+  computed: {
+    siteOwnerInfo: function siteOwnerInfo() {
+      return this.$store.state.GlobalStates.siteOwnerInfo;
+    }
   },
   methods: {
     submit: function submit() {
       var _this = this;
 
       this.errors = {};
-      this.fields = {
-        name: this.name,
-        occupation: this.occupation,
-        aboutMe: this.aboutMe,
-        footerText: this.footerText
-      };
-      console.log(this.fields);
-      axios.post('/submitForm', this.fields).then(function (response) {
+      axios.post('/admin/saveSiteOwnerInfo', this.siteOwnerInfo).then(function (response) {
         alert('Message sent!');
       })["catch"](function (error) {
         if (error.response.status === 422) {
@@ -2977,14 +2974,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vuex__WEBPACK_IMPORTED_MODULE_2__.default); //глобальные стейты
+
+vue__WEBPACK_IMPORTED_MODULE_2__.default.use(vuex__WEBPACK_IMPORTED_MODULE_3__.default); //глобальные стейты
 
 var GlobalStates = {
   state: {
@@ -2992,7 +2992,9 @@ var GlobalStates = {
     navMenuStyle: {
       'right': '-500px',
       'opacity': '0'
-    }
+    },
+    //информация о владельце сайта
+    siteOwnerInfo: -1
   },
   mutations: {
     //установить стейт
@@ -3008,10 +3010,27 @@ var GlobalStates = {
         state: 'navMenuStyle',
         value: values
       });
+    },
+    //getSiteOwnerInfo
+    //получить информацию о владельце сайта
+    getSiteOwnerInfo: function getSiteOwnerInfo(context) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getSiteOwnerInfo').then(function (response) {
+        if (response.data != false) {
+          context.commit('setState', {
+            state: 'siteOwnerInfo',
+            value: response.data
+          });
+        } else {
+          context.commit('setState', {
+            state: 'siteOwnerInfo',
+            value: false
+          });
+        }
+      });
     }
   }
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_2__.default.Store({
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
   modules: {
     GlobalStates: GlobalStates
   }
@@ -40158,19 +40177,19 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.name,
-                    expression: "name"
+                    value: _vm.siteOwnerInfo.name,
+                    expression: "siteOwnerInfo.name"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { type: "text" },
-                domProps: { value: _vm.name },
+                domProps: { value: _vm.siteOwnerInfo.name },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.name = $event.target.value
+                    _vm.$set(_vm.siteOwnerInfo, "name", $event.target.value)
                   }
                 }
               }),
@@ -40190,19 +40209,23 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.occupation,
-                    expression: "occupation"
+                    value: _vm.siteOwnerInfo.occupation,
+                    expression: "siteOwnerInfo.occupation"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { type: "text" },
-                domProps: { value: _vm.occupation },
+                domProps: { value: _vm.siteOwnerInfo.occupation },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.occupation = $event.target.value
+                    _vm.$set(
+                      _vm.siteOwnerInfo,
+                      "occupation",
+                      $event.target.value
+                    )
                   }
                 }
               }),
@@ -40222,18 +40245,18 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.aboutMe,
-                    expression: "aboutMe"
+                    value: _vm.siteOwnerInfo.aboutMe,
+                    expression: "siteOwnerInfo.aboutMe"
                   }
                 ],
                 staticClass: "form-control",
-                domProps: { value: _vm.aboutMe },
+                domProps: { value: _vm.siteOwnerInfo.aboutMe },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.aboutMe = $event.target.value
+                    _vm.$set(_vm.siteOwnerInfo, "aboutMe", $event.target.value)
                   }
                 }
               }),
@@ -40253,19 +40276,23 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.footerText,
-                    expression: "footerText"
+                    value: _vm.siteOwnerInfo.bottomText,
+                    expression: "siteOwnerInfo.bottomText"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { type: "text" },
-                domProps: { value: _vm.footerText },
+                domProps: { value: _vm.siteOwnerInfo.bottomText },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.footerText = $event.target.value
+                    _vm.$set(
+                      _vm.siteOwnerInfo,
+                      "bottomText",
+                      $event.target.value
+                    )
                   }
                 }
               }),
@@ -40288,10 +40315,10 @@ var render = function() {
       _vm._v(" "),
       _c("Preview", {
         attrs: {
-          name: _vm.name,
-          occupation: _vm.occupation,
-          aboutMe: _vm.aboutMe,
-          footerText: _vm.footerText
+          name: _vm.siteOwnerInfo.name,
+          occupation: _vm.siteOwnerInfo.occupation,
+          aboutMe: _vm.siteOwnerInfo.aboutMe,
+          footerText: _vm.siteOwnerInfo.bottomText
         }
       })
     ],
