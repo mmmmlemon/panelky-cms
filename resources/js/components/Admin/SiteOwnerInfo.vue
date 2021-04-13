@@ -30,6 +30,9 @@
                         Сохранить
                     </button>
                 </form>
+                <div class="col-12 p-3 text-center unclickable zeroOpacity" v-bind:class="{ blinkAnim: saved }">
+                    <h5>Изменения сохранены</h5>
+                </div>
             </div>
             <!-- превью -->
             <Preview :name="siteOwnerInfo.name" :occupation="siteOwnerInfo.occupation" :aboutMe="siteOwnerInfo.aboutMe" :footerText="siteOwnerInfo.bottomText"/>
@@ -44,10 +47,6 @@ export default {
 
         this.$store.dispatch('getSiteOwnerInfo');
 
-        // this.name = "Egor Zhuravskiy";
-        // this.occupation = "PHP, JavaScript & Python developer";
-        // this.aboutMe = "High quality web projectlications for you and your family and your pet parrot 🦜 (squawk squawk)";
-        // this.footerText = "Here are some of my projects"
     },
 
     data: function(){
@@ -57,6 +56,7 @@ export default {
             occupation: '',
             aboutMe: '',
             bottomText: '',
+            saved: false,
         }  
     },
 
@@ -69,10 +69,12 @@ export default {
     methods: {
         submit() {
 
+            this.saved = false;
+
             this.errors = {};
 
             axios.post('/admin/saveSiteOwnerInfo', this.siteOwnerInfo).then(response => {
-                    alert('Message sent!');
+                    this.saved = true;
                 }).catch(error => {
                     if(error.response.status === 422){
                         this.errors = error.response.data.errors || {};

@@ -1970,12 +1970,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   created: function created() {
-    this.$store.dispatch('getSiteOwnerInfo'); // this.name = "Egor Zhuravskiy";
-    // this.occupation = "PHP, JavaScript & Python developer";
-    // this.aboutMe = "High quality web projectlications for you and your family and your pet parrot 🦜 (squawk squawk)";
-    // this.footerText = "Here are some of my projects"
+    this.$store.dispatch('getSiteOwnerInfo');
   },
   data: function data() {
     return {
@@ -1983,7 +1983,8 @@ __webpack_require__.r(__webpack_exports__);
       name: '',
       occupation: '',
       aboutMe: '',
-      bottomText: ''
+      bottomText: '',
+      saved: false
     };
   },
   computed: {
@@ -1995,9 +1996,10 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this = this;
 
+      this.saved = false;
       this.errors = {};
       axios.post('/admin/saveSiteOwnerInfo', this.siteOwnerInfo).then(function (response) {
-        alert('Message sent!');
+        _this.saved = true;
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this.errors = error.response.data.errors || {};
@@ -2102,6 +2104,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -40310,6 +40313,15 @@ var render = function() {
               [_vm._v("\n                Сохранить\n            ")]
             )
           ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "col-12 p-3 text-center unclickable zeroOpacity",
+            class: { blinkAnim: _vm.saved }
+          },
+          [_c("h5", [_vm._v("Изменения сохранены")])]
         )
       ]),
       _vm._v(" "),

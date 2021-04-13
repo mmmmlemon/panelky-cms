@@ -3,6 +3,7 @@
 
 <template>
     <div class="container col-12 vh-100">
+   
         <div class="col-12 text-center mt-5">
             <h4>Панель администратора</h4>
             <hr>

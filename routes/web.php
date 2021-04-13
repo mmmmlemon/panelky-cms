@@ -31,5 +31,5 @@ Route::get('/admin', [AdminController::class, 'index']);
 Route::get('/admin/{any}', [AdminController::class, 'index']);
 
 //ссылка на любую страницу ведет на страницу index, которая показывает vue-router
-Route::get('/{all}', [HomeController::class, 'index'])->where('any', '.*');
+Route::get('{any}', [HomeController::class, 'index'])->where('any', '.*');
 
