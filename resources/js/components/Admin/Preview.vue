@@ -3,7 +3,7 @@
 <template>
     <div class="col-12 col-md-6">        
         <div class="col-12 d-flex m-5 justify-content-center animatedBackground previewCard">
-            <HeaderCard :info="{name: name, occupation: occupation, aboutMe: aboutMe, footerText: footerText}" />
+            <HeaderCard :info="{name: name, occupation: occupation, aboutMe: aboutMe, bottomText: bottomText}" />
             
             <!-- кнопка развернуть на весь экран -->
             <button class="btn btn-light fullscreenButton" title="Развернуть на полный экран" v-on:click="showFullscreenPreview">
@@ -16,7 +16,7 @@
                 <i class="bi bi-fullscreen-exit"></i>
             </button>
             <div class="row h-100 justify-content-center">
-                <HeaderCard :info="{name: name, occupation: occupation, aboutMe: aboutMe, footerText: footerText}" /> 
+                <HeaderCard :info="{name: name, occupation: occupation, aboutMe: aboutMe, bottomText: bottomText}" /> 
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@ export default {
         name: '',
         occupation: '',
         aboutMe: '',
-        footerText: '',
+        bottomText: '',
     },
 
     methods: {

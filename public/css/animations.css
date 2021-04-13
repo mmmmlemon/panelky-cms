@@ -11,7 +11,6 @@
 }
 
 .goUpAnim {
-
     animation-name: goUp;
     animation-duration: 0.5s;
 }
@@ -80,4 +79,39 @@
 
 .blinkAnim {
     animation: blink 5s ease-in-out;
+}
+
+.name-enter-active {
+    transition: all 0.5s ease;
+}
+.name-enter {
+  transform: translateY(17px);
+  opacity: 0;
+}
+
+.occupation-enter-active {
+    transition: all 0.5s ease;
+    transition-delay: 0.5s;
+}
+
+.occupation-enter {
+    opacity: 0;
+}
+
+.aboutMe-enter-active {
+    transition: all 0.5s ease;
+    transition-delay: 1s;
+}
+
+.aboutMe-enter {
+    opacity: 0;
+}
+
+.bottomText-enter-active {
+    transition: all 0.5s ease;
+    transition-delay: 1.5s;
+}
+.bottomText-enter {
+  transform: translateY(-17px);
+  opacity: 0;
 }

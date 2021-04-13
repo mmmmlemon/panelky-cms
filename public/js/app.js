@@ -1898,7 +1898,7 @@ __webpack_require__.r(__webpack_exports__);
     name: '',
     occupation: '',
     aboutMe: '',
-    footerText: ''
+    bottomText: ''
   },
   methods: {
     //показать превью на полный экран
@@ -2038,7 +2038,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   created: function created() {
     window.addEventListener('scroll', this.handleNavScroll);
-    this.$store.dispatch('getSiteOwnerInfo');
   },
   destroyed: function destroyed() {
     window.removeEventListener('scroll', this.handleNavScroll);
@@ -2213,6 +2212,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  beforeCreate: function beforeCreate() {
+    this.$store.dispatch('getSiteOwnerInfo');
+  },
   computed: {
     siteOwnerInfo: function siteOwnerInfo() {
       return this.$store.state.GlobalStates.siteOwnerInfo;
@@ -2309,6 +2311,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -40077,7 +40096,7 @@ var render = function() {
               name: _vm.name,
               occupation: _vm.occupation,
               aboutMe: _vm.aboutMe,
-              footerText: _vm.footerText
+              bottomText: _vm.bottomText
             }
           }
         }),
@@ -40123,7 +40142,7 @@ var render = function() {
                   name: _vm.name,
                   occupation: _vm.occupation,
                   aboutMe: _vm.aboutMe,
-                  footerText: _vm.footerText
+                  bottomText: _vm.bottomText
                 }
               }
             })
@@ -40302,9 +40321,9 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _vm.errors && _vm.errors.footerText
+              _vm.errors && _vm.errors.bottomText
                 ? _c("div", { staticClass: "text-danger" }, [
-                    _vm._v(_vm._s(_vm.errors.footerText[0]))
+                    _vm._v(_vm._s(_vm.errors.bottomText[0]))
                   ])
                 : _vm._e()
             ]),
@@ -40332,7 +40351,7 @@ var render = function() {
           name: _vm.siteOwnerInfo.name,
           occupation: _vm.siteOwnerInfo.occupation,
           aboutMe: _vm.siteOwnerInfo.aboutMe,
-          footerText: _vm.siteOwnerInfo.bottomText
+          bottomText: _vm.siteOwnerInfo.bottomText
         }
       })
     ],
@@ -40718,59 +40737,64 @@ var render = function() {
         "row h-100 width90pc bigCard d-flex justify-content-center borderUnderline"
     },
     [
-      _c("div", { staticClass: "d-none d-md-block textVertical" }, [
-        _c(
-          "h1",
-          {
-            staticClass: "text-center textVertical font5rem",
-            class: { goUpAnim: _vm.info.name != undefined }
-          },
-          [_c("b", [_vm._v(_vm._s(_vm.info["name"]))])]
-        ),
-        _vm._v(" "),
-        _c("hr", { staticClass: "goUpAnim" }),
-        _vm._v(" "),
-        _c(
-          "p",
-          {
-            staticClass: "text-center textVertical font2-5rem",
-            class: { fadeInAnim: _vm.info.occupation != undefined }
-          },
-          [
-            _vm._v(
-              "\n            " + _vm._s(_vm.info["occupation"]) + "\n        "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c("hr", { staticClass: "fadeInAnim" }),
-        _vm._v(" "),
-        _c(
-          "p",
-          {
-            staticClass: "text-center font1-8rem",
-            class: { fadeInAnim: _vm.info.aboutMe != undefined }
-          },
-          [
-            _vm._v(
-              "\n            " + _vm._s(_vm.info["aboutMe"]) + "\n        "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c(
-          "h6",
-          {
-            staticClass: "text-center font1-8rem",
-            class: { goUpAnim: _vm.info.bottomText != undefined }
-          },
-          [_c("b", [_vm._v(_vm._s(_vm.info["bottomText"]))])]
-        )
-      ]),
+      _c(
+        "div",
+        { staticClass: "d-none d-md-block textVertical fadeInAnim" },
+        [
+          _c("transition", { attrs: { name: "name" } }, [
+            _vm.info.name != undefined
+              ? _c("h1", { staticClass: "text-center textVertical font5rem" }, [
+                  _c("b", [_vm._v(_vm._s(_vm.info["name"]))])
+                ])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("transition", { attrs: { name: "occupation" } }, [
+            _vm.info.occupation != undefined ? _c("hr") : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("transition", { attrs: { name: "occupation" } }, [
+            _vm.info.occupation != undefined
+              ? _c(
+                  "p",
+                  { staticClass: "text-center textVertical font2-5rem" },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.info["occupation"]) +
+                        "\n            "
+                    )
+                  ]
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("transition", { attrs: { name: "occupation" } }, [
+            _vm.info.occupation != undefined ? _c("hr") : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("transition", { attrs: { name: "aboutMe" } }, [
+            _vm.info.aboutMe != undefined
+              ? _c("p", { staticClass: "text-center font1-8rem" }, [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.info["aboutMe"]) +
+                      "\n            "
+                  )
+                ])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("transition", { attrs: { name: "bottomText" } }, [
+            _vm.info.bottomText != undefined
+              ? _c("h6", { staticClass: "text-center font1-8rem" }, [
+                  _c("b", [_vm._v(_vm._s(_vm.info["bottomText"]))])
+                ])
+              : _vm._e()
+          ])
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "d-block d-md-none div-12 textVertical" }, [
         _c(

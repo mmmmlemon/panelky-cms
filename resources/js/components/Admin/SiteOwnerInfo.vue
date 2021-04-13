@@ -23,7 +23,7 @@
                     <div class="mb-3">
                         <h6>Нижний текст</h6>
                         <input v-model="siteOwnerInfo.bottomText" type="text" class="form-control">
-                        <div v-if="errors && errors.footerText" class="text-danger">{{ errors.footerText[0] }}</div>
+                        <div v-if="errors && errors.bottomText" class="text-danger">{{ errors.bottomText[0] }}</div>
                     </div>
 
                     <button class="btn btn-lg btn-block btn-outline-light">
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <!-- превью -->
-            <Preview :name="siteOwnerInfo.name" :occupation="siteOwnerInfo.occupation" :aboutMe="siteOwnerInfo.aboutMe" :footerText="siteOwnerInfo.bottomText"/>
+            <Preview :name="siteOwnerInfo.name" :occupation="siteOwnerInfo.occupation" :aboutMe="siteOwnerInfo.aboutMe" :bottomText="siteOwnerInfo.bottomText"/>
 
         </div>
 

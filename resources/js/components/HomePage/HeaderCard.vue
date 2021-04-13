@@ -3,27 +3,44 @@
 <template>
     <div class="row h-100 width90pc bigCard d-flex justify-content-center borderUnderline">
         <!-- для десктопа -->
-        <div class="d-none d-md-block textVertical">
+        <div class="d-none d-md-block textVertical fadeInAnim">
+
             <!-- имя автора -->
-            <h1 class="text-center textVertical font5rem" v-bind:class="{ goUpAnim: info.name != undefined }">
-                <b>{{info['name']}}</b>
-            </h1>
-            <hr class="goUpAnim">
+            <transition name="name">
+                <h1 v-if="info.name != undefined" class="text-center textVertical font5rem">
+                    <b>{{info['name']}}</b>
+                </h1>
+            </transition>
+
+            <transition name="occupation">
+                <hr v-if="info.occupation != undefined">
+            </transition>
+        
             <!-- род занятий -->
-            <p class="text-center textVertical font2-5rem" v-bind:class="{ fadeInAnim: info.occupation != undefined }">
-                {{info['occupation']}}
-            </p>
-            <hr class="fadeInAnim">
+            <transition name="occupation">
+                <p v-if="info.occupation != undefined" class="text-center textVertical font2-5rem">
+                    {{info['occupation']}}
+                </p>
+            </transition>
+
+            <transition name="occupation">
+                <hr v-if="info.occupation != undefined">
+            </transition>
+
             <!-- о себе -->
-            <p class="text-center font1-8rem" v-bind:class="{ fadeInAnim: info.aboutMe != undefined }">
-                {{info['aboutMe']}}
-            </p>
-            <br>
-            <br>
+            <transition name="aboutMe">
+                <p v-if="info.aboutMe != undefined" class="text-center font1-8rem">
+                    {{info['aboutMe']}}
+                </p>
+         
+            </transition>
             <!-- нижний текст -->
-            <h6 class="text-center font1-8rem" v-bind:class="{ goUpAnim: info.bottomText != undefined }">
-                <b>{{info['bottomText']}}</b>
-            </h6>
+            <transition name="bottomText">
+                <h6 v-if="info.bottomText != undefined" class="text-center font1-8rem">
+                    <b>{{info['bottomText']}}</b>
+                </h6>
+            </transition>
+ 
         </div>
         <!-- для мобилок -->
         <div class="d-block d-md-none div-12 textVertical">
@@ -53,6 +70,7 @@
 <script>
 export default {
 
+
     props: {
         info: { type: Object, default: function() {
             return {
@@ -63,6 +81,8 @@ export default {
             }
         }},
     },
+
+
 
 }
 </script>

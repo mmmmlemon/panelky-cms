@@ -28,9 +28,13 @@
 </template>
 <script>
 export default {
+    beforeCreate(){
+        this.$store.dispatch('getSiteOwnerInfo');
+    },
 
     computed: {
         siteOwnerInfo: function(){
+             
              return this.$store.state.GlobalStates.siteOwnerInfo;
         }
     }
