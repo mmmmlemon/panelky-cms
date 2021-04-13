@@ -4,12 +4,7 @@
     <div class="row h-100 justify-content-center">
 
         <HeaderCard 
-            :info="{
-                'name': siteOwnerInfo.name,
-                'occupation': siteOwnerInfo.occupation,
-                'aboutMe': siteOwnerInfo.aboutMe,
-                'footerText': siteOwnerInfo.bottomText,
-                }"/>
+            :info="siteOwnerInfo"/>
 
         <ProjectCard id="spotifyi"
             type='left'
@@ -36,7 +31,7 @@ export default {
 
     computed: {
         siteOwnerInfo: function(){
-            //  return this.$store.state.GlobalStates.siteOwnerInfo;
+             return this.$store.state.GlobalStates.siteOwnerInfo;
         }
     }
 

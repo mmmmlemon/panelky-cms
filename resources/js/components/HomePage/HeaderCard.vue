@@ -5,24 +5,24 @@
         <!-- для десктопа -->
         <div class="d-none d-md-block textVertical">
             <!-- имя автора -->
-            <h1 class="text-center textVertical goUpAnim font5rem">
+            <h1 class="text-center textVertical font5rem" v-bind:class="{ goUpAnim: info.name != undefined }">
                 <b>{{info['name']}}</b>
             </h1>
             <hr class="goUpAnim">
             <!-- род занятий -->
-            <p class="text-center textVertical fadeInAnim font2-5rem">
+            <p class="text-center textVertical font2-5rem" v-bind:class="{ fadeInAnim: info.occupation != undefined }">
                 {{info['occupation']}}
             </p>
             <hr class="fadeInAnim">
             <!-- о себе -->
-            <p class="text-center fadeInAnim font1-8rem">
+            <p class="text-center font1-8rem" v-bind:class="{ fadeInAnim: info.aboutMe != undefined }">
                 {{info['aboutMe']}}
             </p>
             <br>
             <br>
             <!-- нижний текст -->
-            <h6 class="text-center goUpAnim font1-8rem">
-                <b>{{info['footerText']}}</b>
+            <h6 class="text-center font1-8rem" v-bind:class="{ goUpAnim: info.bottomText != undefined }">
+                <b>{{info['bottomText']}}</b>
             </h6>
         </div>
         <!-- для мобилок -->
@@ -56,10 +56,10 @@ export default {
     props: {
         info: { type: Object, default: function() {
             return {
-                'name': 'Ivan Petrov',
-                'occupation': 'A programmer',
-                'aboutMe': 'I can do this and this and that and I can do it like that',
-                'footerText': 'Here are my projects',
+                'name': undefined,
+                'occupation': undefined,
+                'aboutMe': undefined,
+                'bottomText': undefined,
             }
         }},
     },

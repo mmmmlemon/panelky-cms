@@ -2212,14 +2212,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: {
-    siteOwnerInfo: function siteOwnerInfo() {//  return this.$store.state.GlobalStates.siteOwnerInfo;
+    siteOwnerInfo: function siteOwnerInfo() {
+      return this.$store.state.GlobalStates.siteOwnerInfo;
     }
   }
 });
@@ -2371,10 +2367,10 @@ __webpack_require__.r(__webpack_exports__);
       type: Object,
       "default": function _default() {
         return {
-          'name': 'Ivan Petrov',
-          'occupation': 'A programmer',
-          'aboutMe': 'I can do this and this and that and I can do it like that',
-          'footerText': 'Here are my projects'
+          'name': undefined,
+          'occupation': undefined,
+          'aboutMe': undefined,
+          'bottomText': undefined
         };
       }
     }
@@ -40555,16 +40551,7 @@ var render = function() {
     "div",
     { staticClass: "row h-100 justify-content-center" },
     [
-      _c("HeaderCard", {
-        attrs: {
-          info: {
-            name: _vm.siteOwnerInfo.name,
-            occupation: _vm.siteOwnerInfo.occupation,
-            aboutMe: _vm.siteOwnerInfo.aboutMe,
-            footerText: _vm.siteOwnerInfo.bottomText
-          }
-        }
-      }),
+      _c("HeaderCard", { attrs: { info: _vm.siteOwnerInfo } }),
       _vm._v(" "),
       _c("ProjectCard", {
         attrs: {
@@ -40734,7 +40721,10 @@ var render = function() {
       _c("div", { staticClass: "d-none d-md-block textVertical" }, [
         _c(
           "h1",
-          { staticClass: "text-center textVertical goUpAnim font5rem" },
+          {
+            staticClass: "text-center textVertical font5rem",
+            class: { goUpAnim: _vm.info.name != undefined }
+          },
           [_c("b", [_vm._v(_vm._s(_vm.info["name"]))])]
         ),
         _vm._v(" "),
@@ -40742,7 +40732,10 @@ var render = function() {
         _vm._v(" "),
         _c(
           "p",
-          { staticClass: "text-center textVertical fadeInAnim font2-5rem" },
+          {
+            staticClass: "text-center textVertical font2-5rem",
+            class: { fadeInAnim: _vm.info.occupation != undefined }
+          },
           [
             _vm._v(
               "\n            " + _vm._s(_vm.info["occupation"]) + "\n        "
@@ -40752,17 +40745,31 @@ var render = function() {
         _vm._v(" "),
         _c("hr", { staticClass: "fadeInAnim" }),
         _vm._v(" "),
-        _c("p", { staticClass: "text-center fadeInAnim font1-8rem" }, [
-          _vm._v("\n            " + _vm._s(_vm.info["aboutMe"]) + "\n        ")
-        ]),
+        _c(
+          "p",
+          {
+            staticClass: "text-center font1-8rem",
+            class: { fadeInAnim: _vm.info.aboutMe != undefined }
+          },
+          [
+            _vm._v(
+              "\n            " + _vm._s(_vm.info["aboutMe"]) + "\n        "
+            )
+          ]
+        ),
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
-        _c("h6", { staticClass: "text-center goUpAnim font1-8rem" }, [
-          _c("b", [_vm._v(_vm._s(_vm.info["footerText"]))])
-        ])
+        _c(
+          "h6",
+          {
+            staticClass: "text-center font1-8rem",
+            class: { goUpAnim: _vm.info.bottomText != undefined }
+          },
+          [_c("b", [_vm._v(_vm._s(_vm.info["bottomText"]))])]
+        )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "d-block d-md-none div-12 textVertical" }, [
