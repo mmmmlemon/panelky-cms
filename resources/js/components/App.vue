@@ -16,6 +16,8 @@ export default {
 
     created(){
         window.addEventListener('scroll', this.handleNavScroll);
+
+        this.$store.dispatch('getSiteOwnerInfo');
     },
 
     destroyed() {

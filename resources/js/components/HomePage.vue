@@ -5,10 +5,10 @@
 
         <HeaderCard 
             :info="{
-                'name': 'Egor Zhuravskiy',
-                'occupation': 'PHP, JavaScript & Python developer',
-                'aboutMe': 'High quality web projectlications for you and your family and your pet parrot 🦜 (squawk squawk)',
-                'footerText': 'Here are some of my projects',
+                'name': siteOwnerInfo.name,
+                'occupation': siteOwnerInfo.occupation,
+                'aboutMe': siteOwnerInfo.aboutMe,
+                'footerText': siteOwnerInfo.bottomText,
                 }"/>
 
         <ProjectCard id="spotifyi"
@@ -33,6 +33,12 @@
 </template>
 <script>
 export default {
+
+    computed: {
+        siteOwnerInfo: function(){
+            //  return this.$store.state.GlobalStates.siteOwnerInfo;
+        }
+    }
 
 }
 </script>

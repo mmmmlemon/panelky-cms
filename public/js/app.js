@@ -2038,6 +2038,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   created: function created() {
     window.addEventListener('scroll', this.handleNavScroll);
+    this.$store.dispatch('getSiteOwnerInfo');
   },
   destroyed: function destroyed() {
     window.removeEventListener('scroll', this.handleNavScroll);
@@ -2216,7 +2217,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  computed: {
+    siteOwnerInfo: function siteOwnerInfo() {//  return this.$store.state.GlobalStates.siteOwnerInfo;
+    }
+  }
+});
 
 /***/ }),
 
@@ -40552,11 +40558,10 @@ var render = function() {
       _c("HeaderCard", {
         attrs: {
           info: {
-            name: "Egor Zhuravskiy",
-            occupation: "PHP, JavaScript & Python developer",
-            aboutMe:
-              "High quality web projectlications for you and your family and your pet parrot 🦜 (squawk squawk)",
-            footerText: "Here are some of my projects"
+            name: _vm.siteOwnerInfo.name,
+            occupation: _vm.siteOwnerInfo.occupation,
+            aboutMe: _vm.siteOwnerInfo.aboutMe,
+            footerText: _vm.siteOwnerInfo.bottomText
           }
         }
       }),
