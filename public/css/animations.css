@@ -1,3 +1,5 @@
+/* анимации */
+
 @keyframes goUp {
     0% { 
         opacity: 0;
@@ -81,6 +83,7 @@
     animation: blink 5s ease-in-out;
 }
 
+/* анимации vue transition для HeaderCard */
 .name-enter-active {
     transition: all 0.5s ease;
 }
@@ -115,3 +118,5 @@
   transform: translateY(-17px);
   opacity: 0;
 }
+
+/* //////////////////// */

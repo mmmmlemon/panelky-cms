@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Settings;
 
+//AdminController
+//функции админки
 class AdminController extends Controller
 {
     public function __construct()
@@ -12,11 +14,14 @@ class AdminController extends Controller
         $this->middleware('auth');
     }
 
+    //index
+    //показать layout админки
     public function index() {
         
         return view('indexAdmin');
     }
 
+    //saveSiteOwnerInfo
     //сохранить информацию о владельце сайта
     public function saveSiteOwnerInfo(Request $request)
     {

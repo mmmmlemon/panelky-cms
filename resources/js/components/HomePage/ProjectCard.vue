@@ -1,7 +1,9 @@
 // ProjectCard
 // Карточка для проектов
 <template>
+
     <div class="row h-75 w-75 d-flex justify-content-center borderUnderline zIndex-1">
+
         <!-- карточка с описанием слева -->
         <div v-if="type=='left'" class="row justify-content-center">
             <!-- для десктопа -->
@@ -109,10 +111,13 @@
                 </button>
             </div>
         </div>
+
         <div v-else class="textVertical">
             <Error errorMessage="Неверный параметр 'type'"/>
         </div>
+
     </div>
+    
 </template>
 <script>
 export default {

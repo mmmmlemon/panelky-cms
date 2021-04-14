@@ -1,11 +1,13 @@
 // NavButton
 // кнопка навигации с боковым меню
 <template>
+
     <div>
         <!-- кнопка меню - десктоп-->
         <button v-on:click="showNavMenu()" class="d-none d-md-block navButton zIndex3">
             <i class="bi bi-three-dots-vertical"></i>
         </button>
+        
         <!-- меню -->
         <div class="col-12 col-md-2 navMenu" :style="{right: navMenuStyle['right'], opacity: navMenuStyle['opacity'], zIndex: 5}">
             <div class="row justify-content-end">

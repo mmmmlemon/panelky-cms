@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Settings;
 
-
+//APIController
+//функции API, получение информации из БД
 class APIController extends Controller
 {
+    //getSiteOwnerInfo
     //получить информацию о владельце сайта
     public function getSiteOwnerInfo()
     {   

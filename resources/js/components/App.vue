@@ -1,6 +1,7 @@
 // App
 // корневой компонент для публичной части сайта
 
+
 <template>
     <div class="container col-12 vh-100">
         <Nav />
@@ -10,7 +11,9 @@
             v-touch:swipe.left="showNavMenu">
         </router-view>
     </div>
+
 </template>
+
 <script>
 export default {
 

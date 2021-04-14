@@ -5,6 +5,7 @@ use Storage;
 
 use Illuminate\Http\Request;
 
+//TestController
 // контроллер для тестирования функционала сайта
 class TestController extends Controller
 {
@@ -39,7 +40,6 @@ class TestController extends Controller
         } catch (Throwable $e) {
             return "not success";
         }
-    
 
         dd(json_decode($json));
     }

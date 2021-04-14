@@ -1850,6 +1850,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
@@ -1865,6 +1867,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
 //
 //
 //
@@ -1973,6 +1979,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   created: function created() {
     this.$store.dispatch('getSiteOwnerInfo');
@@ -2022,6 +2033,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
 //
 //
 //
@@ -2151,6 +2165,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2183,6 +2207,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -2280,7 +2305,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     footerTitle: {
@@ -2311,6 +2335,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2525,6 +2569,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     type: {
@@ -2574,6 +2623,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     errorMessage: {
@@ -2596,6 +2647,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2645,6 +2701,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
@@ -2660,6 +2718,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -2763,6 +2823,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
 //
 //
 //
@@ -40184,7 +40247,7 @@ var render = function() {
         _c(
           "form",
           {
-            attrs: { methods: "POST" },
+            attrs: { method: "POST" },
             on: {
               submit: function($event) {
                 $event.preventDefault()
@@ -40466,7 +40529,11 @@ var render = function() {
                   staticClass: "btn btn-block btn-light font14pt",
                   attrs: { to: "/admin", "aria-current": "page" }
                 },
-                [_vm._v("Владелец сайта")]
+                [
+                  _vm._v(
+                    "\n                        Владелец сайта\n                    "
+                  )
+                ]
               )
             ],
             1
@@ -40482,7 +40549,11 @@ var render = function() {
                   staticClass: "btn btn-block btn-outline-light font14pt",
                   attrs: { to: "/admin/projects" }
                 },
-                [_vm._v("Проекты")]
+                [
+                  _vm._v(
+                    "\n                        Проекты\n                    "
+                  )
+                ]
               )
             ],
             1
@@ -40498,7 +40569,11 @@ var render = function() {
                   staticClass: "btn btn-block btn-outline-light font14pt",
                   attrs: { to: "/admin/links" }
                 },
-                [_vm._v("Ссылки и контакты")]
+                [
+                  _vm._v(
+                    "\n                        Ссылки и контакты\n                    "
+                  )
+                ]
               )
             ],
             1
@@ -40658,12 +40733,7 @@ var render = function() {
               ]
             )
           ])
-        ]),
-        _c("p", { staticClass: "text-center" }, [
-          _c("b", [_vm._v(_vm._s(_vm.contactEmail))])
-        ]),
-        _vm._v(" "),
-        _c("p")
+        ])
       ])
     ]
   )
@@ -40796,39 +40866,68 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "d-block d-md-none div-12 textVertical" }, [
-        _c(
-          "h1",
-          { staticClass: "text-center textVertical goUpAnim font2-5rem" },
-          [_c("b", [_vm._v(_vm._s(_vm.info["name"]))])]
-        ),
-        _vm._v(" "),
-        _c("hr", { staticClass: "goUpAnim" }),
-        _vm._v(" "),
-        _c(
-          "p",
-          { staticClass: "text-center textVertical fadeInAnim font1-8rem" },
-          [
-            _vm._v(
-              "\n            " + _vm._s(_vm.info["occupation"]) + "\n        "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c("hr", { staticClass: "fadeInAnim" }),
-        _vm._v(" "),
-        _c("p", { staticClass: "text-center fadeInAnim font1-2rem" }, [
-          _vm._v("\n           " + _vm._s(_vm.info["aboutMe"]) + "\n        ")
-        ]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("h6", { staticClass: "text-center goUpAnim font1-2rem" }, [
-          _c("b", [_vm._v(_vm._s(_vm.info["footerText"]))])
-        ])
-      ])
+      _c(
+        "div",
+        { staticClass: "d-block d-md-none div-12 textVertical fadeInAnim" },
+        [
+          _c("transition", { attrs: { name: "name" } }, [
+            _vm.info.name != undefined
+              ? _c(
+                  "h1",
+                  { staticClass: "text-center textVertical font2-5rem" },
+                  [_c("b", [_vm._v(_vm._s(_vm.info["name"]))])]
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("transition", { attrs: { name: "occupation" } }, [
+            _vm.info.occupation != undefined ? _c("hr") : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("transition", { attrs: { name: "occupation" } }, [
+            _vm.info.occupation != undefined
+              ? _c(
+                  "p",
+                  { staticClass: "text-center textVertical font1-8rem" },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.info["occupation"]) +
+                        "\n            "
+                    )
+                  ]
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("transition", { attrs: { name: "occupation" } }, [
+            _vm.info.occupation != undefined ? _c("hr") : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("transition", { attrs: { name: "aboutMe" } }, [
+            _vm.info.aboutMe != undefined
+              ? _c("p", { staticClass: "text-center font1-2rem" }, [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.info["aboutMe"]) +
+                      "\n            "
+                  )
+                ])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("transition", { attrs: { name: "bottomText" } }, [
+            _vm.info.bottomText != undefined
+              ? _c("h6", { staticClass: "text-center font1-2rem" }, [
+                  _c("b", [_vm._v(_vm._s(_vm.info["bottomText"]))])
+                ])
+              : _vm._e()
+          ])
+        ],
+        1
+      )
     ]
   )
 }

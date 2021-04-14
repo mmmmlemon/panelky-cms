@@ -1,10 +1,13 @@
-//AdminControlPanel
-//контрольная панель администратора сайта
+//SiteOwnerInfo
+//вкладка в админке, информация о владельце сайта
 <template>
-        <div class="row justify-content-center">       
+
+        <div class="row justify-content-center"> 
+
             <!-- форма редактирования -->
             <div class="col-12 col-md-4 mt-5">
-                <form @submit.prevent="submit" methods="POST">
+
+                <form @submit.prevent="submit" method="POST">
                     <div class="mb-3">
                         <h6>Имя владельца сайта</h6>
                         <input v-model="siteOwnerInfo.name" type="text" class="form-control">
@@ -30,13 +33,15 @@
                         Сохранить
                     </button>
                 </form>
+                
+                <!-- сообщение о сохранении настроек -->
                 <div class="col-12 p-3 text-center unclickable zeroOpacity" v-bind:class="{ blinkAnim: saved }">
                     <h5>Изменения сохранены</h5>
                 </div>
+
             </div>
             <!-- превью -->
             <Preview :name="siteOwnerInfo.name" :occupation="siteOwnerInfo.occupation" :aboutMe="siteOwnerInfo.aboutMe" :bottomText="siteOwnerInfo.bottomText"/>
-
         </div>
 
 </template>

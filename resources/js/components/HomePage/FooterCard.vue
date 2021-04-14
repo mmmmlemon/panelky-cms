@@ -35,10 +35,9 @@
                         </span>
                     </button>
                 </a>
-                <p class="text-center">
+                <!-- <p class="text-center">
                     <b>{{contactEmail}}</b>
-                </p>
-                <!-- <b><a :href="'mailto:'+contactEmail" target="_blank">{{contactEmail}}</a></b> -->
+                </p> -->
             </p>
         </div>
        

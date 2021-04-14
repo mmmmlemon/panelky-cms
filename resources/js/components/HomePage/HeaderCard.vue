@@ -2,6 +2,7 @@
 // карточка с общей информацией о владельце сайта и его роде занятий
 <template>
     <div class="row h-100 width90pc bigCard d-flex justify-content-center borderUnderline">
+
         <!-- для десктопа -->
         <div class="d-none d-md-block textVertical fadeInAnim">
 
@@ -43,33 +44,51 @@
  
         </div>
         <!-- для мобилок -->
-        <div class="d-block d-md-none div-12 textVertical">
+        <div class="d-block d-md-none div-12 textVertical fadeInAnim">
+
             <!-- имя автора -->
-            <h1 class="text-center textVertical goUpAnim font2-5rem">
-                <b>{{info['name']}}</b>
-            </h1>
-            <hr class="goUpAnim">
+            <transition name="name">
+                <h1 v-if="info.name != undefined" class="text-center textVertical font2-5rem">
+                    <b>{{info['name']}}</b>
+                </h1>
+            </transition>
+
+            <transition name="occupation">
+                <hr v-if="info.occupation != undefined">
+            </transition>
+
             <!-- род занятий -->
-            <p class="text-center textVertical fadeInAnim font1-8rem">
-                {{info['occupation']}}
-            </p>
-            <hr class="fadeInAnim">
+            <transition name="occupation">
+                <p v-if="info.occupation != undefined" class="text-center textVertical font1-8rem">
+                    {{info['occupation']}}
+                </p>
+            </transition>
+
+            <transition name="occupation">
+                <hr v-if="info.occupation != undefined">
+            </transition>
+
             <!-- о себе -->
-            <p class="text-center fadeInAnim font1-2rem">
-               {{info['aboutMe']}}
-            </p>
+            <transition name="aboutMe">
+                <p v-if="info.aboutMe != undefined" class="text-center font1-2rem">
+                    {{info['aboutMe']}}
+                </p>
+            </transition>
+
             <br>
-            <br>
+
+            <transition name="bottomText">
             <!-- нижний текст -->
-            <h6 class="text-center goUpAnim font1-2rem">
-                <b>{{info['footerText']}}</b>
-            </h6>
+                <h6 v-if="info.bottomText != undefined" class="text-center font1-2rem">
+                    <b>{{info['bottomText']}}</b>
+                </h6>
+            </transition>
         </div>
     </div>
 </template>
+
 <script>
 export default {
-
 
     props: {
         info: { type: Object, default: function() {
@@ -81,8 +100,6 @@ export default {
             }
         }},
     },
-
-
-
+    
 }
 </script>
