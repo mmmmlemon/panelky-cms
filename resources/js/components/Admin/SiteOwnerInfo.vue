@@ -5,7 +5,7 @@
         <div class="row justify-content-center"> 
 
             <!-- форма редактирования -->
-            <div class="col-12 col-md-4 mt-5">
+            <div class="col-12 col-md-4 mt-5 fadeInAnim" v-bind:class="{zeroOpacity: siteOwnerInfo === -1}">
 
                 <form @submit.prevent="submit" method="POST">
                     <div class="mb-3">

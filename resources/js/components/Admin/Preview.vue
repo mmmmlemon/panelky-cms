@@ -1,10 +1,10 @@
 //Preview
 //компонент для показа превью карточек
 <template>
-    <div class="col-12 col-md-6">  
+    <div class="col-12 col-md-6 fadeInAnim">  
         
         <!-- мини-превью -->
-        <div class="col-12 d-flex m-5 justify-content-center animatedBackground previewCard">
+        <div class="col-12 d-flex m-5 justify-content-center animatedBackground previewCard" v-bind:class="{zeroOpacity: name === undefined}">
             <HeaderCard :info="{name: name, occupation: occupation, aboutMe: aboutMe, bottomText: bottomText}" />
             
             <!-- кнопка развернуть на весь экран -->
@@ -35,10 +35,10 @@ export default {
     },
 
     props: {
-        name: '',
-        occupation: '',
-        aboutMe: '',
-        bottomText: '',
+        name: undefined,
+        occupation: undefined,
+        aboutMe: undefined,
+        bottomText: undefined,
     },
 
     methods: {
