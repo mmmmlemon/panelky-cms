@@ -32,8 +32,11 @@ import FooterCard from './components/HomePage/FooterCard.vue';
 Vue.component('FooterCard', FooterCard);
 
 //Admin
-import Preview from './components/Admin/Preview.vue';
-Vue.component('Preview', Preview);
+import PreviewOwner from './components/Admin/Misc/PreviewOwner.vue';
+Vue.component('PreviewOwner', PreviewOwner);
+import PreviewProject from './components/Admin/Misc/PreviewProject.vue';
+Vue.component('PreviewProject', PreviewProject);
+
 
 //Misc
 import Error from './components/Misc/Error.vue';

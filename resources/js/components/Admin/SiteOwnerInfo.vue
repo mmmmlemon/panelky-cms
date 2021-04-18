@@ -41,7 +41,7 @@
 
             </div>
             <!-- превью -->
-            <Preview :name="siteOwnerInfo.name" :occupation="siteOwnerInfo.occupation" :aboutMe="siteOwnerInfo.aboutMe" :bottomText="siteOwnerInfo.bottomText"/>
+            <PreviewOwner :name="siteOwnerInfo.name" :occupation="siteOwnerInfo.occupation" :aboutMe="siteOwnerInfo.aboutMe" :bottomText="siteOwnerInfo.bottomText"/>
         </div>
 
 </template>

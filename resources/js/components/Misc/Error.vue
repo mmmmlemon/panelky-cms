@@ -3,7 +3,7 @@
 <template>
 
     <div class="alert alert-danger text-center m-2 goUpAnim" role="alert">
-        <h4><b>Error</b></h4>
+        <h4><b>Ошибка</b></h4>
         {{errorMessage}}
     </div>
 

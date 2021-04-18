@@ -155,7 +155,7 @@ hr {
     transition: left 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
-.toastCard{
+.toastCard {
     color: black;
     background-color: white;
     border-radius: 15px;
@@ -164,6 +164,12 @@ hr {
     bottom: 15px;
     right: 15px;
 }
+
+.projectMiniPreview {
+    border-radius: 15px;
+    padding: 5px;
+}
+
 
 /* /////////////////////// */
 /* margins, paddings, width, height */
