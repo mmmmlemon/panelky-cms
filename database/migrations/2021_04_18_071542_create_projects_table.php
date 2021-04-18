@@ -21,6 +21,7 @@ class CreateProjectsTable extends Migration
             $table->string('project_bottomText');
             $table->string('project_icon', 500);
             $table->string('project_image', 500);
+            $table->string('project_url');
             $table->timestamps();
         });
     }
