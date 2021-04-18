@@ -5,7 +5,7 @@
         <div v-if="type === 'mini'" class="col-12 projectMiniPreview animatedBackground">
             <!-- название проекта -->
             <h1 class="text-center textVertical font3-8rem">
-                <b>{{projectInfo.name}}</b>
+                <b>{{projectInfo.title}}</b>
             </h1>
             <!-- лого -->
             <img :src="projectInfo.icon" class="projectLogo" alt="">
@@ -36,7 +36,7 @@ export default {
         type: { type: String, default: 'mini' },
         projectInfo: { type: Object, default: function() {
             return {
-                'name': undefined,
+                'title': undefined,
                 'icon': undefined,
                 'subtitle': undefined,
                 'id': undefined,

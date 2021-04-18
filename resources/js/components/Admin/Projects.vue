@@ -5,14 +5,14 @@
 
        <div class="col-12 m-3">
            <div class="row justify-content-center">
-                <PreviewProject type="mini" :projectInfo="{name:'SpotiFYI', 'icon': '/stock/spoti_logo.png', 'subtitle': 'Music statistics for Spotify'}"/>
+                <PreviewProject type="mini" :projectInfo="{title:'SpotiFYI', 'icon': '/stock/spoti_logo.png', 'subtitle': 'Music statistics for Spotify'}"/>
            </div>
 
        </div>
 
         <div class="col-12 m-3">
             <div class="row justify-content-center">
-                <PreviewProject type="mini" :projectInfo="{name:'Weird Web-Site of [Mr. o_O]', 'icon': '/stock/mr_logo.png', 'subtitle': 'Videoblog page'}"/>
+                <PreviewProject type="mini" :projectInfo="{title:'Weird Web-Site of [Mr. o_O]', 'icon': '/stock/mr_logo.png', 'subtitle': 'Videoblog page'}"/>
             </div>
         </div>
 

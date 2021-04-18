@@ -2005,7 +2005,7 @@ __webpack_require__.r(__webpack_exports__);
       type: Object,
       "default": function _default() {
         return {
-          'name': undefined,
+          'title': undefined,
           'icon': undefined,
           'subtitle': undefined,
           'id': undefined
@@ -40679,7 +40679,7 @@ var render = function() {
           { staticClass: "col-12 projectMiniPreview animatedBackground" },
           [
             _c("h1", { staticClass: "text-center textVertical font3-8rem" }, [
-              _c("b", [_vm._v(_vm._s(_vm.projectInfo.name))])
+              _c("b", [_vm._v(_vm._s(_vm.projectInfo.title))])
             ]),
             _vm._v(" "),
             _c("img", {
@@ -40765,7 +40765,7 @@ var render = function() {
               attrs: {
                 type: "mini",
                 projectInfo: {
-                  name: "SpotiFYI",
+                  title: "SpotiFYI",
                   icon: "/stock/spoti_logo.png",
                   subtitle: "Music statistics for Spotify"
                 }
@@ -40785,7 +40785,7 @@ var render = function() {
               attrs: {
                 type: "mini",
                 projectInfo: {
-                  name: "Weird Web-Site of [Mr. o_O]",
+                  title: "Weird Web-Site of [Mr. o_O]",
                   icon: "/stock/mr_logo.png",
                   subtitle: "Videoblog page"
                 }
