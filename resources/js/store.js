@@ -43,8 +43,29 @@ const GlobalStates = {
     }
 }
 
+const AdminStates = {
+    state: {
+        //текущая открытая вкладка на панели администратора
+        currentTab: -1,
+    },
+
+    mutations: {
+        //установить стейт
+        setState(state, payload){
+            state[payload.state] = payload.value;
+        }
+    },
+
+    actions: {
+        setCurrentTab(context, value){
+            context.commit('setState', {state: 'currentTab', value});
+        }
+    },
+}
+
 export default new Vuex.Store({
     modules: {
         GlobalStates: GlobalStates,
+        AdminStates: AdminStates,
     }
   });

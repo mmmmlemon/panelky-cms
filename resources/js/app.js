@@ -35,7 +35,6 @@ Vue.component('FooterCard', FooterCard);
 import Preview from './components/Admin/Preview.vue';
 Vue.component('Preview', Preview);
 
-
 //Misc
 import Error from './components/Misc/Error.vue';
 Vue.component('Error', Error);

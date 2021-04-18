@@ -48,6 +48,10 @@
 <script>
 export default {
 
+    beforeCreate(){
+        this.$store.dispatch('setCurrentTab', 'admin');
+    },
+
     created(){
 
         this.$store.dispatch('getSiteOwnerInfo');

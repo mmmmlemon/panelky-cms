@@ -9,6 +9,8 @@ import About from './components/About.vue';
 
 import AppAdmin from './components/AppAdmin.vue';
 import SiteOwnerInfo from './components/Admin/SiteOwnerInfo.vue';
+import Projects from './components/Admin/Projects.vue';
+import Links from './components/Admin/Links.vue';
 
 import PageNotFound from './components/Misc/PageNotFound.vue';
 
@@ -42,6 +44,16 @@ const routes = [
                 component: SiteOwnerInfo,
 
             },
+            {
+                //projects
+                path: '/admin/projects',
+                component: Projects,
+            },
+            {
+                //links
+                path: '/admin/links',
+                component: Links,
+            }
         ]
     },
     // 404

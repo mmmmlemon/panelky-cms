@@ -32,12 +32,16 @@
             <div class="col-8 ">
                 <ul class="nav nav-fill">
                     <li class="nav-item mr-2">
-                        <router-link to="/admin" class="btn btn-block btn-light font14pt" aria-current="page">
+                        <router-link v-bind:class="{'btn-light': currentTab === 'admin', 
+                                                    'btn-outline-light': currentTab !== 'admin'}"
+                                                    to="/admin" class="btn btn-block font14pt" aria-current="page">
                             Владелец сайта
                         </router-link>
                     </li>
                     <li class="nav-item mr-2">
-                        <router-link to="/admin/projects" class="btn btn-block btn-outline-light font14pt">
+                        <router-link v-bind:class="{'btn-light': currentTab === 'projects', 
+                                                    'btn-outline-light': currentTab !== 'projects'}"
+                                                    to="/admin/projects" class="btn btn-block font14pt" >
                             Проекты
                         </router-link>
                     </li>
@@ -57,11 +61,17 @@
 </template>
 <script>
 export default {
-    
+
     data: function() {
         return {
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         }   
+    },
+
+    computed: {
+        currentTab: function() {
+            return this.$store.state.AdminStates.currentTab;
+        }
     },
 
     methods: {
@@ -78,5 +88,6 @@ export default {
             });
         },
     },
+    
 }
 </script>
