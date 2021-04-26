@@ -13,10 +13,10 @@
             <!-- краткое описание -->
             <p class="text-center textVertical font2rem">{{projectInfo.subtitle}}</p>
             <hr>
-            <button class="btn btn-lg btn-light m-2" title="Редактировать" v-on:click="showFullscreenPreview">
+            <button class="btn btn-lg btn-light m-2" title="Редактировать">
                 <i class="bi bi-pencil-fill"></i>
             </button>
-            <button class="btn btn-lg btn-light m-2" title="Удалить" v-on:click="showFullscreenPreview">
+            <button class="btn btn-lg btn-light m-2" title="Удалить">
                 <i class="bi bi-trash-fill"></i>
             </button>
         </div>

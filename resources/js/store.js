@@ -47,6 +47,7 @@ const AdminStates = {
     state: {
         //текущая открытая вкладка на панели администратора
         currentTab: -1,
+        projectsList: -1,
     },
 
     mutations: {
@@ -57,9 +58,24 @@ const AdminStates = {
     },
 
     actions: {
+        //setCurrentTab
+        //установить текущую вкладку
         setCurrentTab(context, value){
             context.commit('setState', {state: 'currentTab', value});
+        },
+
+        //getProjectsList
+        //получить список проектов из БД
+        getProjectsList(context){
+            axios.get('/api/getProjectsList').then(response => {
+                if(response.data != false)
+                { context.commit('setState', {state: 'projectsList', value: response.data}); }
+                else
+                { context.commit('setState', {state: 'siteOwnerInfo', value: false}); }
+            })
         }
+
+
     },
 }
 

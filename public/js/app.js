@@ -2050,9 +2050,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   beforeMount: function beforeMount() {
     this.$store.dispatch('setCurrentTab', 'projects');
+    this.$store.dispatch('getProjectsList', 'projects');
+  },
+  computed: {
+    projectsList: function projectsList() {
+      return this.$store.state.AdminStates.projectsList;
+    }
   }
 });
 
@@ -3279,7 +3291,8 @@ var GlobalStates = {
 var AdminStates = {
   state: {
     //текущая открытая вкладка на панели администратора
-    currentTab: -1
+    currentTab: -1,
+    projectsList: -1
   },
   mutations: {
     //установить стейт
@@ -3288,10 +3301,29 @@ var AdminStates = {
     }
   },
   actions: {
+    //setCurrentTab
+    //установить текущую вкладку
     setCurrentTab: function setCurrentTab(context, value) {
       context.commit('setState', {
         state: 'currentTab',
         value: value
+      });
+    },
+    //getProjectsList
+    //получить список проектов из БД
+    getProjectsList: function getProjectsList(context) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getProjectsList').then(function (response) {
+        if (response.data != false) {
+          context.commit('setState', {
+            state: 'projectsList',
+            value: response.data
+          });
+        } else {
+          context.commit('setState', {
+            state: 'siteOwnerInfo',
+            value: false
+          });
+        }
       });
     }
   }
@@ -40695,25 +40727,9 @@ var render = function() {
             _vm._v(" "),
             _c("hr"),
             _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-lg btn-light m-2",
-                attrs: { title: "Редактировать" },
-                on: { click: _vm.showFullscreenPreview }
-              },
-              [_c("i", { staticClass: "bi bi-pencil-fill" })]
-            ),
+            _vm._m(0),
             _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-lg btn-light m-2",
-                attrs: { title: "Удалить" },
-                on: { click: _vm.showFullscreenPreview }
-              },
-              [_c("i", { staticClass: "bi bi-trash-fill" })]
-            )
+            _vm._m(1)
           ]
         )
       : _vm.type === "full"
@@ -40729,7 +40745,31 @@ var render = function() {
         )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-lg btn-light m-2",
+        attrs: { title: "Редактировать" }
+      },
+      [_c("i", { staticClass: "bi bi-pencil-fill" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      { staticClass: "btn btn-lg btn-light m-2", attrs: { title: "Удалить" } },
+      [_c("i", { staticClass: "bi bi-trash-fill" })]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -40755,8 +40795,8 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "row mt-5 justify-content-center fadeInAnim" },
-    [
-      _c("div", { staticClass: "col-12 m-3" }, [
+    _vm._l(_vm.projectsList, function(project) {
+      return _c("div", { key: project.id, staticClass: "col-12 m-3" }, [
         _c(
           "div",
           { staticClass: "row justify-content-center" },
@@ -40765,29 +40805,9 @@ var render = function() {
               attrs: {
                 type: "mini",
                 projectInfo: {
-                  title: "SpotiFYI",
-                  icon: "/stock/spoti_logo.png",
-                  subtitle: "Music statistics for Spotify"
-                }
-              }
-            })
-          ],
-          1
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-12 m-3" }, [
-        _c(
-          "div",
-          { staticClass: "row justify-content-center" },
-          [
-            _c("PreviewProject", {
-              attrs: {
-                type: "mini",
-                projectInfo: {
-                  title: "Weird Web-Site of [Mr. o_O]",
-                  icon: "/stock/mr_logo.png",
-                  subtitle: "Videoblog page"
+                  title: project.title,
+                  icon: project.icon,
+                  subtitle: project.subtitle
                 }
               }
             })
@@ -40795,7 +40815,8 @@ var render = function() {
           1
         )
       ])
-    ]
+    }),
+    0
   )
 }
 var staticRenderFns = []
