@@ -47,7 +47,7 @@ const AdminStates = {
     state: {
         //текущая открытая вкладка на панели администратора
         currentTab: -1,
-        projectsList: -1,
+        projectsList: [],
     },
 
     mutations: {

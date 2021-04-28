@@ -36,7 +36,7 @@ class APIController extends Controller
 
         foreach($projects as $project)
         {
-           array_push($response, ['id' => $project->id,'title' => $project->project_title, 'icon' => $project->project_icon, 'subtitle' => $project->project_subtitle]);
+           array_push($response, ['id' => $project->id,'title' => $project->project_title]);
         }
 
         return response()->json($response);

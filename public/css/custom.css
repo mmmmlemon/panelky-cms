@@ -170,6 +170,16 @@ hr {
     padding: 5px;
 }
 
+.transparentCard {
+    border-radius: 15px;
+    background-color: rgba(255,255,255, 0.1);
+    cursor: pointer;
+}
+
+.transparentCard {
+    background-color: rgba(255,255,255, 0.3);
+}
+
 
 /* /////////////////////// */
 /* margins, paddings, width, height */
