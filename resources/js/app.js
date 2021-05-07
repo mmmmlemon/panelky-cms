@@ -34,10 +34,16 @@ Vue.component('FooterCard', FooterCard);
 //Admin
 import PreviewOwner from './components/Admin/Misc/PreviewOwner.vue';
 Vue.component('PreviewOwner', PreviewOwner);
+
 import ListOfProjects from './components/Admin/Misc/ListOfProjects.vue';
 Vue.component('ListOfProjects', ListOfProjects);
+
 import ProjectListItem from './components/Admin/Misc/ProjectListItem.vue';
 Vue.component('ProjectListItem', ProjectListItem);
+
+import PreviewProject from './components/Admin/Misc/PreviewProject.vue';
+Vue.component('PreviewProject', PreviewProject);
+
 
 //Misc
 import Error from './components/Misc/Error.vue';

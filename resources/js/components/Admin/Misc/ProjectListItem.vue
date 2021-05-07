@@ -1,7 +1,7 @@
 //ProjectListItem
 //проект в списке проектов
 <template>
-    <div class="col-11 m-1 transparentCard" v-on:click="setCurrentProjectId(id)" v-bind:class="{ active: id === currentProjectId }">
+    <div class="col-11 m-1 transparentCard" v-on:click="getProject(id)" v-bind:class="{ active: id === currentProjectId }">
         <div class="row">
             <div class="col-10 text-center align-middle">
                 <h2 class="" style="margin-top:10%;">{{title}}</h2>
@@ -39,8 +39,9 @@ export default {
     },
 
     methods: {
-        setCurrentProjectId: function(value){
-           this.$store.dispatch('setCurrentProjectId', value);
+        getProject: function(value){
+            this.$store.dispatch('getProject', value);
+            this.$store.dispatch('setCurrentProjectId', value);
         }
     }
 

@@ -49,6 +49,7 @@ const AdminStates = {
         currentTab: -1,
         projectsList: -1,
         currentProjectId: -1, 
+        currentProject: -1,
     },
 
     mutations: {
@@ -73,7 +74,7 @@ const AdminStates = {
                 { context.commit('setState', {state: 'projectsList', value: response.data}); }
                 else
                 { context.commit('setState', {state: 'siteOwnerInfo', value: false}); }
-            })
+            });
         },
 
         //setCurrentProjectId
@@ -90,9 +91,27 @@ const AdminStates = {
                 { context.commit('setState', { state: 'currentProjectId', value: response.data }); }
                 else
                 { context.commit('setState', {state: 'currentProjectId', value: false}); }
-            })
 
-       
+                axios.get('/api/getProject/'+response.data).then(response => {
+                    if(response.data !== false)
+                    { context.commit('setState', { state: 'currentProject', value: response.data}) }
+                    else
+                    { context.commit('setState', { state: 'currentProject', value: false}) }
+                });
+
+            });
+        },
+
+        //getProject
+        //получить проект для превью проекта
+        getProject(context, value)
+        {
+            axios.get('/api/getProject/'+value).then(response => {
+                if(response.data !== false)
+                { context.commit('setState', { state: 'currentProject', value: response.data}) }
+                else
+                { context.commit('setState', { state: 'currentProject', value: false}) }
+            });
         }
     }
 }

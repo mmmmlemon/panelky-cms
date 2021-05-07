@@ -51,4 +51,13 @@ class APIController extends Controller
         return response()->json($firstProject);
     }
 
+    //getProject
+    //получить проект для превью
+    public function getProject($id)
+    {
+        $project = Project::findOrFail($id);
+        
+        return response()->json($project);
+    }
+
 }
