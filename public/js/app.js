@@ -2011,6 +2011,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     currentProject: {
@@ -41023,25 +41042,66 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v(_vm._s(_vm.currentProject.project_title))]),
-    _vm._v(" "),
-    _c("img", {
-      attrs: { src: _vm.currentProject.project_icon, width: "10%" }
-    }),
-    _vm._v(" "),
-    _c("h3", [_vm._v(_vm._s(_vm.currentProject.project_subtitle))]),
-    _vm._v(" "),
-    _c("h5", [_vm._v(_vm._s(_vm.currentProject.project_desc))]),
-    _vm._v(" "),
-    _c(
-      "a",
-      { attrs: { href: _vm.currentProject.project_url, target: "_blank" } },
-      [_vm._v("Link")]
-    )
-  ])
+  return _c(
+    "div",
+    {
+      staticClass:
+        "col-12 d-flex h-100 justify-content-center animatedBackground previewCard"
+    },
+    [
+      _c("div", { staticClass: "row text-center textVertical" }, [
+        _c("div", { staticClass: "col-12" }, [
+          _c("h1", { staticClass: "text-center textVertical font3-8rem" }, [
+            _c("b", [_vm._v(_vm._s(_vm.currentProject.project_title))])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12" }, [
+          _c("img", {
+            attrs: { src: _vm.currentProject.project_icon, width: "10%" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12" }, [
+          _c("p", { staticClass: "text-center textVertical font2rem" }, [
+            _vm._v(
+              "\n               " +
+                _vm._s(_vm.currentProject.project_subtitle) +
+                "\n            "
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
+      ])
+    ]
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12" }, [
+      _c("hr"),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-light mr-3",
+          attrs: { title: "Редактировать" }
+        },
+        [_c("i", { staticClass: "bi bi-pencil-fill" })]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-light ml-3", attrs: { title: "Удалить" } },
+        [_c("i", { staticClass: "bi bi-trash-fill" })]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -41155,7 +41215,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col-8 transparentCard" },
+              { staticClass: "col-8" },
               [
                 _c("PreviewProject", {
                   attrs: { currentProject: _vm.currentProject }

@@ -7,7 +7,7 @@
                 <div class="col-4">
                     <ListOfProjects v-if="projectsList !== -1" :projectsList="projectsList"/>
                 </div>
-                <div class="col-8 transparentCard">
+                <div class="col-8">
                    <PreviewProject :currentProject="currentProject"/>
                 </div>
             </div>       
