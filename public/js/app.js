@@ -2026,9 +2026,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
+    id: {
+      type: Number,
+      "default": undefined
+    },
     title: {
       type: String,
       "default": "Title"
+    }
+  },
+  computed: {
+    currentProjectId: function currentProjectId() {
+      return this.$store.state.AdminStates.currentProjectId;
+    }
+  },
+  methods: {
+    setCurrentProjectId: function setCurrentProjectId(value) {
+      this.$store.dispatch('setCurrentProjectId', value);
     }
   }
 });
@@ -2066,11 +2080,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   beforeMount: function beforeMount() {
     this.$store.dispatch('setCurrentTab', 'projects');
-    this.$store.dispatch('getProjectsList', 'projects');
+    this.$store.dispatch('getProjectsList');
+    this.$store.dispatch('setFirstProjectId'); // this.$store.dispatch('setCurrentProjectId', this.$store.state.AdminStates.projectsList[0].id)
   },
+  mounted: function mounted() {},
   computed: {
     projectsList: function projectsList() {
       return this.$store.state.AdminStates.projectsList;
+    },
+    currentProjectId: function currentProjectId() {
+      return this.$store.state.AdminStates.currentProjectId;
     }
   }
 });
@@ -3283,7 +3302,7 @@ var GlobalStates = {
     //получить информацию о владельце сайта
     getSiteOwnerInfo: function getSiteOwnerInfo(context) {
       axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getSiteOwnerInfo').then(function (response) {
-        if (response.data != false) {
+        if (response.data !== false) {
           context.commit('setState', {
             state: 'siteOwnerInfo',
             value: response.data
@@ -3302,7 +3321,8 @@ var AdminStates = {
   state: {
     //текущая открытая вкладка на панели администратора
     currentTab: -1,
-    projectsList: []
+    projectsList: -1,
+    currentProjectId: -1
   },
   mutations: {
     //установить стейт
@@ -3312,7 +3332,7 @@ var AdminStates = {
   },
   actions: {
     //setCurrentTab
-    //установить текущую вкладку
+    //установить текущую вкладку (Админка)
     setCurrentTab: function setCurrentTab(context, value) {
       context.commit('setState', {
         state: 'currentTab',
@@ -3320,10 +3340,10 @@ var AdminStates = {
       });
     },
     //getProjectsList
-    //получить список проектов из БД
+    //получить список проектов из БД (Админка)
     getProjectsList: function getProjectsList(context) {
       axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getProjectsList').then(function (response) {
-        if (response.data != false) {
+        if (response.data !== false) {
           context.commit('setState', {
             state: 'projectsList',
             value: response.data
@@ -3331,6 +3351,31 @@ var AdminStates = {
         } else {
           context.commit('setState', {
             state: 'siteOwnerInfo',
+            value: false
+          });
+        }
+      });
+    },
+    //setCurrentProjectId
+    //установить текукщий выбранный проект в списке проектов (Админка)
+    setCurrentProjectId: function setCurrentProjectId(context, value) {
+      context.commit('setState', {
+        state: 'currentProjectId',
+        value: value
+      });
+    },
+    //setFirstProjectId
+    //уставновить первый id проекта в currentProjectId
+    setFirstProjectId: function setFirstProjectId(context) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getFirstProjectId').then(function (response) {
+        if (response.data !== false) {
+          context.commit('setState', {
+            state: 'currentProjectId',
+            value: response.data
+          });
+        } else {
+          context.commit('setState', {
+            state: 'currentProjectId',
             value: false
           });
         }
@@ -40697,7 +40742,7 @@ var render = function() {
     _vm._l(_vm.projectsList, function(project) {
       return _c("ProjectListItem", {
         key: project.id,
-        attrs: { title: project.title }
+        attrs: { id: project.id, title: project.title }
       })
     }),
     1
@@ -40821,17 +40866,29 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-11 m-1 transparentCard active" }, [
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-10 text-center align-middle" }, [
-        _c("h2", { staticStyle: { "margin-top": "10%" } }, [
-          _vm._v(_vm._s(_vm.title))
-        ])
-      ]),
-      _vm._v(" "),
-      _vm._m(0)
-    ])
-  ])
+  return _c(
+    "div",
+    {
+      staticClass: "col-11 m-1 transparentCard",
+      class: { active: _vm.id === _vm.currentProjectId },
+      on: {
+        click: function($event) {
+          return _vm.setCurrentProjectId(_vm.id)
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-10 text-center align-middle" }, [
+          _c("h2", { staticStyle: { "margin-top": "10%" } }, [
+            _vm._v(_vm._s(_vm.title))
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -40881,30 +40938,30 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "row mt-5 justify-content-center fadeInAnim" },
-    [
-      _c("div", { staticClass: "col-8" }, [
-        _c("div", { staticClass: "row" }, [
-          _c(
-            "div",
-            { staticClass: "col-4" },
-            [
-              _c("ListOfProjects", {
-                attrs: { projectsList: _vm.projectsList }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-8 transparentCard" }, [
-            _vm._v("\n                Preview\n            ")
+  return _vm.currentProjectId !== -1
+    ? _c("div", { staticClass: "row mt-5 justify-content-center fadeInAnim" }, [
+        _c("div", { staticClass: "col-8" }, [
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "div",
+              { staticClass: "col-4" },
+              [
+                _vm.projectsList !== -1
+                  ? _c("ListOfProjects", {
+                      attrs: { projectsList: _vm.projectsList }
+                    })
+                  : _vm._e()
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-8 transparentCard" }, [
+              _vm._v("\n                Preview\n            ")
+            ])
           ])
         ])
       ])
-    ]
-  )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true

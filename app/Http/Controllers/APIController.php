@@ -42,4 +42,13 @@ class APIController extends Controller
         return response()->json($response);
     }
 
+    //getFirstProjectId
+    //получить id первого проекта в списке
+    public function getFirstProjectId()
+    {
+        $firstProject = Project::firstOrFail()->id;
+
+        return response()->json($firstProject);
+    }
+
 }

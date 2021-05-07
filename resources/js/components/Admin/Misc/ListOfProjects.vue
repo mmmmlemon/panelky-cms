@@ -4,7 +4,7 @@
 
 <div class="row">
 
-    <ProjectListItem v-for="project in projectsList" :key="project.id"
+    <ProjectListItem v-for="project in projectsList" :key="project.id" :id="project.id"
                         :title="project.title"/>
 
 </div>
@@ -14,8 +14,7 @@
 export default {
     
     props: {
-        projectsList: { type: Array, default: undefined }
-    }
-
+        projectsList: { type: Array, default: undefined },
+    },
 }
 </script>

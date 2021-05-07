@@ -34,7 +34,7 @@ const GlobalStates = {
         //получить информацию о владельце сайта
         getSiteOwnerInfo(context){
             axios.get('/api/getSiteOwnerInfo').then(response => {
-                if(response.data != false)
+                if(response.data !== false)
                 { context.commit('setState', {state: 'siteOwnerInfo', value: response.data}); }
                 else
                 { context.commit('setState', {state: 'siteOwnerInfo', value: false}); }
@@ -47,7 +47,8 @@ const AdminStates = {
     state: {
         //текущая открытая вкладка на панели администратора
         currentTab: -1,
-        projectsList: [],
+        projectsList: -1,
+        currentProjectId: -1, 
     },
 
     mutations: {
@@ -59,24 +60,41 @@ const AdminStates = {
 
     actions: {
         //setCurrentTab
-        //установить текущую вкладку
+        //установить текущую вкладку (Админка)
         setCurrentTab(context, value){
             context.commit('setState', {state: 'currentTab', value});
         },
 
         //getProjectsList
-        //получить список проектов из БД
+        //получить список проектов из БД (Админка)
         getProjectsList(context){
             axios.get('/api/getProjectsList').then(response => {
-                if(response.data != false)
+                if(response.data !== false)
                 { context.commit('setState', {state: 'projectsList', value: response.data}); }
                 else
                 { context.commit('setState', {state: 'siteOwnerInfo', value: false}); }
             })
+        },
+
+        //setCurrentProjectId
+        //установить текукщий выбранный проект в списке проектов (Админка)
+        setCurrentProjectId(context, value){            
+            context.commit('setState', {state: 'currentProjectId', value});
+        },
+
+        //setFirstProjectId
+        //уставновить первый id проекта в currentProjectId
+        setFirstProjectId(context){
+            axios.get('/api/getFirstProjectId').then(response => {
+                if(response.data !== false)
+                { context.commit('setState', { state: 'currentProjectId', value: response.data }); }
+                else
+                { context.commit('setState', {state: 'currentProjectId', value: false}); }
+            })
+
+       
         }
-
-
-    },
+    }
 }
 
 export default new Vuex.Store({
