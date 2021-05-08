@@ -27,7 +27,7 @@ class APIController extends Controller
     }
 
     //getProjectsList
-    //получить список проектов
+    //получить список проектов, Админка
     public function getProjectsList()
     {
         $projects = Project::all();
@@ -43,7 +43,7 @@ class APIController extends Controller
     }
 
     //getFirstProjectId
-    //получить id первого проекта в списке
+    //получить id первого проекта в списке, Админка
     public function getFirstProjectId()
     {
         $firstProject = Project::firstOrFail()->id;
@@ -52,12 +52,25 @@ class APIController extends Controller
     }
 
     //getProject
-    //получить проект для превью
+    //получить проект для превью, Админка
     public function getProject($id)
     {
         $project = Project::findOrFail($id);
         
         return response()->json($project);
+    }
+
+    //getFullProjectsList
+    //получить полный список проектов для главной страницы
+    public function getFullProjectList()
+    {
+        $projects = Project::all();
+
+        if(count($projects) == 0)
+        { return response()->json(false); }
+        else
+        { return response()->json($projects);  }
+
     }
 
 }

@@ -14,6 +14,8 @@ const GlobalStates = {
         navMenuStyle: {'right':'-500px', 'opacity':'0'},
         //информация о владельце сайта
         siteOwnerInfo: -1,
+        //полный список проектов для главной страницы
+        fullProjectList: -1,
     },
 
     mutations: {
@@ -39,6 +41,17 @@ const GlobalStates = {
                 else
                 { context.commit('setState', {state: 'siteOwnerInfo', value: false}); }
             })
+        },
+
+        //getFullProjectList
+        //получить полный список проектов для главной страницы
+        getFullProjectList(context){
+            axios.get('/api/getFullProjectList').then(response => {
+                if(response.data !== false)
+                { context.commit('setState', {state: 'fullProjectList', value: response.data}); }
+                else
+                { context.commit('setState', {state: 'fullProjectList', value: false}); }
+            });
         }
     }
 }

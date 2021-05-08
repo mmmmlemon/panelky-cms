@@ -10,44 +10,44 @@
             <div class="d-none d-md-block col-12 col-md-5 text-center textVertical">
                 <!-- название проекта -->
                 <h1 class="text-center textVertical font3-8rem">
-                    <b>{{projectName}}</b>
+                    <b>{{project.project_title}}</b>
                 </h1>
                 <!-- лого -->
-                <img src="/stock/spoti_logo.png" class="projectLogo" alt="">
+                <img :src="project.project_icon" class="projectLogo" alt="">
                 <br>
                 <!-- краткое описание -->
-                <p class="text-center textVertical font2rem">{{projectDescription}}</p>
+                <p class="text-center textVertical font2rem">{{project.project_subtitle}}</p>
                 <br>
                 <!-- подробное описание -->
-                <p class="text-center font1-2rem">{{fullDescription}}</p>
+                <p class="text-center font1-2rem">{{project.project_desc}}</p>
                 <hr>
                 <!-- футер -->
-                <h6 class="text-center"><b>{{footer}}</b></h6>
+                <h6 class="text-center"><b>{{project.project_bottomText}}</b></h6>
                 <br>
                 <!-- кнопка "Посетить" -->
                 <button type="button" class="btn btn-lg btn-outline-light">
-                    <a :href="projectUrl" target="_blank">
+                    <a :href="project.project_url" target="_blank">
                         View project
                     </a>
                 </button>
             </div>
             <!-- скриншот проекта -->
             <div class="d-none d-md-block col-12 col-md-6 text-center textVertical">
-                <img src="/stock/spoti.jpg" class="projectImage" alt="">
+                <img :src="project.project_image" class="projectImage" alt="">
             </div>
 
             <!-- для мобилок -->
             <div class="d-block d-md-none col-12 text-center textVertical">
                 <!-- название проекта -->
                 <h1 class="text-center textVertical font3-8rem">
-                    <b>{{projectName}}</b>
+                    <b>{{project.project_title}}</b>
                 </h1>
                 <!-- лого -->
-                <img src="/stock/spoti_logo.png" class="projectLogo" alt="">
+                <img :src="project.project_icon" class="projectLogo" alt="">
                 <br>
                 
                 <!-- краткое описание -->
-                <p class="text-center textVertical font2rem">{{projectDescription}}</p>
+                <p class="text-center textVertical font2rem">{{project.project_subtitle}}</p>
                 <br>
                 <!-- скриншот проекта -->
                 <div class="d-block d-md-none col-12 col-md-6 text-center textVertical">
@@ -55,7 +55,7 @@
                 </div>
                 <!-- кнопка "Посетить" -->
                 <button type="button" class="btn btn-lg btn-outline-light">
-                    <a :href="projectUrl" target="_blank">
+                    <a :href="project.project_url" target="_blank">
                         View project
                     </a>
                 </button>
@@ -67,22 +67,22 @@
             <!-- для десктопа -->
             <!-- скриншот проекта -->
             <div class="d-none d-md-block col-12 col-md-6 text-center textVertical">
-                <img src="/stock/mr.jpg" class="projectImage" alt="">
+                <img :src="project.project_image" class="projectImage" alt="">
             </div>
             <div class="d-none d-md-block col-12 col-md-5 text-center textVertical">
                 <h1 class="text-center textVertical font3-2rem">
-                    <b>{{projectName}}</b>
+                    <b>{{project.project_title}}</b>
                 </h1>
-                <img src="/stock/mr_logo.png" class="projectLogo" alt="">
+                <img :src="project.project_icon" class="projectLogo" alt="">
                 <br>
-                <p class="text-center textVertical font2rem">{{projectDescription}}</p>
+                <p class="text-center textVertical font2rem">{{project.project_subtitle}}</p>
                 <br>
-                <p class="text-center font1-2rem">{{fullDescription}}</p>
+                <p class="text-center font1-2rem">{{project.project_desc}}</p>
                 <hr>
-                <h6 class="text-center"><b>{{footer}}</b></h6>
+                <h6 class="text-center"><b>{{project.project_bottomText}}</b></h6>
                 <br>
                 <button type="button" class="btn btn-lg btn-outline-light">
-                    <a :href="projectUrl" target="_blank">
+                    <a :href="project.project_url" target="_blank">
                         View project
                     </a>
                 </button>
@@ -92,20 +92,20 @@
             <div class="d-block d-md-none col-12 text-center textVertical">
                 <!-- название проекта -->
                 <h1 class="text-center textVertical font3rem">
-                    <b>{{projectName}}</b>
+                    <b>{{project.project_title}}</b>
                 </h1>
                 <!-- лого -->
-                <img src="/stock/mr_logo.png" class="projectLogo" alt="">
+                <img :src="project.project_icon" class="projectLogo" alt="">
                 <br>
                 <!-- краткое описание -->
-                <p class="text-center textVertical font2rem">{{projectDescription}}</p>
+                <p class="text-center textVertical font2rem">{{project.project_subtitle}}</p>
                 <br>
                 <div class="d-block d-md-none col-12 col-md-6 text-center textVertical">
                     <img src="/stock/mr_mobile.png" class="projectImageMobile" alt="">
                 </div>
                 <!-- кнопка "Посетить" -->
                 <button type="button" class="btn btn-lg btn-outline-light">
-                    <a :href="projectUrl" target="_blank">
+                    <a :href="project.project_url" target="_blank">
                         View project
                     </a>
                 </button>
@@ -124,11 +124,24 @@ export default {
 
     props: {
         type: { type: String, default: 'left' },
-        projectName: { type: String, default: 'project Name' },
-        projectUrl: { type: String },
-        projectDescription: { type: String, default: 'project description' },
-        fullDescription: { type: String },
-        footer: { type: String, default: 'Footer text' },
+
+        project: {type: Object, default: function(){
+            return {
+                'project_title': undefined,
+                'project_subtitle': undefined,
+                'project_desc': undefined,
+                'project_bottomText': undefined,
+                'project_icon': undefined,
+                'project_image': undefined,
+                'project_url': undefined,
+            }
+        }},
+
+        // projectName: { type: String, default: 'project Name' },
+        // projectUrl: { type: String },
+        // projectDescription: { type: String, default: 'project description' },
+        // fullDescription: { type: String },
+        // footer: { type: String, default: 'Footer text' },
     },
 }
 </script>

@@ -2,11 +2,15 @@
 //домашняя страница
 <template>
     <div class="row h-100 justify-content-center">
-
+        
         <HeaderCard 
             :info="siteOwnerInfo"/>
-
-        <ProjectCard id="spotifyi"
+        
+        <ProjectCard v-for="project in fullProjectList" :key="project.id"
+            :project="project"
+        />
+    
+        <!-- <ProjectCard id="spotifyi"
             type='left'
             projectName="SpotiFYI"
             projectUrl="http://spotifyi.ru"
@@ -20,7 +24,7 @@
             projectUrl="https://mistermisteroo.ru"
             projectDescription="Videoblog page"
             fullDescription="A CMS for videos and images."
-            footer="Laravel / MySQL" />
+            footer="Laravel / MySQL" /> -->
         
         <FooterCard />
         
@@ -31,14 +35,18 @@
 export default {
     beforeCreate(){
         this.$store.dispatch('getSiteOwnerInfo');
+        this.$store.dispatch('getFullProjectList');
     },
 
     computed: {
         siteOwnerInfo: function(){
              
              return this.$store.state.GlobalStates.siteOwnerInfo;
+        },
+
+        fullProjectList: function(){
+            return this.$store.state.GlobalStates.fullProjectList;
         }
     }
-
 }
 </script>
