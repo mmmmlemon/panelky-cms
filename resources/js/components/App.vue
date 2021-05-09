@@ -7,7 +7,7 @@
         <Nav />
         <NavButton />
         <NavScroll :navScrollStyle="navScrollStyle"/>
-        <router-view 
+        <router-view v-if="fullProjectList !== -1"
             v-touch:swipe.left="showNavMenu">
         </router-view>
     </div>
@@ -19,6 +19,7 @@ export default {
 
     created(){
         window.addEventListener('scroll', this.handleNavScroll);
+        this.$store.dispatch('getFullProjectList');
     },
 
     destroyed() {
@@ -29,6 +30,12 @@ export default {
         return {
             navScrollStyle: undefined,
         }
+    },
+
+    computed: {
+        fullProjectList: function(){
+            return this.$store.state.GlobalStates.fullProjectList;
+        },
     },
 
     methods: {

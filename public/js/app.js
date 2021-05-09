@@ -2294,6 +2294,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   created: function created() {
     window.addEventListener('scroll', this.handleNavScroll);
+    this.$store.dispatch('getFullProjectList');
   },
   destroyed: function destroyed() {
     window.removeEventListener('scroll', this.handleNavScroll);
@@ -2302,6 +2303,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       navScrollStyle: undefined
     };
+  },
+  computed: {
+    fullProjectList: function fullProjectList() {
+      return this.$store.state.GlobalStates.fullProjectList;
+    }
   },
   methods: {
     //показать кнопку NavScroll при скролле вниз
@@ -2494,7 +2500,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   beforeCreate: function beforeCreate() {
     this.$store.dispatch('getSiteOwnerInfo');
-    this.$store.dispatch('getFullProjectList');
   },
   computed: {
     siteOwnerInfo: function siteOwnerInfo() {
@@ -41505,18 +41510,20 @@ var render = function() {
       _vm._v(" "),
       _c("NavScroll", { attrs: { navScrollStyle: _vm.navScrollStyle } }),
       _vm._v(" "),
-      _c("router-view", {
-        directives: [
-          {
-            name: "touch",
-            rawName: "v-touch:swipe.left",
-            value: _vm.showNavMenu,
-            expression: "showNavMenu",
-            arg: "swipe",
-            modifiers: { left: true }
-          }
-        ]
-      })
+      _vm.fullProjectList !== -1
+        ? _c("router-view", {
+            directives: [
+              {
+                name: "touch",
+                rawName: "v-touch:swipe.left",
+                value: _vm.showNavMenu,
+                expression: "showNavMenu",
+                arg: "swipe",
+                modifiers: { left: true }
+              }
+            ]
+          })
+        : _vm._e()
     ],
     1
   )

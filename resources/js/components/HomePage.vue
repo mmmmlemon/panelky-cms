@@ -33,14 +33,13 @@
 
 <script>
 export default {
+
     beforeCreate(){
         this.$store.dispatch('getSiteOwnerInfo');
-        this.$store.dispatch('getFullProjectList');
     },
 
     computed: {
-        siteOwnerInfo: function(){
-             
+        siteOwnerInfo: function(){        
              return this.$store.state.GlobalStates.siteOwnerInfo;
         },
 
