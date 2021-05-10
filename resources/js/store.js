@@ -98,7 +98,7 @@ const AdminStates = {
 
         //setFirstProjectId
         //уставновить первый id проекта в currentProjectId
-        setFirstProjectId(context){
+        setFirstProjectId(context, state){
             axios.get('/api/getFirstProjectId').then(response => {
                 if(response.data !== false)
                 { context.commit('setState', { state: 'currentProjectId', value: response.data }); }

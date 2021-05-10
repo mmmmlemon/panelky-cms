@@ -33,9 +33,9 @@
         </div>   
         <!-- полное превью -->
         <div v-if="type==='full'" class="row justify-content-center zIndex3">
-            <ProjectCard :project="project"/>
+            <ProjectCard :project="currentProject"/>
             <!-- кнопка развернуть на весь экран -->
-            <button class="btn btn-light fullscreenButton" title="Развернуть на полный экран" v-on:click="showFullscreenPreview">
+            <button class="btn btn-light fullscreenButton" title="Развернуть на полный экран">
                 <i class="bi bi-arrows-fullscreen"></i>
             </button>
         </div>
@@ -73,7 +73,9 @@ export default {
                 'project_url': undefined
             }
         }}
-    }
+    },
+
+
 
 }
 </script>

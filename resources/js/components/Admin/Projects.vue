@@ -21,7 +21,6 @@ export default {
     beforeMount(){
         this.$store.dispatch('setCurrentTab', 'projects');
         this.$store.dispatch('getProjectsList');
-        this.$store.dispatch('setFirstProjectId');
     },
 
     mounted(){
