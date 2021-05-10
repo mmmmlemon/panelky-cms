@@ -11,6 +11,7 @@ import AppAdmin from './components/AppAdmin.vue';
 import SiteOwnerInfo from './components/Admin/SiteOwnerInfo.vue';
 import Projects from './components/Admin/Projects.vue';
 import Links from './components/Admin/Links.vue';
+import EditProject from './components/Admin/EditProject.vue';
 
 import PageNotFound from './components/Misc/PageNotFound.vue';
 
@@ -53,6 +54,11 @@ const routes = [
                 //links
                 path: '/admin/links',
                 component: Links,
+            },
+            {
+                //edit project
+                path:'/admin/projects/edit',
+                component: EditProject,
             }
         ]
     },

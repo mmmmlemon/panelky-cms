@@ -19,9 +19,12 @@
            
             <div class="col-12">
                 <hr>
-                    <button class="btn btn-light mr-3" title="Редактировать">
-                        <i class="bi bi-pencil-fill"></i>
-                    </button>
+                    <router-link to="/admin/projects/edit">
+                        <button class="btn btn-light mr-3" title="Редактировать">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+                    </router-link>
+                    
                     <button class="btn btn-light ml-3" title="Удалить">
                         <i class="bi bi-trash-fill"></i>
                     </button>
