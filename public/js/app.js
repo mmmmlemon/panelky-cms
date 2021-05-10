@@ -1951,6 +1951,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2149,8 +2150,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      project: {
+        'project_title': 'SpotiFYI',
+        'project_subtitle': 'Music statistics for Spotify',
+        'project_desc': 'An projectlication for Spotify users that provides them an ability to see their music habits and statistic in an accesible form.',
+        'project_bottomText': 'Laravel / Vue.js / Spotify API',
+        'project_icon': '/stock/spoti_logo.png',
+        'project_image': '/stock/spoti.jpg',
+        'project_url': 'http://spotifyi.ru'
+      }
+    };
+  },
   props: {
+    type: {
+      type: String,
+      "default": 'mini'
+    },
     currentProject: {
       type: Object,
       "default": function _default() {
@@ -2952,6 +2978,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     type: {
@@ -3438,7 +3465,7 @@ var routes = [//user side
     component: _components_Admin_Links_vue__WEBPACK_IMPORTED_MODULE_8__.default
   }, {
     //edit project
-    path: '/admin/projects/edit',
+    path: '/admin/edit',
     component: _components_Admin_EditProject_vue__WEBPACK_IMPORTED_MODULE_9__.default
   }]
 }, // 404
@@ -41105,7 +41132,7 @@ var render = function() {
     "div",
     { staticClass: "row mt-5 justify-content-center fadeInAnim" },
     [
-      _c("div", { staticClass: "col-10" }, [
+      _c("div", { staticClass: "col-12" }, [
         _c("h3", { staticClass: "text-center mb-4" }, [
           _vm._v('Редактирование "Project Name"')
         ]),
@@ -41200,7 +41227,12 @@ var render = function() {
               : _vm._e()
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-7 transparentCard" })
+          _c(
+            "div",
+            { staticClass: "col-7" },
+            [_c("PreviewProject", { attrs: { type: "full" } })],
+            1
+          )
         ])
       ])
     ]
@@ -41479,51 +41511,74 @@ var render = function() {
         "col-12 d-flex h-100 justify-content-center animatedBackground previewCard"
     },
     [
-      _c("div", { staticClass: "row text-center textVertical" }, [
-        _c("div", { staticClass: "col-12" }, [
-          _c("h1", { staticClass: "text-center textVertical font3-8rem" }, [
-            _c("b", [_vm._v(_vm._s(_vm.currentProject.project_title))])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-12" }, [
-          _c("img", {
-            attrs: { src: _vm.currentProject.project_icon, width: "10%" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-12" }, [
-          _c("p", { staticClass: "text-center textVertical font2rem" }, [
-            _vm._v(
-              "\n               " +
-                _vm._s(_vm.currentProject.project_subtitle) +
-                "\n            "
+      _vm.type === "mini"
+        ? _c("div", { staticClass: "row text-center textVertical" }, [
+            _c("div", { staticClass: "col-12" }, [
+              _c("h1", { staticClass: "text-center textVertical font3-8rem" }, [
+                _c("b", [_vm._v(_vm._s(_vm.currentProject.project_title))])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12" }, [
+              _c("img", {
+                attrs: { src: _vm.currentProject.project_icon, width: "10%" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12" }, [
+              _c("p", { staticClass: "text-center textVertical font2rem" }, [
+                _vm._v(
+                  "\n               " +
+                    _vm._s(_vm.currentProject.project_subtitle) +
+                    "\n            "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-12" },
+              [
+                _c("hr"),
+                _vm._v(" "),
+                _c("router-link", { attrs: { to: "/admin/edit" } }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-light mr-3",
+                      attrs: { title: "Редактировать" }
+                    },
+                    [_c("i", { staticClass: "bi bi-pencil-fill" })]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(0)
+              ],
+              1
             )
           ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-12" },
-          [
-            _c("hr"),
-            _vm._v(" "),
-            _c("router-link", { attrs: { to: "/admin/projects/edit" } }, [
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.type === "full"
+        ? _c(
+            "div",
+            { staticClass: "row justify-content-center zIndex3" },
+            [
+              _c("ProjectCard", { attrs: { project: _vm.project } }),
+              _vm._v(" "),
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-light mr-3",
-                  attrs: { title: "Редактировать" }
+                  staticClass: "btn btn-light fullscreenButton",
+                  attrs: { title: "Развернуть на полный экран" },
+                  on: { click: _vm.showFullscreenPreview }
                 },
-                [_c("i", { staticClass: "bi bi-pencil-fill" })]
+                [_c("i", { staticClass: "bi bi-arrows-fullscreen" })]
               )
-            ]),
-            _vm._v(" "),
-            _vm._m(0)
-          ],
-          1
-        )
-      ])
+            ],
+            1
+          )
+        : _vm._e()
     ]
   )
 }
@@ -42403,7 +42458,7 @@ var render = function() {
     "div",
     {
       staticClass:
-        "row h-75 w-75 d-flex justify-content-center borderUnderline zIndex-1"
+        "row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1"
     },
     [
       _vm.type == "left"

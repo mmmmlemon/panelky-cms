@@ -2,7 +2,7 @@
 // Карточка для проектов
 <template>
 
-    <div class="row h-75 w-75 d-flex justify-content-center borderUnderline zIndex-1">
+    <div class="row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1">
 
         <!-- карточка с описанием слева -->
         <div v-if="type=='left'" class="row justify-content-center">
@@ -60,8 +60,9 @@
                     </a>
                 </button>
             </div>
+            
         </div>
-
+        
         <!-- карточка с описанием справа -->
         <div v-else-if="type=='right'" class="row justify-content-center">
             <!-- для десктопа -->
@@ -115,7 +116,7 @@
         <div v-else class="textVertical">
             <Error errorMessage="Неверный параметр 'type'"/>
         </div>
-
+    
     </div>
     
 </template>

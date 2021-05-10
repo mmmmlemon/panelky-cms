@@ -2,7 +2,8 @@
 //превью проекта в админке
 <template>
     <div class="col-12 d-flex h-100 justify-content-center animatedBackground previewCard">
-        <div class="row text-center textVertical">
+        <!-- мини превью -->
+        <div v-if="type === 'mini'" class="row text-center textVertical">
             <div class="col-12">
                 <h1 class="text-center textVertical font3-8rem">
                     <b>{{currentProject.project_title}}</b>    
@@ -19,7 +20,7 @@
            
             <div class="col-12">
                 <hr>
-                    <router-link to="/admin/projects/edit">
+                    <router-link to="/admin/edit">
                         <button class="btn btn-light mr-3" title="Редактировать">
                             <i class="bi bi-pencil-fill"></i>
                         </button>
@@ -28,15 +29,38 @@
                     <button class="btn btn-light ml-3" title="Удалить">
                         <i class="bi bi-trash-fill"></i>
                     </button>
-            </div>
-            
-        </div>    
+            </div> 
+        </div>   
+        <!-- полное превью -->
+        <div v-if="type==='full'" class="row justify-content-center zIndex3">
+            <ProjectCard :project="project"/>
+            <!-- кнопка развернуть на весь экран -->
+            <button class="btn btn-light fullscreenButton" title="Развернуть на полный экран" v-on:click="showFullscreenPreview">
+                <i class="bi bi-arrows-fullscreen"></i>
+            </button>
+        </div>
     </div>
 </template>
 <script>
 export default {
-    
+
+    data: () => {
+        return {
+            project: {
+                'project_title': 'SpotiFYI',
+                'project_subtitle': 'Music statistics for Spotify',
+                'project_desc': 'An projectlication for Spotify users that provides them an ability to see their music habits and statistic in an accesible form.',
+                'project_bottomText': 'Laravel / Vue.js / Spotify API',
+                'project_icon': '/stock/spoti_logo.png',
+                'project_image': '/stock/spoti.jpg',
+                'project_url': 'http://spotifyi.ru'
+            },
+        }
+    },
+
+
     props: {
+        type: {type: String, default: 'mini'},
         currentProject: { type: Object, default: function() {
             return {
                 'id': undefined,

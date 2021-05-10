@@ -2,7 +2,7 @@
 //редактировать проект
 <template>
     <div class="row mt-5 justify-content-center fadeInAnim">
-        <div class="col-10">
+        <div class="col-12">
             <h3 class="text-center mb-4">Редактирование "Project Name"</h3>
             <div class="row justify-content-center">
                 <div class="col-4">
@@ -73,9 +73,10 @@
                         </button>
                     </form>
                 </div>
-                <div class="col-7 transparentCard">
-                    <!-- <ProjectCard /> -->
+                <div class="col-7">
+                    <PreviewProject type="full"/>
                 </div>
+                
             </div>
             
         </div>
