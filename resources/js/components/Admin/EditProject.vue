@@ -1,7 +1,7 @@
 //EditProject
 //редактировать проект
 <template>
-    <div class="row mt-5 justify-content-center fadeInAnim">
+    <div class="row mt-5 justify-content-center fadeInAnim" v-if="currentProject !== -1">
         <div class="col-12">
             <h3 class="text-center mb-4">Редактирование "{{currentProject.project_title}}"</h3>
             <div class="row justify-content-center">
@@ -108,6 +108,13 @@ export default {
         currentProject: function(){
             return this.$store.state.AdminStates.currentProject;
         }
+    },
+
+    beforeMount(){
+        //получаем id проекта из url
+        const id = this.$route.params.id;
+        console.log(`Project ID is '${id}'`)
+        this.$store.dispatch('getProject', {value: id, type: 'full'});
     }
 
 }

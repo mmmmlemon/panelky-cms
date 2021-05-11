@@ -35,7 +35,7 @@ export default {
 
     methods: {
         getProject: function(value){
-            this.$store.dispatch('getProject', value);
+            this.$store.dispatch('getProject', {value: value, type: 'mini'});
             this.$store.dispatch('setCurrentProjectId', value);
         }
     }

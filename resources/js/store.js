@@ -105,7 +105,7 @@ const AdminStates = {
                 else
                 { context.commit('setState', {state: 'currentProjectId', value: false}); }
 
-                axios.get('/api/getProject/'+response.data).then(response => {
+                axios.get(`/api/getProject/${response.data}/mini`).then(response => {
                     if(response.data !== false)
                     { context.commit('setState', { state: 'currentProject', value: response.data}) }
                     else
@@ -117,9 +117,9 @@ const AdminStates = {
 
         //getProject
         //получить проект для превью проекта
-        getProject(context, value)
+        getProject(context, payload)
         {
-            axios.get('/api/getProject/'+value).then(response => {
+            axios.get(`/api/getProject/${payload.value}/${payload.type}`).then(response => {
                 if(response.data !== false)
                 { context.commit('setState', { state: 'currentProject', value: response.data}) }
                 else

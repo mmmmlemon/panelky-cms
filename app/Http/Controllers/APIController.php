@@ -52,14 +52,18 @@ class APIController extends Controller
     }
 
     //getProject
-    //получить проект для превью, Админка
-    public function getProject($id)
+    //получить проект для превью  редактировании проекта, Админка
+    public function getProject($id, $type)
     {
         $project = Project::findOrFail($id);
         
-        return response()->json($project);
+        if($type === "full")
+        { return response()->json($project); }
+        else if ($type === "mini")
+        { return response()->json(['id' => $project->id, 'project_title' => $project->project_title, 'project_subtitle' => $project->project_subtitle, 'project_icon' => $project->project_icon]); }
     }
 
+ 
     //getFullProjectsList
     //получить полный список проектов для главной страницы
     public function getFullProjectList()

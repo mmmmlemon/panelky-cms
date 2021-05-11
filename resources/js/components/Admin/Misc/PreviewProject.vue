@@ -20,7 +20,7 @@
            
             <div class="col-12">
                 <hr>
-                    <router-link to="/admin/edit">
+                    <router-link :to="'/admin/edit/'+currentProject.id">
                         <button class="btn btn-light mr-3" title="Редактировать">
                             <i class="bi bi-pencil-fill"></i>
                         </button>
