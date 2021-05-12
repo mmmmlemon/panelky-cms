@@ -27,7 +27,8 @@
 </template>
 <script>
 export default {
-
+    
+    //данные
     data: function(){
         return {
             fullscreenStyle: undefined,
@@ -44,7 +45,6 @@ export default {
     methods: {
         //показать превью на полный экран
         showFullscreenPreview: function(){
-
             this.fullscreenStyle = { left: '0px', opacity: 1 };
         },
 

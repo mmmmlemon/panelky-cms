@@ -3,29 +3,15 @@
 <template>
     <div class="row h-100 justify-content-center">
         
+        <!-- карточка с информацией о владельце -->
         <HeaderCard 
             :info="siteOwnerInfo"/>
         
+        <!-- карточки проектов (выводятся в цикле) -->
         <ProjectCard v-for="project in fullProjectList" :key="project.id"
-            :project="project"
-        />
-    
-        <!-- <ProjectCard id="spotifyi"
-            type='left'
-            projectName="SpotiFYI"
-            projectUrl="http://spotifyi.ru"
-            projectDescription="Music statistics for Spotify"
-            fullDescription="An projectlication for Spotify users that provides them an ability to see their music habits and statistic in an accesible form. " 
-            footer="Laravel / Vue.js / Spotify API"/>
+                     :project="project"/>
 
-        <ProjectCard 
-            type='right'
-            projectName="Weird Web-Site of [Mr. o_O]"
-            projectUrl="https://mistermisteroo.ru"
-            projectDescription="Videoblog page"
-            fullDescription="A CMS for videos and images."
-            footer="Laravel / MySQL" /> -->
-        
+        <!-- карточка футер -->
         <FooterCard />
         
     </div>
@@ -33,16 +19,20 @@
 
 <script>
 export default {
-
-    beforeCreate(){
+    //хуки
+    created(){
+        //получить информацию о владельце сайта
         this.$store.dispatch('getSiteOwnerInfo');
     },
 
+    //данные
     computed: {
+        //информация о владельце сайта
         siteOwnerInfo: function(){        
              return this.$store.state.GlobalStates.siteOwnerInfo;
         },
 
+        //полный список проектов
         fullProjectList: function(){
             return this.$store.state.GlobalStates.fullProjectList;
         }

@@ -21,7 +21,7 @@
 
 <script>
 export default {
-    
+    //данные
     props: {
         id: { type: Number, default: undefined },
         title: { type: String, default: "Title"}
@@ -33,14 +33,12 @@ export default {
         }
     },
 
+    //методы
     methods: {
         getProject: function(value){
             this.$store.dispatch('getProject', {value: value, type: 'mini'});
             this.$store.dispatch('setCurrentProjectId', value);
         }
     }
-
-
-
 }
 </script>

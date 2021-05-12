@@ -1,14 +1,18 @@
-// App
-// корневой компонент для публичной части сайта
-
-
+//App
+//корневой компонент для публичной части сайта
 <template>
+
     <div class="container col-12 vh-100">
+        <!-- навигация -->
         <Nav />
+        <!-- кнопка навигации в верхнем углу экрана -->
         <NavButton />
+        <!-- кнопка "Наверх" -->
         <NavScroll :navScrollStyle="navScrollStyle"/>
-        <router-view v-if="fullProjectList !== -1"
-            v-touch:swipe.left="showNavMenu">
+        
+        <!-- пока не загрузился список проектов, не показывать router-view -->
+        <router-view v-if="fullProjectList !== -1 && fullProjectList !== false"
+                     v-touch:swipe.left="showNavMenu">
         </router-view>
     </div>
 
@@ -17,65 +21,68 @@
 <script>
 export default {
 
+    //хуки
     created(){
+        //при событии scroll будет срабатывать метод handleNavScroll
         window.addEventListener('scroll', this.handleNavScroll);
+        //получение полного списка проектов для HomePage.vue
         this.$store.dispatch('getFullProjectList');
     },
 
     destroyed() {
+        //убрать listener для события scroll
         window.removeEventListener('scroll', this.handleNavScroll);
     },
 
+    //данные
     data: function(){
         return {
+            //стиль для кнопки "Наверх"
             navScrollStyle: undefined,
         }
     },
 
     computed: {
+        //полный список проектов
         fullProjectList: function(){
             return this.$store.state.GlobalStates.fullProjectList;
         },
     },
 
+    //методы
     methods: {
         //показать кнопку NavScroll при скролле вниз
         //или спрятать при скролле вверх
         handleNavScroll(event){
-
             var height = window.innerHeight;
 
-            if(window.pageYOffset > height + height / 3)
-            {
-                this.navScrollStyle = { opacity: 1, zIndex: '3' };
+            if(window.pageYOffset > height + height / 3){ 
+                this.navScrollStyle = { opacity: 1, zIndex: '3' }; 
             }
-            else if (window.pageYOffset < height + height / 3)
-            {
-                this.navScrollStyle = { opacity: 0, zIndex: '-9999999' };
+            else if (window.pageYOffset < height + height / 3){ 
+                this.navScrollStyle = { opacity: 0, zIndex: '-9999999' }; 
             }
         },
 
-        // показать боковое меню
-        showNavMenu: function() {
-            if(this.$isMobile)
-            {
+        //показать боковое меню
+        showNavMenu: function(){
+            if(this.$isMobile){   
+                //устанавливаем стиль для NavMenu
                 this.$store.dispatch('setNavMenuStyle', {'right':'0px', 'opacity':'1'});
-                //отключаем скролл страницы
-                //пока открыто меню
+                //отключаем скролл страницы пока открыто меню
                 document.body.style.overflow = 'hidden'; 
              }
         },
 
         //закрыть боковое меню
-        closeNavMenu: function() 
-        {   
-            if(this.$isMobile)
-            {
+        closeNavMenu: function(){  
+
+            if(this.$isMobile){
                 this.$store.dispatch('setNavMenuStyle', {'right':'-500px', 'opacity':'0'});
                 //если сайт открыт на телефоне, возвращаем скролл
                 document.body.style.overflow = 'visible'; 
             }
-        }
+        },
     }
 }
 </script>

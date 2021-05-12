@@ -1,13 +1,15 @@
 //EditProject
 //редактировать проект
 <template>
-    <div class="row mt-5 justify-content-center fadeInAnim" v-if="currentProject !== -1">
-        <div class="col-12">
+    <div class="row mt-5 justify-content-center fadeInAnim">
+
+        <div class="col-12" v-if="currentProject !== -1 && currentProject !== false">
             <h3 class="text-center mb-4">Редактирование "{{currentProject.project_title}}"</h3>
             <div class="row justify-content-center">
                 <div class="col-4">
                     <div class="col-12 mb-4">
                         <ul class="nav nav-fill">
+                            <!-- вкладки -->
                             <li class="nav-item mr-2">
                                 <button class="btn btn-block btn-sm" v-on:click="showBasicForm" 
                                         v-bind:class="{'btn-light': basicFormActive === true, 'btn-outline-light': basicFormActive === false}">
@@ -73,6 +75,7 @@
                         </button>
                     </form>
                 </div>
+                <!-- превью -->
                 <div class="col-7">
                     <PreviewProject type="full" :currentProject="currentProject"/>
                 </div>
@@ -85,22 +88,20 @@
 </template>
 <script>
 export default {
+
+    //хуки
+    beforeMount(){
+        //получаем id проекта из url
+        const id = this.$route.params.id;
+        //получаем проект
+        this.$store.dispatch('getProject', {value: id, type: 'full'});
+    },
+
+    //данные
     data: () => {
         return {
             basicFormActive: true,
             imageFormActive: false,
-        }
-    },
-
-    methods: {
-        showImageForm: function(){
-            this.imageFormActive = true;
-            this.basicFormActive = false;
-        },
-
-        showBasicForm: function(){
-            this.basicFormActive = true;
-            this.imageFormActive = false;
         }
     },
 
@@ -110,12 +111,19 @@ export default {
         }
     },
 
-    beforeMount(){
-        //получаем id проекта из url
-        const id = this.$route.params.id;
-        console.log(`Project ID is '${id}'`)
-        this.$store.dispatch('getProject', {value: id, type: 'full'});
-    }
+    //методы
+    methods: {
+        //показать форму для картинок
+        showImageForm: function(){
+            this.imageFormActive = true;
+            this.basicFormActive = false;
+        },
 
+        //показать общую форму
+        showBasicForm: function(){
+            this.basicFormActive = true;
+            this.imageFormActive = false;
+        }
+    },
 }
 </script>

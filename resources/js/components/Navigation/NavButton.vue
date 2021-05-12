@@ -1,5 +1,5 @@
-// NavButton
-// кнопка навигации с боковым меню
+//NavButton
+//кнопка навигации с боковым меню
 <template>
 
     <div>
@@ -60,14 +60,17 @@
 <script>
     export default {
 
+        //данные
         computed:{
+            //стиль бокового меню
             navMenuStyle: function(){
                 return this.$store.state.GlobalStates.navMenuStyle;
             }
         },
 
+        //методы
         methods: {
-            // показать боковое меню
+            //показать боковое меню
             showNavMenu: function() {
                 this.$store.dispatch('setNavMenuStyle', {'right':'0px', 'opacity':'1'});
                 // если сайт открыт на телефоне, то отключаем скролл страницы

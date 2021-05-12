@@ -3,10 +3,8 @@
 <template>
 
 <div class="row">
-
     <ProjectListItem v-for="project in projectsList" :key="project.id" :id="project.id"
                         :title="project.title"/>
-
 </div>
 
 </template>

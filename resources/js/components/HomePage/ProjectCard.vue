@@ -1,8 +1,12 @@
-// ProjectCard
-// Карточка для проектов
+//ProjectCard
+//Карточка для проектов
 <template>
 
     <div class="row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1">
+
+        <div class="col-10" v-if="project === false">
+            <Error errorMessage="Не удалось загрузить информацию о проекте"/>
+        </div>
 
         <!-- карточка с описанием слева -->
         <div v-if="type=='left'" class="row justify-content-center">
@@ -123,9 +127,9 @@
 <script>
 export default {
 
+    //данные
     props: {
         type: { type: String, default: 'left' },
-
         project: {type: Object, default: function(){
             return {
                 'project_title': undefined,
@@ -137,12 +141,6 @@ export default {
                 'project_url': undefined,
             }
         }},
-
-        // projectName: { type: String, default: 'project Name' },
-        // projectUrl: { type: String },
-        // projectDescription: { type: String, default: 'project description' },
-        // fullDescription: { type: String },
-        // footer: { type: String, default: 'Footer text' },
     },
 }
 </script>

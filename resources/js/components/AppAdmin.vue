@@ -1,5 +1,5 @@
-// AppAdmin
-// корневой компонент для админки
+//AppAdmin
+//корневой компонент для админки
 <template>
     <div class="container col-12 vh-100">
         
@@ -62,20 +62,26 @@
 <script>
 export default {
 
+    //данные
     data: function() {
         return {
+            //CSRF-токен
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         }   
     },
 
     computed: {
+        //текущая открытая вкладка
         currentTab: function() {
             return this.$store.state.AdminStates.currentTab;
         }
     },
 
+    //методы
     methods: {
+        //логаут
         logout: function(){
+            //отправить POST-запрос на выход из профиля и перенаправить на главную страницу
             axios.post('logout').then(response => {
                 if(response.status === 302 || 401){
                     window.location.href="/";

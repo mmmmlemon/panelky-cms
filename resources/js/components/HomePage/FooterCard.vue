@@ -1,5 +1,5 @@
 //FooterCard
-// футер с контактами и ссылками
+//футер с контактами и ссылками
 <template>
     <div class="row h-75 w-75 bigCard d-flex justify-content-center">
         <div class="div-12 textVertical">
@@ -35,9 +35,6 @@
                         </span>
                     </button>
                 </a>
-                <!-- <p class="text-center">
-                    <b>{{contactEmail}}</b>
-                </p> -->
             </p>
         </div>
        

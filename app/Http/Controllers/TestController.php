@@ -6,7 +6,7 @@ use Storage;
 use Illuminate\Http\Request;
 
 //TestController
-// контроллер для тестирования функционала сайта
+//контроллер для тестирования функционала сайта
 class TestController extends Controller
 {
     //saveJson

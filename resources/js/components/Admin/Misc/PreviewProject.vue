@@ -44,38 +44,21 @@
 <script>
 export default {
 
-    data: () => {
-        return {
-            project: {
-                'project_title': 'SpotiFYI',
-                'project_subtitle': 'Music statistics for Spotify',
-                'project_desc': 'An projectlication for Spotify users that provides them an ability to see their music habits and statistic in an accesible form.',
-                'project_bottomText': 'Laravel / Vue.js / Spotify API',
-                'project_icon': '/stock/spoti_logo.png',
-                'project_image': '/stock/spoti.jpg',
-                'project_url': 'http://spotifyi.ru'
-            },
-        }
-    },
-
-
     props: {
-        type: {type: String, default: 'mini'},
-        currentProject: { type: Object, default: function() {
-            return {
-                'id': undefined,
-                'project_bottomText': undefined,
-                'project_desc': undefined,
-                'project_icon': undefined,
-                'project_image': undefined,
-                'project_subtitle': undefined,
-                'project_title': undefined,
-                'project_url': undefined
-            }
-        }}
-    },
-
-
+            type: {type: String, default: 'mini'},
+            currentProject: { type: Object, default: function() {
+                return {
+                    'id': undefined,
+                    'project_bottomText': undefined,
+                    'project_desc': undefined,
+                    'project_icon': undefined,
+                    'project_image': undefined,
+                    'project_subtitle': undefined,
+                    'project_title': undefined,
+                    'project_url': undefined
+                }
+            }}
+        },
 
 }
 </script>

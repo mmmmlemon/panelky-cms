@@ -10,6 +10,7 @@ use App\Models\Project;
 //функции API, получение информации из БД
 class APIController extends Controller
 {
+    //ВЛАДЕЛЕЦ САЙТА
     //getSiteOwnerInfo
     //получить информацию о владельце сайта
     public function getSiteOwnerInfo()
@@ -26,14 +27,17 @@ class APIController extends Controller
         return response()->json($response);
     }
 
+    //ПРОЕКТЫ
     //getProjectsList
     //получить список проектов, Админка
     public function getProjectsList()
     {
-        $projects = Project::all();
+        //получаем список проектов отсортированный по полю order
+        $projects = Project::orderBy('order', 'asc')->get();
 
         $response = [];
 
+        //фильтруем результат, нам нужны только поля id и title
         foreach($projects as $project)
         {
            array_push($response, ['id' => $project->id,'title' => $project->project_title]);
@@ -43,38 +47,43 @@ class APIController extends Controller
     }
 
     //getFirstProjectId
-    //получить id первого проекта в списке, Админка
+    //получить id первого проекта в списке проектов
     public function getFirstProjectId()
     {
-        $firstProject = Project::firstOrFail()->id;
+        $firstProjectId = Project::firstOrFail()->id;
 
-        return response()->json($firstProject);
+        return response()->json($firstProjectId);
     }
 
     //getProject
-    //получить проект для превью  редактировании проекта, Админка
+    //получить проект для превью (мини-превью или полное превью)
     public function getProject($id, $type)
     {
         $project = Project::findOrFail($id);
         
-        if($type === "full")
+        //полное превью
+        if($type == "full")
         { return response()->json($project); }
-        else if ($type === "mini")
-        { return response()->json(['id' => $project->id, 'project_title' => $project->project_title, 'project_subtitle' => $project->project_subtitle, 'project_icon' => $project->project_icon]); }
+        //мини-превью
+        else if ($type == "mini")
+        { return response()->json(['id' => $project->id, 
+                                    'project_title' => $project->project_title, 
+                                    'project_subtitle' => $project->project_subtitle, 
+                                    'project_icon' => $project->project_icon]); }
+        else
+        { return response()->json(false); }
     }
 
- 
     //getFullProjectsList
-    //получить полный список проектов для главной страницы
+    //получить полный список проектов для главной страницы со всей информацией
     public function getFullProjectList()
     {
         $projects = Project::all();
 
+        //если в БД нет ни одного проекта, то возвращаем false
         if(count($projects) == 0)
         { return response()->json(false); }
         else
         { return response()->json($projects);  }
-
     }
-
 }

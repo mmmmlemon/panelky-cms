@@ -48,23 +48,18 @@
 <script>
 export default {
 
+    //хуки
     beforeCreate(){
+        //текущая вкладка
         this.$store.dispatch('setCurrentTab', 'admin');
-    },
-
-    created(){
-
+        //получить информацию о владельце
         this.$store.dispatch('getSiteOwnerInfo');
-
     },
 
+    //данные
     data: function(){
         return {
             errors: {},
-            name: '',
-            occupation: '',
-            aboutMe: '',
-            bottomText: '',
             saved: false,
         }  
     },
@@ -75,11 +70,11 @@ export default {
         }
     },
 
+    //методы
     methods: {
-        submit() {
-
+        //отправить форму
+        submit(){
             this.saved = false;
-
             this.errors = {};
 
             axios.post('/admin/saveSiteOwnerInfo', this.siteOwnerInfo).then(response => {

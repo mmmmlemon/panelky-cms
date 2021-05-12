@@ -3,12 +3,17 @@
 <template>
     <div class="row mt-5 justify-content-center fadeInAnim" v-if="currentProjectId !== -1 && currentProject !== -1">
         <div class="col-8">
-            <div class="row">
+
+            <Error v-if="projectsList === false" errorMessage="Не удалось загрузить список проектов"/>
+
+            <div class="row" v-if="projectsList !== -1 && projectsList !== false">
+                <!-- список проектов -->
                 <div class="col-4">
-                    <ListOfProjects v-if="projectsList !== -1" :projectsList="projectsList"/>
+                    <ListOfProjects :projectsList="projectsList"/>      
                 </div>
+                <!-- мини-превью проекта -->
                 <div class="col-8">
-                   <PreviewProject :currentProject="currentProject"/>
+                   <PreviewProject type="mini" :currentProject="currentProject"/>
                 </div>
             </div>       
         </div>
@@ -18,29 +23,32 @@
 <script>
 export default {
     
+    //хуки
     beforeMount(){
+        //текущая вкладка
         this.$store.dispatch('setCurrentTab', 'projects');
+        //получить список проектов
         this.$store.dispatch('getProjectsList');
+        //установить первый проект в списке выбранным по умолчанию
         this.$store.dispatch('setFirstProjectId');
     },
 
-    mounted(){
-
-    },
-
+    //данные
     computed: {
+        //список проектов
         projectsList: function(){
             return this.$store.state.AdminStates.projectsList;
         },
 
+        //текущий выбранный проект
         currentProjectId: function(){
             return this.$store.state.AdminStates.currentProjectId;
         },
 
+        //информация о выбранном проекте для превью
         currentProject: function(){
             return this.$store.state.AdminStates.currentProject;
         }
-
     },
 }
 </script>
