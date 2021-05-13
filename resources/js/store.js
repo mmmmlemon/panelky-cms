@@ -6,7 +6,6 @@ import axios from 'axios';
 
 Vue.use(Vuex);
 
-
 //глобальные стейты
 const GlobalStates = {
     state: {
@@ -72,6 +71,12 @@ const AdminStates = {
         }
     },
 
+    getters: {
+        currentProject: state => {
+            return state.currentProject;
+        }
+    },
+
     actions: {
         //setCurrentTab
         //установить текущую вкладку (Админка)
@@ -100,10 +105,6 @@ const AdminStates = {
         //уставновить первый id проекта в currentProjectId
         setFirstProjectId(context, state){
             axios.get('/api/getFirstProjectId').then(response => {
-                if(response.data !== false)
-                { context.commit('setState', { state: 'currentProjectId', value: response.data }); }
-                else
-                { context.commit('setState', {state: 'currentProjectId', value: false}); }
 
                 axios.get(`/api/getProject/${response.data}/mini`).then(response => {
                     if(response.data !== false)

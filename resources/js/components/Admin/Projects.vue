@@ -1,7 +1,7 @@
 //Projects
 //вкладка в админке, список проектов
 <template>
-    <div class="row mt-5 justify-content-center fadeInAnim" v-if="currentProjectId !== -1 && currentProject !== -1">
+    <div class="row mt-5 justify-content-center fadeInAnim" v-if="currentProject !== false">
         <div class="col-8">
 
             <Error v-if="projectsList === false" errorMessage="Не удалось загрузить список проектов"/>
@@ -12,7 +12,7 @@
                     <ListOfProjects :projectsList="projectsList"/>      
                 </div>
                 <!-- мини-превью проекта -->
-                <div class="col-8">
+                <div class="col-8 fadeIn">
                    <PreviewProject type="mini" :currentProject="currentProject"/>
                 </div>
             </div>       
@@ -29,8 +29,18 @@ export default {
         this.$store.dispatch('setCurrentTab', 'projects');
         //получить список проектов
         this.$store.dispatch('getProjectsList');
-        //установить первый проект в списке выбранным по умолчанию
-        this.$store.dispatch('setFirstProjectId');
+  
+    },
+
+    mounted(){
+        var currentProject = this.$store.getters.currentProject;
+
+        if(currentProject === -1)
+        { 
+            //установить первый проект в списке выбранным по умолчанию
+            this.$store.dispatch('setFirstProjectId');
+        }
+       
     },
 
     //данные
@@ -38,11 +48,6 @@ export default {
         //список проектов
         projectsList: function(){
             return this.$store.state.AdminStates.projectsList;
-        },
-
-        //текущий выбранный проект
-        currentProjectId: function(){
-            return this.$store.state.AdminStates.currentProjectId;
         },
 
         //информация о выбранном проекте для превью

@@ -1,7 +1,7 @@
 //PreviewProject
 //превью проекта в админке
 <template>
-    <div class="col-12 d-flex h-100 justify-content-center animatedBackground previewCard">
+    <div class="col-12 d-flex h-100 justify-content-center animatedBackground previewCard fadeInAnim" v-if="currentProject !== -1">
         <!-- мини превью -->
         <div v-if="type === 'mini'" class="row text-center textVertical">
             <div class="col-12">

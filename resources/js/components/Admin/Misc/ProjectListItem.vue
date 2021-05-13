@@ -1,7 +1,7 @@
 //ProjectListItem
 //проект в списке проектов
 <template>
-    <div class="col-11 m-1 transparentCard" v-on:click="getProject(id)" v-bind:class="{ active: id === currentProjectId }">
+    <div class="col-11 m-1 fadeInAnim transparentCard" v-on:click="getProject(id)" v-bind:class="{ active: id === currentProjectId }" v-if="currentProjectId !== undefined">
         <div class="row">
             <div class="col-10 text-center align-middle">
                 <h2 class="" style="margin-top:10%;">{{title}}</h2>
@@ -29,7 +29,7 @@ export default {
 
     computed: {
         currentProjectId: function(){
-            return this.$store.state.AdminStates.currentProjectId;
+            return this.$store.state.AdminStates.currentProject.id;
         }
     },
 

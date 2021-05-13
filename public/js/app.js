@@ -2251,7 +2251,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     currentProjectId: function currentProjectId() {
-      return this.$store.state.AdminStates.currentProjectId;
+      return this.$store.state.AdminStates.currentProject.id;
     }
   },
   //методы
@@ -2307,19 +2307,21 @@ __webpack_require__.r(__webpack_exports__);
     //текущая вкладка
     this.$store.dispatch('setCurrentTab', 'projects'); //получить список проектов
 
-    this.$store.dispatch('getProjectsList'); //установить первый проект в списке выбранным по умолчанию
+    this.$store.dispatch('getProjectsList');
+  },
+  mounted: function mounted() {
+    var currentProject = this.$store.getters.currentProject;
 
-    this.$store.dispatch('setFirstProjectId');
+    if (currentProject === -1) {
+      //установить первый проект в списке выбранным по умолчанию
+      this.$store.dispatch('setFirstProjectId');
+    }
   },
   //данные
   computed: {
     //список проектов
     projectsList: function projectsList() {
       return this.$store.state.AdminStates.projectsList;
-    },
-    //текущий выбранный проект
-    currentProjectId: function currentProjectId() {
-      return this.$store.state.AdminStates.currentProjectId;
     },
     //информация о выбранном проекте для превью
     currentProject: function currentProject() {
@@ -3625,6 +3627,11 @@ var AdminStates = {
       state[payload.state] = payload.value;
     }
   },
+  getters: {
+    currentProject: function currentProject(state) {
+      return state.currentProject;
+    }
+  },
   actions: {
     //setCurrentTab
     //установить текущую вкладку (Админка)
@@ -3663,18 +3670,6 @@ var AdminStates = {
     //уставновить первый id проекта в currentProjectId
     setFirstProjectId: function setFirstProjectId(context, state) {
       axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getFirstProjectId').then(function (response) {
-        if (response.data !== false) {
-          context.commit('setState', {
-            state: 'currentProjectId',
-            value: response.data
-          });
-        } else {
-          context.commit('setState', {
-            state: 'currentProjectId',
-            value: false
-          });
-        }
-
         axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/getProject/".concat(response.data, "/mini")).then(function (response) {
           if (response.data !== false) {
             context.commit('setState', {
@@ -41653,79 +41648,94 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass:
-        "col-12 d-flex h-100 justify-content-center animatedBackground previewCard"
-    },
-    [
-      _vm.type === "mini"
-        ? _c("div", { staticClass: "row text-center textVertical" }, [
-            _c("div", { staticClass: "col-12" }, [
-              _c("h1", { staticClass: "text-center textVertical font3-8rem" }, [
-                _c("b", [_vm._v(_vm._s(_vm.currentProject.project_title))])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-12" }, [
-              _c("img", {
-                attrs: { src: _vm.currentProject.project_icon, width: "10%" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-12" }, [
-              _c("p", { staticClass: "text-center textVertical font2rem" }, [
-                _vm._v(
-                  "\n               " +
-                    _vm._s(_vm.currentProject.project_subtitle) +
-                    "\n            "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-12" },
-              [
-                _c("hr"),
+  return _vm.currentProject !== -1
+    ? _c(
+        "div",
+        {
+          staticClass:
+            "col-12 d-flex h-100 justify-content-center animatedBackground previewCard fadeInAnim"
+        },
+        [
+          _vm.type === "mini"
+            ? _c("div", { staticClass: "row text-center textVertical" }, [
+                _c("div", { staticClass: "col-12" }, [
+                  _c(
+                    "h1",
+                    { staticClass: "text-center textVertical font3-8rem" },
+                    [
+                      _c("b", [
+                        _vm._v(_vm._s(_vm.currentProject.project_title))
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-12" }, [
+                  _c("img", {
+                    attrs: {
+                      src: _vm.currentProject.project_icon,
+                      width: "10%"
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-12" }, [
+                  _c(
+                    "p",
+                    { staticClass: "text-center textVertical font2rem" },
+                    [
+                      _vm._v(
+                        "\n               " +
+                          _vm._s(_vm.currentProject.project_subtitle) +
+                          "\n            "
+                      )
+                    ]
+                  )
+                ]),
                 _vm._v(" "),
                 _c(
-                  "router-link",
-                  { attrs: { to: "/admin/edit/" + _vm.currentProject.id } },
+                  "div",
+                  { staticClass: "col-12" },
                   [
+                    _c("hr"),
+                    _vm._v(" "),
                     _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-light mr-3",
-                        attrs: { title: "Редактировать" }
-                      },
-                      [_c("i", { staticClass: "bi bi-pencil-fill" })]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _vm._m(0)
-              ],
-              1
-            )
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.type === "full"
-        ? _c(
-            "div",
-            { staticClass: "row justify-content-center zIndex3" },
-            [
-              _c("ProjectCard", { attrs: { project: _vm.currentProject } }),
-              _vm._v(" "),
-              _vm._m(1)
-            ],
-            1
-          )
-        : _vm._e()
-    ]
-  )
+                      "router-link",
+                      { attrs: { to: "/admin/edit/" + _vm.currentProject.id } },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-light mr-3",
+                            attrs: { title: "Редактировать" }
+                          },
+                          [_c("i", { staticClass: "bi bi-pencil-fill" })]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm._m(0)
+                  ],
+                  1
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.type === "full"
+            ? _c(
+                "div",
+                { staticClass: "row justify-content-center zIndex3" },
+                [
+                  _c("ProjectCard", { attrs: { project: _vm.currentProject } }),
+                  _vm._v(" "),
+                  _vm._m(1)
+                ],
+                1
+              )
+            : _vm._e()
+        ]
+      )
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {
@@ -41774,29 +41784,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "col-11 m-1 transparentCard",
-      class: { active: _vm.id === _vm.currentProjectId },
-      on: {
-        click: function($event) {
-          return _vm.getProject(_vm.id)
-        }
-      }
-    },
-    [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-10 text-center align-middle" }, [
-          _c("h2", { staticStyle: { "margin-top": "10%" } }, [
-            _vm._v(_vm._s(_vm.title))
+  return _vm.currentProjectId !== undefined
+    ? _c(
+        "div",
+        {
+          staticClass: "col-11 m-1 fadeInAnim transparentCard",
+          class: { active: _vm.id === _vm.currentProjectId },
+          on: {
+            click: function($event) {
+              return _vm.getProject(_vm.id)
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-10 text-center align-middle" }, [
+              _c("h2", { staticStyle: { "margin-top": "10%" } }, [
+                _vm._v(_vm._s(_vm.title))
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
           ])
-        ]),
-        _vm._v(" "),
-        _vm._m(0)
-      ])
-    ]
-  )
+        ]
+      )
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {
@@ -41838,7 +41850,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.currentProjectId !== -1 && _vm.currentProject !== -1
+  return _vm.currentProject !== false
     ? _c("div", { staticClass: "row mt-5 justify-content-center fadeInAnim" }, [
         _c(
           "div",
@@ -41867,7 +41879,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "col-8" },
+                    { staticClass: "col-8 fadeIn" },
                     [
                       _c("PreviewProject", {
                         attrs: {
