@@ -40,6 +40,10 @@ hr {
     opacity: 0;
 }
 
+.invisible{
+    display: none;
+}
+
 .unclickable {
     pointer-events: none;
 }

@@ -1,7 +1,7 @@
 //Projects
 //вкладка в админке, список проектов
 <template>
-    <div class="row mt-5 justify-content-center fadeInAnim" v-if="currentProject !== false">
+    <div class="row mt-5 justify-content-center fadeInAnim" v-if="currentProject !== -1 && currentProject !== false">
         <div class="col-8">
 
             <Error v-if="projectsList === false" errorMessage="Не удалось загрузить список проектов"/>
@@ -29,7 +29,6 @@ export default {
         this.$store.dispatch('setCurrentTab', 'projects');
         //получить список проектов
         this.$store.dispatch('getProjectsList');
-  
     },
 
     mounted(){
@@ -40,7 +39,6 @@ export default {
             //установить первый проект в списке выбранным по умолчанию
             this.$store.dispatch('setFirstProjectId');
         }
-       
     },
 
     //данные

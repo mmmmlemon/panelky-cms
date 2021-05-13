@@ -1955,6 +1955,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   beforeMount: function beforeMount() {
@@ -1970,7 +1975,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       basicFormActive: true,
-      imageFormActive: false
+      imageFormActive: false,
+      errors: {},
+      saved: false
     };
   },
   computed: {
@@ -1989,6 +1996,20 @@ __webpack_require__.r(__webpack_exports__);
     showBasicForm: function showBasicForm() {
       this.basicFormActive = true;
       this.imageFormActive = false;
+    },
+    //отправить основную форму
+    submitBasic: function submitBasic() {
+      var _this = this;
+
+      this.saved = false;
+      this.errors = {};
+      axios.post('/admin/saveProjectBasic', this.currentProject).then(function (response) {
+        _this.saved = true;
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          _this.errors = error.response.data.errors || {};
+        }
+      });
     }
   }
 });
@@ -41224,22 +41245,30 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _vm.basicFormActive === true
-                  ? _c("form", { attrs: { method: "POST" } }, [
-                      _c("div", { staticClass: "mb-3" }, [
-                        _c("h6", [_vm._v("Название проекта")]),
-                        _vm._v(" "),
+                  ? _c(
+                      "form",
+                      {
+                        attrs: { method: "POST" },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.submit($event)
+                          }
+                        }
+                      },
+                      [
                         _c("input", {
                           directives: [
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.currentProject.project_title,
-                              expression: "currentProject.project_title"
+                              value: _vm.currentProject.id,
+                              expression: "currentProject.id"
                             }
                           ],
-                          staticClass: "form-control",
+                          staticClass: "invisible",
                           attrs: { type: "text" },
-                          domProps: { value: _vm.currentProject.project_title },
+                          domProps: { value: _vm.currentProject.id },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
@@ -41247,149 +41276,215 @@ var render = function() {
                               }
                               _vm.$set(
                                 _vm.currentProject,
-                                "project_title",
+                                "id",
                                 $event.target.value
                               )
                             }
                           }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "mb-3" }, [
-                        _c("h6", [_vm._v("Подзаголовок")]),
+                        }),
                         _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.currentProject.project_subtitle,
-                              expression: "currentProject.project_subtitle"
+                        _c("div", { staticClass: "mb-3" }, [
+                          _c("h6", [_vm._v("Название проекта")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.currentProject.project_title,
+                                expression: "currentProject.project_title"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
+                            domProps: {
+                              value: _vm.currentProject.project_title
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.currentProject,
+                                  "project_title",
+                                  $event.target.value
+                                )
+                              }
                             }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text" },
-                          domProps: {
-                            value: _vm.currentProject.project_subtitle
+                          }),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.project_title
+                            ? _c("div", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(_vm.errors.project_title[0]))
+                              ])
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "mb-3" }, [
+                          _c("h6", [_vm._v("Подзаголовок")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.currentProject.project_subtitle,
+                                expression: "currentProject.project_subtitle"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
+                            domProps: {
+                              value: _vm.currentProject.project_subtitle
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.currentProject,
+                                  "project_subtitle",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.project_subtitle
+                            ? _c("div", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(_vm.errors.project_subtitle[0]))
+                              ])
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "mb-3" }, [
+                          _c("h6", [_vm._v("Краткое описание")]),
+                          _vm._v(" "),
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.currentProject.project_desc,
+                                expression: "currentProject.project_desc"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            domProps: {
+                              value: _vm.currentProject.project_desc
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.currentProject,
+                                  "project_desc",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.project_desc
+                            ? _c("div", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(_vm.errors.project_desc[0]))
+                              ])
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "mb-3" }, [
+                          _c("h6", [_vm._v("Нижний текст")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.currentProject.project_bottomText,
+                                expression: "currentProject.project_bottomText"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
+                            domProps: {
+                              value: _vm.currentProject.project_bottomText
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.currentProject,
+                                  "project_bottomText",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.project_bottomText
+                            ? _c("div", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(_vm.errors.project_bottomText[0]))
+                              ])
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "mb-3" }, [
+                          _c("h6", [_vm._v("Ссылка на проект")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.currentProject.project_url,
+                                expression: "currentProject.project_url"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
+                            domProps: { value: _vm.currentProject.project_url },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.currentProject,
+                                  "project_url",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.project_url
+                            ? _c("div", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(_vm.errors.project_url[0]))
+                              ])
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-lg btn-block btn-outline-light",
+                            on: { click: _vm.submitBasic }
                           },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.currentProject,
-                                "project_subtitle",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "mb-3" }, [
-                        _c("h6", [_vm._v("Краткое описание")]),
-                        _vm._v(" "),
-                        _c("textarea", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.currentProject.project_desc,
-                              expression: "currentProject.project_desc"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          domProps: { value: _vm.currentProject.project_desc },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.currentProject,
-                                "project_desc",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "mb-3" }, [
-                        _c("h6", [_vm._v("Нижний текст")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.currentProject.project_bottomText,
-                              expression: "currentProject.project_bottomText"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text" },
-                          domProps: {
-                            value: _vm.currentProject.project_bottomText
-                          },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.currentProject,
-                                "project_bottomText",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "mb-3" }, [
-                        _c("h6", [_vm._v("Ссылка на проект")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.currentProject.project_url,
-                              expression: "currentProject.project_url"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text" },
-                          domProps: { value: _vm.currentProject.project_url },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.currentProject,
-                                "project_url",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-lg btn-block btn-outline-light"
-                        },
-                        [
-                          _vm._v(
-                            "\n                        Сохранить\n                    "
-                          )
-                        ]
-                      )
-                    ])
+                          [
+                            _vm._v(
+                              "\n                        Сохранить\n                    "
+                            )
+                          ]
+                        )
+                      ]
+                    )
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.imageFormActive === true
@@ -41413,7 +41508,17 @@ var render = function() {
                         ]
                       )
                     ])
-                  : _vm._e()
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "col-12 p-3 text-center unclickable zeroOpacity",
+                    class: { blinkAnim: _vm.saved }
+                  },
+                  [_c("h5", [_vm._v("Изменения сохранены")])]
+                )
               ]),
               _vm._v(" "),
               _c(
@@ -41850,7 +41955,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.currentProject !== false
+  return _vm.currentProject !== -1 && _vm.currentProject !== false
     ? _c("div", { staticClass: "row mt-5 justify-content-center fadeInAnim" }, [
         _c(
           "div",
@@ -42678,7 +42783,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.type == "left"
+      _vm.type == "left" && _vm.project !== undefined
         ? _c("div", { staticClass: "row justify-content-center" }, [
             _c(
               "div",

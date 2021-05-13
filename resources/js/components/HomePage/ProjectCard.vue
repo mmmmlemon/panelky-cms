@@ -9,7 +9,7 @@
         </div>
 
         <!-- карточка с описанием слева -->
-        <div v-if="type=='left'" class="row justify-content-center">
+        <div v-if="type=='left' && project !== undefined" class="row justify-content-center">
             <!-- для десктопа -->
             <div class="d-none d-md-block col-12 col-md-5 text-center textVertical">
                 <!-- название проекта -->
