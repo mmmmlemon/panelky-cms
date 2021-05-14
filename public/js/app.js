@@ -1960,6 +1960,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   beforeMount: function beforeMount() {
@@ -1976,6 +1978,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       basicFormActive: true,
       imageFormActive: false,
+      projectIcon: undefined,
+      projectImage: undefined,
       errors: {},
       saved: false
     };
@@ -2008,6 +2012,33 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this.errors = error.response.data.errors || {};
+        }
+      });
+    },
+    //картинки
+    //
+    handleFileUpload: function handleFileUpload(type) {
+      if (type === 'icon') this.projectIcon = this.$refs.icon.files[0];
+      if (type === 'image') this.projectImage = this.$refs.image.files[0];
+    },
+    //отправить форму с картинками
+    submitImages: function submitImages() {
+      var _this2 = this;
+
+      this.saved = false;
+      var formData = new FormData();
+      if (this.projectIcon !== undefined) formData.append('projectIcon', this.projectIcon);
+      if (this.projectImage !== undefined) formData.append('projectImage', this.projectImage);
+      axios.post('/admin/saveProjectImages', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (response) {
+        _this2.saved = true;
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          _this2.errors = error.response.data.errors || {};
+          console.log(_this2.errors);
         }
       });
     }
@@ -41252,7 +41283,7 @@ var render = function() {
                         on: {
                           submit: function($event) {
                             $event.preventDefault()
-                            return _vm.submit($event)
+                            return _vm.submitBasic($event)
                           }
                         }
                       },
@@ -41488,26 +41519,91 @@ var render = function() {
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.imageFormActive === true
-                  ? _c("form", { attrs: { method: "POST" } }, [
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _c("br"),
-                      _c("br"),
-                      _vm._v(" "),
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-lg btn-block btn-outline-light"
+                  ? _c(
+                      "form",
+                      {
+                        attrs: {
+                          method: "POST",
+                          action: "/admin/saveProjectImages"
                         },
-                        [
-                          _vm._v(
-                            "\n                        Загрузить и сохранить\n                    "
-                          )
-                        ]
-                      )
-                    ])
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.submitImages($event)
+                          }
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "mb-3" }, [
+                          _c("h6", [_vm._v("Логотип проекта")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            ref: "icon",
+                            staticClass: "form-control-file",
+                            attrs: {
+                              type: "file",
+                              accept: "image/jpeg, image/png"
+                            },
+                            on: {
+                              change: function($event) {
+                                return _vm.handleFileUpload("icon")
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.projectIcon
+                            ? _c("div", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(_vm.errors.projectIcon[0]))
+                              ])
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("br"),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "mb-3" }, [
+                          _c("h6", [_vm._v("Изображение\\скриншот проекта")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            ref: "image",
+                            staticClass: "form-control-file",
+                            attrs: {
+                              type: "file",
+                              accept: "image/jpeg, image/png"
+                            },
+                            on: {
+                              change: function($event) {
+                                return _vm.handleFileUpload("image")
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors && _vm.errors.projectImage
+                            ? _c("div", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(_vm.errors.projectImage[0]))
+                              ])
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-lg btn-block btn-outline-light",
+                            attrs: {
+                              disabled:
+                                _vm.projectIcon === undefined &&
+                                _vm.projectImage === undefined
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        Загрузить и сохранить\n                    "
+                            )
+                          ]
+                        )
+                      ]
+                    )
                   : _vm._e(),
                 _vm._v(" "),
                 _c(
@@ -41537,34 +41633,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mb-3" }, [
-      _c("h6", [_vm._v("Логотип проекта")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control-file",
-        attrs: { type: "file", id: "exampleFormControlFile1" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mb-3" }, [
-      _c("h6", [_vm._v("Изображение\\скриншот проекта")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control-file",
-        attrs: { type: "file", id: "exampleFormControlFile1" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

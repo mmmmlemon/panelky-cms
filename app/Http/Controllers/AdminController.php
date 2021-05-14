@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use File;
 use App\Models\Settings;
 use App\Models\Project;
 
@@ -67,6 +69,48 @@ class AdminController extends Controller
         $project->project_url = $request->project_url;
 
         $project->save();
+
+        return response()->json(null, 200);
+    }
+
+    //saveProjectImages
+    //сохранить изображения для проекта
+    public function saveProjectImages(Request $request)
+    {
+        $this->validate($request, [
+            'projectIcon' => 'mimes:jpeg,jpg,png|nullable',
+            'projectImage' => 'mimes:jpeg,jpg,png|nullable'
+        ]);
+        
+        //путь до папки с картинками проектов
+        $path = "app/public/projectsImages/";
+
+        //проверка, есть ли папка projectsImages
+        $check = File::exists(storage_path($path));
+        
+        //если нет, то создаём её
+        if($check == false)
+        { Storage::disk('public')->makeDirectory("projectsImages"); }
+
+        $fileIcon = null;
+        $fileImage = null;
+
+        if($request->hasFile('projectIcon'))
+        { 
+            $fileIcon = $request->projectIcon; 
+            $filename = "public/projectsImages/".md5(time()).".".$fileIcon->getClientOriginalExtension();
+            Storage::put($filename, file_get_contents($fileIcon));
+        }
+        
+        if ($request->hasFile('projectImage'))
+        { 
+            $fileImage = $request->projectImage; 
+            $filename = "public/projectsImages/".md5(time()).".".$fileImage->getClientOriginalExtension();
+            Storage::put($filename, file_get_contents($fileImage));
+        }
+
+        if($fileIcon == null && $fileImage == null)
+        { return response()->json(null, 422); }
 
         return response()->json(null, 200);
     }

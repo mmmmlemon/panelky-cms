@@ -25,7 +25,7 @@
                         </ul>
                     </div>
                     <!-- основная форма -->
-                    <form @submit.prevent="submit" method="POST" v-if="basicFormActive === true">
+                    <form @submit.prevent="submitBasic" method="POST" v-if="basicFormActive === true">
                         <input type="text" v-model="currentProject.id" class="invisible">
                         <div class="mb-3">
                             <h6>Название проекта</h6>
@@ -58,20 +58,22 @@
                         </button>
                     </form> 
                     <!-- форма для картинок -->
-                    <form method="POST" v-if="imageFormActive === true">
+                    <form @submit.prevent="submitImages" method="POST" action="/admin/saveProjectImages" v-if="imageFormActive === true">
                         <div class="mb-3">
                             <h6>Логотип проекта</h6>
-                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                            <!-- <div v-if="errors && errors.name" class="text-danger">{{ errors.name[0] }}</div> -->
+                            <input type="file" ref="icon" class="form-control-file" v-on:change="handleFileUpload('icon')"
+                                    accept="image/jpeg, image/png">
+                            <div v-if="errors && errors.projectIcon" class="text-danger">{{ errors.projectIcon[0] }}</div>
                         </div>
                         <br><br>
                         <div class="mb-3">
                             <h6>Изображение\скриншот проекта</h6>
-                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                            <!-- <div v-if="errors && errors.name" class="text-danger">{{ errors.name[0] }}</div> -->
+                            <input type="file" ref="image" class="form-control-file"  v-on:change="handleFileUpload('image')"
+                                    accept="image/jpeg, image/png">
+                            <div v-if="errors && errors.projectImage" class="text-danger">{{ errors.projectImage[0] }}</div>
                         </div>
 
-                        <button class="btn btn-lg btn-block btn-outline-light">
+                        <button class="btn btn-lg btn-block btn-outline-light" :disabled="projectIcon === undefined && projectImage === undefined">
                             Загрузить и сохранить
                         </button>
                     </form>
@@ -107,8 +109,11 @@ export default {
         return {
             basicFormActive: true,
             imageFormActive: false,
+            projectIcon: undefined,
+            projectImage: undefined,
             errors: {},
             saved: false,
+
         }
     },
 
@@ -144,6 +149,35 @@ export default {
                     this.errors = error.response.data.errors || {};
                 }
             });
+        },
+
+        //картинки
+        //
+        handleFileUpload(type){
+            if(type === 'icon')
+            this.projectIcon = this.$refs.icon.files[0];
+            if(type === 'image')
+            this.projectImage = this.$refs.image.files[0];
+        },
+
+        //отправить форму с картинками
+        submitImages(){
+            this.saved = false;
+            let formData = new FormData();
+            if(this.projectIcon !== undefined)
+            formData.append('projectIcon', this.projectIcon);
+            if(this.projectImage !== undefined)
+            formData.append('projectImage', this.projectImage);
+            axios.post('/admin/saveProjectImages',formData, {
+                headers: {'Content-Type':'multipart/form-data'}
+            }).then(response => {
+                    this.saved = true;
+                }).catch(error => {
+                    if(error.response.status === 422){ 
+                        this.errors = error.response.data.errors || {};
+                        console.log(this.errors)
+                    }
+                });
         }
     },
 }

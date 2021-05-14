@@ -80,7 +80,7 @@ export default {
             axios.post('/admin/saveSiteOwnerInfo', this.siteOwnerInfo).then(response => {
                     this.saved = true;
                 }).catch(error => {
-                    if(error.response.status === 422){
+                    if(error.response.status === 422){ 
                         this.errors = error.response.data.errors || {};
                     }
                 });
