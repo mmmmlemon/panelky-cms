@@ -163,15 +163,23 @@ export default {
         //отправить форму с картинками
         submitImages(){
             this.saved = false;
+
             let formData = new FormData();
             if(this.projectIcon !== undefined)
-            formData.append('projectIcon', this.projectIcon);
+            {formData.append('projectIcon', this.projectIcon);}
             if(this.projectImage !== undefined)
-            formData.append('projectImage', this.projectImage);
-            axios.post('/admin/saveProjectImages',formData, {
+            {formData.append('projectImage', this.projectImage);}
+            if(this.currentProject !== undefined)
+            {formData.append('id', this.currentProject.id);}
+
+            axios.post('/admin/saveProjectImages', formData, {
                 headers: {'Content-Type':'multipart/form-data'}
             }).then(response => {
                     this.saved = true;
+                    this.projectIcon = undefined;
+                    this.projectImage = undefined;
+                    this.$refs.icon.value = null;
+                    this.$refs.image.value = null;
                 }).catch(error => {
                     if(error.response.status === 422){ 
                         this.errors = error.response.data.errors || {};

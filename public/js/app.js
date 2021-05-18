@@ -2027,14 +2027,29 @@ __webpack_require__.r(__webpack_exports__);
 
       this.saved = false;
       var formData = new FormData();
-      if (this.projectIcon !== undefined) formData.append('projectIcon', this.projectIcon);
-      if (this.projectImage !== undefined) formData.append('projectImage', this.projectImage);
+
+      if (this.projectIcon !== undefined) {
+        formData.append('projectIcon', this.projectIcon);
+      }
+
+      if (this.projectImage !== undefined) {
+        formData.append('projectImage', this.projectImage);
+      }
+
+      if (this.currentProject !== undefined) {
+        formData.append('id', this.currentProject.id);
+      }
+
       axios.post('/admin/saveProjectImages', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }).then(function (response) {
         _this2.saved = true;
+        _this2.projectIcon = undefined;
+        _this2.projectImage = undefined;
+        _this2.$refs.icon.value = null;
+        _this2.$refs.image.value = null;
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this2.errors = error.response.data.errors || {};

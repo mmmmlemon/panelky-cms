@@ -94,19 +94,27 @@ class AdminController extends Controller
 
         $fileIcon = null;
         $fileImage = null;
-
+   
         if($request->hasFile('projectIcon'))
         { 
             $fileIcon = $request->projectIcon; 
-            $filename = "public/projectsImages/".md5(time()).".".$fileIcon->getClientOriginalExtension();
-            Storage::put($filename, file_get_contents($fileIcon));
+            $filename = md5(time()).".".$fileIcon->getClientOriginalExtension();
+            $path = "public/projectsImages/".$filename;
+            Storage::put($path, file_get_contents($fileIcon));
+            $project = Project::find($request->id);
+            $project->project_icon = "storage/projectsImages/".$filename;
+            $project->save();
         }
-        
-        if ($request->hasFile('projectImage'))
+
+        if($request->hasFile('projectImage'))
         { 
             $fileImage = $request->projectImage; 
-            $filename = "public/projectsImages/".md5(time()).".".$fileImage->getClientOriginalExtension();
-            Storage::put($filename, file_get_contents($fileImage));
+            $filename = md5(time()).".".$fileImage->getClientOriginalExtension();
+            $path = "public/projectsImages/".$filename;
+            Storage::put($path, file_get_contents($fileImage));
+            $project = Project::find($request->id);
+            $project->project_image = "storage/projectsImages/".$filename;
+            $project->save();
         }
 
         if($fileIcon == null && $fileImage == null)

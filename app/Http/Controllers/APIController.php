@@ -60,16 +60,21 @@ class APIController extends Controller
     public function getProject($id, $type)
     {
         $project = Project::findOrFail($id);
+
+        $project->project_icon = asset($project->project_icon);
+        $project->project_image = asset($project->project_image);
         
         //полное превью
         if($type == "full")
         { return response()->json($project); }
         //мини-превью
         else if ($type == "mini")
-        { return response()->json(['id' => $project->id, 
+        {   
+            return response()->json(['id' => $project->id, 
                                     'project_title' => $project->project_title, 
                                     'project_subtitle' => $project->project_subtitle, 
-                                    'project_icon' => $project->project_icon]); }
+                                    'project_icon' => $project->project_icon]); 
+                                }
         else
         { return response()->json(false); }
     }
