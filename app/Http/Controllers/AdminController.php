@@ -98,10 +98,13 @@ class AdminController extends Controller
         if($request->hasFile('projectIcon'))
         { 
             $fileIcon = $request->projectIcon; 
-            $filename = md5(time()).".".$fileIcon->getClientOriginalExtension();
+            $filename = md5(time().rand(0,9)).".".$fileIcon->getClientOriginalExtension();
             $path = "public/projectsImages/".$filename;
             Storage::put($path, file_get_contents($fileIcon));
+
             $project = Project::find($request->id);
+            //удаление старой картинки перед сохранением ссылки на новую
+            Storage::disk('public')->delete(str_replace('storage/','',$project->project_icon));
             $project->project_icon = "storage/projectsImages/".$filename;
             $project->save();
         }
@@ -109,10 +112,13 @@ class AdminController extends Controller
         if($request->hasFile('projectImage'))
         { 
             $fileImage = $request->projectImage; 
-            $filename = md5(time()).".".$fileImage->getClientOriginalExtension();
+            $filename = md5(time().rand(0,9)).".".$fileImage->getClientOriginalExtension();
             $path = "public/projectsImages/".$filename;
             Storage::put($path, file_get_contents($fileImage));
+
             $project = Project::find($request->id);
+            //удаление старой картинки перед сохранением ссылки на новую
+            Storage::disk('public')->delete(str_replace('storage/', '', $project->project_image));
             $project->project_image = "storage/projectsImages/".$filename;
             $project->save();
         }
