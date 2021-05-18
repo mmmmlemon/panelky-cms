@@ -61,7 +61,9 @@ class APIController extends Controller
     {
         $project = Project::findOrFail($id);
 
+        if($project->project_icon != null)
         $project->project_icon = asset($project->project_icon);
+        if($project->project_image != null)
         $project->project_image = asset($project->project_image);
         
         //полное превью

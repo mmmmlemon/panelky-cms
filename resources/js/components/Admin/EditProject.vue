@@ -64,6 +64,7 @@
                             <input type="file" ref="icon" class="form-control-file" v-on:change="handleFileUpload('icon')"
                                     accept="image/jpeg, image/png">
                             <div v-if="errors && errors.projectIcon" class="text-danger">{{ errors.projectIcon[0] }}</div>
+                            <a v-if="currentProject.project_icon !== null" v-on:click="deleteImage('icon')">Удалить icon</a>
                         </div>
                         <br><br>
                         <div class="mb-3">
@@ -71,6 +72,7 @@
                             <input type="file" ref="image" class="form-control-file"  v-on:change="handleFileUpload('image')"
                                     accept="image/jpeg, image/png">
                             <div v-if="errors && errors.projectImage" class="text-danger">{{ errors.projectImage[0] }}</div>
+                            <a v-if="currentProject.project_image !== null" v-on:click="deleteImage('image')">Удалить image</a>
                         </div>
 
                         <button class="btn btn-lg btn-block btn-outline-light" :disabled="projectIcon === undefined && projectImage === undefined">
@@ -186,6 +188,21 @@ export default {
                         console.log(this.errors)
                     }
                 });
+        },
+
+        //удалить картинку
+        deleteImage(type){
+            let formData = new FormData();
+            formData.append('id',this.currentProject.id);
+            formData.append('type', type);
+
+            axios.post('/admin/deleteImageFromProject', formData).then(response => {
+                // TODO: удаление ссылок на картинки из this.currentProject
+            }).catch(error => {
+                if(error.response.status === 422){ 
+                    console.log(`An error occured while deleting the ${type}`);
+                }
+            })
         }
     },
 }

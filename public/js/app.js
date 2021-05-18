@@ -1962,6 +1962,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   beforeMount: function beforeMount() {
@@ -2054,6 +2056,18 @@ __webpack_require__.r(__webpack_exports__);
         if (error.response.status === 422) {
           _this2.errors = error.response.data.errors || {};
           console.log(_this2.errors);
+        }
+      });
+    },
+    //удалить картинку
+    deleteImage: function deleteImage(type) {
+      var formData = new FormData();
+      formData.append('id', this.currentProject.id);
+      formData.append('type', type);
+      axios.post('/admin/deleteImageFromProject', formData).then(function (response) {// TODO: удаление ссылок на картинки из this.currentProject
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          console.log("An error occured while deleting the ".concat(type));
         }
       });
     }
@@ -41570,6 +41584,20 @@ var render = function() {
                             ? _c("div", { staticClass: "text-danger" }, [
                                 _vm._v(_vm._s(_vm.errors.projectIcon[0]))
                               ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.currentProject.project_icon !== null
+                            ? _c(
+                                "a",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.deleteImage("icon")
+                                    }
+                                  }
+                                },
+                                [_vm._v("Удалить icon")]
+                              )
                             : _vm._e()
                         ]),
                         _vm._v(" "),
@@ -41597,6 +41625,20 @@ var render = function() {
                             ? _c("div", { staticClass: "text-danger" }, [
                                 _vm._v(_vm._s(_vm.errors.projectImage[0]))
                               ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.currentProject.project_image !== null
+                            ? _c(
+                                "a",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.deleteImage("image")
+                                    }
+                                  }
+                                },
+                                [_vm._v("Удалить image")]
+                              )
                             : _vm._e()
                         ]),
                         _vm._v(" "),

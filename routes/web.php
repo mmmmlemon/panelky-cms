@@ -29,6 +29,7 @@ Route::post('/submitForm', [TestController::class, 'submitForm'])->where('any', 
 Route::post('/admin/saveSiteOwnerInfo', [AdminController::class, 'saveSiteOwnerInfo']);
 Route::post('/admin/saveProjectBasic', [AdminController::class, 'saveProjectBasic']);
 Route::post('/admin/saveProjectImages', [AdminController::class, 'saveProjectImages']);
+Route::post('/admin/deleteImageFromProject', [AdminController::class, 'deleteImageFromProject']);
 Route::get('/admin', [AdminController::class, 'index']);
 Route::get('/admin/{any}', [AdminController::class, 'index']);
 Route::get('/admin/{any}/{id}', [AdminController::class, 'index']);

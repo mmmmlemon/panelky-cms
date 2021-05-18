@@ -128,5 +128,29 @@ class AdminController extends Controller
 
         return response()->json(null, 200);
     }
+
+    //deleteImageFromProject
+    //удалить иконку\изображение из проекта
+    public function deleteImageFromProject(Request $request)
+    {
+        $project = Project::find($request->id);
+
+        if($request->type == 'icon')
+        {
+            Storage::disk('public')->delete(str_replace('storage/', '', $project->project_icon));
+            $project->project_icon = null;
+        }
+        else if($request->type == 'image')
+        {
+            Storage::disk('public')->delete(str_replace('storage/', '', $project->project_image));
+            $project->project_image = null;  
+        }
+        else
+        { return response()->json(null, 422); }
+    
+        $project->save();   
+
+        return response()->json(null, 200);
+    }
     
 }
