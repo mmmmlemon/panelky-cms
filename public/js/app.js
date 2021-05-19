@@ -1964,6 +1964,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   beforeMount: function beforeMount() {
@@ -2061,10 +2063,19 @@ __webpack_require__.r(__webpack_exports__);
     },
     //удалить картинку
     deleteImage: function deleteImage(type) {
+      var _this3 = this;
+
       var formData = new FormData();
       formData.append('id', this.currentProject.id);
       formData.append('type', type);
-      axios.post('/admin/deleteImageFromProject', formData).then(function (response) {// TODO: удаление ссылок на картинки из this.currentProject
+      axios.post('/admin/deleteImageFromProject', formData).then(function (response) {
+        if (type === 'icon') {
+          _this3.currentProject.project_icon = null;
+        }
+
+        if (type === 'image') {
+          _this3.currentProject.project_image = null;
+        }
       })["catch"](function (error) {
         if (error.response.status === 422) {
           console.log("An error occured while deleting the ".concat(type));
@@ -2217,6 +2228,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
 //
 //
 //
@@ -41590,13 +41604,14 @@ var render = function() {
                             ? _c(
                                 "a",
                                 {
+                                  staticClass: "btn btn-sm btn-light mt-3",
                                   on: {
                                     click: function($event) {
                                       return _vm.deleteImage("icon")
                                     }
                                   }
                                 },
-                                [_vm._v("Удалить icon")]
+                                [_vm._v("Удалить иконку")]
                               )
                             : _vm._e()
                         ]),
@@ -41631,13 +41646,18 @@ var render = function() {
                             ? _c(
                                 "a",
                                 {
+                                  staticClass: "btn btn-sm btn-light mt-3",
                                   on: {
                                     click: function($event) {
                                       return _vm.deleteImage("image")
                                     }
                                   }
                                 },
-                                [_vm._v("Удалить image")]
+                                [
+                                  _vm._v(
+                                    "\n                            Удалить изображение\\скриншот\n                        "
+                                  )
+                                ]
                               )
                             : _vm._e()
                         ]),
@@ -41959,7 +41979,9 @@ var render = function() {
                 [
                   _c("ProjectCard", { attrs: { project: _vm.currentProject } }),
                   _vm._v(" "),
-                  _vm._m(1)
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _vm._m(2)
                 ],
                 1
               )
@@ -41987,6 +42009,19 @@ var staticRenderFns = [
       "button",
       {
         staticClass: "btn btn-light fullscreenButton",
+        attrs: { title: "Развернуть на полный экран" }
+      },
+      [_c("i", { staticClass: "bi bi-arrows-fullscreen" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-light deleteImageButton",
         attrs: { title: "Развернуть на полный экран" }
       },
       [_c("i", { staticClass: "bi bi-arrows-fullscreen" })]
@@ -42979,7 +43014,7 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "d-none d-md-block col-12 col-md-6 text-center textVertical"
+                  "d-none d-md-block col-12 col-md-6 text-center textVertical "
               },
               [
                 _c("img", {

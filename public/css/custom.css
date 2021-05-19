@@ -151,6 +151,12 @@ hr {
     top: 3%; 
 }
 
+.deleteImageButton {
+    position: absolute; 
+    right: 8%; 
+    top: 3%; 
+}
+
 .fullscreenCard {
     position: fixed; 
     top:0; 
@@ -184,6 +190,8 @@ hr {
 .transparentCard.active {
     background-color: rgba(255,255,255, 0.3);
 }
+
+
 
 
 /* /////////////////////// */

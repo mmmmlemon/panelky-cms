@@ -36,7 +36,7 @@
                 </button>
             </div>
             <!-- скриншот проекта -->
-            <div class="d-none d-md-block col-12 col-md-6 text-center textVertical">
+            <div class="d-none d-md-block col-12 col-md-6 text-center textVertical ">
                 <img :src="project.project_image" class="projectImage" alt="">
             </div>
 
