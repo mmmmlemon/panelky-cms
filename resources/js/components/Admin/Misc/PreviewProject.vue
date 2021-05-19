@@ -38,9 +38,6 @@
             <button class="btn btn-light fullscreenButton" title="Развернуть на полный экран">
                 <i class="bi bi-arrows-fullscreen"></i>
             </button>
-            <button class="btn btn-light deleteImageButton" title="Развернуть на полный экран">
-                <i class="bi bi-arrows-fullscreen"></i>
-            </button>
         </div>
     </div>
 </template>

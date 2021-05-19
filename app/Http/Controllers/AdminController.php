@@ -94,7 +94,9 @@ class AdminController extends Controller
 
         $fileIcon = null;
         $fileImage = null;
-   
+        
+
+        $project = Project::find($request->id);
         if($request->hasFile('projectIcon'))
         { 
             $fileIcon = $request->projectIcon; 
@@ -102,11 +104,12 @@ class AdminController extends Controller
             $path = "public/projectsImages/".$filename;
             Storage::put($path, file_get_contents($fileIcon));
 
-            $project = Project::find($request->id);
+        
             //удаление старой картинки перед сохранением ссылки на новую
             Storage::disk('public')->delete(str_replace('storage/','',$project->project_icon));
             $project->project_icon = "storage/projectsImages/".$filename;
             $project->save();
+         
         }
 
         if($request->hasFile('projectImage'))
@@ -116,18 +119,21 @@ class AdminController extends Controller
             $path = "public/projectsImages/".$filename;
             Storage::put($path, file_get_contents($fileImage));
 
-            $project = Project::find($request->id);
             //удаление старой картинки перед сохранением ссылки на новую
             Storage::disk('public')->delete(str_replace('storage/', '', $project->project_image));
             $project->project_image = "storage/projectsImages/".$filename;
             $project->save();
+
         }
 
         if($fileIcon == null && $fileImage == null)
         { return response()->json(null, 422); }
 
-        return response()->json(null, 200);
-    }
+        $response = ['icon' => asset($project->project_icon), 'image' => asset($project->project_image)];
+
+
+        return response()->json($response, 200);
+    }   
 
     //deleteImageFromProject
     //удалить иконку\изображение из проекта

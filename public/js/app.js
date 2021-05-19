@@ -2054,6 +2054,8 @@ __webpack_require__.r(__webpack_exports__);
         _this2.projectImage = undefined;
         _this2.$refs.icon.value = null;
         _this2.$refs.image.value = null;
+        _this2.currentProject.project_icon = response.data['icon'];
+        _this2.currentProject.project_image = response.data['image'];
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this2.errors = error.response.data.errors || {};
@@ -2228,9 +2230,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
-//
 //
 //
 //
@@ -41979,9 +41978,7 @@ var render = function() {
                 [
                   _c("ProjectCard", { attrs: { project: _vm.currentProject } }),
                   _vm._v(" "),
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _vm._m(2)
+                  _vm._m(1)
                 ],
                 1
               )
@@ -42009,19 +42006,6 @@ var staticRenderFns = [
       "button",
       {
         staticClass: "btn btn-light fullscreenButton",
-        attrs: { title: "Развернуть на полный экран" }
-      },
-      [_c("i", { staticClass: "bi bi-arrows-fullscreen" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-light deleteImageButton",
         attrs: { title: "Развернуть на полный экран" }
       },
       [_c("i", { staticClass: "bi bi-arrows-fullscreen" })]
