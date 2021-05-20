@@ -31,6 +31,7 @@ Route::post('/admin/saveProjectBasic', [AdminController::class, 'saveProjectBasi
 Route::post('/admin/saveProjectImages', [AdminController::class, 'saveProjectImages']);
 Route::post('/admin/deleteImageFromProject', [AdminController::class, 'deleteImageFromProject']);
 Route::post('/admin/addNewProject', [AdminController::class, 'addNewProject']);
+Route::post('/admin/saveImageToTemp', [AdminController::class, 'saveImageToTemp']);
 Route::get('/admin', [AdminController::class, 'index']);
 Route::get('/admin/{any}', [AdminController::class, 'index']);
 Route::get('/admin/{any}/{id}', [AdminController::class, 'index']);

@@ -2277,6 +2277,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   data: function data() {
@@ -2310,10 +2323,36 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     stockImages: function stockImages() {
       return this.$store.state.AdminStates.stockImages;
+    },
+    randomFolderName: function randomFolderName() {
+      return Math.random(0, 999).toString(36).substring(3);
     }
   },
   //методы
   methods: {
+    handleFileUpload: function handleFileUpload(type) {
+      var formData = new FormData();
+      formData.append('randomFolderName', this.randomFolderName);
+
+      if (type === 'icon') {
+        formData.append('filename', "icon.png");
+        formData.append('file', this.$refs.icon.files[0]);
+      }
+
+      if (type === 'image') {
+        formData.append('filename', 'image.png');
+        formData.append('file', this.$refs.image.files[0]);
+      }
+
+      axios.post('/admin/saveImageToTemp', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (response) {//
+      })["catch"](function (error) {
+        console.log("Error uploading image to temp");
+      });
+    },
     submit: function submit() {
       var _this2 = this;
 
@@ -42440,6 +42479,36 @@ var render = function() {
                         "project_url",
                         $event.target.value
                       )
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _c("h6", [_vm._v("Логотип проекта")]),
+                _vm._v(" "),
+                _c("input", {
+                  ref: "icon",
+                  staticClass: "form-control-file",
+                  attrs: { type: "file", accept: "image/jpeg, image/png" },
+                  on: {
+                    change: function($event) {
+                      return _vm.handleFileUpload("icon")
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _c("h6", [_vm._v("Изображение\\скриншот проекта")]),
+                _vm._v(" "),
+                _c("input", {
+                  ref: "image",
+                  staticClass: "form-control-file",
+                  attrs: { type: "file", accept: "image/jpeg, image/png" },
+                  on: {
+                    change: function($event) {
+                      return _vm.handleFileUpload("image")
                     }
                   }
                 })

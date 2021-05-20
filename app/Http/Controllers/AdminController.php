@@ -179,5 +179,23 @@ class AdminController extends Controller
 
         return response()->json(null, 200);
     }
+
+    //saveImageToTemp
+    //сохранить изображение в temp
+    public function saveImageToTemp(Request $request)
+    {   
+        $path = "temp/".$request->randomFolderName."/";
+        $check = File::exists(storage_path($path));
+
+        if($check == false)
+        { Storage::disk('public')->makeDirectory($path); }
+
+        if($request->hasFile('file'))
+        {
+            $filename = $request->filename;
+            Storage::put("/public/".$path.$filename, file_get_contents($request->file));
+            return response()->json(asset("storage/".$path.$filename), 200);
+        }
+    }
     
 }

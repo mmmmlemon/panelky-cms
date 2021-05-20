@@ -34,6 +34,19 @@
                             <input type="text" v-model="currentProject.project_url" placeholder="my-very-cool-project.ru" class="form-control" required>
                             <!-- <div v-if="errors && errors.project_url" class="text-danger">{{ errors.project_url[0] }}</div> -->
                         </div>
+                        <div class="mb-3">
+                            <h6>Логотип проекта</h6>
+                            <input type="file" ref="icon" class="form-control-file" v-on:change="handleFileUpload('icon')"
+                                    accept="image/jpeg, image/png">
+                            <!-- <div v-if="errors && errors.projectIcon" class="text-danger">{{ errors.projectIcon[0] }}</div> -->
+                        </div>
+                        <div class="mb-3">
+                            <h6>Изображение\скриншот проекта</h6>
+                            <input type="file" ref="image" class="form-control-file"  v-on:change="handleFileUpload('image')"
+                                    accept="image/jpeg, image/png">
+                            <!-- <div v-if="errors && errors.projectImage" class="text-danger">{{ errors.projectImage[0] }}</div> -->
+                        </div>
+                        
 
                         <button class="btn btn-lg btn-block btn-outline-light">
                             Сохранить
@@ -87,11 +100,38 @@ export default {
     computed: {
         stockImages: function(){
             return this.$store.state.AdminStates.stockImages;
+        },
+        randomFolderName: function(){
+            return Math.random(0,999).toString(36).substring(3);
         }
     },
 
     //методы
     methods: {
+
+        handleFileUpload(type){
+            let formData = new FormData();
+            formData.append('randomFolderName', this.randomFolderName);
+            if(type === 'icon')
+            {
+                formData.append('filename', "icon.png");
+                formData.append('file', this.$refs.icon.files[0]);
+            }
+
+            if(type === 'image')
+            {
+                formData.append('filename', 'image.png');
+                formData.append('file', this.$refs.image.files[0]);
+            }
+            
+            axios.post('/admin/saveImageToTemp', formData, {
+                headers: {'Content-Type': 'multipart/form-data'} 
+            }).then(response => {
+                //
+            }).catch(error => {
+                console.log("Error uploading image to temp");
+            });
+        },
         submit(){
             this.saved = false;
 
