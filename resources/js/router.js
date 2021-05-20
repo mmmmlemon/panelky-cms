@@ -11,7 +11,10 @@ import AppAdmin from './components/AppAdmin.vue';
 import SiteOwnerInfo from './components/Admin/SiteOwnerInfo.vue';
 import Projects from './components/Admin/Projects.vue';
 import Links from './components/Admin/Links.vue';
-import EditProject from './components/Admin/EditProject.vue';
+import EditProject from './components/Admin/Projects/EditProject.vue';
+import HomeProjects from './components/Admin/Projects/HomeProjects.vue';
+import AllProjects from './components/Admin/Projects/AllProjects.vue';
+import AddNewProject from './components/Admin/Projects/AddNewProject.vue';
 
 import PageNotFound from './components/Misc/PageNotFound.vue';
 
@@ -49,6 +52,23 @@ const routes = [
                 //projects
                 path: '/admin/projects',
                 component: Projects,
+                children: [
+                    {
+                        //homeProjects
+                        path:'/admin/projects',
+                        component: HomeProjects,
+                    },
+                    {
+                        //allProjects
+                        path:'/admin/projects/all',
+                        component: AllProjects,
+                    },
+                    {
+                        //add new project
+                        path: '/admin/projects/add',
+                        component: AddNewProject,
+                    }
+                ]
             },
             {
                 //links
