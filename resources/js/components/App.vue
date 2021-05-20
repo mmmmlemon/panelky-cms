@@ -11,7 +11,7 @@
         <NavScroll :navScrollStyle="navScrollStyle"/>
         
         <!-- пока не загрузился список проектов, не показывать router-view -->
-        <router-view v-if="fullProjectList !== -1 && fullProjectList !== false"
+        <router-view v-if="fullProjectList !== -1"
                      v-touch:swipe.left="showNavMenu">
         </router-view>
     </div>

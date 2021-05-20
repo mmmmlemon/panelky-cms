@@ -2234,7 +2234,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mounted: function mounted() {
+    this.$parent.currentTab = 'addProject';
+  }
+});
 
 /***/ }),
 
@@ -2508,6 +2512,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3881,7 +3892,7 @@ var AdminStates = {
           });
         } else {
           context.commit('setState', {
-            state: 'siteOwnerInfo',
+            state: 'projectsList',
             value: false
           });
         }
@@ -42050,22 +42061,24 @@ var render = function() {
           _vm._v(" "),
           _c(
             "li",
-            { staticClass: "nav-item mr-2" },
+            {
+              staticClass: "nav-item mr-2",
+              on: {
+                click: function($event) {
+                  return _vm.changeCurrentTab("addProject")
+                }
+              }
+            },
             [
               _c(
                 "router-link",
                 {
-                  staticClass: "btn btn-sm btn-block btn-outline-light",
+                  staticClass: "btn btn-sm btn-block",
                   class: {
                     "btn-light": _vm.currentTab === "addProject",
                     "btn-outline-light": _vm.currentTab !== "addProject"
                   },
-                  attrs: { to: "/admin/projects/add" },
-                  on: {
-                    click: function($event) {
-                      return _vm.changeCurrentTab("addProject")
-                    }
-                  }
+                  attrs: { to: "/admin/projects/add" }
                 },
                 [
                   _c("i", { staticClass: "bi bi-file-earmark-plus" }),
@@ -42655,10 +42668,33 @@ var render = function() {
         "div",
         { staticClass: "row justify-content-center" },
         [
-          _vm.projectsList === false
+          _vm.projectsList === -1
             ? _c("Error", {
                 attrs: { errorMessage: "Не удалось загрузить список проектов" }
               })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.projectsList === false
+            ? _c("div", { staticClass: "col-8 text-center goUpAnim" }, [
+                _c("h3", [_vm._v("Нет проектов на главной странице")]),
+                _vm._v(" "),
+                _c("i", { staticClass: "bi bi-file-earmark-check font1-8rem" }),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  [
+                    _vm._v("Их можно добавить в разделе  "),
+                    _c(
+                      "router-link",
+                      { attrs: { to: "/admin/projects/all" } },
+                      [_c("b", [_vm._v("Все проекты")])]
+                    )
+                  ],
+                  1
+                )
+              ])
             : _vm._e(),
           _vm._v(" "),
           _vm.projectsList !== -1 && _vm.projectsList !== false
@@ -42943,7 +42979,7 @@ var render = function() {
       _vm._v(" "),
       _c("NavScroll", { attrs: { navScrollStyle: _vm.navScrollStyle } }),
       _vm._v(" "),
-      _vm.fullProjectList !== -1 && _vm.fullProjectList !== false
+      _vm.fullProjectList !== -1
         ? _c("router-view", {
             directives: [
               {

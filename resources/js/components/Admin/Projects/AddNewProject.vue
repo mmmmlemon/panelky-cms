@@ -7,6 +7,8 @@
 </template>
 <script>
 export default {
-    
+    mounted(){
+        this.$parent.currentTab = 'addProject';
+    }
 }
 </script>

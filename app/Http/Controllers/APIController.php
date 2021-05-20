@@ -33,24 +33,29 @@ class APIController extends Controller
     public function getProjectsList()
     {
         //получаем список проектов отсортированный по полю order
-        $projects = Project::orderBy('order', 'asc')->get();
+        $projects = Project::where('is_home',1)->orderBy('order', 'asc')->get();
 
-        $response = [];
-
-        //фильтруем результат, нам нужны только поля id и title
-        foreach($projects as $project)
+        if(count($projects) > 0)
         {
-           array_push($response, ['slug' => $project->slug,'title' => $project->project_title]);
-        }
+            $response = [];
 
-        return response()->json($response);
+            //фильтруем результат, нам нужны только поля id и title
+            foreach($projects as $project)
+            {
+               array_push($response, ['slug' => $project->slug,'title' => $project->project_title]);
+            }
+    
+            return response()->json($response);
+        }
+        else
+        { return response()->json(false);}
     }
 
-    //getFirstProjectId
-    //получить id первого проекта в списке проектов
+    //getFirstProjectSlug
+    //получить Slug первого проекта в списке проектов
     public function getFirstProjectSlug()
     {
-        $firstProjectSlug = Project::firstOrFail()->slug;
+        $firstProjectSlug = Project::where('is_home', 1)->orderBy('order','asc')->get()[0]->slug;
 
         return response()->json($firstProjectSlug);
     }
@@ -85,7 +90,7 @@ class APIController extends Controller
     //получить полный список проектов для главной страницы со всей информацией
     public function getFullProjectList()
     {
-        $projects = Project::all();
+        $projects = Project::where('is_home',1)->orderBy('order', 'asc')->get();
 
         //если в БД нет ни одного проекта, то возвращаем false
         if(count($projects) == 0)

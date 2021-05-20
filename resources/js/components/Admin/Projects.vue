@@ -22,11 +22,11 @@
                         Все проекты
                     </router-link>
                 </li>
-                <li class="nav-item mr-2">
+                <li class="nav-item mr-2" v-on:click="changeCurrentTab('addProject')">
                     <router-link to="/admin/projects/add" v-bind:class="{'btn-light': currentTab === 'addProject', 
                                                 'btn-outline-light': currentTab !== 'addProject'}"
-                                                 class="btn btn-sm btn-block btn-outline-light" 
-                                                v-on:click="changeCurrentTab('addProject')">
+                                                 class="btn btn-sm btn-block" 
+                                                >
                         <i class="bi bi-file-earmark-plus"></i>
                         Добавить проект
                     </router-link>

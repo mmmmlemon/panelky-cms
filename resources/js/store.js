@@ -90,7 +90,7 @@ const AdminStates = {
                 if(response.data !== false)
                 { context.commit('setState', {state: 'projectsList', value: response.data}); }
                 else
-                { context.commit('setState', {state: 'siteOwnerInfo', value: false}); }
+                { context.commit('setState', {state: 'projectsList', value: false}); }
             });
         },
 
