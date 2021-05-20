@@ -57,7 +57,7 @@ const routes = [
             },
             {
                 //edit project
-                path:'/admin/edit/:id',
+                path:'/admin/edit/:slug',
                 component: EditProject,
             }
         ]

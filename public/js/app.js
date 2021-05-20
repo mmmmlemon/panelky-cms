@@ -1970,10 +1970,10 @@ __webpack_require__.r(__webpack_exports__);
   //хуки
   beforeMount: function beforeMount() {
     //получаем id проекта из url
-    var id = this.$route.params.id; //получаем проект
+    var slug = this.$route.params.slug; //получаем проект
 
     this.$store.dispatch('getProject', {
-      value: id,
+      value: slug,
       type: 'full'
     });
   },
@@ -2331,11 +2331,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   props: {
-    id: {
-      type: Number,
+    slug: {
+      type: String,
       "default": undefined
     },
     title: {
@@ -2344,8 +2345,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    currentProjectId: function currentProjectId() {
-      return this.$store.state.AdminStates.currentProject.id;
+    currentProjectSlug: function currentProjectSlug() {
+      return this.$store.state.AdminStates.currentProject.slug;
     }
   },
   //методы
@@ -2355,7 +2356,7 @@ __webpack_require__.r(__webpack_exports__);
         value: value,
         type: 'mini'
       });
-      this.$store.dispatch('setCurrentProjectId', value);
+      this.$store.dispatch('setCurrentProjectSlug', value);
     }
   }
 });
@@ -2408,7 +2409,7 @@ __webpack_require__.r(__webpack_exports__);
 
     if (currentProject === -1) {
       //установить первый проект в списке выбранным по умолчанию
-      this.$store.dispatch('setFirstProjectId');
+      this.$store.dispatch('setFirstProjectSlug');
     }
   },
   //данные
@@ -3310,17 +3311,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   computed: {
     //стиль бокового меню
     navMenuStyle: function navMenuStyle() {
       return this.$store.state.GlobalStates.navMenuStyle;
+    },
+    //список проектов
+    fullProjectList: function fullProjectList() {
+      return this.$store.state.GlobalStates.fullProjectList;
     }
   },
   //методы
@@ -3603,7 +3603,7 @@ var routes = [//user side
     component: _components_Admin_Links_vue__WEBPACK_IMPORTED_MODULE_8__.default
   }, {
     //edit project
-    path: '/admin/edit/:id',
+    path: '/admin/edit/:slug',
     component: _components_Admin_EditProject_vue__WEBPACK_IMPORTED_MODULE_9__.default
   }]
 }, // 404
@@ -3712,7 +3712,7 @@ var AdminStates = {
     //текущая открытая вкладка на панели администратора
     currentTab: -1,
     projectsList: -1,
-    currentProjectId: -1,
+    currentProjectSlug: -1,
     currentProject: -1
   },
   mutations: {
@@ -3752,18 +3752,18 @@ var AdminStates = {
         }
       });
     },
-    //setCurrentProjectId
+    //setCurrentProjectSlug
     //установить текукщий выбранный проект в списке проектов (Админка)
-    setCurrentProjectId: function setCurrentProjectId(context, value) {
+    setCurrentProjectSlug: function setCurrentProjectSlug(context, value) {
       context.commit('setState', {
-        state: 'currentProjectId',
+        state: 'currentProjectSlug',
         value: value
       });
     },
-    //setFirstProjectId
-    //уставновить первый id проекта в currentProjectId
-    setFirstProjectId: function setFirstProjectId(context, state) {
-      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getFirstProjectId').then(function (response) {
+    //setFirstProjectSlug
+    //уставновить первый slug проекта в currentProjectSlug
+    setFirstProjectSlug: function setFirstProjectSlug(context, state) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getFirstProjectSlug').then(function (response) {
         axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/getProject/".concat(response.data, "/mini")).then(function (response) {
           if (response.data !== false) {
             context.commit('setState', {
@@ -41773,8 +41773,8 @@ var render = function() {
     { staticClass: "row" },
     _vm._l(_vm.projectsList, function(project) {
       return _c("ProjectListItem", {
-        key: project.id,
-        attrs: { id: project.id, title: project.title }
+        key: project.slug,
+        attrs: { slug: project.slug, title: project.title }
       })
     }),
     1
@@ -41951,7 +41951,9 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "router-link",
-                      { attrs: { to: "/admin/edit/" + _vm.currentProject.id } },
+                      {
+                        attrs: { to: "/admin/edit/" + _vm.currentProject.slug }
+                      },
                       [
                         _c(
                           "button",
@@ -42034,15 +42036,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.currentProjectId !== undefined
+  return _vm.currentProjectSlug !== undefined
     ? _c(
         "div",
         {
           staticClass: "col-11 m-1 fadeInAnim transparentCard",
-          class: { active: _vm.id === _vm.currentProjectId },
+          class: { active: _vm.slug === _vm.currentProjectSlug },
           on: {
             click: function($event) {
-              return _vm.getProject(_vm.id)
+              return _vm.getProject(_vm.slug)
             }
           }
         },
@@ -42910,7 +42912,8 @@ var render = function() {
     "div",
     {
       staticClass:
-        "row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1"
+        "row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1",
+      attrs: { id: _vm.project.slug }
     },
     [
       _vm.project === false
@@ -43436,78 +43439,83 @@ var render = function() {
         }
       },
       [
-        _c("div", { staticClass: "row justify-content-end" }, [
-          _c(
-            "button",
-            {
-              staticClass: "navButtonClose",
-              on: {
-                click: function($event) {
-                  return _vm.closeNavMenu()
-                }
-              }
-            },
-            [_c("i", { staticClass: "bi bi-x" })]
-          ),
-          _vm._v(" "),
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-12 text-center" }, [
-            _c("h6", [
-              _c(
-                "a",
-                {
-                  attrs: { href: "#spotifyi" },
-                  on: {
-                    click: function($event) {
-                      return _vm.closeNavMenu()
+        _vm.fullProjectList !== undefined
+          ? _c(
+              "div",
+              { staticClass: "row justify-content-end" },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "navButtonClose",
+                    on: {
+                      click: function($event) {
+                        return _vm.closeNavMenu()
+                      }
                     }
-                  }
-                },
-                [_vm._v("SpotiFYI")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _c("h6", [_vm._v("Weird Web-Site of [Mr. o_O]")]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _c("h6", [_vm._v("Panelky")]),
-            _vm._v(" "),
-            _c("hr")
-          ]),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-12 text-center" }, [
-            _c("h6", [
-              _c(
-                "a",
-                {
-                  attrs: { href: "#spotifyi" },
-                  on: {
-                    click: function($event) {
-                      return _vm.closeNavMenu()
-                    }
-                  }
-                },
-                [_vm._v("GitHub")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _c("h6", [_vm._v("KoFi")]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _c("h6", [_vm._v("Instagramio")]),
-            _vm._v(" "),
-            _c("hr")
-          ])
-        ])
+                  },
+                  [_c("i", { staticClass: "bi bi-x" })]
+                ),
+                _vm._v(" "),
+                _vm._m(0),
+                _vm._v(" "),
+                _vm._l(_vm.fullProjectList, function(project) {
+                  return _c(
+                    "div",
+                    { key: project.slug, staticClass: "col-12 text-center" },
+                    [
+                      _c("h6", [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" + project.slug },
+                            on: {
+                              click: function($event) {
+                                return _vm.closeNavMenu()
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(project.project_title))]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("br")
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-12 text-center" }, [
+                  _c("h6", [
+                    _c(
+                      "a",
+                      {
+                        attrs: { href: "#spotifyi" },
+                        on: {
+                          click: function($event) {
+                            return _vm.closeNavMenu()
+                          }
+                        }
+                      },
+                      [_vm._v("GitHub")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("h6", [_vm._v("KoFi")]),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("h6", [_vm._v("Instagramio")]),
+                  _vm._v(" "),
+                  _c("hr")
+                ])
+              ],
+              2
+            )
+          : _vm._e()
       ]
     )
   ])

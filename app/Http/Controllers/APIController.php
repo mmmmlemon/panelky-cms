@@ -40,7 +40,7 @@ class APIController extends Controller
         //фильтруем результат, нам нужны только поля id и title
         foreach($projects as $project)
         {
-           array_push($response, ['id' => $project->id,'title' => $project->project_title]);
+           array_push($response, ['slug' => $project->slug,'title' => $project->project_title]);
         }
 
         return response()->json($response);
@@ -48,18 +48,18 @@ class APIController extends Controller
 
     //getFirstProjectId
     //получить id первого проекта в списке проектов
-    public function getFirstProjectId()
+    public function getFirstProjectSlug()
     {
-        $firstProjectId = Project::firstOrFail()->id;
+        $firstProjectSlug = Project::firstOrFail()->slug;
 
-        return response()->json($firstProjectId);
+        return response()->json($firstProjectSlug);
     }
 
     //getProject
     //получить проект для превью (мини-превью или полное превью)
-    public function getProject($id, $type)
+    public function getProject($slug, $type)
     {
-        $project = Project::findOrFail($id);
+        $project = Project::where('slug', $slug)->get()[0];
 
         if($project->project_icon != null)
         $project->project_icon = asset($project->project_icon);
@@ -72,7 +72,7 @@ class APIController extends Controller
         //мини-превью
         else if ($type == "mini")
         {   
-            return response()->json(['id' => $project->id, 
+            return response()->json(['slug' => $project->slug, 
                                     'project_title' => $project->project_title, 
                                     'project_subtitle' => $project->project_subtitle, 
                                     'project_icon' => $project->project_icon]); 

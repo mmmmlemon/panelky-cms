@@ -10,7 +10,7 @@
         
         <!-- меню -->
         <div class="col-12 col-md-2 navMenu" :style="{right: navMenuStyle['right'], opacity: navMenuStyle['opacity'], zIndex: 5}">
-            <div class="row justify-content-end">
+            <div class="row justify-content-end" v-if="fullProjectList !== undefined">
                 <!-- кнопка закрыть меню -->
                 <button class="navButtonClose" v-on:click="closeNavMenu()">
                     <i class="bi bi-x"></i>
@@ -23,16 +23,11 @@
                     </h6>
                     <hr>
                 </div>
-                <!-- список проектов -->
-                <div class="col-12 text-center">
+                <div v-for="project in fullProjectList" :key="project.slug" class="col-12 text-center">
                     <h6>
-                        <a v-on:click="closeNavMenu()" href="#spotifyi">SpotiFYI</a>
+                        <a v-on:click="closeNavMenu()" :href="`#${project.slug}`">{{project.project_title}}</a>
                     </h6>
                     <br>
-                    <h6>Weird Web-Site of [Mr. o_O]</h6>
-                    <br>
-                    <h6>Panelky</h6>
-                    <hr>
                 </div>
                 <!-- ссылки -->
                 <div class="col-12">
@@ -65,6 +60,10 @@
             //стиль бокового меню
             navMenuStyle: function(){
                 return this.$store.state.GlobalStates.navMenuStyle;
+            },
+            //список проектов
+            fullProjectList: function(){
+                return this.$store.state.GlobalStates.fullProjectList;
             }
         },
 

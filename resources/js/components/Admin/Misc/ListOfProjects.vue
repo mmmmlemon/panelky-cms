@@ -3,7 +3,7 @@
 <template>
 
 <div class="row">
-    <ProjectListItem v-for="project in projectsList" :key="project.id" :id="project.id"
+    <ProjectListItem v-for="project in projectsList" :key="project.slug" :slug="project.slug"
                         :title="project.title"/>
 </div>
 

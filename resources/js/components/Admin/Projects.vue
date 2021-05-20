@@ -37,7 +37,7 @@ export default {
         if(currentProject === -1)
         { 
             //установить первый проект в списке выбранным по умолчанию
-            this.$store.dispatch('setFirstProjectId');
+            this.$store.dispatch('setFirstProjectSlug');
         }
     },
 

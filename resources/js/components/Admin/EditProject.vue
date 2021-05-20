@@ -103,9 +103,9 @@ export default {
     //хуки
     beforeMount(){
         //получаем id проекта из url
-        const id = this.$route.params.id;
+        const slug = this.$route.params.slug;
         //получаем проект
-        this.$store.dispatch('getProject', {value: id, type: 'full'});
+        this.$store.dispatch('getProject', {value: slug, type: 'full'});
     },
 
     //данные

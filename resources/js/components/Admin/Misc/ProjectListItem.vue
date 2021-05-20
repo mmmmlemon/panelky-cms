@@ -1,10 +1,11 @@
 //ProjectListItem
 //проект в списке проектов
 <template>
-    <div class="col-11 m-1 fadeInAnim transparentCard" v-on:click="getProject(id)" v-bind:class="{ active: id === currentProjectId }" v-if="currentProjectId !== undefined">
+    <div class="col-11 m-1 fadeInAnim transparentCard" v-on:click="getProject(slug)" v-bind:class="{ active: slug === currentProjectSlug }" 
+                                                        v-if="currentProjectSlug !== undefined">
         <div class="row">
             <div class="col-10 text-center align-middle">
-                <h2 class="" style="margin-top:10%;">{{title}}</h2>
+                <h2 style="margin-top:10%;">{{title}}</h2>
             </div>      
             <div class="col-2">
                 <div class="row">
@@ -23,13 +24,13 @@
 export default {
     //данные
     props: {
-        id: { type: Number, default: undefined },
+        slug: { type: String, default: undefined },
         title: { type: String, default: "Title"}
     },
 
     computed: {
-        currentProjectId: function(){
-            return this.$store.state.AdminStates.currentProject.id;
+        currentProjectSlug: function(){
+            return this.$store.state.AdminStates.currentProject.slug;
         }
     },
 
@@ -37,7 +38,7 @@ export default {
     methods: {
         getProject: function(value){
             this.$store.dispatch('getProject', {value: value, type: 'mini'});
-            this.$store.dispatch('setCurrentProjectId', value);
+            this.$store.dispatch('setCurrentProjectSlug', value);
         }
     }
 }

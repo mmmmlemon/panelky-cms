@@ -1,4 +1,3 @@
-  
 import Vuex from 'vuex';
 import Vue from 'vue';
 import { over } from 'lodash';
@@ -60,7 +59,7 @@ const AdminStates = {
         //текущая открытая вкладка на панели администратора
         currentTab: -1,
         projectsList: -1,
-        currentProjectId: -1, 
+        currentProjectSlug: -1, 
         currentProject: -1,
     },
 
@@ -95,16 +94,16 @@ const AdminStates = {
             });
         },
 
-        //setCurrentProjectId
+        //setCurrentProjectSlug
         //установить текукщий выбранный проект в списке проектов (Админка)
-        setCurrentProjectId(context, value){            
-            context.commit('setState', {state: 'currentProjectId', value});
+        setCurrentProjectSlug(context, value){            
+            context.commit('setState', {state: 'currentProjectSlug', value});
         },
 
-        //setFirstProjectId
-        //уставновить первый id проекта в currentProjectId
-        setFirstProjectId(context, state){
-            axios.get('/api/getFirstProjectId').then(response => {
+        //setFirstProjectSlug
+        //уставновить первый slug проекта в currentProjectSlug
+        setFirstProjectSlug(context, state){
+            axios.get('/api/getFirstProjectSlug').then(response => {
 
                 axios.get(`/api/getProject/${response.data}/mini`).then(response => {
                     if(response.data !== false)
