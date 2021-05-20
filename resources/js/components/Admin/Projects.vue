@@ -34,7 +34,7 @@
         </ul>
         </div>
         <br>
-        <div class="col-8">
+        <div class="col-12">
             <router-view>
             </router-view>  
         </div>

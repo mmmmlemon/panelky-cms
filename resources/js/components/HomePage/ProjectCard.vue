@@ -29,7 +29,7 @@
                 <h6 class="text-center"><b>{{project.project_bottomText}}</b></h6>
                 <br>
                 <!-- кнопка "Посетить" -->
-                <button type="button" class="btn btn-lg btn-outline-light">
+                <button type="button" class="btn btn-lg btn-outline-light fadeInAnim" v-if="project.project_url !== undefined && project.project_url !== ''">
                     <a :href="project.project_url" target="_blank">
                         View project
                     </a>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use File;
 use App\Models\Settings;
@@ -155,6 +156,26 @@ class AdminController extends Controller
         { return response()->json(null, 422); }
     
         $project->save();   
+
+        return response()->json(null, 200);
+    }
+
+    //addNewProject
+    //добавить новый проект в БД
+    public function addNewProject(Request $request)
+    {
+        $project = new Project;
+
+        $project->project_title = $request->project_title;
+        $project->project_subtitle = $request->project_subtitle;
+        $project->project_desc = $request->project_desc;
+        $project->project_bottomText = $request->project_bottomText;
+        $project->project_url = $request->project_url;
+        $project->is_home = 0;
+        $project->order = 0;
+        $project->slug = Str::slug($request->project_title);
+
+        $project->save();
 
         return response()->json(null, 200);
     }

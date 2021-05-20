@@ -61,6 +61,7 @@ const AdminStates = {
         projectsList: -1,
         currentProjectSlug: -1, 
         currentProject: -1,
+        stockImages: -1,
     },
 
     mutations: {
@@ -73,6 +74,9 @@ const AdminStates = {
     getters: {
         currentProject: state => {
             return state.currentProject;
+        },
+        stockImages: state => {
+            return state.stockImages;
         }
     },
 
@@ -124,6 +128,14 @@ const AdminStates = {
                 { context.commit('setState', { state: 'currentProject', value: response.data}) }
                 else
                 { context.commit('setState', { state: 'currentProject', value: false}) }
+            });
+        },
+
+        //getStockImages
+        //получить стоковые иконку и скриншот
+        getStockImages(context){
+            axios.get(`/api/getStockImages`).then(response => {
+                { context.commit('setState', {state: 'stockImages', value: response.data})};
             });
         }
     }

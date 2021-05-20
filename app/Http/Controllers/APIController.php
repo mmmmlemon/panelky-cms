@@ -98,4 +98,16 @@ class APIController extends Controller
         else
         { return response()->json($projects);  }
     }
+
+    //getStockImages
+    //получить стоковые изображения
+    public function getStockImages()
+    {
+          $response = [
+            'icon' => asset('/storage/stock/stock_icon.png'),
+            'image' => asset('/storage/stock/stock_image.png')
+        ];
+
+        return response()->json($response);
+    }
 }
