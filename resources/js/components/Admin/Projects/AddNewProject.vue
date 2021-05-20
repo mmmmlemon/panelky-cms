@@ -97,6 +97,12 @@ export default {
         console.log(stockImages)
     },
 
+    destroyed(){
+        let formData = new FormData();
+        formData.append('randomFolderName', this.randomFolderName);
+        axios.post('/admin/removeFolderFromTemp', formData);
+    },
+
     computed: {
         stockImages: function(){
             return this.$store.state.AdminStates.stockImages;
@@ -160,7 +166,12 @@ export default {
             axios.post('/admin/addNewProject', formData, {
                 headers: {'Content-Type': 'multipart/form-data'} }).then(response => {
                     this.saved = true;
-                    window.location.href="/admin/projects/all";
+                    let formData = new FormData();
+                    formData.append('randomFolderName', this.randomFolderName);
+                    axios.post('/admin/removeFolderFromTemp', formData).then(response => {
+                         window.location.href="/admin/projects/all";
+                    });
+                   
                 }).catch(error => {
                     if(error.response.status === 422){
                         this.errors = error.response.data.error || {};

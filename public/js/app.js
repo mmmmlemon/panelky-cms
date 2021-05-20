@@ -2320,6 +2320,11 @@ __webpack_require__.r(__webpack_exports__);
     });
     console.log(stockImages);
   },
+  destroyed: function destroyed() {
+    var formData = new FormData();
+    formData.append('randomFolderName', this.randomFolderName);
+    axios.post('/admin/removeFolderFromTemp', formData);
+  },
   computed: {
     stockImages: function stockImages() {
       return this.$store.state.AdminStates.stockImages;
@@ -2385,7 +2390,11 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this2.saved = true;
-        window.location.href = "/admin/projects/all";
+        var formData = new FormData();
+        formData.append('randomFolderName', _this2.randomFolderName);
+        axios.post('/admin/removeFolderFromTemp', formData).then(function (response) {
+          window.location.href = "/admin/projects/all";
+        });
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this2.errors = error.response.data.error || {};

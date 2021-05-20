@@ -197,5 +197,11 @@ class AdminController extends Controller
             return response()->json(asset("storage/".$path.$filename), 200);
         }
     }
-    
+
+    //removeFolderFromTemp
+    //удалить временную папку из temp
+    public function removeFolderFromTemp(Request $request){
+        Storage::disk('public')->deleteDirectory('/temp/'.$request->randomFolderName);
+        return response()->json(null, 200);
+    }
 }
