@@ -49,7 +49,7 @@
                         
 
                         <button class="btn btn-lg btn-block btn-outline-light">
-                            Сохранить
+                            Сохранить проект
                         </button>
                     </form> 
                 </div>
@@ -133,7 +133,10 @@ export default {
             axios.post('/admin/saveImageToTemp', formData, {
                 headers: {'Content-Type': 'multipart/form-data'} 
             }).then(response => {
-                //
+                if(type === 'icon')
+                { this.currentProject.project_icon = response.data; }
+                if(type === 'image')
+                { this.currentProject.project_image = response.data; }
             }).catch(error => {
                 console.log("Error uploading image to temp");
             });

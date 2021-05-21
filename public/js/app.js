@@ -2336,6 +2336,8 @@ __webpack_require__.r(__webpack_exports__);
   //методы
   methods: {
     handleFileUpload: function handleFileUpload(type) {
+      var _this2 = this;
+
       var formData = new FormData();
       formData.append('randomFolderName', this.randomFolderName);
 
@@ -2353,13 +2355,20 @@ __webpack_require__.r(__webpack_exports__);
         headers: {
           'Content-Type': 'multipart/form-data'
         }
-      }).then(function (response) {//
+      }).then(function (response) {
+        if (type === 'icon') {
+          _this2.currentProject.project_icon = response.data;
+        }
+
+        if (type === 'image') {
+          _this2.currentProject.project_image = response.data;
+        }
       })["catch"](function (error) {
         console.log("Error uploading image to temp");
       });
     },
     submit: function submit() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.saved = false;
       var formData = new FormData();
@@ -2389,16 +2398,16 @@ __webpack_require__.r(__webpack_exports__);
           'Content-Type': 'multipart/form-data'
         }
       }).then(function (response) {
-        _this2.saved = true;
+        _this3.saved = true;
         var formData = new FormData();
-        formData.append('randomFolderName', _this2.randomFolderName);
+        formData.append('randomFolderName', _this3.randomFolderName);
         axios.post('/admin/removeFolderFromTemp', formData).then(function (response) {
           window.location.href = "/admin/projects/all";
         });
       })["catch"](function (error) {
         if (error.response.status === 422) {
-          _this2.errors = error.response.data.error || {};
-          console.log(_this2.errors);
+          _this3.errors = error.response.data.error || {};
+          console.log(_this3.errors);
         }
       });
     }
@@ -42528,7 +42537,7 @@ var render = function() {
                 { staticClass: "btn btn-lg btn-block btn-outline-light" },
                 [
                   _vm._v(
-                    "\n                        Сохранить\n                    "
+                    "\n                        Сохранить проект\n                    "
                   )
                 ]
               )
