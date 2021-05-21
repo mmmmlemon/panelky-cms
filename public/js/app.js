@@ -2393,13 +2393,14 @@ __webpack_require__.r(__webpack_exports__);
         formData.append('project_url', this.currentProject.project_url);
       }
 
+      formData.append('randomFolderName', this.randomFolderName);
       axios.post('/admin/addNewProject', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }).then(function (response) {
         _this3.saved = true;
-        var formData = new FormData();
+        var fromData = new FormData();
         formData.append('randomFolderName', _this3.randomFolderName);
         axios.post('/admin/removeFolderFromTemp', formData).then(function (response) {
           window.location.href = "/admin/projects/all";

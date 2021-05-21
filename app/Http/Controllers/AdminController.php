@@ -175,6 +175,22 @@ class AdminController extends Controller
         $project->order = 0;
         $project->slug = Str::slug($request->project_title);
 
+        //иконка и скриншот
+        $tempFiles = File::files(storage_path("app/public/temp/".$request->randomFolderName));
+
+        foreach($tempFiles as $file)
+        {
+            $filename = md5(time().rand(0,9)).".".pathinfo($file->getBasename(), PATHINFO_EXTENSION);;
+            $originalName = pathinfo($file->getBasename(), PATHINFO_FILENAME);
+            $path = "public/projectsImages/".$filename;
+            Storage::put($path, file_get_contents($file->getRealPath()));
+
+            if($originalName == "icon")
+            { $project->project_icon = "storage/projectsImages/".$filename; }
+            else if ($originalName == "image")
+            { $project->project_image = "storage/projectsImages/".$filename; }    
+        }
+
         $project->save();
 
         return response()->json(null, 200);

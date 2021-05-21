@@ -165,11 +165,12 @@ export default {
             {
                 formData.append('project_url', this.currentProject.project_url);
             }
+            formData.append('randomFolderName', this.randomFolderName);
 
             axios.post('/admin/addNewProject', formData, {
                 headers: {'Content-Type': 'multipart/form-data'} }).then(response => {
                     this.saved = true;
-                    let formData = new FormData();
+                    let fromData = new FormData();
                     formData.append('randomFolderName', this.randomFolderName);
                     axios.post('/admin/removeFolderFromTemp', formData).then(response => {
                          window.location.href="/admin/projects/all";
