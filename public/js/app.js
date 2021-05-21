@@ -2452,8 +2452,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   mounted: function mounted() {
@@ -2464,6 +2462,20 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     allProjects: function allProjects() {
       return this.$store.state.AdminStates.allProjects;
+    }
+  },
+  //методы
+  methods: {
+    setProjectStatus: function setProjectStatus(slug) {
+      var _this = this;
+
+      var formData = new FormData();
+      formData.append('slug', slug);
+      axios.post('/api/setProjectStatus', formData).then(function (response) {
+        _this.$store.dispatch('getAllProjects');
+      })["catch"](function (error) {
+        alert("Error");
+      });
     }
   }
 });
@@ -42681,51 +42693,66 @@ var render = function() {
           _c(
             "div",
             { staticClass: "row justify-content-center" },
-            _vm._l(_vm.allProjects.home, function(project) {
-              return _c(
-                "div",
-                { key: project.slug, staticClass: "col-3 transparentCard m-1" },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "col-10 text-center align-middle" },
-                    [
-                      _c("h2", { staticStyle: { "margin-top": "10%" } }, [
-                        _vm._v(_vm._s(project.project_title))
-                      ])
-                    ]
-                  )
-                ]
-              )
-            }),
-            0
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-12 mt-5" }, [
-          _c("h4", [_vm._v("Другие проекты")]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "row justify-content-center" },
-            _vm._l(_vm.allProjects.other, function(project) {
-              return _c(
-                "div",
-                { key: project.slug, staticClass: "col-3 transparentCard m-1" },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "col-10 text-center align-middle" },
-                    [
-                      _c("h2", { staticStyle: { "margin-top": "10%" } }, [
-                        _vm._v(_vm._s(project.project_title))
-                      ])
-                    ]
-                  )
-                ]
-              )
-            }),
-            0
+            [
+              _vm._l(_vm.allProjects.home, function(project) {
+                return _c(
+                  "div",
+                  {
+                    key: project.slug,
+                    staticClass: "col-3 transparentCard m-1"
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "col-10 text-center align-middle",
+                        on: {
+                          click: function($event) {
+                            return _vm.setProjectStatus(project.slug)
+                          }
+                        }
+                      },
+                      [
+                        _c("h2", { staticStyle: { "margin-top": "10%" } }, [
+                          _vm._v(_vm._s(project.project_title))
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-12" }, [_vm._v(" ")]),
+              _vm._v(" "),
+              _vm._l(_vm.allProjects.other, function(project) {
+                return _c(
+                  "div",
+                  {
+                    key: project.slug,
+                    staticClass: "col-3 transparentCard m-1"
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "col-10 text-center align-middle",
+                        on: {
+                          click: function($event) {
+                            return _vm.setProjectStatus(project.slug)
+                          }
+                        }
+                      },
+                      [
+                        _c("h2", { staticStyle: { "margin-top": "10%" } }, [
+                          _vm._v(_vm._s(project.project_title))
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              })
+            ],
+            2
           )
         ])
       ])

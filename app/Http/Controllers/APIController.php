@@ -123,4 +123,20 @@ class APIController extends Controller
 
         return response()->json($response);
     }
+
+    //setProjectStatus
+    //поменять поле is_home у проекта
+    public function setProjectStatus(Request $request)
+    {
+        $project = Project::where('slug', $request->slug)->get()[0];
+
+        if($project->is_home == 0)
+        { $project->is_home = 1; }
+        else
+        { $project->is_home = 0; }
+
+        $project->save();
+
+        return response()->json(null, 200);
+    }
 }
