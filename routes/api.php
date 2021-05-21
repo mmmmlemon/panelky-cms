@@ -25,3 +25,4 @@ Route::get('/getFirstProjectSlug', [APIController::class, 'getFirstProjectSlug']
 Route::get('/getProject/{id}/{type}', [APIController::class, 'getProject']);
 Route::get('/getFullProjectList', [APIController::class, 'getFullProjectList']);
 Route::get('/getStockImages', [APIController::class, 'getStockImages']);
+Route::get('/getAllProjects', [APIController::class, 'getAllProjects']);

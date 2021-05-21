@@ -2,7 +2,7 @@
 //меню добавления нового проекта
 <template>
     <div class="row justify-content-center fadeInAnim">
-        <div class="col-12">
+        <div class="col-12 mb-4">
             <h3 class="text-center mb-4">Добавить новый проект</h3>
             <div class="row justify-content-center">
                 <div class="col-4">
@@ -12,39 +12,39 @@
                         <div class="mb-3">
                             <h6>Название проекта</h6>
                             <input type="text" v-model="currentProject.project_title" placeholder="НазваниеПроекта.ru" class="form-control" required>
-                            <!-- <div v-if="errors && errors.project_title" class="text-danger">{{ errors.project_title[0] }}</div> -->
+                            <div v-if="errors && errors.project_title" class="text-danger">{{ errors.project_title[0] }}</div>
                         </div>
                         <div class="mb-3">
                             <h6>Подзаголовок</h6>
                             <input type="text" v-model="currentProject.project_subtitle" placeholder="Подзаголовок" class="form-control">
-                            <!-- <div v-if="errors && errors.project_subtitle" class="text-danger">{{ errors.project_subtitle[0] }}</div> -->
+                            <div v-if="errors && errors.project_subtitle" class="text-danger">{{ errors.project_subtitle[0] }}</div>
                         </div>
                         <div class="mb-3">
                             <h6>Краткое описание</h6>
                             <textarea v-model="currentProject.project_desc" placeholder="Краткое описание проекта" class="form-control"></textarea>
-                            <!-- <div v-if="errors && errors.project_desc" class="text-danger">{{ errors.project_desc[0] }}</div> -->
+                            <div v-if="errors && errors.project_desc" class="text-danger">{{ errors.project_desc[0] }}</div>
                         </div>
                         <div class="mb-3">
                             <h6>Нижний текст</h6>
                             <input type="text" v-model="currentProject.project_bottomText" placeholder="Доп. информация мелким шрифтом" class="form-control">
-                            <!-- <div v-if="errors && errors.project_bottomText" class="text-danger">{{ errors.project_bottomText[0] }}</div> -->
+                            <div v-if="errors && errors.project_bottomText" class="text-danger">{{ errors.project_bottomText[0] }}</div>
                         </div>
                         <div class="mb-3">
                             <h6>Ссылка на проект</h6>
-                            <input type="text" v-model="currentProject.project_url" placeholder="my-very-cool-project.ru" class="form-control" required>
-                            <!-- <div v-if="errors && errors.project_url" class="text-danger">{{ errors.project_url[0] }}</div> -->
+                            <input type="text" v-model="currentProject.project_url" placeholder="my-very-cool-project.ru" class="form-control">
+                            <div v-if="errors && errors.project_url" class="text-danger">{{ errors.project_url[0] }}</div>
                         </div>
                         <div class="mb-3">
                             <h6>Логотип проекта</h6>
-                            <input type="file" ref="icon" class="form-control-file" v-on:change="handleFileUpload('icon')"
+                            <input type="file" ref="icon" name="icon" class="form-control-file" v-on:change="handleFileUpload('icon')"
                                     accept="image/jpeg, image/png">
-                            <!-- <div v-if="errors && errors.projectIcon" class="text-danger">{{ errors.projectIcon[0] }}</div> -->
+                            <div v-if="errors && errors.icon" class="text-danger">{{ errors.projectIcon[0] }}</div>
                         </div>
                         <div class="mb-3">
                             <h6>Изображение\скриншот проекта</h6>
-                            <input type="file" ref="image" class="form-control-file"  v-on:change="handleFileUpload('image')"
+                            <input type="file" ref="image" name="image" class="form-control-file"  v-on:change="handleFileUpload('image')"
                                     accept="image/jpeg, image/png">
-                            <!-- <div v-if="errors && errors.projectImage" class="text-danger">{{ errors.projectImage[0] }}</div> -->
+                            <div v-if="errors && errors.image" class="text-danger">{{ errors.projectImage[0] }}</div>
                         </div>
                         
 
@@ -170,7 +170,7 @@ export default {
             axios.post('/admin/addNewProject', formData, {
                 headers: {'Content-Type': 'multipart/form-data'} }).then(response => {
                     this.saved = true;
-                    let fromData = new FormData();
+                    let formData = new FormData();
                     formData.append('randomFolderName', this.randomFolderName);
                     axios.post('/admin/removeFolderFromTemp', formData).then(response => {
                          window.location.href="/admin/projects/all";
@@ -178,7 +178,7 @@ export default {
                    
                 }).catch(error => {
                     if(error.response.status === 422){
-                        this.errors = error.response.data.error || {};
+                        this.errors = error.response.data.errors || {};
                         console.log(this.errors);
                     }
                 });

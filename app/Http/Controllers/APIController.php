@@ -110,4 +110,17 @@ class APIController extends Controller
 
         return response()->json($response);
     }
+
+    //getAllProjects
+    //получить все проекты
+    public function getAllProjects()
+    {
+        $homeProjects = Project::where('is_home', 1)->orderBy('order','asc')->get();
+
+        $otherProjects = Project::where('is_home', 0)->orderBy('id', 'asc')->get();
+
+        $response = ['home' => $homeProjects, 'other' => $otherProjects];
+
+        return response()->json($response);
+    }
 }

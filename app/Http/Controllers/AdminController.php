@@ -58,7 +58,7 @@ class AdminController extends Controller
             'project_subtitle' => 'string',
             'project_desc' => 'string',
             'project_bottomText' => 'string',
-            'project_url' => 'required|url'
+            'project_url' => 'url'
         ]);
 
         $project = Project::find($request->id);
@@ -140,6 +140,7 @@ class AdminController extends Controller
     //удалить иконку\изображение из проекта
     public function deleteImageFromProject(Request $request)
     {
+
         $project = Project::find($request->id);
 
         if($request->type == 'icon')
@@ -164,6 +165,16 @@ class AdminController extends Controller
     //добавить новый проект в БД
     public function addNewProject(Request $request)
     {
+        $this->validate($request, [
+            'project_title' => 'required|string',
+            'project_subtitle' => 'string',
+            'project_desc' => 'string',
+            'project_bottomText' => 'string',
+            'project_url' => 'url',
+            'icon' => 'mimes:jpeg,jpg,png|nullable',
+            'image' => 'mimes:jpeg,jpg,png|nullable',
+        ]);
+
         $project = new Project;
 
         $project->project_title = $request->project_title;
@@ -175,25 +186,27 @@ class AdminController extends Controller
         $project->order = 0;
         $project->slug = Str::slug($request->project_title);
 
-        //иконка и скриншот
-        $tempFiles = File::files(storage_path("app/public/temp/".$request->randomFolderName));
-
-        foreach($tempFiles as $file)
+        if($request->hasFile('icon') || $request->hasFile('image'))
         {
-            $filename = md5(time().rand(0,9)).".".pathinfo($file->getBasename(), PATHINFO_EXTENSION);;
-            $originalName = pathinfo($file->getBasename(), PATHINFO_FILENAME);
-            $path = "public/projectsImages/".$filename;
-            Storage::put($path, file_get_contents($file->getRealPath()));
+            //иконка и скриншот
+            $tempFiles = File::files(storage_path("app/public/temp/".$request->randomFolderName));
 
-            if($originalName == "icon")
-            { $project->project_icon = "storage/projectsImages/".$filename; }
-            else if ($originalName == "image")
-            { $project->project_image = "storage/projectsImages/".$filename; }    
+            foreach($tempFiles as $file)
+            {
+                $filename = md5(time().rand(0,9)).".".pathinfo($file->getBasename(), PATHINFO_EXTENSION);;
+                $originalName = pathinfo($file->getBasename(), PATHINFO_FILENAME);
+                $path = "public/projectsImages/".$filename;
+                Storage::put($path, file_get_contents($file->getRealPath()));
+
+                if($originalName == "icon")
+                { $project->project_icon = "storage/projectsImages/".$filename; }
+                else if ($originalName == "image")
+                { $project->project_image = "storage/projectsImages/".$filename; }    
+            }
         }
 
         $project->save();
-
-        return response()->json(null, 200);
+        return response()->json(null, 200); 
     }
 
     //saveImageToTemp
@@ -216,7 +229,8 @@ class AdminController extends Controller
 
     //removeFolderFromTemp
     //удалить временную папку из temp
-    public function removeFolderFromTemp(Request $request){
+    public function removeFolderFromTemp(Request $request)
+    {
         Storage::disk('public')->deleteDirectory('/temp/'.$request->randomFolderName);
         return response()->json(null, 200);
     }

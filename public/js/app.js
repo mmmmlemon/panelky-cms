@@ -2400,14 +2400,14 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this3.saved = true;
-        var fromData = new FormData();
+        var formData = new FormData();
         formData.append('randomFolderName', _this3.randomFolderName);
         axios.post('/admin/removeFolderFromTemp', formData).then(function (response) {
           window.location.href = "/admin/projects/all";
         });
       })["catch"](function (error) {
         if (error.response.status === 422) {
-          _this3.errors = error.response.data.error || {};
+          _this3.errors = error.response.data.errors || {};
           console.log(_this3.errors);
         }
       });
@@ -2435,9 +2435,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  //хуки
   mounted: function mounted() {
     this.$parent.currentTab = "allProjects";
+    this.$store.dispatch('getAllProjects');
+  },
+  //данные
+  computed: {
+    allProjects: function allProjects() {
+      return this.$store.state.AdminStates.allProjects;
+    }
   }
 });
 
@@ -4038,7 +4065,8 @@ var AdminStates = {
     projectsList: -1,
     currentProjectSlug: -1,
     currentProject: -1,
-    stockImages: -1
+    stockImages: -1,
+    allProjects: -1
   },
   mutations: {
     //установить стейт
@@ -4131,6 +4159,19 @@ var AdminStates = {
         {
           context.commit('setState', {
             state: 'stockImages',
+            value: response.data
+          });
+        }
+        ;
+      });
+    },
+    //getAllProjects
+    //получить все проекты
+    getAllProjects: function getAllProjects(context) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getAllProjects').then(function (response) {
+        {
+          context.commit('setState', {
+            state: 'allProjects',
             value: response.data
           });
         }
@@ -42318,7 +42359,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center fadeInAnim" }, [
-    _c("div", { staticClass: "col-12" }, [
+    _c("div", { staticClass: "col-12 mb-4" }, [
       _c("h3", { staticClass: "text-center mb-4" }, [
         _vm._v("Добавить новый проект")
       ]),
@@ -42373,7 +42414,13 @@ var render = function() {
                       )
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.project_title
+                  ? _c("div", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.project_title[0]))
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "mb-3" }, [
@@ -42403,7 +42450,13 @@ var render = function() {
                       )
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.project_subtitle
+                  ? _c("div", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.project_subtitle[0]))
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "mb-3" }, [
@@ -42433,7 +42486,13 @@ var render = function() {
                       )
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.project_desc
+                  ? _c("div", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.project_desc[0]))
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "mb-3" }, [
@@ -42466,7 +42525,13 @@ var render = function() {
                       )
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.project_bottomText
+                  ? _c("div", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.project_bottomText[0]))
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "mb-3" }, [
@@ -42484,8 +42549,7 @@ var render = function() {
                   staticClass: "form-control",
                   attrs: {
                     type: "text",
-                    placeholder: "my-very-cool-project.ru",
-                    required: ""
+                    placeholder: "my-very-cool-project.ru"
                   },
                   domProps: { value: _vm.currentProject.project_url },
                   on: {
@@ -42500,7 +42564,13 @@ var render = function() {
                       )
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.project_url
+                  ? _c("div", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.project_url[0]))
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "mb-3" }, [
@@ -42509,13 +42579,23 @@ var render = function() {
                 _c("input", {
                   ref: "icon",
                   staticClass: "form-control-file",
-                  attrs: { type: "file", accept: "image/jpeg, image/png" },
+                  attrs: {
+                    type: "file",
+                    name: "icon",
+                    accept: "image/jpeg, image/png"
+                  },
                   on: {
                     change: function($event) {
                       return _vm.handleFileUpload("icon")
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.icon
+                  ? _c("div", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.projectIcon[0]))
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "mb-3" }, [
@@ -42524,13 +42604,23 @@ var render = function() {
                 _c("input", {
                   ref: "image",
                   staticClass: "form-control-file",
-                  attrs: { type: "file", accept: "image/jpeg, image/png" },
+                  attrs: {
+                    type: "file",
+                    name: "image",
+                    accept: "image/jpeg, image/png"
+                  },
                   on: {
                     change: function($event) {
                       return _vm.handleFileUpload("image")
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.image
+                  ? _c("div", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.projectImage[0]))
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c(
@@ -42583,18 +42673,65 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _vm.allProjects !== -1
+    ? _c("div", { staticClass: "row justify-content-center text-center" }, [
+        _c("div", { staticClass: "col-12" }, [
+          _c("h4", [_vm._v("Проекты на главной")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "row justify-content-center" },
+            _vm._l(_vm.allProjects.home, function(project) {
+              return _c(
+                "div",
+                { key: project.slug, staticClass: "col-3 transparentCard m-1" },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "col-10 text-center align-middle" },
+                    [
+                      _c("h2", { staticStyle: { "margin-top": "10%" } }, [
+                        _vm._v(_vm._s(project.project_title))
+                      ])
+                    ]
+                  )
+                ]
+              )
+            }),
+            0
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12 mt-5" }, [
+          _c("h4", [_vm._v("Другие проекты")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "row justify-content-center" },
+            _vm._l(_vm.allProjects.other, function(project) {
+              return _c(
+                "div",
+                { key: project.slug, staticClass: "col-3 transparentCard m-1" },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "col-10 text-center align-middle" },
+                    [
+                      _c("h2", { staticStyle: { "margin-top": "10%" } }, [
+                        _vm._v(_vm._s(project.project_title))
+                      ])
+                    ]
+                  )
+                ]
+              )
+            }),
+            0
+          )
+        ])
+      ])
+    : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center" }, [
-      _c("h4", [_vm._v("AllProjects.vue")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

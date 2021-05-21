@@ -62,6 +62,7 @@ const AdminStates = {
         currentProjectSlug: -1, 
         currentProject: -1,
         stockImages: -1,
+        allProjects: -1,
     },
 
     mutations: {
@@ -137,6 +138,14 @@ const AdminStates = {
             axios.get(`/api/getStockImages`).then(response => {
                 { context.commit('setState', {state: 'stockImages', value: response.data})};
             });
+        },
+
+        //getAllProjects
+        //получить все проекты
+        getAllProjects(context){
+            axios.get('/api/getAllProjects').then(response => {
+                { context.commit('setState', {state: 'allProjects', value: response.data})};
+            })
         }
     }
 }
