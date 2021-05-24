@@ -1,7 +1,7 @@
 //AllProjects
 //список всех проектов
 <template>
-    <div class="row justify-content-center text-center" v-if="allProjects !== -1">
+    <div class="row justify-content-center text-center fadeInAnim" v-if="allProjects !== -1">
 
         <div class="col-4 m-1">
             <h4>Главные проекты</h4>

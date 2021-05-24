@@ -1,9 +1,9 @@
 //ProjectListItem
 //проект в списке проектов
 <template>
-    <div class="col-11 m-1 fadeInAnim transparentCard" v-on:click="getProject(slug)" v-bind:class="{ active: slug === currentProjectSlug }" 
+    <div class="col-11 m-1 fadeInAnim" v-on:click="getProject(slug)"
                                                         v-if="currentProjectSlug !== undefined">
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-10 text-center align-middle">
                 <h2 style="margin-top:10%;">{{title}}</h2>
             </div>      
@@ -16,7 +16,23 @@
                     </div> 
                 </div>
             </div>
-        </div>    
+        </div>     -->
+
+        <div class="col-12 transparentCard m-1 p-0"  v-bind:class="{ active: slug === currentProjectSlug }" >
+            <div class="card-body p-3">
+                <h2 class="card-title text-right">{{title}}</h2>
+                <hr>
+                <!-- <p class="card-text">{{project.project_subtitle}}</p> -->
+                <div class="row ">
+                    <div class="col-12">
+                        <button class="btn btn-light float-right backgroundAnimation" type="button">
+                                <i class="bi bi-arrows-move"></i>
+                        </button> 
+                    </div>
+                 
+                </div>
+            </div>  
+        </div>
     </div> 
 </template>
 

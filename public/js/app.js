@@ -2099,6 +2099,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   props: {
@@ -2185,21 +2201,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  //хуки
-  beforeMount: function beforeMount() {
-    //текущая вкладка
-    this.$store.dispatch('setCurrentTab', 'projects'); //получить список проектов
-
-    this.$store.dispatch('getProjectsList');
-  },
-  mounted: function mounted() {
-    var currentProject = this.$store.getters.currentProject;
-
-    if (currentProject === -1) {
-      //установить первый проект в списке выбранным по умолчанию
-      this.$store.dispatch('setFirstProjectSlug');
-    }
-  },
   //данные
   data: function data() {
     return {
@@ -2808,7 +2809,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  //хуки
+  mounted: function mounted() {
+    //текущая вкладка
+    this.$store.dispatch('setCurrentTab', 'projects'); //получить список проектов
+
+    this.$store.dispatch('getProjectsList'); // var currentProject = this.$store.getters.currentProject;
+    // if(currentProject === -1)
+    // { 
+    //установить первый проект в списке выбранным по умолчанию
+
+    this.$store.dispatch('setFirstProjectSlug'); // }
+  },
   computed: {
     //список проектов
     projectsList: function projectsList() {
@@ -42238,8 +42255,7 @@ var render = function() {
     ? _c(
         "div",
         {
-          staticClass: "col-11 m-1 fadeInAnim transparentCard",
-          class: { active: _vm.slug === _vm.currentProjectSlug },
+          staticClass: "col-11 m-1 fadeInAnim",
           on: {
             click: function($event) {
               return _vm.getProject(_vm.slug)
@@ -42247,15 +42263,24 @@ var render = function() {
           }
         },
         [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-10 text-center align-middle" }, [
-              _c("h2", { staticStyle: { "margin-top": "10%" } }, [
-                _vm._v(_vm._s(_vm.title))
+          _c(
+            "div",
+            {
+              staticClass: "col-12 transparentCard m-1 p-0",
+              class: { active: _vm.slug === _vm.currentProjectSlug }
+            },
+            [
+              _c("div", { staticClass: "card-body p-3" }, [
+                _c("h2", { staticClass: "card-title text-right" }, [
+                  _vm._v(_vm._s(_vm.title))
+                ]),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _vm._m(0)
               ])
-            ]),
-            _vm._v(" "),
-            _vm._m(0)
-          ])
+            ]
+          )
         ]
       )
     : _vm._e()
@@ -42265,15 +42290,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-12 mt-4 mb-4" }, [
-          _c(
-            "button",
-            { staticClass: "btn", staticStyle: { color: "white" } },
-            [_c("i", { staticClass: "bi bi-arrows-move" })]
-          )
-        ])
+    return _c("div", { staticClass: "row " }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-light float-right backgroundAnimation",
+            attrs: { type: "button" }
+          },
+          [_c("i", { staticClass: "bi bi-arrows-move" })]
+        )
       ])
     ])
   }
@@ -42749,193 +42775,197 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.allProjects !== -1
-    ? _c("div", { staticClass: "row justify-content-center text-center" }, [
-        _c(
-          "div",
-          { staticClass: "col-4 m-1" },
-          [
-            _c("h4", [_vm._v("Главные проекты")]),
-            _vm._v(" "),
-            _c("hr"),
-            _vm._v(" "),
-            _c("h6", [_vm._v("Отображаются в самом начале в виде карточек")]),
-            _vm._v(" "),
-            _vm.allProjects.home.length === 0
-              ? _c("div", { staticClass: "col-12 mt-5 goUpAnim" }, [
-                  _c("h3", [_vm._v("Нет главных проектов")]),
-                  _vm._v(" "),
-                  _c("i", { staticClass: "bi bi-file-earmark-x font18pt" }),
-                  _vm._v(" "),
-                  _c("hr")
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "transition-group",
-              {
-                staticClass: "row justify-content-center",
-                attrs: { name: "projectsList", tag: "div" }
-              },
-              _vm._l(_vm.allProjects.home, function(project) {
-                return _c(
-                  "div",
-                  {
-                    key: project.slug,
-                    staticClass: "col-12 transparentCard highlighted m-1"
-                  },
-                  [
-                    _c("div", { staticClass: "card-body" }, [
-                      _c("h2", { staticClass: "card-title" }, [
-                        _vm._v(_vm._s(project.project_title))
-                      ]),
-                      _vm._v(" "),
-                      _c("hr"),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "card-text" }, [
-                        _vm._v(_vm._s(project.project_subtitle))
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "d-grid gap-2 d-md-block" },
-                        [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-light",
-                              attrs: { type: "button" }
-                            },
-                            [_c("i", { staticClass: "bi bi-trash-fill" })]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "router-link",
-                            {
-                              staticClass: "btn btn-light",
-                              attrs: { to: "/admin/edit/" + project.slug }
-                            },
-                            [_c("i", { staticClass: "bi bi-pencil-fill" })]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-light",
-                              attrs: { type: "button" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.setProjectStatus(project.slug)
+    ? _c(
+        "div",
+        { staticClass: "row justify-content-center text-center fadeInAnim" },
+        [
+          _c(
+            "div",
+            { staticClass: "col-4 m-1" },
+            [
+              _c("h4", [_vm._v("Главные проекты")]),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c("h6", [_vm._v("Отображаются в самом начале в виде карточек")]),
+              _vm._v(" "),
+              _vm.allProjects.home.length === 0
+                ? _c("div", { staticClass: "col-12 mt-5 goUpAnim" }, [
+                    _c("h3", [_vm._v("Нет главных проектов")]),
+                    _vm._v(" "),
+                    _c("i", { staticClass: "bi bi-file-earmark-x font18pt" }),
+                    _vm._v(" "),
+                    _c("hr")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "transition-group",
+                {
+                  staticClass: "row justify-content-center",
+                  attrs: { name: "projectsList", tag: "div" }
+                },
+                _vm._l(_vm.allProjects.home, function(project) {
+                  return _c(
+                    "div",
+                    {
+                      key: project.slug,
+                      staticClass: "col-12 transparentCard highlighted m-1"
+                    },
+                    [
+                      _c("div", { staticClass: "card-body" }, [
+                        _c("h2", { staticClass: "card-title" }, [
+                          _vm._v(_vm._s(project.project_title))
+                        ]),
+                        _vm._v(" "),
+                        _c("hr"),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "card-text" }, [
+                          _vm._v(_vm._s(project.project_subtitle))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "d-grid gap-2 d-md-block" },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-light",
+                                attrs: { type: "button" }
+                              },
+                              [_c("i", { staticClass: "bi bi-trash-fill" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "btn btn-light",
+                                attrs: { to: "/admin/edit/" + project.slug }
+                              },
+                              [_c("i", { staticClass: "bi bi-pencil-fill" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-light",
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.setProjectStatus(project.slug)
+                                  }
                                 }
-                              }
-                            },
-                            [_c("i", { staticClass: "bi bi-arrow-right" })]
-                          )
-                        ],
-                        1
-                      )
-                    ])
-                  ]
-                )
-              }),
-              0
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-4 m-1" },
-          [
-            _c("h4", [_vm._v("Другие проекты")]),
-            _vm._v(" "),
-            _c("hr"),
-            _vm._v(" "),
-            _c("h6", [_vm._v("Отображаются в самом конце в виде названий")]),
-            _vm._v(" "),
-            _vm.allProjects.other.length === 0
-              ? _c("div", { staticClass: "col-12 mt-5 goUpAnim" }, [
-                  _c("h3", [_vm._v("Нет проектов")]),
-                  _vm._v(" "),
-                  _c("i", { staticClass: "bi bi-file-earmark-x font18pt" }),
-                  _vm._v(" "),
-                  _c("hr")
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "transition-group",
-              {
-                staticClass: "row justify-content-center",
-                attrs: { name: "projectsList", tag: "div" }
-              },
-              _vm._l(_vm.allProjects.other, function(project) {
-                return _c(
-                  "div",
-                  {
-                    key: project.slug,
-                    staticClass: "col-12 transparentCard m-1"
-                  },
-                  [
-                    _c("div", { staticClass: "card-body" }, [
-                      _c("h2", { staticClass: "card-title" }, [
-                        _vm._v(_vm._s(project.project_title))
-                      ]),
-                      _vm._v(" "),
-                      _c("hr"),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "card-text" }, [
-                        _vm._v(_vm._s(project.project_subtitle))
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "d-grid gap-2 d-md-block" },
-                        [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-light",
-                              attrs: { type: "button" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.setProjectStatus(project.slug)
+                              },
+                              [_c("i", { staticClass: "bi bi-arrow-right" })]
+                            )
+                          ],
+                          1
+                        )
+                      ])
+                    ]
+                  )
+                }),
+                0
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-4 m-1" },
+            [
+              _c("h4", [_vm._v("Другие проекты")]),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c("h6", [_vm._v("Отображаются в самом конце в виде названий")]),
+              _vm._v(" "),
+              _vm.allProjects.other.length === 0
+                ? _c("div", { staticClass: "col-12 mt-5 goUpAnim" }, [
+                    _c("h3", [_vm._v("Нет проектов")]),
+                    _vm._v(" "),
+                    _c("i", { staticClass: "bi bi-file-earmark-x font18pt" }),
+                    _vm._v(" "),
+                    _c("hr")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "transition-group",
+                {
+                  staticClass: "row justify-content-center",
+                  attrs: { name: "projectsList", tag: "div" }
+                },
+                _vm._l(_vm.allProjects.other, function(project) {
+                  return _c(
+                    "div",
+                    {
+                      key: project.slug,
+                      staticClass: "col-12 transparentCard m-1"
+                    },
+                    [
+                      _c("div", { staticClass: "card-body" }, [
+                        _c("h2", { staticClass: "card-title" }, [
+                          _vm._v(_vm._s(project.project_title))
+                        ]),
+                        _vm._v(" "),
+                        _c("hr"),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "card-text" }, [
+                          _vm._v(_vm._s(project.project_subtitle))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "d-grid gap-2 d-md-block" },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-light",
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.setProjectStatus(project.slug)
+                                  }
                                 }
-                              }
-                            },
-                            [_c("i", { staticClass: "bi bi-arrow-left" })]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "router-link",
-                            {
-                              staticClass: "btn btn-light",
-                              attrs: { to: "/admin/edit/" + project.slug }
-                            },
-                            [_c("i", { staticClass: "bi bi-pencil-fill" })]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-light",
-                              attrs: { type: "button" }
-                            },
-                            [_c("i", { staticClass: "bi bi-trash-fill" })]
-                          )
-                        ],
-                        1
-                      )
-                    ])
-                  ]
-                )
-              }),
-              0
-            )
-          ],
-          1
-        )
-      ])
+                              },
+                              [_c("i", { staticClass: "bi bi-arrow-left" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "btn btn-light",
+                                attrs: { to: "/admin/edit/" + project.slug }
+                              },
+                              [_c("i", { staticClass: "bi bi-pencil-fill" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-light",
+                                attrs: { type: "button" }
+                              },
+                              [_c("i", { staticClass: "bi bi-trash-fill" })]
+                            )
+                          ],
+                          1
+                        )
+                      ])
+                    ]
+                  )
+                }),
+                0
+              )
+            ],
+            1
+          )
+        ]
+      )
     : _vm._e()
 }
 var staticRenderFns = []
@@ -43488,6 +43518,10 @@ var render = function() {
                     "div",
                     { staticClass: "col-4" },
                     [
+                      _c("h6", [_vm._v("Порядок")]),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
                       _c("ListOfProjects", {
                         attrs: { projectsList: _vm.projectsList }
                       })
@@ -43499,6 +43533,10 @@ var render = function() {
                     "div",
                     { staticClass: "col-8 fadeIn" },
                     [
+                      _c("h6", [_vm._v(" ")]),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
                       _c("PreviewProject", {
                         attrs: {
                           type: "mini",

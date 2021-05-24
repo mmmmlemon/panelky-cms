@@ -43,24 +43,6 @@
 
 <script>
 export default {
-    //хуки
-    beforeMount(){
-        //текущая вкладка
-        this.$store.dispatch('setCurrentTab', 'projects');
-        //получить список проектов
-        this.$store.dispatch('getProjectsList');
-    },
-
-    mounted(){
-        var currentProject = this.$store.getters.currentProject;
-
-        if(currentProject === -1)
-        { 
-            //установить первый проект в списке выбранным по умолчанию
-            this.$store.dispatch('setFirstProjectSlug');
-        }
-    },
-
     //данные
     data: () => {
         return {

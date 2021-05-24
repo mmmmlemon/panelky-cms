@@ -18,10 +18,14 @@
             <div class="row" v-if="projectsList !== -1 && projectsList !== false">
                 <!-- список проектов -->
                 <div class="col-4">
+                    <h6>Порядок</h6>
+                    <hr>
                     <ListOfProjects :projectsList="projectsList"/>      
                 </div>
                 <!-- мини-превью проекта -->
                 <div class="col-8 fadeIn">
+                     <h6>&nbsp;</h6>
+                    <hr>
                     <PreviewProject type="mini" :currentProject="currentProject"/>
                 </div>
             </div>
@@ -32,6 +36,22 @@
 </template>
 <script>
 export default {
+        //хуки
+        mounted(){
+            //текущая вкладка
+            this.$store.dispatch('setCurrentTab', 'projects');
+            //получить список проектов
+            this.$store.dispatch('getProjectsList');
+
+            // var currentProject = this.$store.getters.currentProject;
+
+            // if(currentProject === -1)
+            // { 
+                //установить первый проект в списке выбранным по умолчанию
+                this.$store.dispatch('setFirstProjectSlug');
+            // }
+        },
+
         computed: {
         //список проектов
         projectsList: function(){
