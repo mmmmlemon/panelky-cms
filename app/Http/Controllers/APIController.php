@@ -33,7 +33,7 @@ class APIController extends Controller
     public function getProjectsList()
     {
         //получаем список проектов отсортированный по полю order
-        $projects = Project::where('is_home',1)->orderBy('order', 'asc')->get();
+        $projects = Project::where('is_home',1)->orderBy('order', 'desc')->get();
 
         if(count($projects) > 0)
         {
@@ -55,7 +55,7 @@ class APIController extends Controller
     //получить Slug первого проекта в списке проектов
     public function getFirstProjectSlug()
     {
-        $projects = Project::where('is_home', 1)->orderBy('order','asc')->get();
+        $projects = Project::where('is_home', 1)->orderBy('order','desc')->get();
 
         if(count($projects) > 0)
         { return response()->json($projects[0]->slug); }
@@ -93,7 +93,7 @@ class APIController extends Controller
     //получить полный список проектов для главной страницы со всей информацией
     public function getFullProjectList()
     {
-        $projects = Project::where('is_home',1)->orderBy('order', 'asc')->get();
+        $projects = Project::where('is_home',1)->orderBy('order', 'desc')->get();
 
         //если в БД нет ни одного проекта, то возвращаем false
         if(count($projects) == 0)
@@ -118,9 +118,9 @@ class APIController extends Controller
     //получить все проекты
     public function getAllProjects()
     {
-        $homeProjects = Project::where('is_home', 1)->orderBy('order','asc')->get();
+        $homeProjects = Project::where('is_home', 1)->orderBy('order','desc')->get();
 
-        $otherProjects = Project::where('is_home', 0)->orderBy('order', 'asc')->get();
+        $otherProjects = Project::where('is_home', 0)->orderBy('order', 'desc')->get();
 
         $response = ['home' => $homeProjects, 'other' => $otherProjects];
 
@@ -136,15 +136,15 @@ class APIController extends Controller
         
         if($project->is_home == 0)
         {   
-            $min = Project::where('is_home', 1)->min('order') - 1;
+            $max = Project::where('is_home', 1)->max('order') + 1;
             $project->is_home = 1; 
-            $project->order = $min;
+            $project->order = $max;
         }
         else
         {    
-            $min = Project::where('is_home', 0)->min('order') - 1;
+            $max = Project::where('is_home', 0)->max('order') + 1;
             $project->is_home = 0; 
-            $project->order = $min;
+            $project->order = $max;
         }
 
         $project->save();

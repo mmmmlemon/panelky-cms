@@ -183,7 +183,7 @@ class AdminController extends Controller
         $project->project_bottomText = $request->project_bottomText;
         $project->project_url = $request->project_url;
         $project->is_home = 0;
-        $project->order = 0;
+        $project->order = Project::where('is_home', 0)->max('order') + 1;
         $project->slug = Str::slug($request->project_title);
 
         if($request->hasFile('icon') || $request->hasFile('image'))
