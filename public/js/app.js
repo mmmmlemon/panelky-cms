@@ -2452,6 +2452,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   mounted: function mounted() {
@@ -42687,19 +42693,24 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _vm.allProjects !== -1
     ? _c("div", { staticClass: "row justify-content-center text-center" }, [
-        _c("div", { staticClass: "col-12" }, [
-          _c("h4", [_vm._v("Проекты на главной")]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "row justify-content-center" },
-            [
+        _c(
+          "div",
+          { staticClass: "col-12" },
+          [
+            _c("h4", [_vm._v("Проекты на главной")]),
+            _vm._v(" "),
+            _c(
+              "transition-group",
+              {
+                staticClass: "row justify-content-center",
+                attrs: { name: "list-complete", tag: "p" }
+              },
               _vm._l(_vm.allProjects.home, function(project) {
                 return _c(
                   "div",
                   {
                     key: project.slug,
-                    staticClass: "col-3 transparentCard m-1"
+                    staticClass: "col-2 transparentCard m-1"
                   },
                   [
                     _c(
@@ -42721,15 +42732,30 @@ var render = function() {
                   ]
                 )
               }),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-12" }, [_vm._v(" ")]),
-              _vm._v(" "),
+              0
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-12 mt-3" },
+          [
+            _c("h4", [_vm._v("Другие проекты")]),
+            _vm._v(" "),
+            _c(
+              "transition-group",
+              {
+                staticClass: "row justify-content-center",
+                attrs: { name: "list-complete", tag: "p" }
+              },
               _vm._l(_vm.allProjects.other, function(project) {
                 return _c(
                   "div",
                   {
                     key: project.slug,
-                    staticClass: "col-3 transparentCard m-1"
+                    staticClass: "col-2 transparentCard m-1"
                   },
                   [
                     _c(
@@ -42750,11 +42776,12 @@ var render = function() {
                     )
                   ]
                 )
-              })
-            ],
-            2
-          )
-        ])
+              }),
+              0
+            )
+          ],
+          1
+        )
       ])
     : _vm._e()
 }

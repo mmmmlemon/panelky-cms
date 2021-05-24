@@ -117,7 +117,7 @@ class APIController extends Controller
     {
         $homeProjects = Project::where('is_home', 1)->orderBy('order','asc')->get();
 
-        $otherProjects = Project::where('is_home', 0)->orderBy('id', 'asc')->get();
+        $otherProjects = Project::where('is_home', 0)->orderBy('order', 'asc')->get();
 
         $response = ['home' => $homeProjects, 'other' => $otherProjects];
 
@@ -131,9 +131,17 @@ class APIController extends Controller
         $project = Project::where('slug', $request->slug)->get()[0];
 
         if($project->is_home == 0)
-        { $project->is_home = 1; }
+        {   
+            $max = Project::where('is_home', 1)->max('order') + 1;
+            $project->is_home = 1; 
+            $project->order = $max;
+        }
         else
-        { $project->is_home = 0; }
+        {    
+            $min = Project::where('is_home', 0)->min('order') - 1;
+            $project->is_home = 0; 
+            $project->order = $min;
+        }
 
         $project->save();
 
