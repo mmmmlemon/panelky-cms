@@ -55,9 +55,12 @@ class APIController extends Controller
     //получить Slug первого проекта в списке проектов
     public function getFirstProjectSlug()
     {
-        $firstProjectSlug = Project::where('is_home', 1)->orderBy('order','asc')->get()[0]->slug;
+        $projects = Project::where('is_home', 1)->orderBy('order','asc')->get();
 
-        return response()->json($firstProjectSlug);
+        if(count($projects) > 0)
+        { return response()->json($projects[0]->slug); }
+        else
+        { return response()->json(false); }
     }
 
     //getProject
@@ -130,11 +133,12 @@ class APIController extends Controller
     {
         $project = Project::where('slug', $request->slug)->get()[0];
 
+        
         if($project->is_home == 0)
         {   
-            $max = Project::where('is_home', 1)->max('order') + 1;
+            $min = Project::where('is_home', 1)->min('order') - 1;
             $project->is_home = 1; 
-            $project->order = $max;
+            $project->order = $min;
         }
         else
         {    

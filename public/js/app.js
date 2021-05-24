@@ -2488,6 +2488,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   mounted: function mounted() {
@@ -2762,6 +2776,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -4168,19 +4184,28 @@ var AdminStates = {
     //уставновить первый slug проекта в currentProjectSlug
     setFirstProjectSlug: function setFirstProjectSlug(context, state) {
       axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getFirstProjectSlug').then(function (response) {
-        axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/getProject/".concat(response.data, "/mini")).then(function (response) {
-          if (response.data !== false) {
-            context.commit('setState', {
-              state: 'currentProject',
-              value: response.data
-            });
-          } else {
+        if (response.data !== false) {
+          axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/getProject/".concat(response.data, "/mini")).then(function (response) {
+            if (response.data !== false) {
+              context.commit('setState', {
+                state: 'currentProject',
+                value: response.data
+              });
+            } else {
+              context.commit('setState', {
+                state: 'currentProject',
+                value: false
+              });
+            }
+          });
+        } else {
+          {
             context.commit('setState', {
               state: 'currentProject',
               value: false
             });
           }
-        });
+        }
       });
     },
     //getProject
@@ -42305,7 +42330,7 @@ var render = function() {
                 [
                   _c("i", { staticClass: "bi bi-file-earmark-check" }),
                   _vm._v(
-                    "\n                   Проекты на главной\n                "
+                    "\n                   Главные проекты\n                "
                   )
                 ]
               )
@@ -42336,7 +42361,9 @@ var render = function() {
                 },
                 [
                   _c("i", { staticClass: "bi bi-files" }),
-                  _vm._v("\n                    Все проекты\n                ")
+                  _vm._v(
+                    "\n                    Управление проектами\n                "
+                  )
                 ]
               )
             ],
@@ -42367,7 +42394,7 @@ var render = function() {
                 [
                   _c("i", { staticClass: "bi bi-file-earmark-plus" }),
                   _vm._v(
-                    "\n                    Добавить проект\n                "
+                    "\n                    Добавить новый проект\n                "
                   )
                 ]
               )
@@ -42727,7 +42754,21 @@ var render = function() {
           "div",
           { staticClass: "col-4 m-1" },
           [
-            _c("h4", [_vm._v("Проекты на главной")]),
+            _c("h4", [_vm._v("Главные проекты")]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c("h6", [_vm._v("Отображаются в самом начале в виде карточек")]),
+            _vm._v(" "),
+            _vm.allProjects.home.length === 0
+              ? _c("div", { staticClass: "col-12 mt-5 goUpAnim" }, [
+                  _c("h3", [_vm._v("Нет главных проектов")]),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "bi bi-file-earmark-x font18pt" }),
+                  _vm._v(" "),
+                  _c("hr")
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c(
               "transition-group",
@@ -42807,6 +42848,20 @@ var render = function() {
           { staticClass: "col-4 m-1" },
           [
             _c("h4", [_vm._v("Другие проекты")]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c("h6", [_vm._v("Отображаются в самом конце в виде названий")]),
+            _vm._v(" "),
+            _vm.allProjects.other.length === 0
+              ? _c("div", { staticClass: "col-12 mt-5 goUpAnim" }, [
+                  _c("h3", [_vm._v("Нет проектов")]),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "bi bi-file-earmark-x font18pt" }),
+                  _vm._v(" "),
+                  _c("hr")
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c(
               "transition-group",
@@ -43379,7 +43434,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.currentProject !== -1 && _vm.currentProject !== false
+  return _vm.currentProject !== -1
     ? _c("div", { staticClass: "row justify-content-center" }, [
         _c(
           "div",
@@ -43394,28 +43449,37 @@ var render = function() {
               : _vm._e(),
             _vm._v(" "),
             _vm.projectsList === false
-              ? _c("div", { staticClass: "col-8 text-center goUpAnim" }, [
-                  _c("h3", [_vm._v("Нет проектов на главной странице")]),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "bi bi-file-earmark-check font1-8rem"
-                  }),
-                  _vm._v(" "),
-                  _c("hr"),
-                  _vm._v(" "),
-                  _c(
-                    "h5",
-                    [
-                      _vm._v("Их можно добавить в разделе  "),
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "row justify-content-center text-center goUpAnim"
+                  },
+                  [
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("h3", [_vm._v("Нет главных проектов")]),
+                      _vm._v(" "),
+                      _c("i", {
+                        staticClass: "bi bi-file-earmark-check font1-8rem"
+                      }),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
                       _c(
-                        "router-link",
-                        { attrs: { to: "/admin/projects/all" } },
-                        [_c("b", [_vm._v("Все проекты")])]
+                        "h5",
+                        [
+                          _vm._v("Их можно добавить в разделе  "),
+                          _c(
+                            "router-link",
+                            { attrs: { to: "/admin/projects/all" } },
+                            [_c("b", [_vm._v("Управление проектами")])]
+                          )
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  )
-                ])
+                    ])
+                  ]
+                )
               : _vm._e(),
             _vm._v(" "),
             _vm.projectsList !== -1 && _vm.projectsList !== false

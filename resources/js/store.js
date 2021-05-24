@@ -109,13 +109,20 @@ const AdminStates = {
         //уставновить первый slug проекта в currentProjectSlug
         setFirstProjectSlug(context, state){
             axios.get('/api/getFirstProjectSlug').then(response => {
-
-                axios.get(`/api/getProject/${response.data}/mini`).then(response => {
-                    if(response.data !== false)
-                    { context.commit('setState', { state: 'currentProject', value: response.data}) }
-                    else
+                
+                if(response.data !== false)
+                {
+                    axios.get(`/api/getProject/${response.data}/mini`).then(response => {
+                        if(response.data !== false)
+                        { context.commit('setState', { state: 'currentProject', value: response.data}) }
+                        else
+                        { context.commit('setState', { state: 'currentProject', value: false}) }
+                    });
+                }
+                else
+                { 
                     { context.commit('setState', { state: 'currentProject', value: false}) }
-                });
+                }
 
             });
         },

@@ -1,16 +1,18 @@
 //HomeProjects
 //управление проектами на главной странице сайта
 <template>
-    <div class="row justify-content-center" v-if="currentProject !== -1 && currentProject !== false">
+    <div class="row justify-content-center" v-if="currentProject !== -1">
 
         <div class="col-8">
             <Error v-if="projectsList === -1" errorMessage="Не удалось загрузить список проектов"/>
 
-            <div v-if="projectsList === false" class="col-8 text-center goUpAnim">
-                <h3>Нет проектов на главной странице</h3>
+            <div v-if="projectsList === false" class="row justify-content-center text-center goUpAnim">
+                <div class="col-12">
+                    <h3>Нет главных проектов</h3>
                 <i class="bi bi-file-earmark-check font1-8rem"></i>
                 <hr>
-            <h5>Их можно добавить в разделе  <router-link to="/admin/projects/all"><b>Все проекты</b></router-link></h5>
+                <h5>Их можно добавить в разделе  <router-link to="/admin/projects/all"><b>Управление проектами</b></router-link></h5>
+                </div>
             </div>
 
             <div class="row" v-if="projectsList !== -1 && projectsList !== false">

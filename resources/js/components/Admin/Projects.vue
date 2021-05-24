@@ -10,7 +10,7 @@
                                                 class="btn btn-sm btn-block" aria-current="page"
                                                 >
                         <i class="bi bi-file-earmark-check"></i>
-                       Проекты на главной
+                       Главные проекты
                     </router-link>
                 </li>
                 <li class="nav-item mr-2" v-on:click="changeCurrentTab('allProjects')">
@@ -19,7 +19,7 @@
                                                  class="btn btn-sm btn-block" 
                                                  >
                         <i class="bi bi-files"></i>
-                        Все проекты
+                        Управление проектами
                     </router-link>
                 </li>
                 <li class="nav-item mr-2" v-on:click="changeCurrentTab('addProject')">
@@ -28,7 +28,7 @@
                                                  class="btn btn-sm btn-block" 
                                                 >
                         <i class="bi bi-file-earmark-plus"></i>
-                        Добавить проект
+                        Добавить новый проект
                     </router-link>
                 </li>
         </ul>
