@@ -63,6 +63,7 @@ const AdminStates = {
         currentProject: -1,
         stockImages: -1,
         allProjects: -1,
+        deleteModalInfo: -1,
     },
 
     mutations: {
@@ -153,7 +154,12 @@ const AdminStates = {
             axios.get('/api/getAllProjects').then(response => {
                 { context.commit('setState', {state: 'allProjects', value: response.data})};
             })
-        }
+        },
+
+        //setDeleteModalInfo
+        setDeleteModalInfo(context, value){
+            context.commit('setState', {state: 'deleteModalInfo', value: value});
+        },
     }
 }
 

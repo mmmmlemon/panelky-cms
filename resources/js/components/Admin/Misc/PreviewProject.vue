@@ -26,7 +26,7 @@
                         </button>
                     </router-link>
                     
-                    <button class="btn btn-light ml-3" title="Удалить">
+                    <button class="btn btn-light ml-3" title="Удалить"  v-on:click="deleteProject">
                         <i class="bi bi-trash-fill"></i>
                     </button>
             </div> 
@@ -44,6 +44,11 @@
 <script>
 export default {
 
+    mounted(){
+        this.$parent.$parent.$parent.deleteModal = 1;
+    },
+
+    //данные
     props: {
             type: {type: String, default: 'mini'},
             currentProject: { type: Object, default: function() {
@@ -59,6 +64,16 @@ export default {
                 }
             }}
         },
+    
+    //методы
+    methods: {
+        //удалить проект
+        deleteProject(){
+
+            this.$store.dispatch('setDeleteModalInfo', this.currentProject);
+          
+        }
+    }
 
 }
 </script>

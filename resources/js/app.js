@@ -44,6 +44,9 @@ Vue.component('ProjectListItem', ProjectListItem);
 import PreviewProject from './components/Admin/Misc/PreviewProject.vue';
 Vue.component('PreviewProject', PreviewProject);
 
+import DeleteModal from './components/Admin/Misc/DeleteModal.vue';
+Vue.component('DeleteModal', DeleteModal);
+
 
 //Misc
 import Error from './components/Misc/Error.vue';

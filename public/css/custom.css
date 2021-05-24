@@ -184,7 +184,7 @@ hr {
     border-radius: 15px;
     background-color: rgba(255,255,255, 0.1);
     cursor: pointer;
-    transition: all 0.1s ease-in-out;
+    transition: all 0.05s ease-in-out;
 }
 
 .transparentCard.active {
@@ -197,6 +197,29 @@ hr {
 
 .transparentCard.highlighted{
     background-color: rgba(255, 255, 255, 0.205);
+}
+
+.transparentCard.deleteModalCard{
+    background-color: rgba(255, 255, 255, 1);
+    position: absolute;
+    top: 25%;
+    color: black;
+}
+
+.deleteModalBody{
+    top: 0;
+    left: 0;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100% !important;
+    height: 100%;
+    z-index: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.deleteModalCard{
+    position: absolute;
+    top: 25%;
 }
 
 

@@ -234,4 +234,17 @@ class AdminController extends Controller
         Storage::disk('public')->deleteDirectory('/temp/'.$request->randomFolderName);
         return response()->json(null, 200);
     }
+
+    //deleteProject
+    //удалить проект
+    public function deleteProject(Request $request)
+    {
+        $project = Project::where('slug', $request->slug)->get()[0];
+
+        $id = $project->id;
+
+        Project::find($id)->delete();
+
+        return response()->json(null, 200);
+    }
 }
