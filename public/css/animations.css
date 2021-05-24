@@ -119,18 +119,39 @@
   opacity: 0;
 }
 
-.list-complete-item {
+/* анимации vue transition для AllProjects */
+.projectsList-item {
     transition: all 1s;
     display: inline-block;
     margin-right: 10px;
   }
-  .list-complete-enter, .list-complete-leave-to
-  /* .list-complete-leave-active до версии 2.1.8 */ {
+
+.projectsList-enter{
     opacity: 0;
-    transform: scale(0.1);
-    transform: translateY(30px);
-  }
-  .list-complete-leave-active {
-    position: absolute;
-  }
+    transform: translateX(-10px);
+}
+
+.projectsList-enter-to{
+    opacity: 1;
+    transform: translateX(5px);
+}
+
+.projectsList-leave{
+    opacity: 1;
+    transform: translateX(10px);
+}
+
+.projectsList-leave-to{
+    opacity: 0;
+    transform: translateX(-5px);
+}
+
+.projectsList-leave-active {
+    position: sticky;
+}
+
+.projectsList-enter-active {
+    position: relative;
+}
+
 /* //////////////////// */

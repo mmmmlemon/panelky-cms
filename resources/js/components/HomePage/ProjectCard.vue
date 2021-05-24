@@ -31,7 +31,7 @@
                 <!-- кнопка "Посетить" -->
                 <button type="button" class="btn btn-lg btn-outline-light fadeInAnim" v-if="project.project_url !== undefined && project.project_url !== ''">
                     <a :href="project.project_url" target="_blank">
-                        View project
+                        Перейти к проекту
                     </a>
                 </button>
             </div>
