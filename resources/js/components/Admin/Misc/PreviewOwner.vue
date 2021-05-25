@@ -1,10 +1,10 @@
 //Preview
 //компонент для показа превью карточек
 <template>
-    <div class="col-12 col-md-6 fadeInAnim">  
-        
+    <div class="col-12 fadeInAnim">  
+      
         <!-- мини-превью -->
-        <div class="col-12 d-flex m-5 justify-content-center animatedBackground previewCard" v-bind:class="{zeroOpacity: name === undefined}">
+        <div class="col-12 d-flex justify-content-center animatedBackground previewCard" v-bind:class="{zeroOpacity: name === undefined}">
             <HeaderCard :info="{name: name, occupation: occupation, aboutMe: aboutMe, bottomText: bottomText}" />
             
             <!-- кнопка развернуть на весь экран -->

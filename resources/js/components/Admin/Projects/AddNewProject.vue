@@ -3,9 +3,10 @@
 <template>
     <div class="row justify-content-center fadeInAnim">
         <div class="col-12 mb-4">
-            <h3 class="text-center mb-4">Добавить новый проект</h3>
             <div class="row justify-content-center">
                 <div class="col-4">
+                    <h5>Информация о проекте</h5>
+                    <hr>
                     <!-- основная форма -->
                     <form @submit.prevent="submit" method="POST">
                         <input type="text" class="invisible">
@@ -54,7 +55,9 @@
                     </form> 
                 </div>
                 <!-- превью -->
-                <div class="col-7">
+                <div class="col-6">
+                    <h5>Превью</h5>
+                    <hr>
                     <PreviewProject type="full" :currentProject="currentProject"/>
                 </div> 
             </div>

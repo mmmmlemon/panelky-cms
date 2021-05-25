@@ -4,9 +4,11 @@
     <div class="row mt-5 justify-content-center fadeInAnim">
 
         <div class="col-12" v-if="currentProject !== -1 && currentProject !== false">
-            <h3 class="text-center mb-4">Редактирование "{{currentProject.project_title}}"</h3>
+            
             <div class="row justify-content-center">
                 <div class="col-4">
+                    <h5>Информация о проекте</h5>
+                    <hr>
                     <div class="col-12 mb-4">
                         <ul class="nav nav-fill">
                             <!-- вкладки -->
@@ -87,7 +89,9 @@
                     </div>
                 </div>
                 <!-- превью -->
-                <div class="col-7">
+                <div class="col-6">
+                    <h5>Превью</h5>
+                    <hr>
                     <PreviewProject type="full" :currentProject="currentProject"/>
                 </div>
                 

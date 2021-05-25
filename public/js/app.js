@@ -2411,6 +2411,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   data: function data() {
@@ -2768,6 +2771,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   beforeMount: function beforeMount() {
@@ -2976,6 +2983,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -42324,12 +42337,12 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-12 col-md-6 fadeInAnim" }, [
+  return _c("div", { staticClass: "col-12 fadeInAnim" }, [
     _c(
       "div",
       {
         staticClass:
-          "col-12 d-flex m-5 justify-content-center animatedBackground previewCard",
+          "col-12 d-flex justify-content-center animatedBackground previewCard",
         class: { zeroOpacity: _vm.name === undefined }
       },
       [
@@ -42786,12 +42799,12 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center fadeInAnim" }, [
     _c("div", { staticClass: "col-12 mb-4" }, [
-      _c("h3", { staticClass: "text-center mb-4" }, [
-        _vm._v("Добавить новый проект")
-      ]),
-      _vm._v(" "),
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", { staticClass: "col-4" }, [
+          _c("h5", [_vm._v("Информация о проекте")]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
           _c(
             "form",
             {
@@ -43064,8 +43077,12 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-7" },
+          { staticClass: "col-6" },
           [
+            _c("h5", [_vm._v("Превью")]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
             _c("PreviewProject", {
               attrs: { type: "full", currentProject: _vm.currentProject }
             })
@@ -43335,16 +43352,12 @@ var render = function() {
     [
       _vm.currentProject !== -1 && _vm.currentProject !== false
         ? _c("div", { staticClass: "col-12" }, [
-            _c("h3", { staticClass: "text-center mb-4" }, [
-              _vm._v(
-                'Редактирование "' +
-                  _vm._s(_vm.currentProject.project_title) +
-                  '"'
-              )
-            ]),
-            _vm._v(" "),
             _c("div", { staticClass: "row justify-content-center" }, [
               _c("div", { staticClass: "col-4" }, [
+                _c("h5", [_vm._v("Информация о проекте")]),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
                 _c("div", { staticClass: "col-12 mb-4" }, [
                   _c("ul", { staticClass: "nav nav-fill" }, [
                     _c("li", { staticClass: "nav-item mr-2" }, [
@@ -43765,8 +43778,12 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-7" },
+                { staticClass: "col-6" },
                 [
+                  _c("h5", [_vm._v("Превью")]),
+                  _vm._v(" "),
+                  _c("hr"),
+                  _vm._v(" "),
                   _c("PreviewProject", {
                     attrs: { type: "full", currentProject: _vm.currentProject }
                   })
@@ -43915,198 +43932,204 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "row justify-content-center" },
-    [
-      _c(
-        "div",
-        {
-          staticClass: "col-12 col-md-4 mt-5 fadeInAnim",
-          class: { zeroOpacity: _vm.siteOwnerInfo === -1 }
-        },
-        [
-          _c(
-            "form",
-            {
-              attrs: { method: "POST" },
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.submit($event)
-                }
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c(
+      "div",
+      {
+        staticClass: "col-12 col-md-4 mt-5 fadeInAnim",
+        class: { zeroOpacity: _vm.siteOwnerInfo === -1 }
+      },
+      [
+        _c("h5", [_vm._v("Информация о владельце")]),
+        _vm._v(" "),
+        _c("hr"),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            attrs: { method: "POST" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.submit($event)
               }
-            },
-            [
-              _c("div", { staticClass: "mb-3" }, [
-                _c("h6", [_vm._v("Имя владельца сайта")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.siteOwnerInfo.name,
-                      expression: "siteOwnerInfo.name"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.siteOwnerInfo.name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.siteOwnerInfo, "name", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.name
-                  ? _c("div", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.name[0]))
-                    ])
-                  : _vm._e()
-              ]),
+            }
+          },
+          [
+            _c("div", { staticClass: "mb-3" }, [
+              _c("h6", [_vm._v("Имя владельца сайта")]),
               _vm._v(" "),
-              _c("div", { staticClass: "mb-3" }, [
-                _c("h6", [_vm._v("Род занятий")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.siteOwnerInfo.occupation,
-                      expression: "siteOwnerInfo.occupation"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.siteOwnerInfo.occupation },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.siteOwnerInfo,
-                        "occupation",
-                        $event.target.value
-                      )
-                    }
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.siteOwnerInfo.name,
+                    expression: "siteOwnerInfo.name"
                   }
-                }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.occupation
-                  ? _c("div", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.occupation[0]))
-                    ])
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-3" }, [
-                _c("h6", [_vm._v("О себе")]),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.siteOwnerInfo.aboutMe,
-                      expression: "siteOwnerInfo.aboutMe"
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.siteOwnerInfo.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
                     }
-                  ],
-                  staticClass: "form-control",
-                  domProps: { value: _vm.siteOwnerInfo.aboutMe },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.siteOwnerInfo,
-                        "aboutMe",
-                        $event.target.value
-                      )
-                    }
+                    _vm.$set(_vm.siteOwnerInfo, "name", $event.target.value)
                   }
-                }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.aboutMe
-                  ? _c("div", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.aboutMe[0]))
-                    ])
-                  : _vm._e()
-              ]),
+                }
+              }),
               _vm._v(" "),
-              _c("div", { staticClass: "mb-3" }, [
-                _c("h6", [_vm._v("Нижний текст")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.siteOwnerInfo.bottomText,
-                      expression: "siteOwnerInfo.bottomText"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.siteOwnerInfo.bottomText },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.siteOwnerInfo,
-                        "bottomText",
-                        $event.target.value
-                      )
-                    }
+              _vm.errors && _vm.errors.name
+                ? _c("div", { staticClass: "text-danger" }, [
+                    _vm._v(_vm._s(_vm.errors.name[0]))
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mb-3" }, [
+              _c("h6", [_vm._v("Род занятий")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.siteOwnerInfo.occupation,
+                    expression: "siteOwnerInfo.occupation"
                   }
-                }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.bottomText
-                  ? _c("div", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.bottomText[0]))
-                    ])
-                  : _vm._e()
-              ]),
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.siteOwnerInfo.occupation },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.siteOwnerInfo,
+                      "occupation",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
               _vm._v(" "),
-              _c(
-                "button",
-                { staticClass: "btn btn-lg btn-block btn-outline-light" },
-                [_vm._v("\n                Сохранить\n            ")]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "col-12 p-3 text-center unclickable zeroOpacity",
-              class: { blinkAnim: _vm.saved }
-            },
-            [_c("h5", [_vm._v("Изменения сохранены")])]
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("PreviewOwner", {
-        attrs: {
-          name: _vm.siteOwnerInfo.name,
-          occupation: _vm.siteOwnerInfo.occupation,
-          aboutMe: _vm.siteOwnerInfo.aboutMe,
-          bottomText: _vm.siteOwnerInfo.bottomText
-        }
-      })
-    ],
-    1
-  )
+              _vm.errors && _vm.errors.occupation
+                ? _c("div", { staticClass: "text-danger" }, [
+                    _vm._v(_vm._s(_vm.errors.occupation[0]))
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mb-3" }, [
+              _c("h6", [_vm._v("Кратко о себе")]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.siteOwnerInfo.aboutMe,
+                    expression: "siteOwnerInfo.aboutMe"
+                  }
+                ],
+                staticClass: "form-control",
+                domProps: { value: _vm.siteOwnerInfo.aboutMe },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.siteOwnerInfo, "aboutMe", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.aboutMe
+                ? _c("div", { staticClass: "text-danger" }, [
+                    _vm._v(_vm._s(_vm.errors.aboutMe[0]))
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mb-3" }, [
+              _c("h6", [_vm._v("Нижний текст")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.siteOwnerInfo.bottomText,
+                    expression: "siteOwnerInfo.bottomText"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.siteOwnerInfo.bottomText },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.siteOwnerInfo,
+                      "bottomText",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.bottomText
+                ? _c("div", { staticClass: "text-danger" }, [
+                    _vm._v(_vm._s(_vm.errors.bottomText[0]))
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-lg btn-block btn-outline-light" },
+              [_vm._v("\n                Сохранить\n            ")]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "col-12 p-3 text-center unclickable zeroOpacity",
+            class: { blinkAnim: _vm.saved }
+          },
+          [_c("h5", [_vm._v("Изменения сохранены")])]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "col-md-6 mt-5" },
+      [
+        _c("h5", [_vm._v("Превью")]),
+        _vm._v(" "),
+        _c("hr"),
+        _vm._v(" "),
+        _c("PreviewOwner", {
+          attrs: {
+            name: _vm.siteOwnerInfo.name,
+            occupation: _vm.siteOwnerInfo.occupation,
+            aboutMe: _vm.siteOwnerInfo.aboutMe,
+            bottomText: _vm.siteOwnerInfo.bottomText
+          }
+        })
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -45120,7 +45143,7 @@ var render = function() {
             staticClass: "nav-link active",
             attrs: { "aria-current": "page", to: "/" }
           },
-          [_vm._v("Home")]
+          [_vm._v("Главная")]
         )
       ],
       1
@@ -45136,7 +45159,7 @@ var render = function() {
             staticClass: "nav-link active",
             attrs: { "aria-current": "page", to: "/about" }
           },
-          [_vm._v("About")]
+          [_vm._v("О сайте")]
         )
       ],
       1
@@ -45278,7 +45301,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12" }, [
-      _c("h6", { staticClass: "text-center" }, [_c("b", [_vm._v("Projects")])]),
+      _c("h6", { staticClass: "text-center" }, [_c("b", [_vm._v("Проекты")])]),
       _vm._v(" "),
       _c("hr")
     ])
@@ -45288,7 +45311,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12" }, [
-      _c("h6", { staticClass: "text-center" }, [_c("b", [_vm._v("Links")])]),
+      _c("h6", { staticClass: "text-center" }, [_c("b", [_vm._v("Контакты")])]),
       _vm._v(" "),
       _c("hr")
     ])

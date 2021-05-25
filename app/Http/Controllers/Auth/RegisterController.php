@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use DB;
 
 class RegisterController extends Controller
 {
@@ -29,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/admin';
 
     /**
      * Create a new controller instance.
@@ -47,6 +48,21 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+
+
+    public function showRegistrationForm() {
+        $count = count(DB::table('users')->get());
+
+        if($count == 0)
+        {
+            return view('auth.register');
+        }
+        else
+        {
+            abort(404);
+        }
+    }
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -64,10 +80,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $count = count(DB::table('users')->get());
+
+        if($count == 0)
+        {
+            return User::create([
+                'id' => 0,
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
+        }
+        else
+        {
+            abort(403);
+        }
     }
 }

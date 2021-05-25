@@ -19,7 +19,7 @@
                 <!-- проекты -->
                 <div class="col-12">
                     <h6 class="text-center">
-                        <b>Projects</b>
+                        <b>Проекты</b>
                     </h6>
                     <hr>
                 </div>
@@ -32,7 +32,7 @@
                 <!-- ссылки -->
                 <div class="col-12">
                     <h6 class="text-center">
-                        <b>Links</b>
+                        <b>Контакты</b>
                     </h6>
                     <hr>
                 </div>

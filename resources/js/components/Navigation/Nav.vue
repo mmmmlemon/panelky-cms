@@ -6,11 +6,11 @@
     <ul class="nav justify-content-center mt-3 font18pt">
         <!-- Home -->
         <li class="nav-item">
-            <router-link class="nav-link active" aria-current="page" to="/">Home</router-link>
+            <router-link class="nav-link active" aria-current="page" to="/">Главная</router-link>
         </li>
         <!-- About -->
         <li class="nav-item">
-            <router-link class="nav-link active" aria-current="page" to="/about">About</router-link>
+            <router-link class="nav-link active" aria-current="page" to="/about">О сайте</router-link>
         </li>
     </ul>
 

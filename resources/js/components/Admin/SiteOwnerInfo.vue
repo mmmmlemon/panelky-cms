@@ -1,12 +1,13 @@
 //SiteOwnerInfo
 //вкладка в админке, информация о владельце сайта
 <template>
-
+    
         <div class="row justify-content-center"> 
 
             <!-- форма редактирования -->
             <div class="col-12 col-md-4 mt-5 fadeInAnim" v-bind:class="{zeroOpacity: siteOwnerInfo === -1}">
-
+                <h5>Информация о владельце</h5>
+                <hr>
                 <form @submit.prevent="submit" method="POST">
                     <div class="mb-3">
                         <h6>Имя владельца сайта</h6>
@@ -19,7 +20,7 @@
                         <div v-if="errors && errors.occupation" class="text-danger">{{ errors.occupation[0] }}</div>
                     </div>
                     <div class="mb-3">
-                        <h6>О себе</h6>
+                        <h6>Кратко о себе</h6>
                         <textarea v-model="siteOwnerInfo.aboutMe" class="form-control"></textarea>
                         <div v-if="errors && errors.aboutMe" class="text-danger">{{ errors.aboutMe[0] }}</div>
                     </div>
@@ -40,8 +41,13 @@
                 </div>
 
             </div>
-            <!-- превью -->
-            <PreviewOwner :name="siteOwnerInfo.name" :occupation="siteOwnerInfo.occupation" :aboutMe="siteOwnerInfo.aboutMe" :bottomText="siteOwnerInfo.bottomText"/>
+            <div class="col-md-6 mt-5">
+                <h5>Превью</h5>
+                <hr>
+                <!-- превью -->
+                <PreviewOwner :name="siteOwnerInfo.name" :occupation="siteOwnerInfo.occupation" :aboutMe="siteOwnerInfo.aboutMe" :bottomText="siteOwnerInfo.bottomText"/>
+            </div>
+           
         </div>
 
 </template>
