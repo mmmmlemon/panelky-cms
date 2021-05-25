@@ -50,7 +50,7 @@
                             <p class="card-text">{{project.project_subtitle}}</p>
                             <div class="d-grid gap-2 d-md-block">
                                 <button class="btn btn-light" type="button"
-                                            v-on:click="setProjectStatus(project.slug)">
+                                            v-on:click="setProjectStatus(project.slug)" :disabled="allProjects.home.length >=5">
                                     <i class="bi bi-arrow-left"></i>
                                 </button>
           

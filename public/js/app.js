@@ -43206,7 +43206,10 @@ var render = function() {
                               "button",
                               {
                                 staticClass: "btn btn-light",
-                                attrs: { type: "button" },
+                                attrs: {
+                                  type: "button",
+                                  disabled: _vm.allProjects.home.length >= 5
+                                },
                                 on: {
                                   click: function($event) {
                                     return _vm.setProjectStatus(project.slug)
