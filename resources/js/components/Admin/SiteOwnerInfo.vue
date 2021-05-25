@@ -11,22 +11,22 @@
                 <form @submit.prevent="submit" method="POST">
                     <div class="mb-3">
                         <h6>Имя владельца сайта</h6>
-                        <input v-model="siteOwnerInfo.name" type="text" class="form-control">
+                        <input v-model="siteOwnerInfo.name" type="text" class="form-control" required>
                         <div v-if="errors && errors.name" class="text-danger">{{ errors.name[0] }}</div>
                     </div>
                     <div class="mb-3">
                         <h6>Род занятий</h6>
-                        <input v-model="siteOwnerInfo.occupation" type="text" class="form-control">
+                        <input v-model="siteOwnerInfo.occupation" type="text" class="form-control" required>
                         <div v-if="errors && errors.occupation" class="text-danger">{{ errors.occupation[0] }}</div>
                     </div>
                     <div class="mb-3">
                         <h6>Кратко о себе</h6>
-                        <textarea v-model="siteOwnerInfo.aboutMe" class="form-control"></textarea>
+                        <textarea v-model="siteOwnerInfo.aboutMe" class="form-control" required></textarea>
                         <div v-if="errors && errors.aboutMe" class="text-danger">{{ errors.aboutMe[0] }}</div>
                     </div>
                     <div class="mb-3">
                         <h6>Нижний текст</h6>
-                        <input v-model="siteOwnerInfo.bottomText" type="text" class="form-control">
+                        <input v-model="siteOwnerInfo.bottomText" type="text" class="form-control" required>
                         <div v-if="errors && errors.bottomText" class="text-danger">{{ errors.bottomText[0] }}</div>
                     </div>
 

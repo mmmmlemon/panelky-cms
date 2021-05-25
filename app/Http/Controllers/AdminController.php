@@ -186,7 +186,7 @@ class AdminController extends Controller
         $project->order = Project::where('is_home', 0)->max('order') + 1;
         $project->slug = Str::slug($request->project_title);
 
-        if($request->hasFile('icon') || $request->hasFile('image'))
+        if(File::exists(storage_path("app/public/temp/".$request->randomFolderName)))
         {
             //иконка и скриншот
             $tempFiles = File::files(storage_path("app/public/temp/".$request->randomFolderName));

@@ -43,7 +43,7 @@
                         </div>
                         <div class="mb-3">
                             <h6>Изображение\скриншот проекта</h6>
-                            <input type="file" ref="image" name="image" class="form-control-file"  v-on:change="handleFileUpload('image')"
+                            <input type="file" ref="image" name="image" class="form-control-file" v-on:change="handleFileUpload('image')"
                                     accept="image/jpeg, image/png">
                             <div v-if="errors && errors.image" class="text-danger">{{ errors.projectImage[0] }}</div>
                         </div>
@@ -176,7 +176,7 @@ export default {
                     let formData = new FormData();
                     formData.append('randomFolderName', this.randomFolderName);
                     axios.post('/admin/removeFolderFromTemp', formData).then(response => {
-                         window.location.href="/admin/projects/all";
+                        window.location.href="/admin/projects/all";
                     });
                    
                 }).catch(error => {

@@ -43969,7 +43969,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "text", required: "" },
                 domProps: { value: _vm.siteOwnerInfo.name },
                 on: {
                   input: function($event) {
@@ -44001,7 +44001,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "text", required: "" },
                 domProps: { value: _vm.siteOwnerInfo.occupation },
                 on: {
                   input: function($event) {
@@ -44037,6 +44037,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
+                attrs: { required: "" },
                 domProps: { value: _vm.siteOwnerInfo.aboutMe },
                 on: {
                   input: function($event) {
@@ -44068,7 +44069,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "text", required: "" },
                 domProps: { value: _vm.siteOwnerInfo.bottomText },
                 on: {
                   input: function($event) {
