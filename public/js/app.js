@@ -1937,15 +1937,21 @@ __webpack_require__.r(__webpack_exports__);
     deleteProject: function deleteProject() {
       var _this = this;
 
-      var slug = this.deleteModalInfo.slug;
+      var slug = this.deleteModalInfo.deleteInfo.slug;
       var formData = new FormData();
       formData.append("slug", slug);
       axios.post('/admin/deleteProject', formData).then(function (response) {
-        _this.$store.dispatch('getProjectsList');
+        if (_this.deleteModalInfo.page === 'homeProjects') {
+          _this.$store.dispatch('getProjectsList');
 
-        _this.$store.dispatch('setFirstProjectSlug');
+          _this.$store.dispatch('setFirstProjectSlug');
 
-        _this.$store.dispatch('setDeleteModalInfo', undefined);
+          _this.$store.dispatch('setDeleteModalInfo', undefined);
+        } else if (_this.deleteModalInfo.page === 'allProjects') {
+          _this.$store.dispatch('getAllProjects');
+
+          _this.$store.dispatch('setDeleteModalInfo', undefined);
+        }
       })["catch"](function (error) {
         alert("Error");
       });
@@ -2142,7 +2148,10 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     //удалить проект
     deleteProject: function deleteProject() {
-      this.$store.dispatch('setDeleteModalInfo', this.currentProject);
+      this.$store.dispatch('setDeleteModalInfo', {
+        deleteInfo: this.currentProject,
+        page: 'homeProjects'
+      });
     }
   }
 });
@@ -2584,8 +2593,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   mounted: function mounted() {
@@ -2609,6 +2616,13 @@ __webpack_require__.r(__webpack_exports__);
         _this.$store.dispatch('getAllProjects');
       })["catch"](function (error) {
         alert("Error");
+      });
+    },
+    //удалить проект
+    deleteProject: function deleteProject(project) {
+      this.$store.dispatch('setDeleteModalInfo', {
+        deleteInfo: project,
+        page: 'allProjects'
       });
     }
   }
@@ -4358,10 +4372,10 @@ var AdminStates = {
       });
     },
     //setDeleteModalInfo
-    setDeleteModalInfo: function setDeleteModalInfo(context, value) {
+    setDeleteModalInfo: function setDeleteModalInfo(context, payload) {
       context.commit('setState', {
         state: 'deleteModalInfo',
-        value: value
+        value: payload
       });
     }
   }
@@ -42167,7 +42181,9 @@ var render = function() {
                 _vm._v(" "),
                 _c("h5", { staticClass: "card-text" }, [
                   _vm._v("Вы действительно хотите удалить проект "),
-                  _c("b", [_vm._v(_vm._s(_vm.deleteModalInfo.project_title))]),
+                  _c("b", [
+                    _vm._v(_vm._s(_vm.deleteModalInfo.deleteInfo.project_title))
+                  ]),
                   _vm._v("? Это действие нельзя будет отменить.")
                 ]),
                 _vm._v(" "),
@@ -43092,7 +43108,12 @@ var render = function() {
                               "button",
                               {
                                 staticClass: "btn btn-light",
-                                attrs: { type: "button" }
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteProject(project)
+                                  }
+                                }
                               },
                               [_c("i", { staticClass: "bi bi-trash-fill" })]
                             ),
@@ -43208,7 +43229,12 @@ var render = function() {
                               "button",
                               {
                                 staticClass: "btn btn-light",
-                                attrs: { type: "button" }
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteProject(project)
+                                  }
+                                }
                               },
                               [_c("i", { staticClass: "bi bi-trash-fill" })]
                             )

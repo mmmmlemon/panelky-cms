@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Storage;
 
 use Illuminate\Http\Request;
+use App\Models\Project;
+use Illuminate\Support\Str;
 
 //TestController
 //контроллер для тестирования функционала сайта
@@ -56,5 +58,21 @@ class TestController extends Controller
 
         return response()->json(null, 200);
 
+    }
+
+    //добавить новый проект пустой
+    public function addNewProject()
+    {
+        $project = new Project;
+
+        $title = "New Project " . rand(100,999);
+        $project->project_title = $title;
+        $project->project_url = "http://192.168.0.105:8000/";
+        $project->is_home = 0;
+        $project->order = Project::where('is_home', 0)->max('order') + 1;
+        $project->slug = Str::slug($title);
+        $project->save();
+
+        return "Success";
     }
 }

@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <h2 class="card-title">Удаление проекта</h2>
                     <hr>
-                    <h5 class="card-text">Вы действительно хотите удалить проект <b>{{deleteModalInfo.project_title}}</b>? Это действие нельзя будет отменить.</h5>
+                    <h5 class="card-text">Вы действительно хотите удалить проект <b>{{deleteModalInfo.deleteInfo.project_title}}</b>? Это действие нельзя будет отменить.</h5>
                     <br>
                     <div class="d-grid gap-2 d-md-block">
                         <button class="btn btn-secondary" type="button" v-on:click="cancel">
@@ -41,16 +41,28 @@ export default {
         },
 
         deleteProject(){
-            let slug = this.deleteModalInfo.slug;
+            let slug = this.deleteModalInfo.deleteInfo.slug;
 
             let formData = new FormData();
 
             formData.append("slug", slug);
 
             axios.post('/admin/deleteProject', formData).then(response => {
-                this.$store.dispatch('getProjectsList');
-                this.$store.dispatch('setFirstProjectSlug')
-                this.$store.dispatch('setDeleteModalInfo', undefined);
+
+                if(this.deleteModalInfo.page === 'homeProjects')
+                {
+                    this.$store.dispatch('getProjectsList');
+                    this.$store.dispatch('setFirstProjectSlug')
+                    this.$store.dispatch('setDeleteModalInfo', undefined);
+                }
+
+                else if(this.deleteModalInfo.page === 'allProjects')
+                {
+                    this.$store.dispatch('getAllProjects');
+                    this.$store.dispatch('setDeleteModalInfo', undefined);
+                }
+
+          
             }).catch(error => {
                 alert("Error");
             })

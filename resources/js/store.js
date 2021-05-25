@@ -157,8 +157,8 @@ const AdminStates = {
         },
 
         //setDeleteModalInfo
-        setDeleteModalInfo(context, value){
-            context.commit('setState', {state: 'deleteModalInfo', value: value});
+        setDeleteModalInfo(context, payload){
+            context.commit('setState', {state: 'deleteModalInfo', value: payload});
         },
     }
 }
