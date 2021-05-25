@@ -35,9 +35,18 @@
         <div v-if="type==='full'" class="row justify-content-center zIndex3">
             <ProjectCard :project="currentProject"/>
             <!-- кнопка развернуть на весь экран -->
-            <button class="btn btn-light fullscreenButton" title="Развернуть на полный экран">
+            <button class="btn btn-light fullscreenButton" title="Развернуть на полный экран" v-on:click="showFullscreenPreview">
                 <i class="bi bi-arrows-fullscreen"></i>
             </button>
+        </div>
+        <!-- превью на весь экран -->
+        <div class="container col-12 vh-100 animatedBackground fullscreenCard zIndex3" :style="fullscreenStyle">
+            <button class="btn btn-light btn-lg fullscreenButton" title="Свернуть" v-on:click="closeFullscreenPreview">
+                <i class="bi bi-fullscreen-exit"></i>
+            </button>
+            <div class="row h-100 justify-content-center">
+                <ProjectCard :project="currentProject"/>
+            </div>
         </div>
     </div>
 </template>
@@ -49,6 +58,12 @@ export default {
     },
 
     //данные
+    data: () => {
+        return {
+            fullscreenStyle: undefined,
+        }
+    },
+
     props: {
             type: {type: String, default: 'mini'},
             currentProject: { type: Object, default: function() {
@@ -67,11 +82,17 @@ export default {
     
     //методы
     methods: {
+        //показать превью на полный экран
+        showFullscreenPreview: function(){
+            this.fullscreenStyle = { left: '0px', opacity: 1 };
+        },
+        //свернуть превью на полный экран
+        closeFullscreenPreview: function(){
+            this.fullscreenStyle = { left: '5000px', opacity: 0 };
+        },
         //удалить проект
         deleteProject(){
-
             this.$store.dispatch('setDeleteModalInfo', {deleteInfo: this.currentProject, page: 'homeProjects'});
-          
         }
     }
 

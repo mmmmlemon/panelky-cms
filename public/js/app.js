@@ -2118,11 +2118,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     this.$parent.$parent.$parent.deleteModal = 1;
   },
   //данные
+  data: function data() {
+    return {
+      fullscreenStyle: undefined
+    };
+  },
   props: {
     type: {
       type: String,
@@ -2146,6 +2160,20 @@ __webpack_require__.r(__webpack_exports__);
   },
   //методы
   methods: {
+    //показать превью на полный экран
+    showFullscreenPreview: function showFullscreenPreview() {
+      this.fullscreenStyle = {
+        left: '0px',
+        opacity: 1
+      };
+    },
+    //свернуть превью на полный экран
+    closeFullscreenPreview: function closeFullscreenPreview() {
+      this.fullscreenStyle = {
+        left: '5000px',
+        opacity: 0
+      };
+    },
     //удалить проект
     deleteProject: function deleteProject() {
       this.$store.dispatch('setDeleteModalInfo', {
@@ -42481,30 +42509,51 @@ var render = function() {
                 [
                   _c("ProjectCard", { attrs: { project: _vm.currentProject } }),
                   _vm._v(" "),
-                  _vm._m(0)
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-light fullscreenButton",
+                      attrs: { title: "Развернуть на полный экран" },
+                      on: { click: _vm.showFullscreenPreview }
+                    },
+                    [_c("i", { staticClass: "bi bi-arrows-fullscreen" })]
+                  )
                 ],
                 1
               )
-            : _vm._e()
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "container col-12 vh-100 animatedBackground fullscreenCard zIndex3",
+              style: _vm.fullscreenStyle
+            },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-light btn-lg fullscreenButton",
+                  attrs: { title: "Свернуть" },
+                  on: { click: _vm.closeFullscreenPreview }
+                },
+                [_c("i", { staticClass: "bi bi-fullscreen-exit" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row h-100 justify-content-center" },
+                [_c("ProjectCard", { attrs: { project: _vm.currentProject } })],
+                1
+              )
+            ]
+          )
         ]
       )
     : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-light fullscreenButton",
-        attrs: { title: "Развернуть на полный экран" }
-      },
-      [_c("i", { staticClass: "bi bi-arrows-fullscreen" })]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
