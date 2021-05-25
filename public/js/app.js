@@ -42602,7 +42602,11 @@ var render = function() {
                 _vm._v(" "),
                 _c("hr"),
                 _vm._v(" "),
-                _vm._m(0)
+                _c("div", { staticClass: "row " }, [
+                  _vm.$parent.projectsList.length > 1
+                    ? _c("div", { staticClass: "col-12" }, [_vm._m(0)])
+                    : _vm._e()
+                ])
               ])
             ]
           )
@@ -42615,18 +42619,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row " }, [
-      _c("div", { staticClass: "col-12" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-light float-right backgroundAnimation",
-            attrs: { type: "button" }
-          },
-          [_c("i", { staticClass: "bi bi-arrows-move" })]
-        )
-      ])
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-light float-right backgroundAnimation",
+        attrs: { type: "button" }
+      },
+      [_c("i", { staticClass: "bi bi-arrows-move" })]
+    )
   }
 ]
 render._withStripped = true

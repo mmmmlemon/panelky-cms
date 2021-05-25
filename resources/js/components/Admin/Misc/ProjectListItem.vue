@@ -24,7 +24,7 @@
                 <hr>
                 <!-- <p class="card-text">{{project.project_subtitle}}</p> -->
                 <div class="row ">
-                    <div class="col-12">
+                    <div class="col-12" v-if="$parent.projectsList.length > 1">
                         <button class="btn btn-light float-right backgroundAnimation" type="button">
                                 <i class="bi bi-arrows-move"></i>
                         </button> 
@@ -45,6 +45,7 @@ export default {
     },
 
     computed: {
+  
         currentProjectSlug: function(){
             return this.$store.state.AdminStates.currentProject.slug;
         }
