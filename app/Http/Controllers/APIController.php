@@ -93,13 +93,14 @@ class APIController extends Controller
     //получить полный список проектов для главной страницы со всей информацией
     public function getFullProjectList()
     {
-        $projects = Project::where('is_home',1)->orderBy('order', 'desc')->get();
+        $homeProjects = Project::where('is_home', 1)->orderBy('order', 'desc')->get();
+        $otherProjects = Project::where('is_home', 0)->orderBy('slug','asc')->get();
 
         //если в БД нет ни одного проекта, то возвращаем false
-        if(count($projects) == 0)
+        if(count($homeProjects) == 0)
         { return response()->json(false); }
         else
-        { return response()->json($projects);  }
+        { return response()->json(['home' => $homeProjects, 'other' => $otherProjects]);  }
     }
 
     //getStockImages

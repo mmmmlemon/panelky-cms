@@ -23,11 +23,17 @@
                     </h6>
                     <hr>
                 </div>
-                <div v-for="project in fullProjectList" :key="project.slug" class="col-12 text-center">
+                <div v-for="project in fullProjectList.home" :key="project.slug" class="col-12 text-center">
                     <h6>
                         <a v-on:click="closeNavMenu()" :href="`#${project.slug}`">{{project.project_title}}</a>
                     </h6>
                     <br>
+                </div>
+                <div class="col-12 text-center" v-if="fullProjectList !== -1 && fullProjectList.other.length > 0">
+                    <h6>
+                        <a v-on:click="closeNavMenu()" :href="`#other`">Другие проекты</a>
+                    </h6>
+                     <br>
                 </div>
                 <!-- ссылки -->
                 <div class="col-12">
@@ -54,7 +60,9 @@
 
 <script>
     export default {
-
+        mounted(){
+            console.log(this.fullProjectList)
+        },
         //данные
         computed:{
             //стиль бокового меню

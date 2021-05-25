@@ -31,6 +31,10 @@ Vue.component('ProjectCard', ProjectCard);
 import FooterCard from './components/HomePage/FooterCard.vue';
 Vue.component('FooterCard', FooterCard);
 
+import OtherProjectsCard from './components/HomePage/OtherProjectsCard.vue';
+Vue.component('OtherProjectsCard', OtherProjectsCard);
+
+
 //Admin
 import PreviewOwner from './components/Admin/Misc/PreviewOwner.vue';
 Vue.component('PreviewOwner', PreviewOwner);

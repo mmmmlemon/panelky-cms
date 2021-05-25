@@ -55,9 +55,9 @@ class AdminController extends Controller
         $this->validate($request, [
             'id' => 'required',
             'project_title' => 'required|string',
-            'project_subtitle' => 'string',
-            'project_desc' => 'string',
-            'project_bottomText' => 'string',
+            'project_subtitle' => 'string|nullable',
+            'project_desc' => 'string|nullable',
+            'project_bottomText' => 'string|nullable',
             'project_url' => 'url'
         ]);
 
