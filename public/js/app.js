@@ -2152,11 +2152,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   data: function data() {
     return {
-      fullscreenStyle: undefined
+      fullscreenStyle: undefined,
+      orientation: 'left'
     };
   },
   props: {
@@ -2184,6 +2196,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     //показать превью на полный экран
     showFullscreenPreview: function showFullscreenPreview() {
+      this.orientation = 'left';
       this.fullscreenStyle = {
         left: '0px',
         opacity: 1
@@ -2195,6 +2208,10 @@ __webpack_require__.r(__webpack_exports__);
         left: '5000px',
         opacity: 0
       };
+    },
+    //сменить ориентацию в превью на полный экран
+    changeOrientation: function changeOrientation() {
+      if (this.orientation === 'left') this.orientation = 'right';else this.orientation = 'left';
     },
     //удалить проект
     deleteProject: function deleteProject() {
@@ -42838,6 +42855,22 @@ var render = function() {
               style: _vm.fullscreenStyle
             },
             [
+              _c("div", { staticClass: "fullscreenButtons" }, [
+                _c("ul", { staticClass: "nav nav-fill" }, [
+                  _c("li", { staticClass: "nav-item" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-light btn-lg fullscreenButton",
+                        attrs: { title: "Изменить ориентацию" },
+                        on: { click: _vm.changeOrientation }
+                      },
+                      [_c("i", { staticClass: "bi bi-arrow-left-right" })]
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
               _c(
                 "button",
                 {
@@ -42851,7 +42884,14 @@ var render = function() {
               _c(
                 "div",
                 { staticClass: "row h-100 justify-content-center" },
-                [_c("ProjectCard", { attrs: { project: _vm.currentProject } })],
+                [
+                  _c("ProjectCard", {
+                    attrs: {
+                      project: _vm.currentProject,
+                      type: _vm.orientation
+                    }
+                  })
+                ],
                 1
               )
             ]

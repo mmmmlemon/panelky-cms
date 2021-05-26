@@ -47,12 +47,23 @@
         </div>
         <!-- превью на весь экран -->
         <div class="container col-12 vh-100 animatedBackground fullscreenCard zIndex3" :style="fullscreenStyle">
+            <div class="fullscreenButtons">
+                <ul class="nav nav-fill">
+                    <!-- Главные проекты -->
+                    <li class="nav-item">
+                         <button class="btn btn-light btn-lg fullscreenButton" title="Изменить ориентацию" v-on:click="changeOrientation">
+                            <i class="bi bi-arrow-left-right"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+  
             <!-- кнопка свернуть -->
             <button class="btn btn-light btn-lg fullscreenButton" title="Свернуть" v-on:click="closeFullscreenPreview">
                 <i class="bi bi-fullscreen-exit"></i>
             </button>
             <div class="row h-100 justify-content-center">
-                <ProjectCard :project="currentProject"/>
+                <ProjectCard :project="currentProject" :type="orientation"/>
             </div>
         </div>
     </div>
@@ -63,6 +74,7 @@ export default {
     data: () => {
         return {
             fullscreenStyle: undefined,
+            orientation: 'left',
         }
     },
 
@@ -86,17 +98,24 @@ export default {
     methods: {
         //показать превью на полный экран
         showFullscreenPreview: function(){
+            this.orientation = 'left';
             this.fullscreenStyle = { left: '0px', opacity: 1 };
         },
         //свернуть превью на полный экран
         closeFullscreenPreview: function(){
             this.fullscreenStyle = { left: '5000px', opacity: 0 };
         },
+        //сменить ориентацию в превью на полный экран
+        changeOrientation(){
+            if(this.orientation === 'left')
+            this.orientation = 'right';
+            else
+            this.orientation = 'left';
+        },
         //удалить проект
         deleteProject(){
             this.$store.dispatch('setDeleteModalInfo', {deleteInfo: this.currentProject, page: 'homeProjects'});
         }
     }
-
 }
 </script>

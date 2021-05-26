@@ -61,7 +61,7 @@ class APIController extends Controller
         if(count($projects) > 0)
         { return response()->json($projects[0]->slug, 200); }
         else
-        { return response()->json(false, 422); }
+        { return response()->json(false, 200); }
     }
 
     //getProject

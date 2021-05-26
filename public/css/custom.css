@@ -151,6 +151,12 @@ hr {
     top: 3%; 
 }
 
+.fullscreenButtons {
+    position: absolute; 
+    right: 7%; 
+    top: 3%; 
+}
+
 .deleteImageButton {
     position: absolute; 
     right: 8%; 
@@ -221,6 +227,8 @@ hr {
     position: absolute;
     top: 25%;
 }
+
+
 
 
 
