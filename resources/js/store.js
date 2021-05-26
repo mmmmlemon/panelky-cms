@@ -58,11 +58,17 @@ const AdminStates = {
     state: {
         //текущая открытая вкладка на панели администратора
         currentTab: -1,
+        //список проектов для HomeProjects.vue
         projectsList: -1,
+        //slug текущего выбранного проекта в HomeProjects.vue
         currentProjectSlug: -1, 
+        //текущий выбранный проект (HomeProject.vue, EditProject.vue)
         currentProject: -1,
+        //плейсхолдеры для картинок в проекте (AddNewProject.vue)
         stockImages: -1,
+        //список всех проектов (AllProjects.vue)
         allProjects: -1,
+        //инф-ция для модального окна удаления проеткта
         deleteModalInfo: -1,
     },
 
@@ -77,9 +83,6 @@ const AdminStates = {
         currentProject: state => {
             return state.currentProject;
         },
-        stockImages: state => {
-            return state.stockImages;
-        }
     },
 
     actions: {
@@ -110,7 +113,6 @@ const AdminStates = {
         //уставновить первый slug проекта в currentProjectSlug
         setFirstProjectSlug(context, state){
             axios.get('/api/getFirstProjectSlug').then(response => {
-                
                 if(response.data !== false)
                 {
                     axios.get(`/api/getProject/${response.data}/mini`).then(response => {
@@ -124,7 +126,6 @@ const AdminStates = {
                 { 
                     { context.commit('setState', { state: 'currentProject', value: false}) }
                 }
-
             });
         },
 
@@ -157,6 +158,7 @@ const AdminStates = {
         },
 
         //setDeleteModalInfo
+        //записать инф-цию об удалении в модальное окно удаления проекта
         setDeleteModalInfo(context, payload){
             context.commit('setState', {state: 'deleteModalInfo', value: payload});
         },

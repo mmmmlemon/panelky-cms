@@ -2473,10 +2473,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {
-    //плейсхолдеры для картинок
-    stockImages: function stockImages() {
-      return this.$store.state.AdminStates.stockImages;
-    },
     //случайно сгенерированное имя папки
     randomFolderName: function randomFolderName() {
       return Math.random(0, 999).toString(36).substring(3);
@@ -4456,11 +4452,17 @@ var AdminStates = {
   state: {
     //текущая открытая вкладка на панели администратора
     currentTab: -1,
+    //список проектов для HomeProjects.vue
     projectsList: -1,
+    //slug текущего выбранного проекта в HomeProjects.vue
     currentProjectSlug: -1,
+    //текущий выбранный проект (HomeProject.vue, EditProject.vue)
     currentProject: -1,
+    //плейсхолдеры для картинок в проекте (AddNewProject.vue)
     stockImages: -1,
+    //список всех проектов (AllProjects.vue)
     allProjects: -1,
+    //инф-ция для модального окна удаления проеткта
     deleteModalInfo: -1
   },
   mutations: {
@@ -4472,9 +4474,6 @@ var AdminStates = {
   getters: {
     currentProject: function currentProject(state) {
       return state.currentProject;
-    },
-    stockImages: function stockImages(state) {
-      return state.stockImages;
     }
   },
   actions: {
@@ -4583,6 +4582,7 @@ var AdminStates = {
       });
     },
     //setDeleteModalInfo
+    //записать инф-цию об удалении в модальное окно удаления проекта
     setDeleteModalInfo: function setDeleteModalInfo(context, payload) {
       context.commit('setState', {
         state: 'deleteModalInfo',

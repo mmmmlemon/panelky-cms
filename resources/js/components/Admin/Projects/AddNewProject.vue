@@ -110,10 +110,6 @@ export default {
     },
 
     computed: {
-        //плейсхолдеры для картинок
-        stockImages: function(){
-            return this.$store.state.AdminStates.stockImages;
-        },
         //случайно сгенерированное имя папки
         randomFolderName: function(){
             return Math.random(0,999).toString(36).substring(3);
