@@ -233,6 +233,8 @@ class AdminController extends Controller
             Storage::put("/public/".$path.$filename, file_get_contents($request->file));
             return response()->json(asset("storage/".$path.$filename), 200);
         }
+        else
+        { return response()-json(null, 500); }
     }
 
     //removeFolderFromTemp

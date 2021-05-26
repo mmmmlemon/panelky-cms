@@ -146,8 +146,10 @@ export default {
                 if(type === 'image')
                 { this.currentProject.project_image = response.data; }
             }).catch(error => {
-                //TODO: вывод ошибки в AppAdmin
-                console.log("Error uploading image to temp");
+                if(error.response.status === 422 || error.response.status === 500){ 
+                        var errors = error.response.data;
+                        this.$store.dispatch('setErrors', error.response.data.message);
+                     }
             });
         },
 

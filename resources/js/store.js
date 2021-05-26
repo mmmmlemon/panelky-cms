@@ -70,6 +70,8 @@ const AdminStates = {
         allProjects: -1,
         //инф-ция для модального окна удаления проеткта
         deleteModalInfo: -1,
+        //ошибки для AppAdmin
+        errors: -1,
     },
 
     mutations: {
@@ -161,6 +163,12 @@ const AdminStates = {
         //записать инф-цию об удалении в модальное окно удаления проекта
         setDeleteModalInfo(context, payload){
             context.commit('setState', {state: 'deleteModalInfo', value: payload});
+        },
+
+        //setErrors
+        //записать ошибки
+        setErrors(context, errors){
+            context.commit('setState', {state: 'errors', value: errors});
         },
     }
 }

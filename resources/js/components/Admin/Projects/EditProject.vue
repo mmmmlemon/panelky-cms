@@ -214,8 +214,10 @@ export default {
                 { this.currentProject.project_image = null; }
             }).catch(error => {
                 if(error.response.status === 422){ 
-                    //TODO
-                    //вывод ошибки в AppAdmin
+                  if(error.response.status === 422 || error.response.status === 500){ 
+                        var errors = error.response.data;
+                        this.$store.dispatch('setErrors', error.response.data.message);
+                     }
                 }
             })
         }

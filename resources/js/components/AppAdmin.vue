@@ -3,6 +3,13 @@
 <template>
     <div class="container col-12 vh-100">
         
+        <!-- ошибки -->
+        <div class="col-3" style="position: fixed; z-index: 3;" v-if="errors !== -1">
+            <button class="btn btn-sm btn-danger mb-1 goUpAnim" v-on:click="clearError">
+                X
+            </button>
+            <Error :errorMessage="errors"/>
+        </div>
         <!-- модальное окно для удаления проектов -->
         <DeleteModal />
 
@@ -90,11 +97,21 @@ export default {
         //текущая открытая вкладка
         currentTab: function() {
             return this.$store.state.AdminStates.currentTab;
+        },
+
+        //ошибки
+        errors: function(){
+            return this.$store.state.AdminStates.errors;
         }
     },
 
     //методы
     methods: {
+        //очистить ошибки
+        clearError()
+        {
+            this.$store.dispatch('setErrors', -1);
+        },
         //логаут
         logout: function(){
             //отправить POST-запрос на выход из профиля и перенаправить на главную страницу

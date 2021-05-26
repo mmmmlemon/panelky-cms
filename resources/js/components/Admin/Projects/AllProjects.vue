@@ -114,9 +114,11 @@ export default {
             axios.post('/api/setProjectStatus', formData).then(response => {
                 this.$store.dispatch('getAllProjects');
             }).catch(error => {
-                //TODO
-                //добавить ошибку в AppAdmin
-            })
+               if(error.response.status === 422 || error.response.status === 500){ 
+                    var errors = error.response.data;
+                    this.$store.dispatch('setErrors', error.response.data.message);
+                    }
+                });
         },
 
         //удалить проект

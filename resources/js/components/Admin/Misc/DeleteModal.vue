@@ -67,8 +67,10 @@ export default {
                     this.$store.dispatch('setDeleteModalInfo', undefined);
                 }
             }).catch(error => {
-                //TODO
-                //добавить ошибку в AppAdmin
+                if(error.response.status === 422 || error.response.status === 500){ 
+                        var errors = error.response.data;
+                        this.$store.dispatch('setErrors', error.response.data.message);
+                     }
             });
         }
     }

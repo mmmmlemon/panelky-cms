@@ -1963,8 +1963,12 @@ __webpack_require__.r(__webpack_exports__);
 
             _this.$store.dispatch('setDeleteModalInfo', undefined);
           }
-      })["catch"](function (error) {//TODO
-        //добавить ошибку в AppAdmin
+      })["catch"](function (error) {
+        if (error.response.status === 422 || error.response.status === 500) {
+          var errors = error.response.data;
+
+          _this.$store.dispatch('setErrors', error.response.data.message);
+        }
       });
     }
   }
@@ -2531,8 +2535,11 @@ __webpack_require__.r(__webpack_exports__);
           _this2.currentProject.project_image = response.data;
         }
       })["catch"](function (error) {
-        //TODO: вывод ошибки в AppAdmin
-        console.log("Error uploading image to temp");
+        if (error.response.status === 422 || error.response.status === 500) {
+          var errors = error.response.data;
+
+          _this2.$store.dispatch('setErrors', error.response.data.message);
+        }
       });
     },
     //добавить проект
@@ -2714,8 +2721,12 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('slug', slug);
       axios.post('/api/setProjectStatus', formData).then(function (response) {
         _this.$store.dispatch('getAllProjects');
-      })["catch"](function (error) {//TODO
-        //добавить ошибку в AppAdmin
+      })["catch"](function (error) {
+        if (error.response.status === 422 || error.response.status === 500) {
+          var errors = error.response.data;
+
+          _this.$store.dispatch('setErrors', error.response.data.message);
+        }
       });
     },
     //удалить проект
@@ -2961,8 +2972,12 @@ __webpack_require__.r(__webpack_exports__);
           _this3.currentProject.project_image = null;
         }
       })["catch"](function (error) {
-        if (error.response.status === 422) {//TODO
-          //вывод ошибки в AppAdmin
+        if (error.response.status === 422) {
+          if (error.response.status === 422 || error.response.status === 500) {
+            var errors = error.response.data;
+
+            _this3.$store.dispatch('setErrors', error.response.data.message);
+          }
         }
       });
     }
@@ -3372,6 +3387,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   data: function data() {
@@ -3384,10 +3406,18 @@ __webpack_require__.r(__webpack_exports__);
     //текущая открытая вкладка
     currentTab: function currentTab() {
       return this.$store.state.AdminStates.currentTab;
+    },
+    //ошибки
+    errors: function errors() {
+      return this.$store.state.AdminStates.errors;
     }
   },
   //методы
   methods: {
+    //очистить ошибки
+    clearError: function clearError() {
+      this.$store.dispatch('setErrors', -1);
+    },
     //логаут
     logout: function logout() {
       //отправить POST-запрос на выход из профиля и перенаправить на главную страницу
@@ -4480,7 +4510,9 @@ var AdminStates = {
     //список всех проектов (AllProjects.vue)
     allProjects: -1,
     //инф-ция для модального окна удаления проеткта
-    deleteModalInfo: -1
+    deleteModalInfo: -1,
+    //ошибки для AppAdmin
+    errors: -1
   },
   mutations: {
     //установить стейт
@@ -4604,6 +4636,14 @@ var AdminStates = {
       context.commit('setState', {
         state: 'deleteModalInfo',
         value: payload
+      });
+    },
+    //setErrors
+    //записать ошибки
+    setErrors: function setErrors(context, errors) {
+      context.commit('setState', {
+        state: 'errors',
+        value: errors
       });
     }
   }
@@ -44589,6 +44629,29 @@ var render = function() {
     "div",
     { staticClass: "container col-12 vh-100" },
     [
+      _vm.errors !== -1
+        ? _c(
+            "div",
+            {
+              staticClass: "col-3",
+              staticStyle: { position: "fixed", "z-index": "3" }
+            },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-danger mb-1 goUpAnim",
+                  on: { click: _vm.clearError }
+                },
+                [_vm._v("\n            X\n        ")]
+              ),
+              _vm._v(" "),
+              _c("Error", { attrs: { errorMessage: _vm.errors } })
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
       _c("DeleteModal"),
       _vm._v(" "),
       _vm._m(0),
