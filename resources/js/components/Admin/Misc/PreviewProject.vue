@@ -2,37 +2,43 @@
 //превью проекта в админке
 <template>
     <div class="col-12 d-flex h-100 justify-content-center animatedBackground previewCard fadeInAnim" v-if="currentProject !== -1">
-        <!-- мини превью -->
+        <!-- МИНИ ПРЕВЬЮ (в HomeProjects.vue) -->
         <div v-if="type === 'mini'" class="row text-center textVertical">
+            <!-- название -->
             <div class="col-12">
                 <h1 class="text-center textVertical font3-8rem">
                     <b>{{currentProject.project_title}}</b>    
                 </h1>  
             </div>
+            <!-- лого -->
             <div class="col-12">
                 <img :src="currentProject.project_icon" width="10%">
             </div>
+            <!-- подзаголовок -->
             <div class="col-12">
                 <p class="text-center textVertical font2rem">
                    {{currentProject.project_subtitle}}
                 </p>
             </div>
-           
+            <!-- кнопки -->
             <div class="col-12">
                 <hr>
-                    <router-link :to="'/admin/edit/'+currentProject.slug">
-                        <button class="btn btn-light mr-3" title="Редактировать">
-                            <i class="bi bi-pencil-fill"></i>
-                        </button>
-                    </router-link>
-                    
-                    <button class="btn btn-light ml-3" title="Удалить"  v-on:click="deleteProject">
-                        <i class="bi bi-trash-fill"></i>
+                <!-- ред. -->
+                <router-link :to="'/admin/edit/'+currentProject.slug">
+                    <button class="btn btn-light mr-3" title="Редактировать">
+                        <i class="bi bi-pencil-fill"></i>
                     </button>
+                </router-link>
+                <!-- удалить -->
+                <button class="btn btn-light ml-3" title="Удалить"  v-on:click="deleteProject">
+                    <i class="bi bi-trash-fill"></i>
+                </button>
             </div> 
-        </div>   
-        <!-- полное превью -->
+        </div>
+
+        <!-- ПОЛНОЕ ПРЕВЬЮ (в EditProject.vue) -->
         <div v-if="type==='full'" class="row justify-content-center zIndex3">
+            <!-- карточка проекта -->
             <ProjectCard :project="currentProject"/>
             <!-- кнопка развернуть на весь экран -->
             <button class="btn btn-light fullscreenButton" title="Развернуть на полный экран" v-on:click="showFullscreenPreview">
@@ -41,6 +47,7 @@
         </div>
         <!-- превью на весь экран -->
         <div class="container col-12 vh-100 animatedBackground fullscreenCard zIndex3" :style="fullscreenStyle">
+            <!-- кнопка свернуть -->
             <button class="btn btn-light btn-lg fullscreenButton" title="Свернуть" v-on:click="closeFullscreenPreview">
                 <i class="bi bi-fullscreen-exit"></i>
             </button>
@@ -52,11 +59,6 @@
 </template>
 <script>
 export default {
-
-    mounted(){
-        this.$parent.$parent.$parent.deleteModal = 1;
-    },
-
     //данные
     data: () => {
         return {

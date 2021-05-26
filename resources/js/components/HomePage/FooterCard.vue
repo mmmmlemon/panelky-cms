@@ -44,8 +44,8 @@
 export default {
 
     props: {
-        footerTitle: { type: String, default: 'Links' },
-        contactTitle: { type: String, default: 'Contact me' },
+        footerTitle: { type: String, default: 'Ссылки' },
+        contactTitle: { type: String, default: 'Связаться со мной' },
         contactEmail: { type: String, default: 'contact@mail.com' }
     },
 }

@@ -1,9 +1,9 @@
 //NavButton
 //кнопка навигации с боковым меню
 <template>
-
     <div>
-        <!-- кнопка меню - десктоп-->
+        <!-- кнопка меню -->
+        <!-- видна только на десктопе -->
         <button v-on:click="showNavMenu()" class="d-none d-md-block navButton zIndex3">
             <i class="bi bi-three-dots-vertical"></i>
         </button>
@@ -57,12 +57,8 @@
         </div>
     </div>
 </template>
-
 <script>
     export default {
-        mounted(){
-            console.log(this.fullProjectList)
-        },
         //данные
         computed:{
             //стиль бокового меню

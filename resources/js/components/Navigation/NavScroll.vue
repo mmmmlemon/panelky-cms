@@ -1,16 +1,12 @@
 //NavScroll
 //кнопка "Наверх"
 <template>
-
     <button class="navScroll" :style="navScrollStyle" v-on:click="scrollToTop">
         <i class="bi bi-arrow-bar-up"></i>
     </button>
-
 </template>
-
 <script>
-export default {
-    
+export default { 
     //данные
     props: {
         //стиль кнопки

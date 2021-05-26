@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-11 text-center mt-5 borderUnderline">
-            <h1>Login</h1>
+            <h1>Вход</h1>
         </div>
         <form class="col-12 col-md-6" method="POST" action="{{ route('login') }}">
             @csrf
@@ -12,7 +12,7 @@
             {{-- E-Mail --}}
             <div class="form-group col-12">
                 <h5 class="text-center mt-5">
-                    {{ __('E-Mail Address') }}
+                    E-Mail
                 </h5>
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
@@ -30,7 +30,7 @@
             {{-- Password --}}
             <div class="form-group col-12">
                 <h5 class="text-center mt-1">
-                    {{ __('Password') }}
+                    Пароль
                 </h5>
 
                 <div class="input-group mb-2">
@@ -52,7 +52,7 @@
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                         <label class="form-check-label" for="remember">
-                            {{ __('Remember Me') }}
+                            Запомнить меня
                         </label>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
             <div class="form-group row mb-0">
                 <div class="col-12">
                     <button type="submit" class="btn btn-outline-light btn-lg btn-block">
-                        {{ __('Login') }}
+                        Вход
                     </button>
                 </div>
             </div>

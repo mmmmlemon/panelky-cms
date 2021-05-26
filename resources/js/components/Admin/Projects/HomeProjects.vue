@@ -2,16 +2,17 @@
 //управление проектами на главной странице сайта
 <template>
     <div class="row justify-content-center" v-if="currentProject !== -1">
-
         <div class="col-8">
+            <!-- Ошибка -->
             <Error v-if="projectsList === -1" errorMessage="Не удалось загрузить список проектов"/>
-
+            
+            <!-- сообщение если нет проектов -->
             <div v-if="projectsList === false" class="row justify-content-center text-center goUpAnim">
                 <div class="col-12">
                     <h3>Нет главных проектов</h3>
-                <i class="bi bi-file-earmark-check font1-8rem"></i>
-                <hr>
-                <h5>Их можно добавить в разделе  <router-link to="/admin/projects/all"><b>Управление проектами</b></router-link></h5>
+                    <i class="bi bi-file-earmark-check font1-8rem"></i>
+                    <hr>
+                    <h5>Их можно добавить в разделе  <router-link to="/admin/projects/all"><b>Управление проектами</b></router-link></h5>
                 </div>
             </div>
 
@@ -30,29 +31,27 @@
                 </div>
             </div>
         </div>
-    
-   
     </div>
 </template>
 <script>
 export default {
-        //хуки
-        mounted(){
-            //текущая вкладка
-            this.$store.dispatch('setCurrentTab', 'projects');
-            //получить список проектов
-            this.$store.dispatch('getProjectsList');
+    //хуки
+    mounted(){
+        //текущая вкладка
+        this.$store.dispatch('setCurrentTab', 'projects');
+        //получить список проектов
+        this.$store.dispatch('getProjectsList');
 
-            // var currentProject = this.$store.getters.currentProject;
+        // var currentProject = this.$store.getters.currentProject;
 
-            // if(currentProject === -1)
-            // { 
-                //установить первый проект в списке выбранным по умолчанию
-                this.$store.dispatch('setFirstProjectSlug');
-            // }
-        },
+        // if(currentProject === -1)
+        // { 
+            //установить первый проект в списке выбранным по умолчанию
+            this.$store.dispatch('setFirstProjectSlug');
+        // }
+    },
 
-        computed: {
+    computed: {
         //список проектов
         projectsList: function(){
             return this.$store.state.AdminStates.projectsList;

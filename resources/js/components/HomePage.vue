@@ -15,8 +15,7 @@
         <OtherProjectsCard v-if="fullProjectList !== -1 && fullProjectList.other.length > 0" :projects="fullProjectList.other"/>
 
         <!-- карточка футер -->
-        <FooterCard />
-        
+        <FooterCard />    
     </div>
 </template>
 

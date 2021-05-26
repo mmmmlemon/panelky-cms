@@ -76,7 +76,6 @@ export default {
 
         //закрыть боковое меню
         closeNavMenu: function(){  
-
             if(this.$isMobile){
                 this.$store.dispatch('setNavMenuStyle', {'right':'-500px', 'opacity':'0'});
                 //если сайт открыт на телефоне, возвращаем скролл

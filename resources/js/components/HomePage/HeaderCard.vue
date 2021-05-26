@@ -2,13 +2,13 @@
 //карточка с общей информацией о владельце сайта и его роде занятий
 <template>
     <div class="row h-100 width90pc bigCard d-flex justify-content-center borderUnderline">
-        
-        <div class="col-8" v-if="info === false">
-            <Error errorMessage="Не удалось загрузить информацию о владельце сайта"/>
-        </div>
-    
+         
         <!-- для десктопа -->
         <div class="d-none d-md-block textVertical fadeInAnim">
+            <!-- Ошибка -->
+            <div class="col-12" v-if="info === false">
+                <Error errorMessage="Не удалось загрузить информацию о владельце сайта"/>
+            </div>
 
             <!-- имя автора -->
             <transition name="name">

@@ -1,7 +1,6 @@
 //ProjectCard
 //Карточка для проектов
 <template>
-
     <div class="row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1" :id="project.slug">
 
         <div class="col-10" v-if="project === false">

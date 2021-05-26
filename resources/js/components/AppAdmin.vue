@@ -3,6 +3,7 @@
 <template>
     <div class="container col-12 vh-100">
         
+        <!-- модальное окно для удаления проектов -->
         <DeleteModal />
 
         <div class="col-12 text-center mt-5">
@@ -33,6 +34,7 @@
         <div class="row justify-content-center">
             <div class="col-8 ">
                 <ul class="nav nav-fill">
+                    <!-- Владлец сайта -->
                     <li class="nav-item mr-2">
                         <router-link v-bind:class="{'btn-light': currentTab === 'admin', 
                                                     'btn-outline-light': currentTab !== 'admin'}"
@@ -40,6 +42,7 @@
                             Владелец сайта
                         </router-link>
                     </li>
+                    <!-- Проекты -->
                     <li class="nav-item mr-2">
                         <router-link v-bind:class="{'btn-light': currentTab === 'projects', 
                                                     'btn-outline-light': currentTab !== 'projects'}"
@@ -47,9 +50,20 @@
                             Проекты
                         </router-link>
                     </li>
+                    <!-- Ссылки и контакты -->
                     <li class="nav-item mr-2">
-                        <router-link to="/admin/links" class="btn btn-block btn-outline-light font14pt">
+                        <router-link v-bind:class="{'btn-light': currentTab === 'links', 
+                                                    'btn-outline-light': currentTab !== 'links'}" 
+                                                    to="/admin/links" class="btn btn-block font14pt">
                             Ссылки и контакты
+                        </router-link>
+                    </li>
+                    <!-- Настройки сайта -->
+                    <li class="nav-item mr-2">
+                        <router-link v-bind:class="{'btn-light': currentTab === 'settings', 
+                                                    'btn-outline-light': currentTab !== 'settings'}" 
+                                                    to="/admin/settings" class="btn btn-block font14pt">
+                            Настройки
                         </router-link>
                     </li>
                 </ul>

@@ -11,6 +11,7 @@ import AppAdmin from './components/AppAdmin.vue';
 import SiteOwnerInfo from './components/Admin/SiteOwnerInfo.vue';
 import Projects from './components/Admin/Projects.vue';
 import Links from './components/Admin/Links.vue';
+import Settings from './components/Admin/Settings.vue';
 import EditProject from './components/Admin/Projects/EditProject.vue';
 import HomeProjects from './components/Admin/Projects/HomeProjects.vue';
 import AllProjects from './components/Admin/Projects/AllProjects.vue';
@@ -74,6 +75,11 @@ const routes = [
                 //links
                 path: '/admin/links',
                 component: Links,
+            },
+            {
+                //settings
+                path: '/admin/settings',
+                component: Settings,
             },
             {
                 //edit project

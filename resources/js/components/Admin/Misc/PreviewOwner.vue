@@ -4,8 +4,8 @@
     <div class="col-12 fadeInAnim">  
       
         <!-- мини-превью -->
-        <div class="col-12 d-flex justify-content-center animatedBackground previewCard" v-bind:class="{zeroOpacity: name === undefined}">
-            <HeaderCard :info="{name: name, occupation: occupation, aboutMe: aboutMe, bottomText: bottomText}" />
+        <div class="col-12 d-flex justify-content-center animatedBackground previewCard" v-bind:class="{zeroOpacity: siteOwnerInfo === undefined}">
+            <HeaderCard :info="siteOwnerInfo" />
             
             <!-- кнопка развернуть на весь экран -->
             <button class="btn btn-light fullscreenButton" title="Развернуть на полный экран" v-on:click="showFullscreenPreview">
@@ -19,7 +19,7 @@
                 <i class="bi bi-fullscreen-exit"></i>
             </button>
             <div class="row h-100 justify-content-center">
-                <HeaderCard :info="{name: name, occupation: occupation, aboutMe: aboutMe, bottomText: bottomText}" /> 
+                <HeaderCard :info="siteOwnerInfo" /> 
             </div>
         </div>
 
@@ -36,10 +36,14 @@ export default {
     },
 
     props: {
-        name: undefined,
-        occupation: undefined,
-        aboutMe: undefined,
-        bottomText: undefined,
+        siteOwnerInfo: { type: Object, default: function(){
+            return {
+                name: undefined,
+                occupation: undefined,
+                aboutMe: undefined,
+                bottomText: undefined,
+            }
+        }},
     },
 
     methods: {
