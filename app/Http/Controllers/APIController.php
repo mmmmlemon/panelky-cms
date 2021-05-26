@@ -24,7 +24,7 @@ class APIController extends Controller
             'bottomText' => $settings->site_owner_bottom
         ];
 
-        return response()->json($response);
+        return response()->json($response, 200);
     }
 
     //ПРОЕКТЫ
@@ -34,7 +34,7 @@ class APIController extends Controller
     {
         //получаем список проектов отсортированный по полю order
         $projects = Project::where('is_home',1)->orderBy('order', 'desc')->get();
-
+   
         if(count($projects) > 0)
         {
             $response = [];
@@ -42,13 +42,14 @@ class APIController extends Controller
             //фильтруем результат, нам нужны только поля id и title
             foreach($projects as $project)
             {
-               array_push($response, ['slug' => $project->slug,'title' => $project->project_title]);
+               array_push($response, ['slug' => $project->slug,
+                                      'title' => $project->project_title]);
             }
     
-            return response()->json($response);
+            return response()->json($response, 200);
         }
         else
-        { return response()->json(false);}
+        { return response()->json(false, 200);}
     }
 
     //getFirstProjectSlug
@@ -58,9 +59,9 @@ class APIController extends Controller
         $projects = Project::where('is_home', 1)->orderBy('order','desc')->get();
 
         if(count($projects) > 0)
-        { return response()->json($projects[0]->slug); }
+        { return response()->json($projects[0]->slug, 200); }
         else
-        { return response()->json(false); }
+        { return response()->json(false, 422); }
     }
 
     //getProject
@@ -76,17 +77,17 @@ class APIController extends Controller
         
         //полное превью
         if($type == "full")
-        { return response()->json($project); }
+        { return response()->json($project, 200); }
         //мини-превью
         else if ($type == "mini")
         {   
             return response()->json(['slug' => $project->slug, 
                                     'project_title' => $project->project_title, 
                                     'project_subtitle' => $project->project_subtitle, 
-                                    'project_icon' => $project->project_icon]); 
-                                }
+                                    'project_icon' => $project->project_icon], 200); 
+        }
         else
-        { return response()->json(false); }
+        { return response()->json(false, 422); }
     }
 
     //getFullProjectsList
@@ -98,13 +99,13 @@ class APIController extends Controller
 
         //если в БД нет ни одного проекта, то возвращаем false
         if(count($homeProjects) == 0)
-        { return response()->json(false); }
+        { return response()->json(['home' => false, 'other' => false], 200); }
         else
         { return response()->json(['home' => $homeProjects, 'other' => $otherProjects]);  }
     }
 
     //getStockImages
-    //получить стоковые изображения
+    //получить плейсхолдеры картинок для проекта
     public function getStockImages()
     {
           $response = [
@@ -112,7 +113,7 @@ class APIController extends Controller
             'image' => asset('/storage/stock/stock_image.png')
         ];
 
-        return response()->json($response);
+        return response()->json($response, 200);
     }
 
     //getAllProjects
@@ -120,12 +121,11 @@ class APIController extends Controller
     public function getAllProjects()
     {
         $homeProjects = Project::where('is_home', 1)->orderBy('order','desc')->get();
-
         $otherProjects = Project::where('is_home', 0)->orderBy('order', 'desc')->get();
 
         $response = ['home' => $homeProjects, 'other' => $otherProjects];
 
-        return response()->json($response);
+        return response()->json($response, 200);
     }
 
     //setProjectStatus
@@ -134,7 +134,6 @@ class APIController extends Controller
     {
         $project = Project::where('slug', $request->slug)->get()[0];
 
-        
         if($project->is_home == 0)
         {   
             $max = Project::where('is_home', 1)->max('order') + 1;

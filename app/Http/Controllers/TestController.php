@@ -73,6 +73,6 @@ class TestController extends Controller
         $project->slug = Str::slug($title);
         $project->save();
 
-        return "Success";
+        return response()->json(null, 400);
     }
 }

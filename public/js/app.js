@@ -45714,7 +45714,13 @@ var render = function() {
                   [_c("i", { staticClass: "bi bi-x" })]
                 ),
                 _vm._v(" "),
-                _vm._m(0),
+                _vm.fullProjectList.home !== false
+                  ? _c("div", { staticClass: "col-12" }, [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c("hr")
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
                 _vm._l(_vm.fullProjectList.home, function(project) {
                   return _c(
@@ -45804,10 +45810,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12" }, [
-      _c("h6", { staticClass: "text-center" }, [_c("b", [_vm._v("Проекты")])]),
-      _vm._v(" "),
-      _c("hr")
+    return _c("h6", { staticClass: "text-center" }, [
+      _c("b", [_vm._v("Проекты")])
     ])
   },
   function() {

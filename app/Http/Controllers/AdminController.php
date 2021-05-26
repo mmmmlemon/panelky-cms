@@ -30,10 +30,10 @@ class AdminController extends Controller
     public function saveSiteOwnerInfo(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|string',
-            'occupation' => 'required|string',
+            'name' => 'required|string|max:255',
+            'occupation' => 'required|string|max:255',
             'aboutMe' => 'required|string',
-            'bottomText' => 'required|string'
+            'bottomText' => 'required|string|max:255'
         ]);
 
         $settings = Settings::firstOrFail();
@@ -45,20 +45,20 @@ class AdminController extends Controller
 
         $settings->save();
 
-        return response()->json(null, 200);
+        return response()->json(true, 200);
     }
 
     //saveProjectBasic
-    //сохранить общую информацию о проекте
+    //редактирование, сохранить общую информацию о проекте
     public function saveProjectBasic(Request $request)
     {
         $this->validate($request, [
             'id' => 'required',
-            'project_title' => 'required|string',
-            'project_subtitle' => 'string|nullable',
+            'project_title' => 'required|string|max:255',
+            'project_subtitle' => 'string|nullable|max:255',
             'project_desc' => 'string|nullable',
-            'project_bottomText' => 'string|nullable',
-            'project_url' => 'url'
+            'project_bottomText' => 'string|nullable|max:255',
+            'project_url' => 'url|max:500'
         ]);
 
         $project = Project::find($request->id);
@@ -71,11 +71,11 @@ class AdminController extends Controller
 
         $project->save();
 
-        return response()->json(null, 200);
+        return response()->json(true, 200);
     }
 
     //saveProjectImages
-    //сохранить изображения для проекта
+    //редактирование, сохранить изображения для проекта
     public function saveProjectImages(Request $request)
     {
         $this->validate($request, [
@@ -110,7 +110,6 @@ class AdminController extends Controller
             Storage::disk('public')->delete(str_replace('storage/','',$project->project_icon));
             $project->project_icon = "storage/projectsImages/".$filename;
             $project->save();
-         
         }
 
         if($request->hasFile('projectImage'))
@@ -124,7 +123,6 @@ class AdminController extends Controller
             Storage::disk('public')->delete(str_replace('storage/', '', $project->project_image));
             $project->project_image = "storage/projectsImages/".$filename;
             $project->save();
-
         }
 
         if($fileIcon == null && $fileImage == null)
@@ -132,15 +130,13 @@ class AdminController extends Controller
 
         $response = ['icon' => asset($project->project_icon), 'image' => asset($project->project_image)];
 
-
         return response()->json($response, 200);
     }   
 
     //deleteImageFromProject
-    //удалить иконку\изображение из проекта
+    //редактирование, удалить иконку\изображение из проекта
     public function deleteImageFromProject(Request $request)
     {
-
         $project = Project::find($request->id);
 
         if($request->type == 'icon')
@@ -158,7 +154,7 @@ class AdminController extends Controller
     
         $project->save();   
 
-        return response()->json(null, 200);
+        return response()->json(true, 200);
     }
 
     //addNewProject
@@ -166,11 +162,11 @@ class AdminController extends Controller
     public function addNewProject(Request $request)
     {
         $this->validate($request, [
-            'project_title' => 'required|string',
-            'project_subtitle' => 'string',
+            'project_title' => 'required|string|max:255',
+            'project_subtitle' => 'string|max:255',
             'project_desc' => 'string',
-            'project_bottomText' => 'string',
-            'project_url' => 'url',
+            'project_bottomText' => 'string|max:255',
+            'project_url' => 'url|max:500',
             'icon' => 'mimes:jpeg,jpg,png|nullable',
             'image' => 'mimes:jpeg,jpg,png|nullable',
         ]);
@@ -183,9 +179,20 @@ class AdminController extends Controller
         $project->project_bottomText = $request->project_bottomText;
         $project->project_url = $request->project_url;
         $project->is_home = 0;
+        //получаем максимальное значение order у проектов не добавленных в Главные и делаем +1
         $project->order = Project::where('is_home', 0)->max('order') + 1;
-        $project->slug = Str::slug($request->project_title);
 
+        //сгенерировать slug
+        $slug = Str::slug($request->project_title);
+        //если проект с таким slug'ом уже есть, то добавляем случайные символы в конец
+        if(count(Project::where('slug', $slug)->get()) > 0)
+        {   
+            $str = base_convert(rand(100000,999999), 10, 36);
+            $slug .= "-" . strval($str);
+        }
+        $project->slug = $slug;
+        
+        //перемещаем файлы картинок из temp в projectsImages
         if(File::exists(storage_path("app/public/temp/".$request->randomFolderName)))
         {
             //иконка и скриншот
@@ -206,7 +213,8 @@ class AdminController extends Controller
         }
 
         $project->save();
-        return response()->json(null, 200); 
+
+        return response()->json(true, 200); 
     }
 
     //saveImageToTemp
@@ -232,7 +240,7 @@ class AdminController extends Controller
     public function removeFolderFromTemp(Request $request)
     {
         Storage::disk('public')->deleteDirectory('/temp/'.$request->randomFolderName);
-        return response()->json(null, 200);
+        return response()->json(true, 200);
     }
 
     //deleteProject
@@ -240,11 +248,8 @@ class AdminController extends Controller
     public function deleteProject(Request $request)
     {
         $project = Project::where('slug', $request->slug)->get()[0];
-
         $id = $project->id;
-
         Project::find($id)->delete();
-
-        return response()->json(null, 200);
+        return response()->json(true, 200);
     }
 }

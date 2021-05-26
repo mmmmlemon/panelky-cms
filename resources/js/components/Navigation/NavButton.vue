@@ -17,7 +17,7 @@
                 </button>
                 <!-- пункты меню -->
                 <!-- проекты -->
-                <div class="col-12">
+                <div class="col-12" v-if="fullProjectList.home !== false">
                     <h6 class="text-center">
                         <b>Проекты</b>
                     </h6>

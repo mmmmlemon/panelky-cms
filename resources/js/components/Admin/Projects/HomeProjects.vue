@@ -3,7 +3,7 @@
 <template>
     <div class="row justify-content-center" v-if="currentProject !== -1">
         <div class="col-8">
-            <!-- Ошибка -->
+            <!-- Ошибки -->
             <Error v-if="projectsList === -1" errorMessage="Не удалось загрузить список проектов"/>
             
             <!-- сообщение если нет проектов -->
