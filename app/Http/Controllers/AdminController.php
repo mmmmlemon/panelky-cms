@@ -254,6 +254,14 @@ class AdminController extends Controller
     public function deleteProject(Request $request)
     {
         $project = Project::where('slug', $request->slug)->get()[0];
+
+        //удаление картинок
+        if($project->project_icon != null)
+        { unlink(storage_path(str_replace('storage','/app/public', $project->project_icon))); }
+
+        if($project->project_image != null)
+        { unlink(storage_path(str_replace('storage','/app/public', $project->project_image))); }
+
         $id = $project->id;
         Project::find($id)->delete();
         return response()->json(true, 200);
