@@ -37,7 +37,7 @@
                         <!-- Ссылка на проект -->
                         <div class="mb-3">
                             <h6>Ссылка на проект</h6>
-                            <input type="text" v-model="currentProject.project_url" placeholder="my-very-cool-project.ru" class="form-control">
+                            <input type="text" v-model="currentProject.project_url" placeholder="my-very-cool-project.ru" class="form-control" required>
                             <div v-if="errors && errors.project_url" class="text-danger goUpAnim">{{ errors.project_url[0] }}</div>
                         </div>
                         <!-- Логотип\иконка -->
@@ -104,6 +104,8 @@ export default {
                 project_image: undefined,
                 project_url: undefined,
             }),
+            projectIconName: undefined,
+            projectImageName: undefined,
             saved: false,
             errors: [],
         }
@@ -121,17 +123,18 @@ export default {
         //залить файл картинки в temp
         handleFileUpload(type){
             let formData = new FormData();
+            var filename = Math.random(0,999).toString(36).substring(3)+".png";
             formData.append('randomFolderName', this.randomFolderName);
             //если файл - иконка
             if(type === 'icon')
             {
-                formData.append('filename', "icon.png");
+                formData.append('filename', filename);
                 formData.append('file', this.$refs.icon.files[0]);
             }
             //если файл - скриншот
             if(type === 'image')
             {
-                formData.append('filename', 'image.png');
+                formData.append('filename', filename);
                 formData.append('file', this.$refs.image.files[0]);
             }
             
@@ -141,10 +144,16 @@ export default {
             }).then(response => {
                 //если иконка, то меняем иконку в превью
                 if(type === 'icon')
-                { this.currentProject.project_icon = response.data; }
+                { 
+                    this.currentProject.project_icon = response.data; 
+                    this.projectIconName = filename;
+                }
                 //если скриншот, то меняем в превью скриншот
                 if(type === 'image')
-                { this.currentProject.project_image = response.data; }
+                { 
+                    this.currentProject.project_image = response.data; 
+                    this.projectImageName = filename;
+                }
             }).catch(error => {
                 if(error.response.status === 422 || error.response.status === 500){ 
                         var errors = error.response.data;
@@ -169,6 +178,10 @@ export default {
             { formData.append('project_bottomText', this.currentProject.project_bottomText); }
             if(this.currentProject.project_url !== undefined)
             { formData.append('project_url', this.currentProject.project_url); }
+            if(this.projectIconName !== undefined)
+            { formData.append('project_icon', this.projectIconName); }
+            if(this.projectImageName !== undefined)
+            { formData.append('project_image', this.projectImageName); }
             //случайное имя папки в temp
             formData.append('randomFolderName', this.randomFolderName);
 

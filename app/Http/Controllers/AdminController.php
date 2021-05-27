@@ -166,7 +166,7 @@ class AdminController extends Controller
             'project_subtitle' => 'string|max:255',
             'project_desc' => 'string',
             'project_bottomText' => 'string|max:255',
-            'project_url' => 'url|max:500',
+            'project_url' => 'url|max:500|required',
             'icon' => 'mimes:jpeg,jpg,png|nullable',
             'image' => 'mimes:jpeg,jpg,png|nullable',
         ]);
@@ -190,6 +190,7 @@ class AdminController extends Controller
             $str = base_convert(rand(100000,999999), 10, 36);
             $slug .= "-" . strval($str);
         }
+
         $project->slug = $slug;
         
         //перемещаем файлы картинок из temp в projectsImages
@@ -197,18 +198,21 @@ class AdminController extends Controller
         {
             //иконка и скриншот
             $tempFiles = File::files(storage_path("app/public/temp/".$request->randomFolderName));
-
-            foreach($tempFiles as $file)
+            
+            if($request->project_icon != null)
             {
-                $filename = md5(time().rand(0,9)).".".pathinfo($file->getBasename(), PATHINFO_EXTENSION);;
-                $originalName = pathinfo($file->getBasename(), PATHINFO_FILENAME);
+                $filename = md5(time().rand(0,9)).".png";
                 $path = "public/projectsImages/".$filename;
-                Storage::put($path, file_get_contents($file->getRealPath()));
+                Storage::put($path, file_get_contents(storage_path('app/public/temp/'.$request->randomFolderName."/".$request->project_icon)));
+                $project->project_icon = "storage/projectsImages/".$filename;
+            }
 
-                if($originalName == "icon")
-                { $project->project_icon = "storage/projectsImages/".$filename; }
-                else if ($originalName == "image")
-                { $project->project_image = "storage/projectsImages/".$filename; }    
+            if($request->project_image != null)
+            {
+                $filename = md5(time().rand(0,9)).".png";
+                $path = "public/projectsImages/".$filename;
+                Storage::put($path, file_get_contents(storage_path('app/public/temp/'.$request->randomFolderName."/".$request->project_image)));
+                $project->project_image = "storage/projectsImages/".$filename;
             }
         }
 

@@ -2489,6 +2489,8 @@ __webpack_require__.r(__webpack_exports__);
         project_image: undefined,
         project_url: undefined
       }),
+      projectIconName: undefined,
+      projectImageName: undefined,
       saved: false,
       errors: []
     };
@@ -2506,16 +2508,17 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       var formData = new FormData();
+      var filename = Math.random(0, 999).toString(36).substring(3) + ".png";
       formData.append('randomFolderName', this.randomFolderName); //если файл - иконка
 
       if (type === 'icon') {
-        formData.append('filename', "icon.png");
+        formData.append('filename', filename);
         formData.append('file', this.$refs.icon.files[0]);
       } //если файл - скриншот
 
 
       if (type === 'image') {
-        formData.append('filename', 'image.png');
+        formData.append('filename', filename);
         formData.append('file', this.$refs.image.files[0]);
       } //отправка формы с файлом
 
@@ -2528,11 +2531,13 @@ __webpack_require__.r(__webpack_exports__);
         //если иконка, то меняем иконку в превью
         if (type === 'icon') {
           _this2.currentProject.project_icon = response.data;
+          _this2.projectIconName = filename;
         } //если скриншот, то меняем в превью скриншот
 
 
         if (type === 'image') {
           _this2.currentProject.project_image = response.data;
+          _this2.projectImageName = filename;
         }
       })["catch"](function (error) {
         if (error.response.status === 422 || error.response.status === 500) {
@@ -2568,6 +2573,14 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.currentProject.project_url !== undefined) {
         formData.append('project_url', this.currentProject.project_url);
+      }
+
+      if (this.projectIconName !== undefined) {
+        formData.append('project_icon', this.projectIconName);
+      }
+
+      if (this.projectImageName !== undefined) {
+        formData.append('project_image', this.projectImageName);
       } //случайное имя папки в temp
 
 
@@ -43362,7 +43375,8 @@ var render = function() {
                   staticClass: "form-control",
                   attrs: {
                     type: "text",
-                    placeholder: "my-very-cool-project.ru"
+                    placeholder: "my-very-cool-project.ru",
+                    required: ""
                   },
                   domProps: { value: _vm.currentProject.project_url },
                   on: {
