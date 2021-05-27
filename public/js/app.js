@@ -45288,7 +45288,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.type == "left" && _vm.project !== undefined
+      _vm.project.orientation == "left" && _vm.project !== undefined
         ? _c("div", { staticClass: "row justify-content-center" }, [
             _c(
               "div",
@@ -45424,7 +45424,7 @@ var render = function() {
               ]
             )
           ])
-        : _vm.type == "right"
+        : _vm.project.orientation == "right"
         ? _c("div", { staticClass: "row justify-content-center" }, [
             _c(
               "div",

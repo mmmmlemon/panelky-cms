@@ -8,7 +8,7 @@
         </div>
 
         <!-- карточка с описанием слева -->
-        <div v-if="type=='left' && project !== undefined" class="row justify-content-center">
+        <div v-if="project.orientation == 'left' && project !== undefined" class="row justify-content-center">
             <!-- для десктопа -->
             <div class="d-none d-md-block col-12 col-md-5 text-center textVertical">
                 <!-- название проекта -->
@@ -67,7 +67,7 @@
         </div>
         
         <!-- карточка с описанием справа -->
-        <div v-else-if="type=='right'" class="row justify-content-center">
+        <div v-else-if="project.orientation == 'right'" class="row justify-content-center">
             <!-- для десктопа -->
             <!-- скриншот проекта -->
             <div class="d-none d-md-block col-12 col-md-6 text-center textVertical">

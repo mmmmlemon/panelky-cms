@@ -97,11 +97,22 @@ class APIController extends Controller
         $homeProjects = Project::where('is_home', 1)->orderBy('order', 'desc')->get();
         $otherProjects = Project::where('is_home', 0)->orderBy('slug','asc')->get();
 
+        //добавление параметра orientation 
+        //для поочередного вывода "левых" и "правых" карточек на главной странице
+
+        for($i = 0; $i <= count($homeProjects)-1; $i++)
+        {
+            if($i % 2 != 0)
+            { $homeProjects[$i]->orientation = "right"; }
+            else
+            { $homeProjects[$i]->orientation = "left"; }
+        }
+        
         //если в БД нет ни одного проекта, то возвращаем false
         if(count($homeProjects) == 0)
         { return response()->json(['home' => false, 'other' => false], 200); }
         else
-        { return response()->json(['home' => $homeProjects, 'other' => $otherProjects]);  }
+        { return response()->json(['home' => $homeProjects, 'other' => $otherProjects], 200);  }
     }
 
     //getStockImages
