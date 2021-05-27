@@ -2459,6 +2459,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
+  created: function created() {
+    //послать запрос на удаление времменой папки, если страница перезагружается
+    window.addEventListener('beforeunload', this.removeFromTemp);
+  },
   mounted: function mounted() {
     var _this = this;
 
@@ -2470,11 +2474,10 @@ __webpack_require__.r(__webpack_exports__);
       _this.currentProject.project_image = response.data.image;
     });
   },
-  destroyed: function destroyed() {
-    //при "уничтожении" компонента, удалить временную папку в temp
-    var formData = new FormData();
-    formData.append('randomFolderName', this.randomFolderName);
-    axios.post('/admin/removeFolderFromTemp', formData);
+  destroyed: function destroyed() {//при "уничтожении" компонента, удалить временную папку в temp
+    // let formData = new FormData();
+    // formData.append('randomFolderName', this.randomFolderName);
+    // axios.post('/admin/removeFolderFromTemp', formData);
   },
   //данные
   data: function data() {
@@ -2547,6 +2550,14 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
+    //удалить временную папку
+    removeFromTemp: function removeFromTemp() {
+      //удаление временной папки из temp, если запрос прошел
+      var formData = new FormData();
+      formData.append('randomFolderName', this.randomFolderName);
+      axios.post('/admin/removeFolderFromTemp', formData).then(function (response) {//
+      });
+    },
     //добавить проект
     submit: function submit() {
       var _this3 = this;
@@ -2591,14 +2602,9 @@ __webpack_require__.r(__webpack_exports__);
           'Content-Type': 'multipart/form-data'
         }
       }).then(function (response) {
-        _this3.saved = true; //удаление временной папки из temp, если запрос прошел
+        _this3.saved = true; //редирект во вкладку "Управление проектами"
 
-        var formData = new FormData();
-        formData.append('randomFolderName', _this3.randomFolderName);
-        axios.post('/admin/removeFolderFromTemp', formData).then(function (response) {
-          //редирект во вкладку "Управление проектами"
-          window.location.href = "/admin/projects/all";
-        });
+        window.location.href = "/admin/projects/all";
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this3.errors = error.response.data.errors || {};

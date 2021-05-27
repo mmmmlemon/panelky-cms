@@ -73,6 +73,11 @@
 <script>
 export default {
     //хуки
+    created(){
+        //послать запрос на удаление времменой папки, если страница перезагружается
+        window.addEventListener('beforeunload', this.removeFromTemp);
+    },
+
     mounted(){
         //установить текущую вкладку в Projects.vue
         this.$parent.currentTab = 'addProject';
@@ -86,9 +91,9 @@ export default {
 
     destroyed(){
         //при "уничтожении" компонента, удалить временную папку в temp
-        let formData = new FormData();
-        formData.append('randomFolderName', this.randomFolderName);
-        axios.post('/admin/removeFolderFromTemp', formData);
+        // let formData = new FormData();
+        // formData.append('randomFolderName', this.randomFolderName);
+        // axios.post('/admin/removeFolderFromTemp', formData);
     },
 
     //данные
@@ -162,6 +167,16 @@ export default {
             });
         },
 
+        //удалить временную папку
+        removeFromTemp(){
+            //удаление временной папки из temp, если запрос прошел
+            let formData = new FormData();
+            formData.append('randomFolderName', this.randomFolderName);
+            axios.post('/admin/removeFolderFromTemp', formData).then(response => {
+                //
+            }); 
+        },
+
         //добавить проект
         submit(){
             this.saved = false;
@@ -189,13 +204,10 @@ export default {
             axios.post('/admin/addNewProject', formData, {
                 headers: {'Content-Type': 'multipart/form-data'} }).then(response => {
                     this.saved = true;
-                    //удаление временной папки из temp, если запрос прошел
-                    let formData = new FormData();
-                    formData.append('randomFolderName', this.randomFolderName);
-                    axios.post('/admin/removeFolderFromTemp', formData).then(response => {
-                        //редирект во вкладку "Управление проектами"
-                        window.location.href="/admin/projects/all";
-                    });     
+
+                    //редирект во вкладку "Управление проектами"
+                    window.location.href="/admin/projects/all";
+                  
                 }).catch(error => {
                     if(error.response.status === 422){
                         this.errors = error.response.data.errors || {};
