@@ -44848,7 +44848,7 @@ var render = function() {
       _vm._l(_vm.fullProjectList.home, function(project) {
         return _c("ProjectCard", {
           key: project.id,
-          attrs: { project: project }
+          attrs: { project: project, type: project.orientation }
         })
       }),
       _vm._v(" "),
@@ -45288,7 +45288,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.project.orientation == "left" && _vm.project !== undefined
+      _vm.type == "left" && _vm.project !== undefined
         ? _c("div", { staticClass: "row justify-content-center" }, [
             _c(
               "div",
@@ -45424,7 +45424,7 @@ var render = function() {
               ]
             )
           ])
-        : _vm.project.orientation == "right"
+        : _vm.type == "right"
         ? _c("div", { staticClass: "row justify-content-center" }, [
             _c(
               "div",
