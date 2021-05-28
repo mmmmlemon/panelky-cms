@@ -9,7 +9,9 @@ require('./bootstrap');
 window.Vue = require('vue').default;
 import Vue from 'vue';
 import router from './router';
+import draggable from 'vuedraggable';
 import store from './store';
+Vue.component('draggable', draggable);
 
 //иморты плагинов
 //isMobile
@@ -86,5 +88,5 @@ Vue.component('NavScroll', NavScroll);
 const app = new Vue({
     el: '#app',
     store,
-    router
+    router,
 });
