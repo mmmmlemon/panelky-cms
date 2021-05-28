@@ -3912,6 +3912,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   props: {
@@ -49086,7 +49121,11 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "d-none d-md-block col-12 col-md-5 text-center textVertical"
+                  "d-none d-md-block col-12 text-center textVertical",
+                class: {
+                  "col-md-12": _vm.project.project_image === null,
+                  "col-md-5": _vm.project.prokect_image !== null
+                }
               },
               [
                 _c(
@@ -49095,28 +49134,48 @@ var render = function() {
                   [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
                 ),
                 _vm._v(" "),
-                _c("img", {
-                  staticClass: "projectLogo",
-                  attrs: { src: _vm.project.project_icon, alt: "" }
-                }),
+                _vm.project.project_icon !== null
+                  ? _c("img", {
+                      staticClass: "projectLogo",
+                      attrs: { src: _vm.project.project_icon, alt: "" }
+                    })
+                  : _vm._e(),
                 _vm._v(" "),
                 _c("br"),
                 _vm._v(" "),
-                _c("p", { staticClass: "text-center textVertical font2rem" }, [
-                  _vm._v(_vm._s(_vm.project.project_subtitle))
-                ]),
+                _vm.project.project_subtitle !== null
+                  ? _c(
+                      "p",
+                      { staticClass: "text-center textVertical font2rem" },
+                      [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(_vm.project.project_subtitle) +
+                            "\n            "
+                        )
+                      ]
+                    )
+                  : _vm._e(),
                 _vm._v(" "),
                 _c("br"),
                 _vm._v(" "),
-                _c("p", { staticClass: "text-center font1-2rem" }, [
-                  _vm._v(_vm._s(_vm.project.project_desc))
-                ]),
+                _vm.project.project_desc !== null
+                  ? _c("p", { staticClass: "text-center font1-2rem" }, [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.project.project_desc) +
+                          "\n            "
+                      )
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
                 _c("hr"),
                 _vm._v(" "),
-                _c("h6", { staticClass: "text-center" }, [
-                  _c("b", [_vm._v(_vm._s(_vm.project.project_bottomText))])
-                ]),
+                _vm.project.project_bottomText !== null
+                  ? _c("h6", { staticClass: "text-center" }, [
+                      _c("b", [_vm._v(_vm._s(_vm.project.project_bottomText))])
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
                 _c("br"),
                 _vm._v(" "),
@@ -49149,19 +49208,21 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "d-none d-md-block col-12 col-md-6 text-center textVertical "
-              },
-              [
-                _c("img", {
-                  staticClass: "projectImage",
-                  attrs: { src: _vm.project.project_image, alt: "" }
-                })
-              ]
-            ),
+            _vm.project.project_image !== null
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "d-none d-md-block col-12 col-md-6 text-center textVertical"
+                  },
+                  [
+                    _c("img", {
+                      staticClass: "projectImage",
+                      attrs: { src: _vm.project.project_image, alt: "" }
+                    })
+                  ]
+                )
+              : _vm._e(),
             _vm._v(" "),
             _c(
               "div",
@@ -49218,81 +49279,111 @@ var render = function() {
           ])
         : _vm.type == "right"
         ? _c("div", { staticClass: "row justify-content-center" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "d-none d-md-block col-12 col-md-6 text-center textVertical"
-              },
-              [
-                _c("img", {
-                  staticClass: "projectImage",
-                  attrs: { src: _vm.project.project_image, alt: "" }
-                })
-              ]
-            ),
+            _vm.project.project_image !== null
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "d-none d-md-block col-12 col-md-6 text-center textVertical"
+                  },
+                  [
+                    _c("img", {
+                      staticClass: "projectImage",
+                      attrs: { src: _vm.project.project_image, alt: "" }
+                    })
+                  ]
+                )
+              : _vm._e(),
             _vm._v(" "),
             _c(
               "div",
               {
                 staticClass:
-                  "d-none d-md-block col-12 col-md-5 text-center textVertical"
+                  "d-none d-md-block col-12 text-center textVertical",
+                attrs: {
+                  "v-bind:class": {
+                    "col-md-12": _vm.project.project_image === null,
+                    "col-md-5": _vm.project.project_image !== null
+                  }
+                }
               },
               [
                 _c(
                   "h1",
-                  { staticClass: "text-center textVertical font3-2rem" },
+                  { staticClass: "text-center textVertical font3-8rem" },
                   [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
                 ),
                 _vm._v(" "),
-                _c("img", {
-                  staticClass: "projectLogo",
-                  attrs: { src: _vm.project.project_icon, alt: "" }
-                }),
+                _vm.project.project_icon !== null
+                  ? _c("img", {
+                      staticClass: "projectLogo",
+                      attrs: { src: _vm.project.project_icon, alt: "" }
+                    })
+                  : _vm._e(),
                 _vm._v(" "),
                 _c("br"),
                 _vm._v(" "),
-                _c("p", { staticClass: "text-center textVertical font2rem" }, [
-                  _vm._v(_vm._s(_vm.project.project_subtitle))
-                ]),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _c("p", { staticClass: "text-center font1-2rem" }, [
-                  _vm._v(_vm._s(_vm.project.project_desc))
-                ]),
-                _vm._v(" "),
-                _c("hr"),
-                _vm._v(" "),
-                _c("h6", { staticClass: "text-center" }, [
-                  _c("b", [_vm._v(_vm._s(_vm.project.project_bottomText))])
-                ]),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-lg btn-outline-light",
-                    attrs: { type: "button" }
-                  },
-                  [
-                    _c(
-                      "a",
-                      {
-                        attrs: {
-                          href: _vm.project.project_url,
-                          target: "_blank"
-                        }
-                      },
+                _vm.project.project_subtitle !== null
+                  ? _c(
+                      "p",
+                      { staticClass: "text-center textVertical font2rem" },
                       [
                         _vm._v(
-                          "\n                    View project\n                "
+                          "\n                " +
+                            _vm._s(_vm.project.project_subtitle) +
+                            "\n            "
                         )
                       ]
                     )
-                  ]
-                )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _vm.project.project_desc !== null
+                  ? _c("p", { staticClass: "text-center font1-2rem" }, [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.project.project_desc) +
+                          "\n            "
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _vm.project.project_bottomText !== null
+                  ? _c("h6", { staticClass: "text-center" }, [
+                      _c("b", [_vm._v(_vm._s(_vm.project.project_bottomText))])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _vm.project.project_url !== null
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-lg btn-outline-light",
+                        attrs: { type: "button" }
+                      },
+                      [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: _vm.project.project_url,
+                              target: "_blank"
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                    View project\n                "
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  : _vm._e()
               ]
             ),
             _vm._v(" "),

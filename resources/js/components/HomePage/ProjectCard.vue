@@ -7,39 +7,53 @@
             <Error errorMessage="Не удалось загрузить информацию о проекте"/>
         </div>
 
-        <!-- карточка с описанием слева -->
+        <!-- КАРТОЧКА, ОПИСАНИЕ СЛЕВА -->
         <div v-if="type=='left' && project !== undefined" class="row justify-content-center">
+
             <!-- для десктопа -->
-            <div class="d-none d-md-block col-12 col-md-5 text-center textVertical">
+            <div class="d-none d-md-block col-12 text-center textVertical" 
+                        v-bind:class="{'col-md-12': project.project_image === null, 
+                                        'col-md-5': project.prokect_image !== null}">
                 <!-- название проекта -->
                 <h1 class="text-center textVertical font3-8rem">
                     <b>{{project.project_title}}</b>
                 </h1>
                 <!-- лого -->
-                <img :src="project.project_icon" class="projectLogo" alt="">
+                <img v-if="project.project_icon !== null" 
+                    :src="project.project_icon" class="projectLogo" alt="">
                 <br>
                 <!-- краткое описание -->
-                <p class="text-center textVertical font2rem">{{project.project_subtitle}}</p>
+                <p v-if="project.project_subtitle !== null" 
+                    class="text-center textVertical font2rem">
+                    {{project.project_subtitle}}
+                </p>
                 <br>
                 <!-- подробное описание -->
-                <p class="text-center font1-2rem">{{project.project_desc}}</p>
+                <p v-if="project.project_desc !== null"
+                    class="text-center font1-2rem">
+                    {{project.project_desc}}
+                </p>
                 <hr>
                 <!-- футер -->
-                <h6 class="text-center"><b>{{project.project_bottomText}}</b></h6>
+                <h6 v-if="project.project_bottomText !== null"
+                    class="text-center">
+                    <b>{{project.project_bottomText}}</b>
+                </h6>
                 <br>
                 <!-- кнопка "Посетить" -->
-                <button type="button" class="btn btn-lg btn-outline-light fadeInAnim" v-if="project.project_url !== undefined && project.project_url !== ''">
+                <button v-if="project.project_url !== undefined && project.project_url !== ''" 
+                        type="button" class="btn btn-lg btn-outline-light fadeInAnim">
                     <a :href="project.project_url" target="_blank">
                         Перейти к проекту
                     </a>
                 </button>
             </div>
             <!-- скриншот проекта -->
-            <div class="d-none d-md-block col-12 col-md-6 text-center textVertical ">
+            <div class="d-none d-md-block col-12 col-md-6 text-center textVertical" v-if="project.project_image !== null">
                 <img :src="project.project_image" class="projectImage" alt="">
             </div>
 
-            <!-- для мобилок -->
+            <!-- TODO для мобилок -->
             <div class="d-block d-md-none col-12 text-center textVertical">
                 <!-- название проекта -->
                 <h1 class="text-center textVertical font3-8rem">
@@ -63,36 +77,57 @@
                     </a>
                 </button>
             </div>
-            
+
         </div>
         
-        <!-- карточка с описанием справа -->
+        <!-- КАРТОЧКА, ОПИСАНИЕ СПРАВА -->
         <div v-else-if="type=='right'" class="row justify-content-center">
             <!-- для десктопа -->
+
             <!-- скриншот проекта -->
-            <div class="d-none d-md-block col-12 col-md-6 text-center textVertical">
+            <div v-if="project.project_image !== null"
+                 class="d-none d-md-block col-12 col-md-6 text-center textVertical" >
                 <img :src="project.project_image" class="projectImage" alt="">
             </div>
-            <div class="d-none d-md-block col-12 col-md-5 text-center textVertical">
-                <h1 class="text-center textVertical font3-2rem">
+
+            <div :v-bind:class="{'col-md-12': project.project_image === null, 'col-md-5': project.project_image !== null}"
+                 class="d-none d-md-block col-12 text-center textVertical">
+                <!-- название проекта -->
+                <h1 class="text-center textVertical font3-8rem">
                     <b>{{project.project_title}}</b>
                 </h1>
-                <img :src="project.project_icon" class="projectLogo" alt="">
+                <!-- лого -->
+                <img v-if="project.project_icon !== null" 
+                    :src="project.project_icon" class="projectLogo" alt="">
                 <br>
-                <p class="text-center textVertical font2rem">{{project.project_subtitle}}</p>
+                <!-- краткое описание -->
+                <p v-if="project.project_subtitle !== null"
+                    class="text-center textVertical font2rem">
+                    {{project.project_subtitle}}
+                </p>
                 <br>
-                <p class="text-center font1-2rem">{{project.project_desc}}</p>
+                <!-- подробное описание -->
+                <p v-if="project.project_desc !== null"
+                    class="text-center font1-2rem">
+                    {{project.project_desc}}
+                </p>
                 <hr>
-                <h6 class="text-center"><b>{{project.project_bottomText}}</b></h6>
+                <!-- футер -->
+                <h6 v-if="project.project_bottomText !== null"
+                    class="text-center">
+                    <b>{{project.project_bottomText}}</b>
+                </h6>
                 <br>
-                <button type="button" class="btn btn-lg btn-outline-light">
+                <!-- кнопка "Посетить" -->
+                <button v-if="project.project_url !== null"
+                        type="button" class="btn btn-lg btn-outline-light">
                     <a :href="project.project_url" target="_blank">
                         View project
                     </a>
                 </button>
             </div>
 
-            <!-- для мобилок -->
+            <!-- TODO для мобилок -->
             <div class="d-block d-md-none col-12 text-center textVertical">
                 <!-- название проекта -->
                 <h1 class="text-center textVertical font3rem">
