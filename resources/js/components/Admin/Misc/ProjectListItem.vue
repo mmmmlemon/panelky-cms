@@ -1,9 +1,8 @@
 //ProjectListItem
 //проект в списке проектов
 <template>
-    <div class="col-11 m-1 fadeInAnim" v-on:click="getProject(slug)"
-                                        v-if="currentProjectSlug !== undefined">
-
+    <div class="col-11 m-1 fadeInAnim" v-on:mousedown="getProject(slug)"
+                                       v-if="currentProjectSlug !== undefined">
         <div class="col-12 transparentCard m-1 p-0"  v-bind:class="{ active: slug === currentProjectSlug }" >
             <div class="card-body p-3">
                 <!-- название -->
@@ -13,8 +12,8 @@
                 <hr>
                 <!-- кнопка перемещения в списке -->
                 <div class="row ">
-                    <div class="col-12" v-if="$parent.projectsList.length > 1">
-                        <button class="btn btn-light float-right backgroundAnimation" type="button">
+                    <div class="col-12">
+                        <button class="btn btn-light float-right backgroundAnimation handle" type="button">
                                 <i class="bi bi-arrows-move"></i>
                         </button> 
                     </div>

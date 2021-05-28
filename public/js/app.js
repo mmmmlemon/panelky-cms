@@ -1996,12 +1996,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
-  props: {
+  computed: {
+    //список проектов
     projectsList: {
-      type: Array,
-      "default": undefined
+      get: function get() {
+        return this.$store.state.AdminStates.projectsList;
+      },
+      set: function set(value) {
+        var _this = this;
+
+        var formData = new FormData();
+        formData.append('newOrder', JSON.stringify(value));
+        this.$store.commit('setState', {
+          state: 'projectsList',
+          value: value
+        });
+        axios.post('/admin/setNewOrderForHomeProjects', formData).then(function (response) {//
+        })["catch"](function (error) {
+          _this.$store.dispatch('setErrors', error.response.data.message);
+        });
+      }
+    },
+    dragOptions: function dragOptions() {
+      return {
+        ghostClass: "dragGhost"
+      };
     }
   }
 });
@@ -2240,7 +2264,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
 //
 //
 //
@@ -2544,8 +2567,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       })["catch"](function (error) {
         if (error.response.status === 422 || error.response.status === 500) {
-          var errors = error.response.data;
-
           _this2.$store.dispatch('setErrors', error.response.data.message);
         }
       });
@@ -46413,17 +46434,46 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "row" },
-    _vm._l(_vm.projectsList, function(project) {
-      return _c("ProjectListItem", {
-        key: project.slug,
-        attrs: { slug: project.slug, title: project.title }
-      })
-    }),
-    1
-  )
+  return _vm.projectsList !== -1
+    ? _c(
+        "div",
+        { staticClass: "row" },
+        [
+          _c(
+            "draggable",
+            _vm._b(
+              {
+                attrs: { handle: ".handle" },
+                model: {
+                  value: _vm.projectsList,
+                  callback: function($$v) {
+                    _vm.projectsList = $$v
+                  },
+                  expression: "projectsList"
+                }
+              },
+              "draggable",
+              _vm.dragOptions,
+              false
+            ),
+            _vm._l(_vm.projectsList, function(element) {
+              return _c(
+                "div",
+                { key: element.slug },
+                [
+                  _c("ProjectListItem", {
+                    attrs: { slug: element.slug, title: element.title }
+                  })
+                ],
+                1
+              )
+            }),
+            0
+          )
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -46709,7 +46759,7 @@ var render = function() {
         {
           staticClass: "col-11 m-1 fadeInAnim",
           on: {
-            click: function($event) {
+            mousedown: function($event) {
               return _vm.getProject(_vm.slug)
             }
           }
@@ -46731,11 +46781,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("hr"),
                 _vm._v(" "),
-                _c("div", { staticClass: "row " }, [
-                  _vm.$parent.projectsList.length > 1
-                    ? _c("div", { staticClass: "col-12" }, [_vm._m(0)])
-                    : _vm._e()
-                ])
+                _vm._m(0)
               ])
             ]
           )
@@ -46748,14 +46794,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-light float-right backgroundAnimation",
-        attrs: { type: "button" }
-      },
-      [_c("i", { staticClass: "bi bi-arrows-move" })]
-    )
+    return _c("div", { staticClass: "row " }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-light float-right backgroundAnimation handle",
+            attrs: { type: "button" }
+          },
+          [_c("i", { staticClass: "bi bi-arrows-move" })]
+        )
+      ])
+    ])
   }
 ]
 render._withStripped = true

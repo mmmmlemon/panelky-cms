@@ -35,6 +35,7 @@ Route::post('/admin/addNewProject', [AdminController::class, 'addNewProject']);
 Route::post('/admin/saveImageToTemp', [AdminController::class, 'saveImageToTemp']);
 Route::post('/admin/removeFolderFromTemp', [AdminController::class, 'removeFolderFromTemp']);
 Route::post('/admin/deleteProject', [AdminController::class, 'deleteProject']);
+Route::post('/admin/setNewOrderForHomeProjects', [AdminController::class, 'setNewOrderForHomeProjects']);
 
 Route::get('/admin', [AdminController::class, 'index']);
 Route::get('/admin/{any}', [AdminController::class, 'index']);

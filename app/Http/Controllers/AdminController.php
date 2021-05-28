@@ -266,4 +266,24 @@ class AdminController extends Controller
         Project::find($id)->delete();
         return response()->json(true, 200);
     }
+
+    //setNewOrderForHomeProjects
+    //установить новый порядок для Главных проектов
+    public function setNewOrderForHomeProjects(Request $request){
+        
+        $newOrder = json_decode($request->newOrder);
+
+        $count = count($newOrder) - 1;
+
+        foreach($newOrder as $item)
+        {
+            $project = Project::where('slug', $item->slug)->get()[0];
+            $project->order = $count;
+            $project->save();
+            $count--;
+        }
+
+        return response()->json($newOrder, 200);
+    }
+
 }

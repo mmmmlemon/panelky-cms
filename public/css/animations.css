@@ -79,6 +79,21 @@
     }
 }
 
+@keyframes blinkshort{
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1
+    }
+
+}
+
 .blinkAnim {
     animation: blink 5s ease-in-out;
 }
@@ -154,4 +169,9 @@
     position: relative;
 }
 
+.dragGhost {
+  opacity: 1;
+  transition: all 0.5s;
+  animation: blinkshort 2s infinite;
+}
 /* //////////////////// */
