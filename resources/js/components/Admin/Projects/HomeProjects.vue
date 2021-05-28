@@ -42,13 +42,13 @@ export default {
         //получить список проектов
         this.$store.dispatch('getProjectsList');
 
-        // var currentProject = this.$store.getters.currentProject;
+        var currentProject = this.$store.getters.currentProject;
 
-        // if(currentProject === -1)
-        // { 
+        if(currentProject === -1)
+        { 
             //установить первый проект в списке выбранным по умолчанию
             this.$store.dispatch('setFirstProjectSlug');
-        // }
+        }
     },
 
     computed: {

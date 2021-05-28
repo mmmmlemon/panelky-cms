@@ -3078,12 +3078,13 @@ __webpack_require__.r(__webpack_exports__);
     //текущая вкладка
     this.$store.dispatch('setCurrentTab', 'projects'); //получить список проектов
 
-    this.$store.dispatch('getProjectsList'); // var currentProject = this.$store.getters.currentProject;
-    // if(currentProject === -1)
-    // { 
-    //установить первый проект в списке выбранным по умолчанию
+    this.$store.dispatch('getProjectsList');
+    var currentProject = this.$store.getters.currentProject;
 
-    this.$store.dispatch('setFirstProjectSlug'); // }
+    if (currentProject === -1) {
+      //установить первый проект в списке выбранным по умолчанию
+      this.$store.dispatch('setFirstProjectSlug');
+    }
   },
   computed: {
     //список проектов
