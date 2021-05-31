@@ -68,6 +68,19 @@ Vue.component('NavButton', NavButton);
 import NavScroll from './components/Navigation/NavScroll';
 Vue.component('NavScroll', NavScroll);
 
+
+Vue.directive('scroll', {
+    inserted: function (el, binding) {
+      let f = function (evt) {
+        if (binding.value(evt, el)) {
+          window.removeEventListener('scroll', f)
+        }
+      }
+      window.addEventListener('scroll', f)
+    }
+  })
+
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

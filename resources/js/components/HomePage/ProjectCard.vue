@@ -1,7 +1,7 @@
 //ProjectCard
 //Карточка для проектов
 <template>
-    <div class="row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1 projectCard" :id="project.slug">
+    <div class="row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1 projectCard" style="opacity: 0;" v-scroll="handleScroll">
 
         <div class="col-10" v-if="project === false">
             <Error errorMessage="Не удалось загрузить информацию о проекте"/>
@@ -177,5 +177,19 @@ export default {
             }
         }},
     },
+
+    //методы
+    methods: {
+        handleScroll: function (evt, el) {
+            if (window.pageYOffset > (el.getBoundingClientRect().top + 200)) {
+                console.log(el.id)
+                el.setAttribute(
+                'style',
+                'opacity: 1; transform: translate3d(0, -70px, 0); transition: all 1s ease-in-out;'
+                )
+            }
+            return window.pageYOffset > (el.getBoundingClientRect().top + 300)
+        },
+    }
 }
 </script>

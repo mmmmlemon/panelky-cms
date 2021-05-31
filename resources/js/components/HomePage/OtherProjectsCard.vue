@@ -2,7 +2,7 @@
 //список других проектов
 <template>
 
-    <div class="row width90pc bigCard d-flex justify-content-center borderUnderline" id="other">
+    <div class="row width90pc bigCard d-flex justify-content-center borderUnderline" id="other" style="opacity: 0;" v-scroll="handleScroll">
         <div class="d-block d-md-block col-12 textVertical fadeInAnim m-5">
             <h3 class="text-center mb-5">Другие проекты</h3>
             <div class="row justify-content-center">
@@ -31,8 +31,23 @@
 </template>
 <script>
 export default {
+    //данные
     props: {
         projects: { type: Array, default: undefined },
+    },
+
+    //методы
+    methods: {
+        handleScroll: function (evt, el) {
+            if (window.pageYOffset > (el.getBoundingClientRect().top + 200)) {
+                console.log(el.id)
+                el.setAttribute(
+                'style',
+                'opacity: 1; transform: translate3d(0, -70px, 0); transition: all 1s ease-in-out;'
+                )
+            }
+            return window.pageYOffset > (el.getBoundingClientRect().top + 300)
+        },
     }
 }
 </script>

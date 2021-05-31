@@ -3766,10 +3766,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  //данные
   props: {
     projects: {
       type: Array,
       "default": undefined
+    }
+  },
+  //методы
+  methods: {
+    handleScroll: function handleScroll(evt, el) {
+      if (window.pageYOffset > el.getBoundingClientRect().top + 200) {
+        console.log(el.id);
+        el.setAttribute('style', 'opacity: 1; transform: translate3d(0, -70px, 0); transition: all 1s ease-in-out;');
+      }
+
+      return window.pageYOffset > el.getBoundingClientRect().top + 300;
     }
   }
 });
@@ -3968,6 +3980,17 @@ __webpack_require__.r(__webpack_exports__);
           'project_url': undefined
         };
       }
+    }
+  },
+  //методы
+  methods: {
+    handleScroll: function handleScroll(evt, el) {
+      if (window.pageYOffset > el.getBoundingClientRect().top + 200) {
+        console.log(el.id);
+        el.setAttribute('style', 'opacity: 1; transform: translate3d(0, -70px, 0); transition: all 1s ease-in-out;');
+      }
+
+      return window.pageYOffset > el.getBoundingClientRect().top + 300;
     }
   }
 });
@@ -4315,6 +4338,17 @@ vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Nav', _components_Navigation
 vue__WEBPACK_IMPORTED_MODULE_3__.default.component('NavButton', _components_Navigation_NavButton__WEBPACK_IMPORTED_MODULE_17__.default);
 
 vue__WEBPACK_IMPORTED_MODULE_3__.default.component('NavScroll', _components_Navigation_NavScroll__WEBPACK_IMPORTED_MODULE_18__.default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.directive('scroll', {
+  inserted: function inserted(el, binding) {
+    var f = function f(evt) {
+      if (binding.value(evt, el)) {
+        window.removeEventListener('scroll', f);
+      }
+    };
+
+    window.addEventListener('scroll', f);
+  }
+});
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -48989,8 +49023,17 @@ var render = function() {
   return _c(
     "div",
     {
+      directives: [
+        {
+          name: "scroll",
+          rawName: "v-scroll",
+          value: _vm.handleScroll,
+          expression: "handleScroll"
+        }
+      ],
       staticClass:
         "row width90pc bigCard d-flex justify-content-center borderUnderline",
+      staticStyle: { opacity: "0" },
       attrs: { id: "other" }
     },
     [
@@ -49097,9 +49140,17 @@ var render = function() {
   return _c(
     "div",
     {
+      directives: [
+        {
+          name: "scroll",
+          rawName: "v-scroll",
+          value: _vm.handleScroll,
+          expression: "handleScroll"
+        }
+      ],
       staticClass:
         "row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1 projectCard",
-      attrs: { id: _vm.project.slug }
+      staticStyle: { opacity: "0" }
     },
     [
       _vm.project === false
