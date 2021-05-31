@@ -96,6 +96,7 @@ class AdminController extends Controller
         $fileIcon = null;
         $fileImage = null;
         
+        $response = [];
 
         $project = Project::find($request->id);
         if($request->hasFile('projectIcon'))
@@ -110,6 +111,8 @@ class AdminController extends Controller
             Storage::disk('public')->delete(str_replace('storage/','',$project->project_icon));
             $project->project_icon = "storage/projectsImages/".$filename;
             $project->save();
+
+            $response['icon'] = asset($project->project_icon);
         }
 
         if($request->hasFile('projectImage'))
@@ -123,12 +126,14 @@ class AdminController extends Controller
             Storage::disk('public')->delete(str_replace('storage/', '', $project->project_image));
             $project->project_image = "storage/projectsImages/".$filename;
             $project->save();
+
+            $response['image'] = asset($project->project_image);
         }
 
         if($fileIcon == null && $fileImage == null)
         { return response()->json(null, 422); }
 
-        $response = ['icon' => asset($project->project_icon), 'image' => asset($project->project_image)];
+        // $response = ['icon' => asset($project->project_icon), 'image' => asset($project->project_image)];
 
         return response()->json($response, 200);
     }   

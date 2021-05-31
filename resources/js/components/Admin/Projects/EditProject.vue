@@ -191,7 +191,9 @@ export default {
                     this.$refs.icon.value = null;
                     this.$refs.image.value = null;
 
+                    if(response.data['icon'] !== undefined)
                     this.currentProject.project_icon = response.data['icon'];
+                    if(response.data['image'] !== undefined)
                     this.currentProject.project_image = response.data['image'];
                 }).catch(error => {
                     if(error.response.status === 422){ 

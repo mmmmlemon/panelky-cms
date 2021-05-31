@@ -2987,8 +2987,8 @@ __webpack_require__.r(__webpack_exports__);
         _this2.projectImage = undefined;
         _this2.$refs.icon.value = null;
         _this2.$refs.image.value = null;
-        _this2.currentProject.project_icon = response.data['icon'];
-        _this2.currentProject.project_image = response.data['image'];
+        if (response.data['icon'] !== undefined) _this2.currentProject.project_icon = response.data['icon'];
+        if (response.data['image'] !== undefined) _this2.currentProject.project_image = response.data['image'];
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this2.errors = error.response.data.errors || {};
@@ -3787,6 +3787,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -46479,6 +46480,7 @@ var render = function() {
             "draggable",
             _vm._b(
               {
+                staticClass: "col-12",
                 attrs: { handle: ".handle" },
                 model: {
                   value: _vm.projectsList,
@@ -46495,7 +46497,7 @@ var render = function() {
             _vm._l(_vm.projectsList, function(element) {
               return _c(
                 "div",
-                { key: element.slug },
+                { key: element.slug, staticClass: "col-12" },
                 [
                   _c("ProjectListItem", {
                     attrs: { slug: element.slug, title: element.title }
@@ -49096,7 +49098,7 @@ var render = function() {
     "div",
     {
       staticClass:
-        "row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1",
+        "row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1 projectCard",
       attrs: { id: _vm.project.slug }
     },
     [
@@ -49184,7 +49186,7 @@ var render = function() {
                   ? _c(
                       "button",
                       {
-                        staticClass: "btn btn-lg btn-outline-light fadeInAnim",
+                        staticClass: "btn btn-lg btn-outline-light",
                         attrs: { type: "button" }
                       },
                       [
@@ -49300,11 +49302,9 @@ var render = function() {
               {
                 staticClass:
                   "d-none d-md-block col-12 text-center textVertical",
-                attrs: {
-                  "v-bind:class": {
-                    "col-md-12": _vm.project.project_image === null,
-                    "col-md-5": _vm.project.project_image !== null
-                  }
+                class: {
+                  "col-md-12": _vm.project.project_image === null,
+                  "col-md-5": _vm.project.prokect_image !== null
                 }
               },
               [
@@ -49377,7 +49377,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                    View project\n                "
+                              "\n                    Перейти к проекту\n                "
                             )
                           ]
                         )

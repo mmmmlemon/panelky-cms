@@ -2,8 +2,8 @@
 //список проектов
 <template>
     <div class="row" v-if="projectsList !== -1">
-        <draggable v-model="projectsList" handle=".handle" v-bind="dragOptions">
-                <div v-for="element in projectsList" :key="element.slug">
+        <draggable v-model="projectsList" handle=".handle" v-bind="dragOptions" class="col-12">
+                <div class="col-12" v-for="element in projectsList" :key="element.slug">
                     <ProjectListItem :slug="element.slug"
                         :title="element.title"/>
                 </div>

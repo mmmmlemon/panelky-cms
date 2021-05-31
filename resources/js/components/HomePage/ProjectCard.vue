@@ -1,7 +1,7 @@
 //ProjectCard
 //Карточка для проектов
 <template>
-    <div class="row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1" :id="project.slug">
+    <div class="row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1 projectCard" :id="project.slug">
 
         <div class="col-10" v-if="project === false">
             <Error errorMessage="Не удалось загрузить информацию о проекте"/>
@@ -42,7 +42,7 @@
                 <br>
                 <!-- кнопка "Посетить" -->
                 <button v-if="project.project_url !== undefined && project.project_url !== ''" 
-                        type="button" class="btn btn-lg btn-outline-light fadeInAnim">
+                        type="button" class="btn btn-lg btn-outline-light">
                     <a :href="project.project_url" target="_blank">
                         Перейти к проекту
                     </a>
@@ -90,7 +90,8 @@
                 <img :src="project.project_image" class="projectImage" alt="">
             </div>
 
-            <div :v-bind:class="{'col-md-12': project.project_image === null, 'col-md-5': project.project_image !== null}"
+            <div v-bind:class="{'col-md-12': project.project_image === null, 
+                                'col-md-5': project.prokect_image !== null}"
                  class="d-none d-md-block col-12 text-center textVertical">
                 <!-- название проекта -->
                 <h1 class="text-center textVertical font3-8rem">
@@ -122,7 +123,7 @@
                 <button v-if="project.project_url !== null"
                         type="button" class="btn btn-lg btn-outline-light">
                     <a :href="project.project_url" target="_blank">
-                        View project
+                        Перейти к проекту
                     </a>
                 </button>
             </div>
