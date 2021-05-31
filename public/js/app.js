@@ -2191,6 +2191,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   data: function data() {
@@ -3772,17 +3773,6 @@ __webpack_require__.r(__webpack_exports__);
       type: Array,
       "default": undefined
     }
-  },
-  //методы
-  methods: {
-    handleScroll: function handleScroll(evt, el) {
-      if (window.pageYOffset > el.getBoundingClientRect().top + 200) {
-        console.log(el.id);
-        el.setAttribute('style', 'opacity: 1; transform: translate3d(0, -70px, 0); transition: all 1s ease-in-out;');
-      }
-
-      return window.pageYOffset > el.getBoundingClientRect().top + 300;
-    }
   }
 });
 
@@ -3960,12 +3950,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mounted: function mounted() {
+    this.setVisible = this.isVisible;
+  },
+  data: function data() {
+    return {
+      visible: false
+    };
+  },
   //данные
   props: {
     type: {
       type: String,
       "default": 'left'
+    },
+    isVisible: {
+      type: Boolean,
+      "default": true
     },
     project: {
       type: Object,
@@ -3982,15 +3988,24 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
+  computed: {
+    setVisible: {
+      get: function get() {
+        this.visible = false;
+      },
+      set: function set(value) {
+        this.visible = value;
+      }
+    }
+  },
   //методы
   methods: {
     handleScroll: function handleScroll(evt, el) {
-      if (window.pageYOffset > el.getBoundingClientRect().top + 200) {
-        console.log(el.id);
-        el.setAttribute('style', 'opacity: 1; transform: translate3d(0, -70px, 0); transition: all 1s ease-in-out;');
+      if (el.getBoundingClientRect().top < 300) {
+        this.setVisible = true;
       }
 
-      return window.pageYOffset > el.getBoundingClientRect().top + 300;
+      return el.getBoundingClientRect().top < 300;
     }
   }
 });
@@ -46733,7 +46748,9 @@ var render = function() {
                 "div",
                 { staticClass: "row justify-content-center zIndex3" },
                 [
-                  _c("ProjectCard", { attrs: { project: _vm.currentProject } }),
+                  _c("ProjectCard", {
+                    attrs: { project: _vm.currentProject, isVisible: true }
+                  }),
                   _vm._v(" "),
                   _c(
                     "button",
@@ -46759,17 +46776,21 @@ var render = function() {
             [
               _c("div", { staticClass: "fullscreenButtons" }, [
                 _c("ul", { staticClass: "nav nav-fill" }, [
-                  _c("li", { staticClass: "nav-item" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-light btn-lg fullscreenButton",
-                        attrs: { title: "Изменить ориентацию" },
-                        on: { click: _vm.changeOrientation }
-                      },
-                      [_c("i", { staticClass: "bi bi-arrow-left-right" })]
-                    )
-                  ])
+                  _vm.currentProject.project_image !== null &&
+                  _vm.currentProject.project_image !== undefined
+                    ? _c("li", { staticClass: "nav-item" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-light btn-lg fullscreenButton",
+                            attrs: { title: "Изменить ориентацию" },
+                            on: { click: _vm.changeOrientation }
+                          },
+                          [_c("i", { staticClass: "bi bi-arrow-left-right" })]
+                        )
+                      ])
+                    : _vm._e()
                 ])
               ]),
               _vm._v(" "),
@@ -46790,7 +46811,8 @@ var render = function() {
                   _c("ProjectCard", {
                     attrs: {
                       project: _vm.currentProject,
-                      type: _vm.orientation
+                      type: _vm.orientation,
+                      isVisible: true
                     }
                   })
                 ],
@@ -48711,7 +48733,11 @@ var render = function() {
       _vm._l(_vm.fullProjectList.home, function(project) {
         return _c("ProjectCard", {
           key: project.id,
-          attrs: { project: project, type: project.orientation }
+          attrs: {
+            project: project,
+            type: project.orientation,
+            isVisible: false
+          }
         })
       }),
       _vm._v(" "),
@@ -49023,24 +49049,16 @@ var render = function() {
   return _c(
     "div",
     {
-      directives: [
-        {
-          name: "scroll",
-          rawName: "v-scroll",
-          value: _vm.handleScroll,
-          expression: "handleScroll"
-        }
-      ],
       staticClass:
         "row width90pc bigCard d-flex justify-content-center borderUnderline",
-      staticStyle: { opacity: "0" },
       attrs: { id: "other" }
     },
     [
       _c(
         "div",
         {
-          staticClass: "d-block d-md-block col-12 textVertical fadeInAnim m-5"
+          staticClass:
+            "d-block d-md-block col-12 textVertical fadeInAnim m-5 goUpCardAnim"
         },
         [
           _c("h3", { staticClass: "text-center mb-5" }, [
@@ -49150,7 +49168,8 @@ var render = function() {
       ],
       staticClass:
         "row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1 projectCard",
-      staticStyle: { opacity: "0" }
+      class: { zeroOpacity: _vm.visible === false },
+      attrs: { id: _vm.project.slug }
     },
     [
       _vm.project === false
@@ -49170,71 +49189,149 @@ var render = function() {
       _vm._v(" "),
       _vm.type == "left" && _vm.project !== undefined
         ? _c("div", { staticClass: "row justify-content-center" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "d-none d-md-block col-12 text-center textVertical",
-                class: {
-                  "col-md-12": _vm.project.project_image === null,
-                  "col-md-5": _vm.project.prokect_image !== null
-                }
-              },
-              [
-                _c(
-                  "h1",
-                  { staticClass: "text-center textVertical font3-8rem" },
-                  [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
-                ),
-                _vm._v(" "),
-                _vm.project.project_icon !== null
-                  ? _c("img", {
+            _vm.visible === true
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "d-none d-md-block col-12 text-center textVertical goUpCardAnim",
+                    class: {
+                      "col-md-12": _vm.project.project_image === null,
+                      "col-md-5": _vm.project.prokect_image !== null
+                    }
+                  },
+                  [
+                    _c(
+                      "h1",
+                      { staticClass: "text-center textVertical font3-8rem" },
+                      [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
+                    ),
+                    _vm._v(" "),
+                    _vm.project.project_icon !== null
+                      ? _c("img", {
+                          staticClass: "projectLogo",
+                          attrs: { src: _vm.project.project_icon, alt: "" }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _vm.project.project_subtitle !== null
+                      ? _c(
+                          "p",
+                          { staticClass: "text-center textVertical font2rem" },
+                          [
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(_vm.project.project_subtitle) +
+                                "\n            "
+                            )
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _vm.project.project_desc !== null
+                      ? _c("p", { staticClass: "text-center font1-2rem" }, [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(_vm.project.project_desc) +
+                              "\n            "
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _vm.project.project_bottomText !== null
+                      ? _c("h6", { staticClass: "text-center" }, [
+                          _c("b", [
+                            _vm._v(_vm._s(_vm.project.project_bottomText))
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _vm.project.project_url !== undefined &&
+                    _vm.project.project_url !== ""
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-lg btn-outline-light",
+                            attrs: { type: "button" }
+                          },
+                          [
+                            _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href: _vm.project.project_url,
+                                  target: "_blank"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                    Перейти к проекту\n                "
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      : _vm._e()
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.project.project_image !== null && _vm.visible === true
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "d-none d-md-block col-12 col-md-6 text-center textVertical goLeftCardAnim"
+                  },
+                  [
+                    _c("img", {
+                      staticClass: "projectImage",
+                      attrs: { src: _vm.project.project_image, alt: "" }
+                    })
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.visible === true
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "d-block d-md-none col-12 text-center textVertical goUpCardAnim"
+                  },
+                  [
+                    _c(
+                      "h1",
+                      { staticClass: "text-center textVertical font3-8rem" },
+                      [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
+                    ),
+                    _vm._v(" "),
+                    _c("img", {
                       staticClass: "projectLogo",
                       attrs: { src: _vm.project.project_icon, alt: "" }
-                    })
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _vm.project.project_subtitle !== null
-                  ? _c(
+                    }),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c(
                       "p",
                       { staticClass: "text-center textVertical font2rem" },
-                      [
-                        _vm._v(
-                          "\n                " +
-                            _vm._s(_vm.project.project_subtitle) +
-                            "\n            "
-                        )
-                      ]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _vm.project.project_desc !== null
-                  ? _c("p", { staticClass: "text-center font1-2rem" }, [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(_vm.project.project_desc) +
-                          "\n            "
-                      )
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("hr"),
-                _vm._v(" "),
-                _vm.project.project_bottomText !== null
-                  ? _c("h6", { staticClass: "text-center" }, [
-                      _c("b", [_vm._v(_vm._s(_vm.project.project_bottomText))])
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _vm.project.project_url !== undefined &&
-                _vm.project.project_url !== ""
-                  ? _c(
+                      [_vm._v(_vm._s(_vm.project.project_subtitle))]
+                    ),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c(
                       "button",
                       {
                         staticClass: "btn btn-lg btn-outline-light",
@@ -49251,93 +49348,24 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                    Перейти к проекту\n                "
+                              "\n                    View project\n                "
                             )
                           ]
                         )
                       ]
                     )
-                  : _vm._e()
-              ]
-            ),
-            _vm._v(" "),
-            _vm.project.project_image !== null
-              ? _c(
-                  "div",
-                  {
-                    staticClass:
-                      "d-none d-md-block col-12 col-md-6 text-center textVertical"
-                  },
-                  [
-                    _c("img", {
-                      staticClass: "projectImage",
-                      attrs: { src: _vm.project.project_image, alt: "" }
-                    })
                   ]
                 )
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "d-block d-md-none col-12 text-center textVertical"
-              },
-              [
-                _c(
-                  "h1",
-                  { staticClass: "text-center textVertical font3-8rem" },
-                  [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
-                ),
-                _vm._v(" "),
-                _c("img", {
-                  staticClass: "projectLogo",
-                  attrs: { src: _vm.project.project_icon, alt: "" }
-                }),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _c("p", { staticClass: "text-center textVertical font2rem" }, [
-                  _vm._v(_vm._s(_vm.project.project_subtitle))
-                ]),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _vm._m(0),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-lg btn-outline-light",
-                    attrs: { type: "button" }
-                  },
-                  [
-                    _c(
-                      "a",
-                      {
-                        attrs: {
-                          href: _vm.project.project_url,
-                          target: "_blank"
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                    View project\n                "
-                        )
-                      ]
-                    )
-                  ]
-                )
-              ]
-            )
+              : _vm._e()
           ])
-        : _vm.type == "right"
+        : _vm.type == "right" && _vm.project !== undefined
         ? _c("div", { staticClass: "row justify-content-center" }, [
-            _vm.project.project_image !== null
+            _vm.project.project_image !== null && _vm.visible === true
               ? _c(
                   "div",
                   {
                     staticClass:
-                      "d-none d-md-block col-12 col-md-6 text-center textVertical"
+                      "d-none d-md-block col-12 col-md-6 text-center textVertical goRightCardAnim"
                   },
                   [
                     _c("img", {
@@ -49348,70 +49376,132 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "d-none d-md-block col-12 text-center textVertical",
-                class: {
-                  "col-md-12": _vm.project.project_image === null,
-                  "col-md-5": _vm.project.prokect_image !== null
-                }
-              },
-              [
-                _c(
-                  "h1",
-                  { staticClass: "text-center textVertical font3-8rem" },
-                  [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
-                ),
-                _vm._v(" "),
-                _vm.project.project_icon !== null
-                  ? _c("img", {
+            _vm.visible === true
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "d-none d-md-block col-12 text-center textVertical goUpCardAnim",
+                    class: {
+                      "col-md-12": _vm.project.project_image === null,
+                      "col-md-5": _vm.project.prokect_image !== null
+                    }
+                  },
+                  [
+                    _c(
+                      "h1",
+                      { staticClass: "text-center textVertical font3-8rem" },
+                      [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
+                    ),
+                    _vm._v(" "),
+                    _vm.project.project_icon !== null
+                      ? _c("img", {
+                          staticClass: "projectLogo",
+                          attrs: { src: _vm.project.project_icon, alt: "" }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _vm.project.project_subtitle !== null
+                      ? _c(
+                          "p",
+                          { staticClass: "text-center textVertical font2rem" },
+                          [
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(_vm.project.project_subtitle) +
+                                "\n            "
+                            )
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _vm.project.project_desc !== null
+                      ? _c("p", { staticClass: "text-center font1-2rem" }, [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(_vm.project.project_desc) +
+                              "\n            "
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _vm.project.project_bottomText !== null
+                      ? _c("h6", { staticClass: "text-center" }, [
+                          _c("b", [
+                            _vm._v(_vm._s(_vm.project.project_bottomText))
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _vm.project.project_url !== null
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-lg btn-outline-light",
+                            attrs: { type: "button" }
+                          },
+                          [
+                            _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href: _vm.project.project_url,
+                                  target: "_blank"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                    Перейти к проекту\n                "
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      : _vm._e()
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.visible === true
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "d-block d-md-none col-12 text-center textVertical goUpCardAnim"
+                  },
+                  [
+                    _c(
+                      "h1",
+                      { staticClass: "text-center textVertical font3rem" },
+                      [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
+                    ),
+                    _vm._v(" "),
+                    _c("img", {
                       staticClass: "projectLogo",
                       attrs: { src: _vm.project.project_icon, alt: "" }
-                    })
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _vm.project.project_subtitle !== null
-                  ? _c(
+                    }),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c(
                       "p",
                       { staticClass: "text-center textVertical font2rem" },
-                      [
-                        _vm._v(
-                          "\n                " +
-                            _vm._s(_vm.project.project_subtitle) +
-                            "\n            "
-                        )
-                      ]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _vm.project.project_desc !== null
-                  ? _c("p", { staticClass: "text-center font1-2rem" }, [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(_vm.project.project_desc) +
-                          "\n            "
-                      )
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("hr"),
-                _vm._v(" "),
-                _vm.project.project_bottomText !== null
-                  ? _c("h6", { staticClass: "text-center" }, [
-                      _c("b", [_vm._v(_vm._s(_vm.project.project_bottomText))])
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _vm.project.project_url !== null
-                  ? _c(
+                      [_vm._v(_vm._s(_vm.project.project_subtitle))]
+                    ),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c(
                       "button",
                       {
                         staticClass: "btn btn-lg btn-outline-light",
@@ -49428,66 +49518,15 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                    Перейти к проекту\n                "
+                              "\n                    View project\n                "
                             )
                           ]
                         )
                       ]
                     )
-                  : _vm._e()
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "d-block d-md-none col-12 text-center textVertical"
-              },
-              [
-                _c("h1", { staticClass: "text-center textVertical font3rem" }, [
-                  _c("b", [_vm._v(_vm._s(_vm.project.project_title))])
-                ]),
-                _vm._v(" "),
-                _c("img", {
-                  staticClass: "projectLogo",
-                  attrs: { src: _vm.project.project_icon, alt: "" }
-                }),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _c("p", { staticClass: "text-center textVertical font2rem" }, [
-                  _vm._v(_vm._s(_vm.project.project_subtitle))
-                ]),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _vm._m(1),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-lg btn-outline-light",
-                    attrs: { type: "button" }
-                  },
-                  [
-                    _c(
-                      "a",
-                      {
-                        attrs: {
-                          href: _vm.project.project_url,
-                          target: "_blank"
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                    View project\n                "
-                        )
-                      ]
-                    )
                   ]
                 )
-              ]
-            )
+              : _vm._e()
           ])
         : _c(
             "div",

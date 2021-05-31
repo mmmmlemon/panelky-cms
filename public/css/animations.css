@@ -17,6 +17,57 @@
     animation-duration: 0.5s;
 }
 
+@keyframes goUpCard {
+    0% { 
+        opacity: 0;
+        transform: translateY(100px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.goUpCardAnim {
+    animation-name: goUpCard;
+    animation-duration: 1s;
+}
+
+@keyframes goLeftCard {
+    0% { 
+        opacity: 0;
+        transform: translateX(100px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+.goLeftCardAnim {
+    animation-name: goLeftCard;
+    animation-duration: 1s;
+}
+
+@keyframes goRightCard {
+    0% { 
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+.goRightCardAnim {
+    animation-name: goRightCard;
+    animation-duration: 1s;
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;

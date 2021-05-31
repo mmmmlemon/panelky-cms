@@ -39,7 +39,7 @@
         <!-- ПОЛНОЕ ПРЕВЬЮ (в EditProject.vue) -->
         <div v-if="type==='full'" class="row justify-content-center zIndex3">
             <!-- карточка проекта -->
-            <ProjectCard :project="currentProject"/>
+            <ProjectCard :project="currentProject" :isVisible="true"/>
             <!-- кнопка развернуть на весь экран -->
             <button class="btn btn-light fullscreenButton" title="Развернуть на полный экран" v-on:click="showFullscreenPreview">
                 <i class="bi bi-arrows-fullscreen"></i>
@@ -49,8 +49,9 @@
         <div class="container col-12 vh-100 animatedBackground fullscreenCard zIndex3" :style="fullscreenStyle">
             <div class="fullscreenButtons">
                 <ul class="nav nav-fill">
-                    <!-- Главные проекты -->
-                    <li class="nav-item">
+                    <!-- TODO шознах тут с версткой, переделать -->
+                    <!-- кнопка ориентации -->
+                    <li class="nav-item" v-if="currentProject.project_image !== null && currentProject.project_image !== undefined">
                          <button class="btn btn-light btn-lg fullscreenButton" title="Изменить ориентацию" v-on:click="changeOrientation">
                             <i class="bi bi-arrow-left-right"></i>
                         </button>
@@ -63,7 +64,7 @@
                 <i class="bi bi-fullscreen-exit"></i>
             </button>
             <div class="row h-100 justify-content-center">
-                <ProjectCard :project="currentProject" :type="orientation"/>
+                <ProjectCard :project="currentProject" :type="orientation" :isVisible="true"/>
             </div>
         </div>
     </div>

@@ -1,7 +1,8 @@
 //ProjectCard
 //Карточка для проектов
 <template>
-    <div class="row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1 projectCard" style="opacity: 0;" v-scroll="handleScroll">
+    <div class="row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1 projectCard" 
+    v-bind:class="{'zeroOpacity': visible === false}" v-scroll="handleScroll" :id="project.slug">
 
         <div class="col-10" v-if="project === false">
             <Error errorMessage="Не удалось загрузить информацию о проекте"/>
@@ -11,9 +12,10 @@
         <div v-if="type=='left' && project !== undefined" class="row justify-content-center">
 
             <!-- для десктопа -->
-            <div class="d-none d-md-block col-12 text-center textVertical" 
+            <div class="d-none d-md-block col-12 text-center textVertical goUpCardAnim" 
                         v-bind:class="{'col-md-12': project.project_image === null, 
-                                        'col-md-5': project.prokect_image !== null}">
+                                        'col-md-5': project.prokect_image !== null}"
+                        v-if="visible === true">
                 <!-- название проекта -->
                 <h1 class="text-center textVertical font3-8rem">
                     <b>{{project.project_title}}</b>
@@ -49,12 +51,13 @@
                 </button>
             </div>
             <!-- скриншот проекта -->
-            <div class="d-none d-md-block col-12 col-md-6 text-center textVertical" v-if="project.project_image !== null">
+            <div class="d-none d-md-block col-12 col-md-6 text-center textVertical goLeftCardAnim" 
+                 v-if="project.project_image !== null && visible === true">
                 <img :src="project.project_image" class="projectImage" alt="">
             </div>
 
             <!-- TODO для мобилок -->
-            <div class="d-block d-md-none col-12 text-center textVertical">
+            <div class="d-block d-md-none col-12 text-center textVertical goUpCardAnim" v-if="visible === true">
                 <!-- название проекта -->
                 <h1 class="text-center textVertical font3-8rem">
                     <b>{{project.project_title}}</b>
@@ -81,18 +84,19 @@
         </div>
         
         <!-- КАРТОЧКА, ОПИСАНИЕ СПРАВА -->
-        <div v-else-if="type=='right'" class="row justify-content-center">
+        <div v-else-if="type=='right' && project !== undefined" class="row justify-content-center">
             <!-- для десктопа -->
 
             <!-- скриншот проекта -->
-            <div v-if="project.project_image !== null"
-                 class="d-none d-md-block col-12 col-md-6 text-center textVertical" >
+            <div v-if="project.project_image !== null && visible === true"
+                 class="d-none d-md-block col-12 col-md-6 text-center textVertical goRightCardAnim" >
                 <img :src="project.project_image" class="projectImage" alt="">
             </div>
 
             <div v-bind:class="{'col-md-12': project.project_image === null, 
                                 'col-md-5': project.prokect_image !== null}"
-                 class="d-none d-md-block col-12 text-center textVertical">
+                 v-if="visible === true"
+                 class="d-none d-md-block col-12 text-center textVertical goUpCardAnim">
                 <!-- название проекта -->
                 <h1 class="text-center textVertical font3-8rem">
                     <b>{{project.project_title}}</b>
@@ -129,7 +133,7 @@
             </div>
 
             <!-- TODO для мобилок -->
-            <div class="d-block d-md-none col-12 text-center textVertical">
+            <div class="d-block d-md-none col-12 text-center textVertical goUpCardAnim" v-if="visible === true">
                 <!-- название проекта -->
                 <h1 class="text-center textVertical font3rem">
                     <b>{{project.project_title}}</b>
@@ -162,9 +166,19 @@
 <script>
 export default {
 
+    mounted(){
+        this.setVisible = this.isVisible;
+    },
+
+    data: () => {
+        return {
+            visible: false,
+        }
+    },
     //данные
     props: {
         type: { type: String, default: 'left' },
+        isVisible: { type: Boolean, default: true },
         project: {type: Object, default: function(){
             return {
                 'project_title': undefined,
@@ -178,18 +192,25 @@ export default {
         }},
     },
 
+    computed: {
+        setVisible: {
+           get() {
+               this.visible = false;
+           },
+           set(value){
+               this.visible = value;
+           }
+        }
+    },
+
     //методы
     methods: {
-        handleScroll: function (evt, el) {
-            if (window.pageYOffset > (el.getBoundingClientRect().top + 200)) {
-                console.log(el.id)
-                el.setAttribute(
-                'style',
-                'opacity: 1; transform: translate3d(0, -70px, 0); transition: all 1s ease-in-out;'
-                )
+        handleScroll: function (evt, el){
+            if (el.getBoundingClientRect().top < 300) {
+                this.setVisible = true;
             }
-            return window.pageYOffset > (el.getBoundingClientRect().top + 300)
-        },
+            return el.getBoundingClientRect().top < 300;
+        }
     }
 }
 </script>
