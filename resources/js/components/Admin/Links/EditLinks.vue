@@ -2,7 +2,88 @@
 //форма редактирования ссылок
 <template>
     <div class="row justify-content-center">
-        <h1 class="text-center">EditLinks.vue</h1>
+        <div class="col-8 mt-2">
+            <button class="btn btn-light" title="Добавить ссылку" 
+                    v-on:click="toggleAddNewLink" v-bind:class="{ 'invisible': addNewLink === true   }">
+                <i class="bi bi-plus"></i>
+                Добавить ссылку
+            </button>
+            
+            <button class="btn btn-light" title="Добавить ссылку" 
+                    v-on:click="toggleAddNewLink" v-bind:class="{ 'invisible': addNewLink === false }">
+                <i class="bi bi-arrow-left"></i>
+                Назад
+            </button>
+        </div>
+        <div class="col-8 mt-5 goUpAnim" v-bind:class="{ 'invisible': addNewLink === false }">
+            <!-- форма редактирования имеющихся ссылок -->
+            <form method="POST">
+                <div class="row justify-content-center">
+                    <div class="col-2 text-center">
+                        <h6>&nbsp;</h6>
+                        <h4></h4>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <h6>Название ресурса</h6>
+                        <input type="text" class="form-control" placeholder="Twitter" required>
+                        <!-- <div v-if="errors && errors.name" class="text-danger goUpAnim">{{ errors.name[0] }}</div> -->
+                    </div>
+                    <div class="col-4 mb-3">
+                        <h6>URL</h6>
+                        <input type="text" class="form-control" placeholder="https://twitter.com/username"  required>
+                        <!-- <div v-if="errors && errors.name" class="text-danger goUpAnim">{{ errors.name[0] }}</div> -->
+                    </div>
+                    <div class="col-3 mb-3">
+                        <h6>&nbsp;</h6>
+                        <!-- кнопка удалить ссылку -->
+                        <button class="btn btn-light ml-2" title="Добавить ссылку">
+                            <i class="bi bi-arrow-right"></i>
+                            Добавить
+                        </button>
+                    </div>
+         
+                </div> 
+                <hr>
+            </form>
+        </div>
+        <div class="col-8 mt-5 goUpAnim" v-bind:class="{ 'invisible': addNewLink === true }">
+            <!-- форма редактирования имеющихся ссылок -->
+            <form method="POST">
+                <div class="row justify-content-center">
+                    <div class="col-2 text-center">
+                        <h6>&nbsp;</h6>
+                        <h4>GitHub</h4>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <h6>Название ресурса</h6>
+                        <input type="text" class="form-control" placeholder="Twitter" required value="GitHub">
+                        <!-- <div v-if="errors && errors.name" class="text-danger goUpAnim">{{ errors.name[0] }}</div> -->
+                    </div>
+                    <div class="col-4 mb-3">
+                        <h6>URL</h6>
+                        <input type="text" class="form-control" placeholder="https://twitter.com/username" value="https://github.com" required>
+                        <!-- <div v-if="errors && errors.name" class="text-danger goUpAnim">{{ errors.name[0] }}</div> -->
+                    </div>
+                    <div class="col-3 mb-3">
+                        <h6>&nbsp;</h6>
+                        <!-- кнопка переместить ссылку -->
+                        <button class="btn btn-light" title="Переместить" >
+                            <i class="bi bi-arrows-move"></i>
+                        </button>
+                        <!-- кнопка удалить ссылку -->
+                        <button class="btn btn-light ml-2" title="Удалить ссылку">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                        <!-- кнопка удалить ссылку -->
+                        <button class="btn btn-light ml-2" title="Сохранить изменения">
+                            Сохранить
+                        </button>
+                    </div>
+         
+                </div> 
+                <hr>
+            </form>
+        </div>
     </div>
 </template>
 <script>
@@ -11,6 +92,24 @@ export default {
     mounted(){
         //текущая вкладка в Links.vue
         this.$parent.currentTab = "editLinks";
+    },
+
+    //данные
+    data: () => {
+        return {
+            addNewLink: false,
+        }
+    },
+
+    //методы
+    methods: {
+        toggleAddNewLink: function(){
+            if(this.addNewLink === false)
+            this.addNewLink = true;
+
+            else
+            this.addNewLink = false;
+        }
     }
 }
 </script>

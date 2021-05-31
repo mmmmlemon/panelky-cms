@@ -1972,11 +1972,104 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   mounted: function mounted() {
     //текущая вкладка в Links.vue
     this.$parent.currentTab = "editLinks";
+  },
+  //данные
+  data: function data() {
+    return {
+      addNewLink: false
+    };
+  },
+  //методы
+  methods: {
+    toggleAddNewLink: function toggleAddNewLink() {
+      if (this.addNewLink === false) this.addNewLink = true;else this.addNewLink = false;
+    }
   }
 });
 
@@ -46772,15 +46865,185 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-8 mt-2" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-light",
+          class: { invisible: _vm.addNewLink === true },
+          attrs: { title: "Добавить ссылку" },
+          on: { click: _vm.toggleAddNewLink }
+        },
+        [
+          _c("i", { staticClass: "bi bi-plus" }),
+          _vm._v("\n            Добавить ссылку\n        ")
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-light",
+          class: { invisible: _vm.addNewLink === false },
+          attrs: { title: "Добавить ссылку" },
+          on: { click: _vm.toggleAddNewLink }
+        },
+        [
+          _c("i", { staticClass: "bi bi-arrow-left" }),
+          _vm._v("\n            Назад\n        ")
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "col-8 mt-5 goUpAnim",
+        class: { invisible: _vm.addNewLink === false }
+      },
+      [_vm._m(0)]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "col-8 mt-5 goUpAnim",
+        class: { invisible: _vm.addNewLink === true }
+      },
+      [_vm._m(1)]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center" }, [
-      _c("h1", { staticClass: "text-center" }, [_vm._v("EditLinks.vue")])
+    return _c("form", { attrs: { method: "POST" } }, [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col-2 text-center" }, [
+          _c("h6", [_vm._v(" ")]),
+          _vm._v(" "),
+          _c("h4")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-3 mb-3" }, [
+          _c("h6", [_vm._v("Название ресурса")]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", placeholder: "Twitter", required: "" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-4 mb-3" }, [
+          _c("h6", [_vm._v("URL")]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              placeholder: "https://twitter.com/username",
+              required: ""
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-3 mb-3" }, [
+          _c("h6", [_vm._v(" ")]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-light ml-2",
+              attrs: { title: "Добавить ссылку" }
+            },
+            [
+              _c("i", { staticClass: "bi bi-arrow-right" }),
+              _vm._v("\n                        Добавить\n                    ")
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("hr")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("form", { attrs: { method: "POST" } }, [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col-2 text-center" }, [
+          _c("h6", [_vm._v(" ")]),
+          _vm._v(" "),
+          _c("h4", [_vm._v("GitHub")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-3 mb-3" }, [
+          _c("h6", [_vm._v("Название ресурса")]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              placeholder: "Twitter",
+              required: "",
+              value: "GitHub"
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-4 mb-3" }, [
+          _c("h6", [_vm._v("URL")]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              placeholder: "https://twitter.com/username",
+              value: "https://github.com",
+              required: ""
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-3 mb-3" }, [
+          _c("h6", [_vm._v(" ")]),
+          _vm._v(" "),
+          _c(
+            "button",
+            { staticClass: "btn btn-light", attrs: { title: "Переместить" } },
+            [_c("i", { staticClass: "bi bi-arrows-move" })]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-light ml-2",
+              attrs: { title: "Удалить ссылку" }
+            },
+            [_c("i", { staticClass: "bi bi-trash-fill" })]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-light ml-2",
+              attrs: { title: "Сохранить изменения" }
+            },
+            [
+              _vm._v(
+                "\n                        Сохранить\n                    "
+              )
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("hr")
     ])
   }
 ]
