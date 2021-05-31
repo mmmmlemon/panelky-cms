@@ -53,6 +53,9 @@ Vue.component('PreviewProject', PreviewProject);
 import DeleteModal from './components/Admin/Misc/DeleteModal.vue';
 Vue.component('DeleteModal', DeleteModal);
 
+import LinkItem from './components/Admin/Misc/LinkItem.vue';
+Vue.component('LinkItem', LinkItem);
+
 
 //Misc
 import Error from './components/Misc/Error.vue';

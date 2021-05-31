@@ -48,41 +48,11 @@
         </div>
         <div class="col-8 mt-5 goUpAnim" v-bind:class="{ 'invisible': addNewLink === true }">
             <!-- форма редактирования имеющихся ссылок -->
-            <form method="POST">
-                <div class="row justify-content-center">
-                    <div class="col-2 text-center">
-                        <h6>&nbsp;</h6>
-                        <h4>GitHub</h4>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <h6>Название ресурса</h6>
-                        <input type="text" class="form-control" placeholder="Twitter" required value="GitHub">
-                        <!-- <div v-if="errors && errors.name" class="text-danger goUpAnim">{{ errors.name[0] }}</div> -->
-                    </div>
-                    <div class="col-4 mb-3">
-                        <h6>URL</h6>
-                        <input type="text" class="form-control" placeholder="https://twitter.com/username" value="https://github.com" required>
-                        <!-- <div v-if="errors && errors.name" class="text-danger goUpAnim">{{ errors.name[0] }}</div> -->
-                    </div>
-                    <div class="col-3 mb-3">
-                        <h6>&nbsp;</h6>
-                        <!-- кнопка переместить ссылку -->
-                        <button class="btn btn-light" title="Переместить" >
-                            <i class="bi bi-arrows-move"></i>
-                        </button>
-                        <!-- кнопка удалить ссылку -->
-                        <button class="btn btn-light ml-2" title="Удалить ссылку">
-                            <i class="bi bi-trash-fill"></i>
-                        </button>
-                        <!-- кнопка удалить ссылку -->
-                        <button class="btn btn-light ml-2" title="Сохранить изменения">
-                            Сохранить
-                        </button>
-                    </div>
-         
-                </div> 
-                <hr>
-            </form>
+            <div v-for="item in links" :key="item.id">
+                <form method="POST" @submit.prevent="submit(item)">
+                    <LinkItem :link="item"/>
+                </form>
+            </div>
         </div>
     </div>
 </template>
@@ -98,6 +68,21 @@ export default {
     data: () => {
         return {
             addNewLink: false,
+
+            links: [
+                {
+                    id: 0,
+                    link_title: 'GitHub',
+                    link_url: 'https://github.com',
+                    link_slug: 'github',
+                },
+                {
+                    id: 1,
+                    link_title: 'Instagram',
+                    link_url: 'https://instagram.com',
+                    link_slug: 'instagram',
+                }
+            ]
         }
     },
 
@@ -109,6 +94,10 @@ export default {
 
             else
             this.addNewLink = false;
+        },
+
+        submit(link){
+            console.log(link)
         }
     }
 }
