@@ -16,6 +16,8 @@ import EditProject from './components/Admin/Projects/EditProject.vue';
 import HomeProjects from './components/Admin/Projects/HomeProjects.vue';
 import AllProjects from './components/Admin/Projects/AllProjects.vue';
 import AddNewProject from './components/Admin/Projects/AddNewProject.vue';
+import EditLinks from './components/Admin/Links/EditLinks.vue';
+import EditContacts from './components/Admin/Links/EditContacts';
 
 import PageNotFound from './components/Misc/PageNotFound.vue';
 
@@ -75,6 +77,18 @@ const routes = [
                 //links
                 path: '/admin/links',
                 component: Links,
+                children: [
+                    {
+                        //edit links
+                        path: '/admin/links',
+                        component: EditLinks,
+                    },
+                    {
+                        //edit contacts
+                        path: '/admin/links/contacts',
+                        component: EditContacts,
+                    }
+                ]
             },
             {
                 //settings
