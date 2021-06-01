@@ -2030,21 +2030,7 @@ __webpack_require__.r(__webpack_exports__);
   //данные
   data: function data() {
     return {
-      addNewLink: false // links: [
-      //     {
-      //         id: 0,
-      //         link_title: 'GitHub',
-      //         link_url: 'https://github.com',
-      //         link_slug: 'github',
-      //     },
-      //     {
-      //         id: 1,
-      //         link_title: 'Instagram',
-      //         link_url: 'https://instagram.com',
-      //         link_slug: 'instagram',
-      //     }
-      // ]
-
+      addNewLink: false
     };
   },
   computed: {
@@ -2166,6 +2152,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2208,10 +2206,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  //хуки
+  mounted: function mounted() {
+    console.log(this.$parent.links);
+  },
   //данные
   data: function data() {
     return {
-      errors: null
+      errors: null,
+      edit: false,
+      backup: undefined
     };
   },
   props: {
@@ -2229,6 +2233,73 @@ __webpack_require__.r(__webpack_exports__);
   },
   //методы
   methods: {
+    //скрыть\показать ссылки (при ред. и сохранении)
+    toggleItems: function toggleItems(value) {
+      if (value == 'hide') {
+        var linkItems = document.getElementsByClassName('linkItem');
+
+        var _iterator = _createForOfIteratorHelper(linkItems),
+            _step;
+
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var item = _step.value;
+
+            if (item.id !== this.link.slug) {
+              item.classList.add("halfOpacity");
+              item.classList.add("unclickable");
+            }
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      } else if (value == 'show') {
+        var _linkItems = document.getElementsByClassName('linkItem');
+
+        var _iterator2 = _createForOfIteratorHelper(_linkItems),
+            _step2;
+
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var _item = _step2.value;
+
+            if (_item.id !== this.link.slug) {
+              _item.classList.remove("halfOpacity");
+
+              _item.classList.remove("unclickable");
+            }
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+      }
+    },
+    //вкл\выкл режим редактирования
+    toggleEdit: function toggleEdit(value) {
+      if (value === true) {
+        if (this.edit === false) {
+          this.backup = {
+            'link_title': this.link.link_title,
+            'link_url': this.link.link_url
+          };
+          this.toggleItems('hide');
+        }
+
+        this.edit = true;
+      }
+
+      if (value === false) {
+        this.toggleItems('show');
+        this.edit = value;
+        this.link.link_title = this.backup.link_title;
+        this.link.link_url = this.backup.link_url;
+      }
+    },
+    //сохранить измененения в ссылке
     submit: function submit() {
       var _this = this;
 
@@ -2236,7 +2307,10 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('id', this.link.id);
       formData.append('link_title', this.link.link_title);
       formData.append('link_url', this.link.link_url);
-      axios.post('/admin/editLink', formData).then(function (response) {//
+      axios.post('/admin/editLink', formData).then(function (response) {
+        _this.edit = false;
+
+        _this.toggleItems('show');
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this.errors = error.response.data.errors || {};
@@ -47288,125 +47362,157 @@ var render = function() {
       }
     },
     [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-2 text-center" }, [
-          _c("h6", [_vm._v(" ")]),
+      _c(
+        "div",
+        {
+          staticClass: "row justify-content-center linkItem",
+          attrs: { id: _vm.link.slug }
+        },
+        [
+          _c("div", { staticClass: "col-2 text-center" }, [
+            _c("h6", [_vm._v(" ")]),
+            _vm._v(" "),
+            _c("h4", [_vm._v(_vm._s(_vm.link.link_title))])
+          ]),
           _vm._v(" "),
-          _c("h4", [_vm._v(_vm._s(_vm.link.link_title))])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-3 mb-3" }, [
-          _c("h6", [_vm._v("Название ресурса")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.link.link_title,
-                expression: "link.link_title"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              placeholder: "Twitter",
-              name: _vm.link.slug,
-              required: ""
-            },
-            domProps: { value: _vm.link.link_title },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c("div", { staticClass: "col-3 mb-3" }, [
+            _c("h6", [_vm._v("Название ресурса")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.link.link_title,
+                  expression: "link.link_title"
                 }
-                _vm.$set(_vm.link, "link_title", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.link_title
-            ? _c("div", { staticClass: "text-danger goUpAnim" }, [
-                _vm._v(_vm._s(_vm.errors.link_title[0]))
-              ])
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-4 mb-3" }, [
-          _c("h6", [_vm._v("URL")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.link.link_url,
-                expression: "link.link_url"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              placeholder: "https://twitter.com/username",
-              required: ""
-            },
-            domProps: { value: _vm.link.link_url },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Twitter", required: "" },
+              domProps: { value: _vm.link.link_title },
+              on: {
+                keydown: function($event) {
+                  return _vm.toggleEdit(true)
+                },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.link, "link_title", $event.target.value)
                 }
-                _vm.$set(_vm.link, "link_url", $event.target.value)
               }
-            }
-          }),
+            }),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.link_title
+              ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                  _vm._v(_vm._s(_vm.errors.link_title[0]))
+                ])
+              : _vm._e()
+          ]),
           _vm._v(" "),
-          _vm.errors && _vm.errors.link_url
-            ? _c("div", { staticClass: "text-danger goUpAnim" }, [
-                _vm._v(_vm._s(_vm.errors.link_url[0]))
-              ])
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _vm._m(0)
-      ])
+          _c("div", { staticClass: "col-4 mb-3" }, [
+            _c("h6", [_vm._v("URL")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.link.link_url,
+                  expression: "link.link_url"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "text",
+                placeholder: "https://twitter.com/username",
+                required: ""
+              },
+              domProps: { value: _vm.link.link_url },
+              on: {
+                keydown: function($event) {
+                  return _vm.toggleEdit(true)
+                },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.link, "link_url", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.link_url
+              ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                  _vm._v(_vm._s(_vm.errors.link_url[0]))
+                ])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-3 mb-3" }, [
+            _c("h6", [_vm._v(" ")]),
+            _vm._v(" "),
+            _vm.edit === false
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-light fadeInAnim",
+                    attrs: { title: "Переместить" }
+                  },
+                  [_c("i", { staticClass: "bi bi-arrows-move" })]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.edit === false
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-light ml-2 fadeInAnim",
+                    attrs: { title: "Удалить ссылку" }
+                  },
+                  [_c("i", { staticClass: "bi bi-trash-fill" })]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.edit !== false
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-light ml-2 goUpAnim",
+                    attrs: { title: "Отменить изменения" },
+                    on: {
+                      click: function($event) {
+                        return _vm.toggleEdit(false)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "bi bi-x" }),
+                    _vm._v("\n                Отмена\n            ")
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.edit !== false
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-light ml-2 goUpAnim",
+                    attrs: { title: "Сохранить изменения" }
+                  },
+                  [
+                    _c("i", { staticClass: "bi bi-save" }),
+                    _vm._v("\n                Сохранить\n            ")
+                  ]
+                )
+              : _vm._e()
+          ])
+        ]
+      )
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3 mb-3" }, [
-      _c("h6", [_vm._v(" ")]),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-light", attrs: { title: "Переместить" } },
-        [_c("i", { staticClass: "bi bi-arrows-move" })]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-light ml-2",
-          attrs: { title: "Удалить ссылку" }
-        },
-        [_c("i", { staticClass: "bi bi-trash-fill" })]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-light ml-2",
-          attrs: { title: "Сохранить изменения" }
-        },
-        [_vm._v("\n                Сохранить\n            ")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

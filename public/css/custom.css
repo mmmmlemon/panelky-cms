@@ -40,6 +40,11 @@ hr {
     opacity: 0;
 }
 
+.halfOpacity {
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0.2;
+}
+
 .invisible{
     display: none;
 }
@@ -228,7 +233,9 @@ hr {
     top: 25%;
 }
 
-
+.linkItem {
+    transition: opacity 0.5s ease-in-out;
+}
 
 
 

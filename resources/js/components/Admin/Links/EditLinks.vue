@@ -66,20 +66,6 @@ export default {
     data: () => {
         return {
             addNewLink: false,
-            // links: [
-            //     {
-            //         id: 0,
-            //         link_title: 'GitHub',
-            //         link_url: 'https://github.com',
-            //         link_slug: 'github',
-            //     },
-            //     {
-            //         id: 1,
-            //         link_title: 'Instagram',
-            //         link_url: 'https://instagram.com',
-            //         link_slug: 'instagram',
-            //     }
-            // ]
         }
     },
 
@@ -87,6 +73,7 @@ export default {
         links: function(){
             return this.$store.state.AdminStates.links;
         },
+
     },
 
     //методы

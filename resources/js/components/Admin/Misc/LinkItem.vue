@@ -3,7 +3,7 @@
 
 <template>
     <form method="POST" @submit.prevent="submit()">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center linkItem" :id="link.slug">
             <div class="col-2 text-center">
                 <h6>&nbsp;</h6>
                 <h4>{{link.link_title}}</h4>
@@ -11,28 +11,34 @@
             <div class="col-3 mb-3">
                 <h6>Название ресурса</h6>
                 <input type="text" class="form-control" placeholder="Twitter" 
-                        v-model="link.link_title"
-                        :name="link.slug" required>
+                        v-model="link.link_title" 
+                        v-on:keydown="toggleEdit(true)" required>
                 <div v-if="errors && errors.link_title" class="text-danger goUpAnim">{{ errors.link_title[0] }}</div>
             </div>
             <div class="col-4 mb-3">
                 <h6>URL</h6>
                 <input type="text" class="form-control" placeholder="https://twitter.com/username" 
-                       v-model="link.link_url" required>
+                       v-model="link.link_url" v-on:keydown="toggleEdit(true)" required>
                 <div v-if="errors && errors.link_url" class="text-danger goUpAnim">{{ errors.link_url[0] }}</div>
             </div>
             <div class="col-3 mb-3">
                 <h6>&nbsp;</h6>
                 <!-- кнопка переместить ссылку -->
-                <button class="btn btn-light" title="Переместить" >
+                <button class="btn btn-light fadeInAnim" title="Переместить" v-if="edit === false">
                     <i class="bi bi-arrows-move"></i>
                 </button>
                 <!-- кнопка удалить ссылку -->
-                <button class="btn btn-light ml-2" title="Удалить ссылку">
+                <button class="btn btn-light ml-2 fadeInAnim" title="Удалить ссылку" v-if="edit === false">
                     <i class="bi bi-trash-fill"></i>
                 </button>
                 <!-- кнопка удалить ссылку -->
-                <button class="btn btn-light ml-2" title="Сохранить изменения">
+                <button class="btn btn-light ml-2 goUpAnim" title="Отменить изменения" v-if="edit !== false" v-on:click="toggleEdit(false)">
+                    <i class="bi bi-x"></i>
+                    Отмена
+                </button>
+                <!-- кнопка удалить ссылку -->
+                <button class="btn btn-light ml-2 goUpAnim" title="Сохранить изменения" v-if="edit !== false">
+                    <i class="bi bi-save"></i>
                     Сохранить
                 </button>
             </div>
@@ -41,10 +47,17 @@
 </template>
 <script>
 export default {
+    //хуки
+    mounted(){
+        console.log(this.$parent.links);
+    },
+
     //данные
     data: () => {
         return {
             errors: null,
+            edit: false,
+            backup: undefined,
         }
     },
 
@@ -61,6 +74,51 @@ export default {
 
     //методы
     methods: {
+        
+        //скрыть\показать ссылки (при ред. и сохранении)
+        toggleItems(value){
+            if(value == 'hide'){
+                let linkItems = document.getElementsByClassName('linkItem');
+                for(let item of linkItems){   
+                    if(item.id !== this.link.slug){ 
+                        item.classList.add("halfOpacity");
+                        item.classList.add("unclickable"); 
+                    } 
+                }
+            }
+
+            else if (value == 'show'){
+                 let linkItems = document.getElementsByClassName('linkItem');
+                for(let item of linkItems){   
+                    if(item.id !== this.link.slug){ 
+                        item.classList.remove("halfOpacity");
+                        item.classList.remove("unclickable"); 
+                    } 
+                }
+            }
+        },
+
+        //вкл\выкл режим редактирования
+        toggleEdit(value){
+
+            if(value === true){
+                if(this.edit === false){ 
+                    this.backup = {'link_title': this.link.link_title, 'link_url': this.link.link_url };
+                    this.toggleItems('hide');
+                }
+                this.edit = true;
+            }
+
+            if(value === false){ 
+                this.toggleItems('show');
+                this.edit = value;
+                this.link.link_title = this.backup.link_title;
+                this.link.link_url = this.backup.link_url; 
+            }
+
+        },
+
+        //сохранить измененения в ссылке
         submit(){
             
             let formData = new FormData();
@@ -70,7 +128,8 @@ export default {
             formData.append('link_url', this.link.link_url);
 
             axios.post('/admin/editLink', formData).then(response => {
-                //
+                this.edit = false;
+                this.toggleItems('show');
             }).catch(error => {
                 if(error.response.status === 422){ 
                     this.errors = error.response.data.errors || {};
