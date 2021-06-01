@@ -2019,6 +2019,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   mounted: function mounted() {
@@ -2071,6 +2077,11 @@ __webpack_require__.r(__webpack_exports__);
         _this.$store.dispatch('getLinks');
 
         _this.toggleAddNewLink();
+
+        _this.newLink = {
+          link_title: undefined,
+          link_url: undefined
+        };
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this.errors = error.response.data.errors || {};
@@ -2093,6 +2104,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2164,6 +2198,25 @@ __webpack_require__.r(__webpack_exports__);
           var errors = error.response.data;
 
           _this.$store.dispatch('setErrors', error.response.data.message);
+        }
+      });
+    },
+    //удалить ссылку
+    deleteLink: function deleteLink() {
+      var _this2 = this;
+
+      var slug = this.deleteModalInfo.slug;
+      var formData = new FormData();
+      formData.append("slug", slug);
+      axios.post('/admin/deleteLink', formData).then(function (response) {
+        _this2.$store.dispatch('getLinks');
+
+        _this2.$store.dispatch('setDeleteModalInfo', undefined);
+      })["catch"](function (error) {
+        if (error.response.status === 422 || error.response.status === 500) {
+          var errors = error.response.data;
+
+          _this2.$store.dispatch('setErrors', error.response.data.message);
         }
       });
     }
@@ -2250,7 +2303,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       type: Object,
       "default": function _default() {
         return {
-          id: undefined,
           link_title: undefined,
           link_url: undefined,
           slug: undefined
@@ -2322,6 +2374,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       if (value === false) {
         this.toggleItems('show');
         this.edit = value;
+        this.errors = null;
         this.link.link_title = this.backup.link_title;
         this.link.link_url = this.backup.link_url;
       }
@@ -2331,7 +2384,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       var _this = this;
 
       var formData = new FormData();
-      formData.append('id', this.link.id);
+      formData.append('slug', this.link.slug);
       formData.append('link_title', this.link.link_title);
       formData.append('link_url', this.link.link_url);
       axios.post('/admin/editLink', formData).then(function (response) {
@@ -2342,6 +2395,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         if (error.response.status === 422) {
           _this.errors = error.response.data.errors || {};
         }
+      });
+    },
+    //удалить ссылку
+    deleteLink: function deleteLink() {
+      this.$store.dispatch('setDeleteModalInfo', {
+        type: 'link',
+        link_title: this.link.link_title,
+        slug: this.link.slug
       });
     }
   }
@@ -2619,7 +2680,8 @@ __webpack_require__.r(__webpack_exports__);
     deleteProject: function deleteProject() {
       this.$store.dispatch('setDeleteModalInfo', {
         deleteInfo: this.currentProject,
-        page: 'homeProjects'
+        page: 'homeProjects',
+        type: 'project'
       });
     }
   }
@@ -3913,6 +3975,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -47281,6 +47345,18 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
+    _vm.links === false
+      ? _c("div", { staticClass: "col-8 mt-5 text-center goUpAnim" }, [
+          _c("h3", [_vm._v("Нет ссылок")]),
+          _vm._v(" "),
+          _c("i", { staticClass: "bi bi-link font1-8rem" }),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("h5", [_vm._v("Но их всегда можно добавить!")])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
     _vm.links !== -1
       ? _c(
           "div",
@@ -47348,64 +47424,134 @@ var render = function() {
   return _vm.deleteModalInfo !== -1 && _vm.deleteModalInfo !== undefined
     ? _c("div", { staticClass: "deleteModalBody fadeInAnim" }, [
         _c("div", { staticClass: "row justify-content-center" }, [
-          _c(
-            "div",
-            { staticClass: "col-4 transparentCard deleteModalCard m-1" },
-            [
-              _c("div", { staticClass: "card-body" }, [
-                _c("h2", { staticClass: "card-title" }, [
-                  _vm._v("Удаление проекта")
-                ]),
-                _vm._v(" "),
-                _c("hr"),
-                _vm._v(" "),
-                _c("h5", { staticClass: "card-text" }, [
-                  _vm._v("Вы действительно хотите удалить проект "),
-                  _c("b", [
-                    _vm._v(_vm._s(_vm.deleteModalInfo.deleteInfo.project_title))
-                  ]),
-                  _vm._v("? Это действие нельзя будет отменить.")
-                ]),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _c("div", { staticClass: "d-grid gap-2 d-md-block" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-secondary",
-                      attrs: { type: "button" },
-                      on: { click: _vm.cancel }
-                    },
-                    [
-                      _vm._m(0),
+          _vm.deleteModalInfo.type === "project"
+            ? _c(
+                "div",
+                { staticClass: "col-4 transparentCard deleteModalCard m-1" },
+                [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("h2", { staticClass: "card-title" }, [
+                      _vm._v("Удаление проекта")
+                    ]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("h5", { staticClass: "card-text" }, [
+                      _vm._v("Вы действительно хотите удалить проект "),
+                      _c("b", [
+                        _vm._v(
+                          _vm._s(_vm.deleteModalInfo.deleteInfo.project_title)
+                        )
+                      ]),
+                      _vm._v("? Это действие нельзя будет отменить.")
+                    ]),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "d-grid gap-2 d-md-block" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          attrs: { type: "button" },
+                          on: { click: _vm.cancel }
+                        },
+                        [
+                          _vm._m(0),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Нет, не хочу")])
+                        ]
+                      ),
                       _vm._v(" "),
-                      _c("span", [_vm._v("Нет, не хочу")])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger",
-                      attrs: { type: "button" },
-                      on: { click: _vm.deleteProject }
-                    },
-                    [
-                      _vm._m(1),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger",
+                          attrs: { type: "button" },
+                          on: { click: _vm.deleteProject }
+                        },
+                        [
+                          _vm._m(1),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Да, удалить")])
+                        ]
+                      )
+                    ])
+                  ])
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.deleteModalInfo.type === "link"
+            ? _c(
+                "div",
+                { staticClass: "col-4 transparentCard deleteModalCard m-1" },
+                [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("h2", { staticClass: "card-title" }, [
+                      _vm._v("Удаление ссылки")
+                    ]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("h5", { staticClass: "card-text" }, [
+                      _vm._v("Вы действительно хотите удалить ссылку "),
+                      _c("b", [_vm._v(_vm._s(_vm.deleteModalInfo.link_title))]),
+                      _vm._v("? Это действие нельзя будет отменить.")
+                    ]),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "d-grid gap-2 d-md-block" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          attrs: { type: "button" },
+                          on: { click: _vm.cancel }
+                        },
+                        [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Нет, не хочу")])
+                        ]
+                      ),
                       _vm._v(" "),
-                      _c("span", [_vm._v("Да, удалить")])
-                    ]
-                  )
-                ])
-              ])
-            ]
-          )
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger",
+                          attrs: { type: "button" },
+                          on: { click: _vm.deleteLink }
+                        },
+                        [
+                          _vm._m(3),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Да, удалить")])
+                        ]
+                      )
+                    ])
+                  ])
+                ]
+              )
+            : _vm._e()
         ])
       ])
     : _vm._e()
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "bi bi-x" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "bi bi-trash-fill" })])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -47556,10 +47702,11 @@ var render = function() {
             _vm._v(" "),
             _vm.edit === false
               ? _c(
-                  "button",
+                  "div",
                   {
                     staticClass: "btn btn-light ml-2 fadeInAnim",
-                    attrs: { title: "Удалить ссылку" }
+                    attrs: { title: "Удалить ссылку" },
+                    on: { click: _vm.deleteLink }
                   },
                   [_c("i", { staticClass: "bi bi-trash-fill" })]
                 )
@@ -47567,7 +47714,7 @@ var render = function() {
             _vm._v(" "),
             _vm.edit !== false
               ? _c(
-                  "button",
+                  "div",
                   {
                     staticClass: "btn btn-light ml-2 goUpAnim",
                     attrs: { title: "Отменить изменения" },
@@ -49886,36 +50033,40 @@ var render = function() {
     { staticClass: "row h-75 w-75 bigCard d-flex justify-content-center" },
     [
       _c("div", { staticClass: "div-12 textVertical" }, [
-        _c("h1", { staticClass: "text-center textVertical" }, [
-          _c("p", { staticClass: "text-center textVertical font14pt" }, [
-            _vm._v(_vm._s(_vm.footerTitle))
-          ]),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "row font21pt" },
-            _vm._l(_vm.links, function(link) {
-              return _c(
-                "div",
-                { key: link.slug, staticClass: "col-12 col-md-12 mt-3" },
-                [
-                  _c(
-                    "a",
-                    { attrs: { href: link.link_url, target: "_blank" } },
-                    [_c("b", [_vm._v(_vm._s(link.link_title))])]
-                  )
-                ]
-              )
-            }),
-            0
-          )
-        ]),
+        _vm.links !== false
+          ? _c("div", { staticClass: "col-12" }, [
+              _c("h1", { staticClass: "text-center textVertical" }, [
+                _c("p", { staticClass: "text-center textVertical font14pt" }, [
+                  _vm._v(_vm._s(_vm.footerTitle))
+                ]),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "row font21pt" },
+                  _vm._l(_vm.links, function(link) {
+                    return _c(
+                      "div",
+                      { key: link.slug, staticClass: "col-12 col-md-12 mt-3" },
+                      [
+                        _c(
+                          "a",
+                          { attrs: { href: link.link_url, target: "_blank" } },
+                          [_c("b", [_vm._v(_vm._s(link.link_title))])]
+                        )
+                      ]
+                    )
+                  }),
+                  0
+                )
+              ])
+            ])
+          : _vm._e(),
         _vm._v(" "),
-        _c("hr"),
+        _vm.links !== false ? _c("hr") : _vm._e(),
         _vm._v(" "),
-        _c("br"),
+        _vm.links !== false ? _c("br") : _vm._e(),
         _vm._v(" "),
         _c("p", { staticClass: "text-center font18pt" }, [
           _c("a", { attrs: { href: "mailto:" + _vm.contactEmail } }, [
@@ -50938,39 +51089,54 @@ var render = function() {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _vm._m(1),
+                _vm.links !== false
+                  ? _c("div", { staticClass: "col-12" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("hr")
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "col-12 text-center" },
-                  [
-                    _vm._l(_vm.links, function(link) {
-                      return _c("h6", { key: link.slug, staticClass: "mb-3" }, [
-                        _c(
-                          "a",
-                          {
-                            attrs: { target: "_blank", href: link.link_url },
-                            on: {
-                              click: function($event) {
-                                return _vm.closeNavMenu()
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(link.link_title) +
-                                "\n                    "
-                            )
-                          ]
-                        )
-                      ])
-                    }),
-                    _vm._v(" "),
-                    _c("hr")
-                  ],
-                  2
-                )
+                _vm.links !== false
+                  ? _c(
+                      "div",
+                      { staticClass: "col-12 text-center" },
+                      [
+                        _vm._l(_vm.links, function(link) {
+                          return _c(
+                            "h6",
+                            { key: link.slug, staticClass: "mb-3" },
+                            [
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    target: "_blank",
+                                    href: link.link_url
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.closeNavMenu()
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                        " +
+                                      _vm._s(link.link_title) +
+                                      "\n                    "
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        }),
+                        _vm._v(" "),
+                        _c("hr")
+                      ],
+                      2
+                    )
+                  : _vm._e()
               ],
               2
             )
@@ -50992,10 +51158,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12" }, [
-      _c("h6", { staticClass: "text-center" }, [_c("b", [_vm._v("Ссылки")])]),
-      _vm._v(" "),
-      _c("hr")
+    return _c("h6", { staticClass: "text-center" }, [
+      _c("b", [_vm._v("Ссылки")])
     ])
   }
 ]

@@ -38,6 +38,7 @@ Route::post('/admin/deleteProject', [AdminController::class, 'deleteProject']);
 Route::post('/admin/setNewOrderForHomeProjects', [AdminController::class, 'setNewOrderForHomeProjects']);
 Route::post('/admin/editLink', [AdminController::class, 'editLink']);
 Route::post('/admin/addLink', [AdminController::class, 'addLink']);
+Route::post('/admin/deleteLink', [AdminController::class, 'deleteLink']);
 
 Route::get('/admin', [AdminController::class, 'index']);
 Route::get('/admin/{any}', [AdminController::class, 'index']);

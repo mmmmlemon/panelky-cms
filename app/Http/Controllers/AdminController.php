@@ -301,7 +301,7 @@ class AdminController extends Controller
             'link_url' => 'url|max:500|required',
         ]);
 
-        $link = Link::find($request->id);
+        $link = Link::where('slug', $request->slug)->get()[0];
 
         $link->link_title = $request->link_title;
         $link->link_url = $request->link_url;
@@ -331,6 +331,17 @@ class AdminController extends Controller
 
         return response()->json(true, 200);
        
+    }
+
+    //deleteLink
+    //удалить ссылку
+    public function deleteLink(Request $request)
+    {
+        $link = Link::where('slug', $request->slug)->get()[0];
+
+        $id = $link->id;
+        Link::find($id)->delete();
+        return response()->json(true, 200);
     }
 
 }

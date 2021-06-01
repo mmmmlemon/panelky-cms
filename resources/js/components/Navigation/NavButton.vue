@@ -36,14 +36,14 @@
                      <br>
                 </div>
                 <!-- ссылки -->
-                <div class="col-12">
+                <div class="col-12" v-if="links !== false">
                     <h6 class="text-center">
                         <b>Ссылки</b>
                     </h6>
                     <hr>
                 </div>
                 <!-- список ссылок -->
-                <div class="col-12 text-center">
+                <div class="col-12 text-center" v-if="links !== false">
                     <h6 v-for="link in links" :key="link.slug" class="mb-3">
                         <a v-on:click="closeNavMenu()" target="_blank" :href="link.link_url">
                             {{link.link_title}}

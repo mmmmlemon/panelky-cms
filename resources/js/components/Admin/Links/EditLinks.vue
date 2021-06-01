@@ -44,7 +44,13 @@
                 </div> 
             </form>
         </div>
-        <div class="col-8 mt-5 goUpAnim" v-if="links !== -1" v-bind:class="{ 'invisible': addNewLink === true }">
+        <div class="col-8 mt-5 text-center goUpAnim" v-if="links === false">
+            <h3>Нет ссылок</h3>
+            <i class="bi bi-link font1-8rem"></i>
+            <hr>
+            <h5>Но их всегда можно добавить!</h5>
+        </div>
+        <div class="col-8 mt-5 goUpAnim" v-if="links !== -1" v-bind:class="{ 'invisible': addNewLink === true }" >
             <!-- форма редактирования имеющихся ссылок -->
             <div v-for="item in links" :key="item.id">
                 <LinkItem :link="item"/>
@@ -107,6 +113,10 @@ export default {
             axios.post('/admin/addLink', formData).then(response => {
                 this.$store.dispatch('getLinks');
                 this.toggleAddNewLink();
+                this.newLink = {
+                    link_title: undefined,
+                    link_url: undefined,
+                };
             }).catch(error => {
                 if(error.response.status === 422){ 
                     this.errors = error.response.data.errors || {};

@@ -173,7 +173,7 @@ class APIController extends Controller
         if(count($links) > 0)
         { return response()->json($links, 200); }
         else
-        { return response()->json(false, 422); }
+        { return response()->json(false, 200); }
   
     }
 }

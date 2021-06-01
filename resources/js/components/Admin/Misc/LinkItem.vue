@@ -28,14 +28,14 @@
                     <i class="bi bi-arrows-move"></i>
                 </button>
                 <!-- кнопка удалить ссылку -->
-                <button class="btn btn-light ml-2 fadeInAnim" title="Удалить ссылку" v-if="edit === false">
+                <div class="btn btn-light ml-2 fadeInAnim" title="Удалить ссылку" v-if="edit === false" v-on:click="deleteLink">
                     <i class="bi bi-trash-fill"></i>
-                </button>
+                </div>
                 <!-- кнопка удалить ссылку -->
-                <button class="btn btn-light ml-2 goUpAnim" title="Отменить изменения" v-if="edit !== false" v-on:click="toggleEdit(false)">
+                <div class="btn btn-light ml-2 goUpAnim" title="Отменить изменения" v-if="edit !== false" v-on:click="toggleEdit(false)">
                     <i class="bi bi-x"></i>
                     Отмена
-                </button>
+                </div>
                 <!-- кнопка удалить ссылку -->
                 <button class="btn btn-light ml-2 goUpAnim" title="Сохранить изменения" v-if="edit !== false">
                     <i class="bi bi-save"></i>
@@ -59,7 +59,6 @@ export default {
     props: {
         link: { type: Object, default: function(){
             return {
-                id: undefined,
                 link_title: undefined,
                 link_url: undefined,
                 slug: undefined,
@@ -107,6 +106,7 @@ export default {
             if(value === false){ 
                 this.toggleItems('show');
                 this.edit = value;
+                this.errors = null;
                 this.link.link_title = this.backup.link_title;
                 this.link.link_url = this.backup.link_url; 
             }
@@ -118,7 +118,7 @@ export default {
             
             let formData = new FormData();
 
-            formData.append('id', this.link.id);
+            formData.append('slug', this.link.slug);
             formData.append('link_title', this.link.link_title);
             formData.append('link_url', this.link.link_url);
 
@@ -130,6 +130,11 @@ export default {
                     this.errors = error.response.data.errors || {};
                 }
             });
+        },
+
+        //удалить ссылку
+        deleteLink(){
+            this.$store.dispatch('setDeleteModalInfo', {type: 'link', link_title: this.link.link_title, slug: this.link.slug});
         }
     }
 }
