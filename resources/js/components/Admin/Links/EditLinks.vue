@@ -46,7 +46,7 @@
                 <hr>
             </form>
         </div>
-        <div class="col-8 mt-5 goUpAnim" v-bind:class="{ 'invisible': addNewLink === true }">
+        <div class="col-8 mt-5 goUpAnim" v-if="links !== -1" v-bind:class="{ 'invisible': addNewLink === true }">
             <!-- форма редактирования имеющихся ссылок -->
             <div v-for="item in links" :key="item.id">
                 <form method="POST" @submit.prevent="submit(item)">
@@ -62,28 +62,34 @@ export default {
     mounted(){
         //текущая вкладка в Links.vue
         this.$parent.currentTab = "editLinks";
+        this.$store.dispatch('getLinks');
     },
 
     //данные
     data: () => {
         return {
             addNewLink: false,
-
-            links: [
-                {
-                    id: 0,
-                    link_title: 'GitHub',
-                    link_url: 'https://github.com',
-                    link_slug: 'github',
-                },
-                {
-                    id: 1,
-                    link_title: 'Instagram',
-                    link_url: 'https://instagram.com',
-                    link_slug: 'instagram',
-                }
-            ]
+            // links: [
+            //     {
+            //         id: 0,
+            //         link_title: 'GitHub',
+            //         link_url: 'https://github.com',
+            //         link_slug: 'github',
+            //     },
+            //     {
+            //         id: 1,
+            //         link_title: 'Instagram',
+            //         link_url: 'https://instagram.com',
+            //         link_slug: 'instagram',
+            //     }
+            // ]
         }
+    },
+
+    computed: {
+        links: function(){
+            return this.$store.state.AdminStates.links;
+        },
     },
 
     //методы

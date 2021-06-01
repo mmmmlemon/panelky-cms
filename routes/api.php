@@ -27,3 +27,4 @@ Route::get('/getFullProjectList', [APIController::class, 'getFullProjectList']);
 Route::get('/getStockImages', [APIController::class, 'getStockImages']);
 Route::get('/getAllProjects', [APIController::class, 'getAllProjects']);
 Route::post('/setProjectStatus', [APIController::class, 'setProjectStatus']);
+Route::get('/getLinks', [APIController::class, 'getLinks']);

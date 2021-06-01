@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Settings;
 use App\Models\Project;
+use App\Models\Link;
 
 //APIController
 //функции API, получение информации из БД
@@ -161,5 +162,18 @@ class APIController extends Controller
         $project->save();
 
         return response()->json(null, 200);
+    }
+
+    //getLinks
+    //получить ссылки
+    public function getLinks()
+    {
+        $links = Link::all();
+
+        if(count($links) > 0)
+        { return response()->json($links, 200); }
+        else
+        { return response()->json(false, 422); }
+  
     }
 }

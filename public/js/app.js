@@ -2028,23 +2028,32 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     //текущая вкладка в Links.vue
     this.$parent.currentTab = "editLinks";
+    this.$store.dispatch('getLinks');
   },
   //данные
   data: function data() {
     return {
-      addNewLink: false,
-      links: [{
-        id: 0,
-        link_title: 'GitHub',
-        link_url: 'https://github.com',
-        link_slug: 'github'
-      }, {
-        id: 1,
-        link_title: 'Instagram',
-        link_url: 'https://instagram.com',
-        link_slug: 'instagram'
-      }]
+      addNewLink: false // links: [
+      //     {
+      //         id: 0,
+      //         link_title: 'GitHub',
+      //         link_url: 'https://github.com',
+      //         link_slug: 'github',
+      //     },
+      //     {
+      //         id: 1,
+      //         link_title: 'Instagram',
+      //         link_url: 'https://instagram.com',
+      //         link_slug: 'instagram',
+      //     }
+      // ]
+
     };
+  },
+  computed: {
+    links: function links() {
+      return this.$store.state.AdminStates.links;
+    }
   },
   //методы
   methods: {
@@ -4901,7 +4910,9 @@ var AdminStates = {
     //инф-ция для модального окна удаления проеткта
     deleteModalInfo: -1,
     //ошибки для AppAdmin
-    errors: -1
+    errors: -1,
+    //ссылки
+    links: -1
   },
   mutations: {
     //установить стейт
@@ -5033,6 +5044,23 @@ var AdminStates = {
       context.commit('setState', {
         state: 'errors',
         value: errors
+      });
+    },
+    //getLinks
+    //получить ссылки
+    getLinks: function getLinks(context) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getLinks').then(function (response) {
+        if (response.data !== false) {
+          context.commit('setState', {
+            state: 'links',
+            value: response.data
+          });
+        } else {
+          context.commit('setState', {
+            state: 'links',
+            value: false
+          });
+        }
       });
     }
   }
@@ -47034,32 +47062,34 @@ var render = function() {
       [_vm._m(0)]
     ),
     _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "col-8 mt-5 goUpAnim",
-        class: { invisible: _vm.addNewLink === true }
-      },
-      _vm._l(_vm.links, function(item) {
-        return _c("div", { key: item.id }, [
-          _c(
-            "form",
-            {
-              attrs: { method: "POST" },
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.submit(item)
-                }
-              }
-            },
-            [_c("LinkItem", { attrs: { link: item } })],
-            1
-          )
-        ])
-      }),
-      0
-    )
+    _vm.links !== -1
+      ? _c(
+          "div",
+          {
+            staticClass: "col-8 mt-5 goUpAnim",
+            class: { invisible: _vm.addNewLink === true }
+          },
+          _vm._l(_vm.links, function(item) {
+            return _c("div", { key: item.id }, [
+              _c(
+                "form",
+                {
+                  attrs: { method: "POST" },
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.submit(item)
+                    }
+                  }
+                },
+                [_c("LinkItem", { attrs: { link: item } })],
+                1
+              )
+            ])
+          }),
+          0
+        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = [

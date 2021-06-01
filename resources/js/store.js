@@ -72,6 +72,8 @@ const AdminStates = {
         deleteModalInfo: -1,
         //ошибки для AppAdmin
         errors: -1,
+        //ссылки
+        links: -1,
     },
 
     mutations: {
@@ -170,6 +172,17 @@ const AdminStates = {
         setErrors(context, errors){
             context.commit('setState', {state: 'errors', value: errors});
         },
+
+        //getLinks
+        //получить ссылки
+        getLinks(context){
+            axios.get('/api/getLinks').then(response => {
+                if(response.data !== false)
+                { context.commit('setState', { state: 'links', value: response.data}); }
+                else
+                { context.commit('setState', { state: 'links', value: false}); }
+            });
+        }
     }
 }
 
