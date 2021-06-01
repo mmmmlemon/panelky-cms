@@ -41,7 +41,6 @@
                             Добавить
                         </button>
                     </div>
-         
                 </div> 
                 <hr>
             </form>
@@ -49,9 +48,7 @@
         <div class="col-8 mt-5 goUpAnim" v-if="links !== -1" v-bind:class="{ 'invisible': addNewLink === true }">
             <!-- форма редактирования имеющихся ссылок -->
             <div v-for="item in links" :key="item.id">
-                <form method="POST" @submit.prevent="submit(item)">
-                    <LinkItem :link="item"/>
-                </form>
+                <LinkItem :link="item"/>
             </div>
         </div>
     </div>

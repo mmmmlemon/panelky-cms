@@ -2020,9 +2020,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   mounted: function mounted() {
@@ -2209,8 +2206,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
+  data: function data() {
+    return {
+      errors: null
+    };
+  },
   props: {
     link: {
       type: Object,
@@ -2219,9 +2222,26 @@ __webpack_require__.r(__webpack_exports__);
           id: undefined,
           link_title: undefined,
           link_url: undefined,
-          link_slug: undefined
+          slug: undefined
         };
       }
+    }
+  },
+  //методы
+  methods: {
+    submit: function submit() {
+      var _this = this;
+
+      var formData = new FormData();
+      formData.append('id', this.link.id);
+      formData.append('link_title', this.link.link_title);
+      formData.append('link_url', this.link.link_url);
+      axios.post('/admin/editLink', formData).then(function (response) {//
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          _this.errors = error.response.data.errors || {};
+        }
+      });
     }
   }
 });
@@ -47070,22 +47090,12 @@ var render = function() {
             class: { invisible: _vm.addNewLink === true }
           },
           _vm._l(_vm.links, function(item) {
-            return _c("div", { key: item.id }, [
-              _c(
-                "form",
-                {
-                  attrs: { method: "POST" },
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.submit(item)
-                    }
-                  }
-                },
-                [_c("LinkItem", { attrs: { link: item } })],
-                1
-              )
-            ])
+            return _c(
+              "div",
+              { key: item.id },
+              [_c("LinkItem", { attrs: { link: item } })],
+              1
+            )
           }),
           0
         )
@@ -47266,60 +47276,102 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row justify-content-center" }, [
-    _c("div", { staticClass: "col-2 text-center" }, [
-      _c("h6", [_vm._v(" ")]),
-      _vm._v(" "),
-      _c("h4", [_vm._v(_vm._s(_vm.link.link_title))])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-3 mb-3" }, [
-      _c("h6", [_vm._v("Название ресурса")]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.link.link_title,
-            expression: "link.link_title"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          placeholder: "Twitter",
-          name: _vm.link.link_slug,
-          required: ""
-        },
-        domProps: { value: _vm.link.link_title },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.link, "link_title", $event.target.value)
-          }
+  return _c(
+    "form",
+    {
+      attrs: { method: "POST" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.submit()
         }
-      })
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-4 mb-3" }, [
-      _c("h6", [_vm._v("URL")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          placeholder: "https://twitter.com/username",
-          required: ""
-        },
-        domProps: { value: _vm.link.link_url }
-      })
-    ]),
-    _vm._v(" "),
-    _vm._m(0)
-  ])
+      }
+    },
+    [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col-2 text-center" }, [
+          _c("h6", [_vm._v(" ")]),
+          _vm._v(" "),
+          _c("h4", [_vm._v(_vm._s(_vm.link.link_title))])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-3 mb-3" }, [
+          _c("h6", [_vm._v("Название ресурса")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.link.link_title,
+                expression: "link.link_title"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              placeholder: "Twitter",
+              name: _vm.link.slug,
+              required: ""
+            },
+            domProps: { value: _vm.link.link_title },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.link, "link_title", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.link_title
+            ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                _vm._v(_vm._s(_vm.errors.link_title[0]))
+              ])
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-4 mb-3" }, [
+          _c("h6", [_vm._v("URL")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.link.link_url,
+                expression: "link.link_url"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              placeholder: "https://twitter.com/username",
+              required: ""
+            },
+            domProps: { value: _vm.link.link_url },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.link, "link_url", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.link_url
+            ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                _vm._v(_vm._s(_vm.errors.link_url[0]))
+              ])
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -47350,7 +47402,7 @@ var staticRenderFns = [
           staticClass: "btn btn-light ml-2",
           attrs: { title: "Сохранить изменения" }
         },
-        [_vm._v("\n            Сохранить\n        ")]
+        [_vm._v("\n                Сохранить\n            ")]
       )
     ])
   }

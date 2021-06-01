@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use File;
 use App\Models\Settings;
 use App\Models\Project;
+use App\Models\Link;
 
 //AdminController
 //функции админки
@@ -289,6 +290,25 @@ class AdminController extends Controller
         }
 
         return response()->json($newOrder, 200);
+    }
+
+    //editLink
+    //сохранить изменения для ссылок
+    public function editLink(Request $request)
+    {
+        $this->validate($request, [
+            'link_title' => 'required|string|max:50',
+            'link_url' => 'url|max:500|required',
+        ]);
+
+        $link = Link::find($request->id);
+
+        $link->link_title = $request->link_title;
+        $link->link_url = $request->link_url;
+
+        $link->save();
+
+        return response()->json(true, 200);
     }
 
 }
