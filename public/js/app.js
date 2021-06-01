@@ -2025,6 +2025,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   mounted: function mounted() {
@@ -2049,8 +2051,29 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {
-    links: function links() {
-      return this.$store.state.AdminStates.links;
+    links: {
+      get: function get() {
+        return this.$store.state.AdminStates.links;
+      },
+      set: function set(value) {
+        var _this = this;
+
+        var formData = new FormData();
+        formData.append('newOrder', JSON.stringify(value));
+        this.$store.commit('setState', {
+          state: 'links',
+          value: value
+        });
+        axios.post('/admin/setNewOrderForLinks', formData).then(function (response) {// this.$store.commit('setState', {state: 'links', value: response.data});
+        })["catch"](function (error) {
+          _this.$store.dispatch('setErrors', error.response.data.message);
+        });
+      }
+    },
+    dragOptions: function dragOptions() {
+      return {
+        ghostClass: "dragGhost"
+      };
     }
   },
   //методы
@@ -2068,23 +2091,23 @@ __webpack_require__.r(__webpack_exports__);
     },
     //отправить новую ссылку
     submit: function submit(link) {
-      var _this = this;
+      var _this2 = this;
 
       var formData = new FormData();
       formData.append('link_title', this.newLink.link_title);
       formData.append('link_url', this.newLink.link_url);
       axios.post('/admin/addLink', formData).then(function (response) {
-        _this.$store.dispatch('getLinks');
+        _this2.$store.dispatch('getLinks');
 
-        _this.toggleAddNewLink();
+        _this2.toggleAddNewLink();
 
-        _this.newLink = {
+        _this2.newLink = {
           link_title: undefined,
           link_url: undefined
         };
       })["catch"](function (error) {
         if (error.response.status === 422) {
-          _this.errors = error.response.data.errors || {};
+          _this2.errors = error.response.data.errors || {};
         }
       });
     }
@@ -47346,15 +47369,22 @@ var render = function() {
     ),
     _vm._v(" "),
     _vm.links === false
-      ? _c("div", { staticClass: "col-8 mt-5 text-center goUpAnim" }, [
-          _c("h3", [_vm._v("Нет ссылок")]),
-          _vm._v(" "),
-          _c("i", { staticClass: "bi bi-link font1-8rem" }),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c("h5", [_vm._v("Но их всегда можно добавить!")])
-        ])
+      ? _c(
+          "div",
+          {
+            staticClass: "col-8 mt-5 text-center goUpAnim",
+            class: { invisible: _vm.addNewLink === true }
+          },
+          [
+            _c("h3", [_vm._v("Нет ссылок")]),
+            _vm._v(" "),
+            _c("i", { staticClass: "bi bi-link font1-8rem" }),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c("h5", [_vm._v("Но их всегда можно добавить!")])
+          ]
+        )
       : _vm._e(),
     _vm._v(" "),
     _vm.links !== -1
@@ -47364,15 +47394,37 @@ var render = function() {
             staticClass: "col-8 mt-5 goUpAnim",
             class: { invisible: _vm.addNewLink === true }
           },
-          _vm._l(_vm.links, function(item) {
-            return _c(
-              "div",
-              { key: item.id },
-              [_c("LinkItem", { attrs: { link: item } })],
-              1
+          [
+            _c(
+              "draggable",
+              _vm._b(
+                {
+                  staticClass: "col-12",
+                  attrs: { handle: ".handle" },
+                  model: {
+                    value: _vm.links,
+                    callback: function($$v) {
+                      _vm.links = $$v
+                    },
+                    expression: "links"
+                  }
+                },
+                "draggable",
+                _vm.dragOptions,
+                false
+              ),
+              _vm._l(_vm.links, function(item) {
+                return _c(
+                  "div",
+                  { key: item.id },
+                  [_c("LinkItem", { attrs: { link: item } })],
+                  1
+                )
+              }),
+              0
             )
-          }),
-          0
+          ],
+          1
         )
       : _vm._e()
   ])
@@ -47691,9 +47743,9 @@ var render = function() {
             _vm._v(" "),
             _vm.edit === false
               ? _c(
-                  "button",
+                  "div",
                   {
-                    staticClass: "btn btn-light fadeInAnim",
+                    staticClass: "btn btn-light fadeInAnim handle",
                     attrs: { title: "Переместить" }
                   },
                   [_c("i", { staticClass: "bi bi-arrows-move" })]

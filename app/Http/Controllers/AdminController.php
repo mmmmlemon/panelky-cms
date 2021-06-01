@@ -344,4 +344,23 @@ class AdminController extends Controller
         return response()->json(true, 200);
     }
 
+    //setNewOrderForLinks
+    //установить новый порядок для ссылок
+    public function setNewOrderForLinks(Request $request){
+        
+        $newOrder = json_decode($request->newOrder);
+
+        $count = count($newOrder) - 1;
+
+        foreach($newOrder as $item)
+        {
+            $link = Link::where('slug', $item->slug)->get()[0];
+            $link->order = $count;
+            $link->save();
+            $count--;
+        }
+
+        return response()->json($newOrder, 200);
+    }
+
 }

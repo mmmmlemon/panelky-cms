@@ -24,9 +24,9 @@
             <div class="col-3 mb-3">
                 <h6>&nbsp;</h6>
                 <!-- кнопка переместить ссылку -->
-                <button class="btn btn-light fadeInAnim" title="Переместить" v-if="edit === false">
+                <div class="btn btn-light fadeInAnim handle" title="Переместить" v-if="edit === false">
                     <i class="bi bi-arrows-move"></i>
-                </button>
+                </div>
                 <!-- кнопка удалить ссылку -->
                 <div class="btn btn-light ml-2 fadeInAnim" title="Удалить ссылку" v-if="edit === false" v-on:click="deleteLink">
                     <i class="bi bi-trash-fill"></i>
@@ -94,7 +94,6 @@ export default {
 
         //вкл\выкл режим редактирования
         toggleEdit(value){
-
             if(value === true){
                 if(this.edit === false){ 
                     this.backup = {'link_title': this.link.link_title, 'link_url': this.link.link_url };

@@ -44,7 +44,7 @@
                 </div> 
             </form>
         </div>
-        <div class="col-8 mt-5 text-center goUpAnim" v-if="links === false">
+        <div class="col-8 mt-5 text-center goUpAnim" v-if="links === false" v-bind:class="{ 'invisible': addNewLink === true }">
             <h3>Нет ссылок</h3>
             <i class="bi bi-link font1-8rem"></i>
             <hr>
@@ -52,9 +52,11 @@
         </div>
         <div class="col-8 mt-5 goUpAnim" v-if="links !== -1" v-bind:class="{ 'invisible': addNewLink === true }" >
             <!-- форма редактирования имеющихся ссылок -->
-            <div v-for="item in links" :key="item.id">
-                <LinkItem :link="item"/>
-            </div>
+            <draggable v-model="links" handle=".handle" v-bind="dragOptions" class="col-12">
+                <div v-for="item in links" :key="item.id">
+                    <LinkItem :link="item"/>
+                </div>
+            </draggable>
         </div>
     </div>
 </template>
@@ -82,8 +84,26 @@ export default {
     },
 
     computed: {
-        links: function(){
-            return this.$store.state.AdminStates.links;
+        links: {
+            get(){
+                 return this.$store.state.AdminStates.links;
+            },
+
+            set(value){
+                let formData = new FormData();
+                formData.append('newOrder', JSON.stringify(value));
+                this.$store.commit('setState', {state: 'links', value: value});
+                axios.post('/admin/setNewOrderForLinks', formData).then(response => {
+                    // this.$store.commit('setState', {state: 'links', value: response.data});
+                }).catch(error => {
+                    this.$store.dispatch('setErrors', error.response.data.message);
+                });
+            }
+        },
+        dragOptions() {
+            return {
+                ghostClass: "dragGhost"
+            }
         },
 
     },
