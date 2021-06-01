@@ -7,19 +7,9 @@
                 <p class="text-center textVertical font14pt">{{footerTitle}}</p>
                 <hr>
                 <div class="row font21pt">
-                    <div class="col-12 col-md-12 mt-3">
-                        <a href="https://github.com/mmmmlemon" target="_blank">
-                           <b>GitHub</b>
-                        </a>  
-                    </div>
-                    <div class="col-12 col-md-12 mt-3">
-                        <a href="https://github.com/mmmmlemon" target="_blank">
-                            <b>Telegram</b>
-                        </a>  
-                    </div>
-                    <div class="col-12 col-md-12 mt-3">
-                        <a href="https://github.com/mmmmlemon" target="_blank">
-                            <b>TikTok</b>
+                    <div v-for="link in links" :key="link.slug" class="col-12 col-md-12 mt-3">
+                        <a :href="link.link_url" target="_blank">
+                           <b>{{link.link_title}}</b>
                         </a>  
                     </div>
                 </div>
@@ -42,11 +32,22 @@
 </template>
 <script>
 export default {
+    //хуки
+    created(){
+        this.$store.dispatch('getLinks');
+    },
 
+    //данные
     props: {
         footerTitle: { type: String, default: 'Ссылки' },
         contactTitle: { type: String, default: 'Связаться со мной' },
         contactEmail: { type: String, default: 'contact@mail.com' }
     },
+
+    computed: {
+        links: function(){
+            return this.$store.state.AdminStates.links;
+        }
+    }
 }
 </script>

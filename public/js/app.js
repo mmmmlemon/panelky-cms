@@ -3945,17 +3945,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  //хуки
+  created: function created() {
+    this.$store.dispatch('getLinks');
+  },
+  //данные
   props: {
     footerTitle: {
       type: String,
@@ -3968,6 +3963,11 @@ __webpack_require__.r(__webpack_exports__);
     contactEmail: {
       type: String,
       "default": 'contact@mail.com'
+    }
+  },
+  computed: {
+    links: function links() {
+      return this.$store.state.AdminStates.links;
     }
   }
 });
@@ -4557,8 +4557,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   computed: {
@@ -4569,6 +4567,10 @@ __webpack_require__.r(__webpack_exports__);
     //список проектов
     fullProjectList: function fullProjectList() {
       return this.$store.state.GlobalStates.fullProjectList;
+    },
+    //ссылки
+    links: function links() {
+      return this.$store.state.AdminStates.links;
     }
   },
   //методы
@@ -49891,7 +49893,24 @@ var render = function() {
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
-          _vm._m(0)
+          _c(
+            "div",
+            { staticClass: "row font21pt" },
+            _vm._l(_vm.links, function(link) {
+              return _c(
+                "div",
+                { key: link.slug, staticClass: "col-12 col-md-12 mt-3" },
+                [
+                  _c(
+                    "a",
+                    { attrs: { href: link.link_url, target: "_blank" } },
+                    [_c("b", [_vm._v(_vm._s(link.link_title))])]
+                  )
+                ]
+              )
+            }),
+            0
+          )
         ]),
         _vm._v(" "),
         _c("hr"),
@@ -49909,7 +49928,7 @@ var render = function() {
               [
                 _c("span", [_vm._v(_vm._s(_vm.contactTitle))]),
                 _vm._v(" "),
-                _vm._m(1)
+                _vm._m(0)
               ]
             )
           ])
@@ -49919,36 +49938,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row font21pt" }, [
-      _c("div", { staticClass: "col-12 col-md-12 mt-3" }, [
-        _c(
-          "a",
-          { attrs: { href: "https://github.com/mmmmlemon", target: "_blank" } },
-          [_c("b", [_vm._v("GitHub")])]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-md-12 mt-3" }, [
-        _c(
-          "a",
-          { attrs: { href: "https://github.com/mmmmlemon", target: "_blank" } },
-          [_c("b", [_vm._v("Telegram")])]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-md-12 mt-3" }, [
-        _c(
-          "a",
-          { attrs: { href: "https://github.com/mmmmlemon", target: "_blank" } },
-          [_c("b", [_vm._v("TikTok")])]
-        )
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -50855,7 +50844,7 @@ var render = function() {
     _c(
       "button",
       {
-        staticClass: "d-none d-md-block navButton zIndex3",
+        staticClass: "d-none d-md-block navButton zIndex3 fadeInAnim",
         on: {
           click: function($event) {
             return _vm.showNavMenu()
@@ -50951,32 +50940,37 @@ var render = function() {
                 _vm._v(" "),
                 _vm._m(1),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-12 text-center" }, [
-                  _c("h6", [
-                    _c(
-                      "a",
-                      {
-                        attrs: { href: "#spotifyi" },
-                        on: {
-                          click: function($event) {
-                            return _vm.closeNavMenu()
-                          }
-                        }
-                      },
-                      [_vm._v("GitHub")]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c("h6", [_vm._v("KoFi")]),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c("h6", [_vm._v("Instagramio")]),
-                  _vm._v(" "),
-                  _c("hr")
-                ])
+                _c(
+                  "div",
+                  { staticClass: "col-12 text-center" },
+                  [
+                    _vm._l(_vm.links, function(link) {
+                      return _c("h6", { key: link.slug, staticClass: "mb-3" }, [
+                        _c(
+                          "a",
+                          {
+                            attrs: { target: "_blank", href: link.link_url },
+                            on: {
+                              click: function($event) {
+                                return _vm.closeNavMenu()
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(link.link_title) +
+                                "\n                    "
+                            )
+                          ]
+                        )
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("hr")
+                  ],
+                  2
+                )
               ],
               2
             )
@@ -50999,7 +50993,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12" }, [
-      _c("h6", { staticClass: "text-center" }, [_c("b", [_vm._v("Контакты")])]),
+      _c("h6", { staticClass: "text-center" }, [_c("b", [_vm._v("Ссылки")])]),
       _vm._v(" "),
       _c("hr")
     ])

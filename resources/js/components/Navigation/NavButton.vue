@@ -4,7 +4,7 @@
     <div>
         <!-- кнопка меню -->
         <!-- видна только на десктопе -->
-        <button v-on:click="showNavMenu()" class="d-none d-md-block navButton zIndex3">
+        <button v-on:click="showNavMenu()" class="d-none d-md-block navButton zIndex3 fadeInAnim">
             <i class="bi bi-three-dots-vertical"></i>
         </button>
         
@@ -38,19 +38,17 @@
                 <!-- ссылки -->
                 <div class="col-12">
                     <h6 class="text-center">
-                        <b>Контакты</b>
+                        <b>Ссылки</b>
                     </h6>
                     <hr>
                 </div>
                 <!-- список ссылок -->
                 <div class="col-12 text-center">
-                    <h6>
-                        <a v-on:click="closeNavMenu()" href="#spotifyi">GitHub</a>
+                    <h6 v-for="link in links" :key="link.slug" class="mb-3">
+                        <a v-on:click="closeNavMenu()" target="_blank" :href="link.link_url">
+                            {{link.link_title}}
+                        </a>
                     </h6>
-                    <br>
-                    <h6>KoFi</h6>
-                    <br>
-                    <h6>Instagramio</h6>
                     <hr>
                 </div>
             </div>
@@ -68,6 +66,10 @@
             //список проектов
             fullProjectList: function(){
                 return this.$store.state.GlobalStates.fullProjectList;
+            },
+            //ссылки
+            links: function(){
+                return this.$store.state.AdminStates.links;
             }
         },
 
