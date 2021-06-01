@@ -10,28 +10,28 @@
             </button>
             
             <button class="btn btn-light" title="Добавить ссылку" 
-                    v-on:click="toggleAddNewLink" v-bind:class="{ 'invisible': addNewLink === false }">
+                    v-on:click="toggleAddNewLink('back')" v-bind:class="{ 'invisible': addNewLink === false }">
                 <i class="bi bi-arrow-left"></i>
                 Назад
             </button>
         </div>
         <div class="col-8 mt-5 goUpAnim" v-bind:class="{ 'invisible': addNewLink === false }">
             <!-- форма редактирования имеющихся ссылок -->
-            <form method="POST">
+            <form method="POST" @submit.prevent="submit()">
                 <div class="row justify-content-center">
                     <div class="col-2 text-center">
                         <h6>&nbsp;</h6>
-                        <h4></h4>
+                        <h4>{{newLink.link_title}}</h4>
                     </div>
                     <div class="col-3 mb-3">
                         <h6>Название ресурса</h6>
-                        <input type="text" class="form-control" placeholder="Twitter" required>
-                        <!-- <div v-if="errors && errors.name" class="text-danger goUpAnim">{{ errors.name[0] }}</div> -->
+                        <input type="text" class="form-control" placeholder="Twitter" v-model="newLink.link_title" required>
+                        <div v-if="errors && errors.link_title" class="text-danger goUpAnim">{{ errors.link_title[0] }}</div>
                     </div>
                     <div class="col-4 mb-3">
                         <h6>URL</h6>
-                        <input type="text" class="form-control" placeholder="https://twitter.com/username"  required>
-                        <!-- <div v-if="errors && errors.name" class="text-danger goUpAnim">{{ errors.name[0] }}</div> -->
+                        <input type="text" class="form-control" placeholder="https://twitter.com/username" v-model="newLink.link_url" required>
+                        <div v-if="errors && errors.link_url" class="text-danger goUpAnim">{{ errors.link_url[0] }}</div>
                     </div>
                     <div class="col-3 mb-3">
                         <h6>&nbsp;</h6>
@@ -42,7 +42,6 @@
                         </button>
                     </div>
                 </div> 
-                <hr>
             </form>
         </div>
         <div class="col-8 mt-5 goUpAnim" v-if="links !== -1" v-bind:class="{ 'invisible': addNewLink === true }">
@@ -66,6 +65,13 @@ export default {
     data: () => {
         return {
             addNewLink: false,
+            newLink: {type: Object, default: function(){
+                return {
+                    link_title: undefined,
+                    link_url: undefined,
+                }
+            }},
+            errors: null,
         }
     },
 
@@ -78,7 +84,12 @@ export default {
 
     //методы
     methods: {
-        toggleAddNewLink: function(){
+        //переключиться между ссылками и добавлением
+        toggleAddNewLink: function(value){
+            if(value === "back")
+            { this.newLink = {link_title: undefined,
+                              link_url: undefined}; }
+
             if(this.addNewLink === false)
             this.addNewLink = true;
 
@@ -86,8 +97,22 @@ export default {
             this.addNewLink = false;
         },
 
+        //отправить новую ссылку
         submit(link){
-            console.log(link)
+            
+            let formData = new FormData();
+            formData.append('link_title', this.newLink.link_title);
+            formData.append('link_url', this.newLink.link_url);
+
+            axios.post('/admin/addLink', formData).then(response => {
+                this.$store.dispatch('getLinks');
+                this.toggleAddNewLink();
+            }).catch(error => {
+                if(error.response.status === 422){ 
+                    this.errors = error.response.data.errors || {};
+                }
+            })
+            
         }
     }
 }

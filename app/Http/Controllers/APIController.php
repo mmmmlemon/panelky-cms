@@ -168,7 +168,7 @@ class APIController extends Controller
     //получить ссылки
     public function getLinks()
     {
-        $links = Link::all();
+        $links = Link::orderBy('order', 'desc')->get();
 
         if(count($links) > 0)
         { return response()->json($links, 200); }

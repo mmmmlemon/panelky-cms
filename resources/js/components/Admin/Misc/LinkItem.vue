@@ -47,11 +47,6 @@
 </template>
 <script>
 export default {
-    //хуки
-    mounted(){
-        console.log(this.$parent.links);
-    },
-
     //данные
     data: () => {
         return {

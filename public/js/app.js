@@ -2019,7 +2019,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   mounted: function mounted() {
@@ -2030,7 +2029,17 @@ __webpack_require__.r(__webpack_exports__);
   //данные
   data: function data() {
     return {
-      addNewLink: false
+      addNewLink: false,
+      newLink: {
+        type: Object,
+        "default": function _default() {
+          return {
+            link_title: undefined,
+            link_url: undefined
+          };
+        }
+      },
+      errors: null
     };
   },
   computed: {
@@ -2040,11 +2049,33 @@ __webpack_require__.r(__webpack_exports__);
   },
   //методы
   methods: {
-    toggleAddNewLink: function toggleAddNewLink() {
+    //переключиться между ссылками и добавлением
+    toggleAddNewLink: function toggleAddNewLink(value) {
+      if (value === "back") {
+        this.newLink = {
+          link_title: undefined,
+          link_url: undefined
+        };
+      }
+
       if (this.addNewLink === false) this.addNewLink = true;else this.addNewLink = false;
     },
+    //отправить новую ссылку
     submit: function submit(link) {
-      console.log(link);
+      var _this = this;
+
+      var formData = new FormData();
+      formData.append('link_title', this.newLink.link_title);
+      formData.append('link_url', this.newLink.link_url);
+      axios.post('/admin/addLink', formData).then(function (response) {
+        _this.$store.dispatch('getLinks');
+
+        _this.toggleAddNewLink();
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          _this.errors = error.response.data.errors || {};
+        }
+      });
     }
   }
 });
@@ -2206,10 +2237,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  //хуки
-  mounted: function mounted() {
-    console.log(this.$parent.links);
-  },
   //данные
   data: function data() {
     return {
@@ -47138,7 +47165,11 @@ var render = function() {
           staticClass: "btn btn-light",
           class: { invisible: _vm.addNewLink === false },
           attrs: { title: "Добавить ссылку" },
-          on: { click: _vm.toggleAddNewLink }
+          on: {
+            click: function($event) {
+              return _vm.toggleAddNewLink("back")
+            }
+          }
         },
         [
           _c("i", { staticClass: "bi bi-arrow-left" }),
@@ -47153,7 +47184,99 @@ var render = function() {
         staticClass: "col-8 mt-5 goUpAnim",
         class: { invisible: _vm.addNewLink === false }
       },
-      [_vm._m(0)]
+      [
+        _c(
+          "form",
+          {
+            attrs: { method: "POST" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.submit()
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "row justify-content-center" }, [
+              _c("div", { staticClass: "col-2 text-center" }, [
+                _c("h6", [_vm._v(" ")]),
+                _vm._v(" "),
+                _c("h4", [_vm._v(_vm._s(_vm.newLink.link_title))])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-3 mb-3" }, [
+                _c("h6", [_vm._v("Название ресурса")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.newLink.link_title,
+                      expression: "newLink.link_title"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "Twitter", required: "" },
+                  domProps: { value: _vm.newLink.link_title },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.newLink, "link_title", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.link_title
+                  ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                      _vm._v(_vm._s(_vm.errors.link_title[0]))
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-4 mb-3" }, [
+                _c("h6", [_vm._v("URL")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.newLink.link_url,
+                      expression: "newLink.link_url"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    placeholder: "https://twitter.com/username",
+                    required: ""
+                  },
+                  domProps: { value: _vm.newLink.link_url },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.newLink, "link_url", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.link_url
+                  ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                      _vm._v(_vm._s(_vm.errors.link_url[0]))
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _vm._m(0)
+            ])
+          ]
+        )
+      ]
     ),
     _vm._v(" "),
     _vm.links !== -1
@@ -47181,54 +47304,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("form", { attrs: { method: "POST" } }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-2 text-center" }, [
-          _c("h6", [_vm._v(" ")]),
-          _vm._v(" "),
-          _c("h4")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-3 mb-3" }, [
-          _c("h6", [_vm._v("Название ресурса")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Twitter", required: "" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-4 mb-3" }, [
-          _c("h6", [_vm._v("URL")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              placeholder: "https://twitter.com/username",
-              required: ""
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-3 mb-3" }, [
-          _c("h6", [_vm._v(" ")]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-light ml-2",
-              attrs: { title: "Добавить ссылку" }
-            },
-            [
-              _c("i", { staticClass: "bi bi-arrow-right" }),
-              _vm._v("\n                        Добавить\n                    ")
-            ]
-          )
-        ])
-      ]),
+    return _c("div", { staticClass: "col-3 mb-3" }, [
+      _c("h6", [_vm._v(" ")]),
       _vm._v(" "),
-      _c("hr")
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-light ml-2",
+          attrs: { title: "Добавить ссылку" }
+        },
+        [
+          _c("i", { staticClass: "bi bi-arrow-right" }),
+          _vm._v("\n                        Добавить\n                    ")
+        ]
+      )
     ])
   }
 ]

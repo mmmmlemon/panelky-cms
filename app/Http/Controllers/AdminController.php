@@ -311,4 +311,26 @@ class AdminController extends Controller
         return response()->json(true, 200);
     }
 
+    //addLink
+    //добавить ссылку
+    public function addLink(Request $request)
+    {
+        $this->validate($request, [
+            'link_title' => 'required|string|max:50',
+            'link_url' => 'url|max:500|required',
+        ]);
+
+        $link = new Link;
+
+        $link->link_title = $request->link_title;
+        $link->link_url = $request->link_url;
+        $link->slug = Str::slug($request->link_title);
+        $link->order = Link::orderBy('order', 'desc')->max('order') + 1;
+
+        $link->save();
+
+        return response()->json(true, 200);
+       
+    }
+
 }
