@@ -3,7 +3,7 @@
 <template>
     <div class="row justify-content-center">
         <div class="col-8 mt-2">
-            <button class="btn btn-light" title="Добавить ссылку" 
+            <button class="btn btn-light fadeInAnim" title="Добавить ссылку" 
                     v-on:click="toggleAddNewLink" v-bind:class="{ 'invisible': addNewLink === true   }">
                 <i class="bi bi-plus"></i>
                 Добавить ссылку

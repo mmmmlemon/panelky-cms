@@ -95,7 +95,10 @@
 export default {
 
     mounted(){
-        this.$parent.$parent.startHeaderCardTransition = true;
+        if(this.$route.path != '/admin'){
+            this.$parent.$parent.startHeaderCardTransition = true;
+        }
+       
     },
 
     props: {
@@ -112,7 +115,10 @@ export default {
     computed: {
         //вкл. анимацию
         startTransition: function(){
-            return this.$parent.$parent.startHeaderCardTransition;
+            if(this.$route.path !== '/admin')
+            { return this.$parent.$parent.startHeaderCardTransition;}
+            else
+            { return true; }
         }
     }
     

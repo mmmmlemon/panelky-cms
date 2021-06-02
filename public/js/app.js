@@ -1944,11 +1944,64 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   mounted: function mounted() {
     //текущая вкладка в Links.vue
     this.$parent.currentTab = "editContacts";
+  },
+  //данные
+  data: function data() {
+    return {
+      email: 'zhmyhalo@mail.ru',
+      edit: false,
+      backup: null,
+      errors: null
+    };
+  },
+  //методы
+  methods: {
+    //вкл\выкл режим редактирования
+    toggleEdit: function toggleEdit(value) {
+      if (value === true) {
+        if (this.edit === false) {
+          this.backup = this.email;
+        }
+
+        this.edit = true;
+      }
+
+      if (value === false) {
+        this.edit = value;
+        this.errors = null;
+        this.email = this.backup;
+      }
+    }
   }
 });
 
@@ -2265,6 +2318,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+//
 //
 //
 //
@@ -4169,7 +4223,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
-    this.$parent.$parent.startHeaderCardTransition = true;
+    if (this.$route.path != '/admin') {
+      this.$parent.$parent.startHeaderCardTransition = true;
+    }
   },
   props: {
     info: {
@@ -4187,7 +4243,11 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     //вкл. анимацию
     startTransition: function startTransition() {
-      return this.$parent.$parent.startHeaderCardTransition;
+      if (this.$route.path !== '/admin') {
+        return this.$parent.$parent.startHeaderCardTransition;
+      } else {
+        return true;
+      }
     }
   }
 });
@@ -47208,16 +47268,98 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-8" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12 goUpAnim" }, [
+          _c("form", { attrs: { method: "POST" } }, [
+            _c("div", { staticClass: "row justify-content-center" }, [
+              _c("div", { staticClass: "col-5 mb-3" }, [
+                _c("h6", [_vm._v("E-Mail")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.email,
+                      expression: "email"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    placeholder: "username@mail.ru",
+                    required: ""
+                  },
+                  domProps: { value: _vm.email },
+                  on: {
+                    keydown: function($event) {
+                      return _vm.toggleEdit(true)
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.email = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _vm.edit === true
+              ? _c(
+                  "div",
+                  { staticClass: "row justify-content-center goUpAnim" },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-light",
+                        attrs: { title: "Отмена" },
+                        on: {
+                          click: function($event) {
+                            return _vm.toggleEdit(false)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "bi bi-x" }),
+                        _vm._v(
+                          "\n                            Отмена\n                        "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm._m(0)
+                  ]
+                )
+              : _vm._e()
+          ])
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center" }, [
-      _c("h1", { staticClass: "text-center" }, [_vm._v("EditContacts.vue")])
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-light ml-2",
+        attrs: { title: "Сохранить изменения" }
+      },
+      [
+        _c("i", { staticClass: "bi bi-save" }),
+        _vm._v(
+          "\n                            Сохранить\n                        "
+        )
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -47247,7 +47389,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "btn btn-light",
+          staticClass: "btn btn-light fadeInAnim",
           class: { invisible: _vm.addNewLink === true },
           attrs: { title: "Добавить ссылку" },
           on: { click: _vm.toggleAddNewLink }
@@ -47710,7 +47852,20 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-4 mb-3" }, [
-            _c("h6", [_vm._v("URL")]),
+            _c("h6", [
+              _vm._v("URL "),
+              _c(
+                "a",
+                {
+                  attrs: {
+                    href: _vm.link.link_url,
+                    target: "_blank",
+                    title: "Проверить ссылку"
+                  }
+                },
+                [_c("i", { staticClass: "bi bi-link" })]
+              )
+            ]),
             _vm._v(" "),
             _c("input", {
               directives: [

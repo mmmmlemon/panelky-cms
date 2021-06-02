@@ -16,7 +16,8 @@
                 <div v-if="errors && errors.link_title" class="text-danger goUpAnim">{{ errors.link_title[0] }}</div>
             </div>
             <div class="col-4 mb-3">
-                <h6>URL</h6>
+                <h6>URL <a :href="link.link_url" target="_blank" title="Проверить ссылку"><i class="bi bi-link"></i></a></h6>
+
                 <input type="text" class="form-control" placeholder="https://twitter.com/username" 
                        v-model="link.link_url" v-on:keydown="toggleEdit(true)" required>
                 <div v-if="errors && errors.link_url" class="text-danger goUpAnim">{{ errors.link_url[0] }}</div>
