@@ -39,6 +39,8 @@ export default {
         return {
             //стиль для кнопки "Наверх"
             navScrollStyle: undefined,
+            //вкл. анимацию для HeaderCard.vue
+            startHeaderCardTransition: false,
         }
     },
 

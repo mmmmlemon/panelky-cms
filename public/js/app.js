@@ -3743,7 +3743,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       //стиль для кнопки "Наверх"
-      navScrollStyle: undefined
+      navScrollStyle: undefined,
+      //вкл. анимацию для HeaderCard.vue
+      startHeaderCardTransition: false
     };
   },
   computed: {
@@ -4166,7 +4168,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  //данные
+  mounted: function mounted() {
+    this.$parent.$parent.startHeaderCardTransition = true;
+  },
   props: {
     info: {
       type: Object,
@@ -4178,6 +4182,12 @@ __webpack_require__.r(__webpack_exports__);
           'bottomText': undefined
         };
       }
+    }
+  },
+  computed: {
+    //вкл. анимацию
+    startTransition: function startTransition() {
+      return this.$parent.$parent.startHeaderCardTransition;
     }
   }
 });
@@ -50029,33 +50039,35 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "row h-100 justify-content-center" },
-    [
-      _c("HeaderCard", { attrs: { info: _vm.siteOwnerInfo } }),
-      _vm._v(" "),
-      _vm._l(_vm.fullProjectList.home, function(project) {
-        return _c("ProjectCard", {
-          key: project.id,
-          attrs: {
-            project: project,
-            type: project.orientation,
-            isVisible: false
-          }
-        })
-      }),
-      _vm._v(" "),
-      _vm.fullProjectList !== -1 && _vm.fullProjectList.other.length > 0
-        ? _c("OtherProjectsCard", {
-            attrs: { projects: _vm.fullProjectList.other }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _c("FooterCard")
-    ],
-    2
-  )
+  return _vm.siteOwnerInfo !== -1
+    ? _c(
+        "div",
+        { staticClass: "row h-100 justify-content-center" },
+        [
+          _c("HeaderCard", { attrs: { info: _vm.siteOwnerInfo } }),
+          _vm._v(" "),
+          _vm._l(_vm.fullProjectList.home, function(project) {
+            return _c("ProjectCard", {
+              key: project.id,
+              attrs: {
+                project: project,
+                type: project.orientation,
+                isVisible: false
+              }
+            })
+          }),
+          _vm._v(" "),
+          _vm.fullProjectList !== -1 && _vm.fullProjectList.other.length > 0
+            ? _c("OtherProjectsCard", {
+                attrs: { projects: _vm.fullProjectList.other }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _c("FooterCard")
+        ],
+        2
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -50092,26 +50104,33 @@ var render = function() {
                   _vm._v(_vm._s(_vm.footerTitle))
                 ]),
                 _vm._v(" "),
-                _c("hr"),
+                _c("hr", { staticClass: "mb-0" }),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "row font21pt" },
-                  _vm._l(_vm.links, function(link) {
-                    return _c(
+                _vm.links !== undefined && _vm.links !== -1
+                  ? _c(
                       "div",
-                      { key: link.slug, staticClass: "col-12 col-md-12 mt-3" },
-                      [
-                        _c(
-                          "a",
-                          { attrs: { href: link.link_url, target: "_blank" } },
-                          [_c("b", [_vm._v(_vm._s(link.link_title))])]
+                      { staticClass: "row font21pt" },
+                      _vm._l(_vm.links, function(link) {
+                        return _c(
+                          "div",
+                          {
+                            key: link.slug,
+                            staticClass: "col-12 col-md-12 mt-3"
+                          },
+                          [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: link.link_url, target: "_blank" }
+                              },
+                              [_c("b", [_vm._v(_vm._s(link.link_title))])]
+                            )
+                          ]
                         )
-                      ]
+                      }),
+                      0
                     )
-                  }),
-                  0
-                )
+                  : _vm._e()
               ])
             ])
           : _vm._e(),
@@ -50200,7 +50219,7 @@ var render = function() {
             : _vm._e(),
           _vm._v(" "),
           _c("transition", { attrs: { name: "name" } }, [
-            _vm.info.name != undefined
+            _vm.startTransition === true && _vm.info.name != undefined
               ? _c("h1", { staticClass: "text-center textVertical font5rem" }, [
                   _c("b", [_vm._v(_vm._s(_vm.info["name"]))])
                 ])
@@ -50208,11 +50227,13 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("transition", { attrs: { name: "occupation" } }, [
-            _vm.info.occupation != undefined ? _c("hr") : _vm._e()
+            _vm.startTransition === true && _vm.info.occupation != undefined
+              ? _c("hr")
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c("transition", { attrs: { name: "occupation" } }, [
-            _vm.info.occupation != undefined
+            _vm.startTransition === true && _vm.info.occupation != undefined
               ? _c(
                   "p",
                   { staticClass: "text-center textVertical font2-5rem" },
@@ -50228,11 +50249,13 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("transition", { attrs: { name: "occupation" } }, [
-            _vm.info.occupation != undefined ? _c("hr") : _vm._e()
+            _vm.startTransition === true && _vm.info.occupation != undefined
+              ? _c("hr")
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c("transition", { attrs: { name: "aboutMe" } }, [
-            _vm.info.aboutMe != undefined
+            _vm.startTransition === true && _vm.info.aboutMe != undefined
               ? _c("p", { staticClass: "text-center font1-8rem" }, [
                   _vm._v(
                     "\n                " +
@@ -50244,7 +50267,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("transition", { attrs: { name: "bottomText" } }, [
-            _vm.info.bottomText != undefined
+            _vm.startTransition === true && _vm.info.bottomText != undefined
               ? _c("h6", { staticClass: "text-center font1-8rem" }, [
                   _c("b", [_vm._v(_vm._s(_vm.info["bottomText"]))])
                 ])
@@ -51149,7 +51172,7 @@ var render = function() {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.links !== false
+                _vm.links !== false && _vm.links !== -1
                   ? _c(
                       "div",
                       { staticClass: "col-12 text-center" },

@@ -1,10 +1,10 @@
 //HomePage
 //домашняя страница
 <template>
-    <div class="row h-100 justify-content-center">
+    <div class="row h-100 justify-content-center" v-if="siteOwnerInfo !== -1">
     
         <!-- карточка с информацией о владельце -->
-        <HeaderCard 
+        <HeaderCard
             :info="siteOwnerInfo"/>
         
         <!-- карточки проектов (выводятся в цикле) -->

@@ -43,7 +43,7 @@
                     <hr>
                 </div>
                 <!-- список ссылок -->
-                <div class="col-12 text-center" v-if="links !== false">
+                <div class="col-12 text-center" v-if="links !== false && links !== -1">
                     <h6 v-for="link in links" :key="link.slug" class="mb-3">
                         <a v-on:click="closeNavMenu()" target="_blank" :href="link.link_url">
                             {{link.link_title}}
