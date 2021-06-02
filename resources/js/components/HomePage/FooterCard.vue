@@ -19,7 +19,7 @@
             <hr v-if="links !== false">
             <br v-if="links !== false">
             <p class="text-center font18pt">
-                <a :href="'mailto:'+contactEmail">
+                <a :href="'mailto:'+email">
                     <button type="button" class="btn btn-lg btn-outline-light">
                         <span>{{contactTitle}}</span>
                         <span aria-hidden="true">
@@ -37,9 +37,20 @@ export default {
     //хуки
     created(){
         this.$store.dispatch('getLinks');
+        axios.get('/api/getEmail').then(response => {
+            this.email = response.data;
+        }).catch(error => {
+            this.email = false;
+        })
     },
 
     //данные
+    data: () => {
+        return {
+            email: -1,
+        }
+    },
+
     props: {
         footerTitle: { type: String, default: 'Ссылки' },
         contactTitle: { type: String, default: 'Связаться со мной' },

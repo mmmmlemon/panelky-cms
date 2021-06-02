@@ -363,4 +363,14 @@ class AdminController extends Controller
         return response()->json($newOrder, 200);
     }
 
+    //editEmail
+    //сохранить изменения в Email
+    public function editEmail(Request $request)
+    {
+        $settings = Settings::get()[0];
+        $settings->contact_email = $request->email;
+        $settings->save();
+        return response()->json(true, 200);
+    }
+
 }

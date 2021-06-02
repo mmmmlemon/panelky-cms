@@ -174,6 +174,14 @@ class APIController extends Controller
         { return response()->json($links, 200); }
         else
         { return response()->json(false, 200); }
-  
+
+    }
+
+    //getEmail
+    //получить E-mail
+    public function getEmail()
+    {
+        $email = Settings::get()[0]->contact_email;
+        return response()->json($email, 200);
     }
 }

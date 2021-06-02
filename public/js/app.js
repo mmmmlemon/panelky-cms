@@ -1969,8 +1969,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
+  created: function created() {
+    var _this = this;
+
+    axios.get('/api/getEmail').then(function (response) {
+      _this.email = response.data;
+    })["catch"](function (error) {
+      _this.email = false;
+    });
+  },
   mounted: function mounted() {
     //текущая вкладка в Links.vue
     this.$parent.currentTab = "editContacts";
@@ -1978,7 +1988,7 @@ __webpack_require__.r(__webpack_exports__);
   //данные
   data: function data() {
     return {
-      email: 'zhmyhalo@mail.ru',
+      email: -1,
       edit: false,
       backup: null,
       errors: null
@@ -2001,6 +2011,17 @@ __webpack_require__.r(__webpack_exports__);
         this.errors = null;
         this.email = this.backup;
       }
+    },
+    //сохранить email
+    submit: function submit() {
+      var _this2 = this;
+
+      var formData = new FormData();
+      formData.append('email', this.email);
+      axios.post('/admin/editEmail', formData).then(function (response) {
+        _this2.edit = false;
+      })["catch"](function (error) {//
+      });
     }
   }
 });
@@ -4091,9 +4112,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
+    var _this = this;
+
     this.$store.dispatch('getLinks');
+    axios.get('/api/getEmail').then(function (response) {
+      _this.email = response.data;
+    })["catch"](function (error) {
+      _this.email = false;
+    });
   },
   //данные
+  data: function data() {
+    return {
+      email: -1
+    };
+  },
   props: {
     footerTitle: {
       type: String,
@@ -47270,75 +47303,104 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center" }, [
     _c("div", { staticClass: "col-8" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-12 goUpAnim" }, [
-          _c("form", { attrs: { method: "POST" } }, [
-            _c("div", { staticClass: "row justify-content-center" }, [
-              _c("div", { staticClass: "col-5 mb-3" }, [
-                _c("h6", [_vm._v("E-Mail")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.email,
-                      expression: "email"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    placeholder: "username@mail.ru",
-                    required: ""
-                  },
-                  domProps: { value: _vm.email },
-                  on: {
-                    keydown: function($event) {
-                      return _vm.toggleEdit(true)
-                    },
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+      _c(
+        "div",
+        { staticClass: "row justify-content-center" },
+        [
+          _vm.email === false
+            ? _c("Error", {
+                attrs: {
+                  errorMessage: "Произошла ошибка при получении контактов"
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.email !== -1 && _vm.email !== false
+            ? _c("div", { staticClass: "col-12 goUpAnim" }, [
+                _c(
+                  "form",
+                  {
+                    attrs: { method: "POST" },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.submit($event)
                       }
-                      _vm.email = $event.target.value
                     }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _vm.edit === true
-              ? _c(
-                  "div",
-                  { staticClass: "row justify-content-center goUpAnim" },
+                  },
                   [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-light",
-                        attrs: { title: "Отмена" },
-                        on: {
-                          click: function($event) {
-                            return _vm.toggleEdit(false)
+                    _c("div", { staticClass: "row justify-content-center" }, [
+                      _c("div", { staticClass: "col-5 mb-3" }, [
+                        _c("h6", [_vm._v("E-Mail")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.email,
+                              expression: "email"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            placeholder: "username@mail.ru",
+                            required: ""
+                          },
+                          domProps: { value: _vm.email },
+                          on: {
+                            keydown: function($event) {
+                              return _vm.toggleEdit(true)
+                            },
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.email = $event.target.value
+                            }
                           }
-                        }
-                      },
-                      [
-                        _c("i", { staticClass: "bi bi-x" }),
-                        _vm._v(
-                          "\n                            Отмена\n                        "
-                        )
-                      ]
-                    ),
+                        })
+                      ])
+                    ]),
                     _vm._v(" "),
-                    _vm._m(0)
+                    _vm.edit === true
+                      ? _c(
+                          "div",
+                          {
+                            staticClass: "row justify-content-center goUpAnim"
+                          },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-light",
+                                attrs: { title: "Отмена" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.toggleEdit(false)
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", { staticClass: "bi bi-x" }),
+                                _vm._v(
+                                  "\n                            Отмена\n                        "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm._m(0)
+                          ]
+                        )
+                      : _vm._e()
                   ]
                 )
-              : _vm._e()
-          ])
-        ])
-      ])
+              ])
+            : _vm._e()
+        ],
+        1
+      )
     ])
   ])
 }
@@ -50295,7 +50357,7 @@ var render = function() {
         _vm.links !== false ? _c("br") : _vm._e(),
         _vm._v(" "),
         _c("p", { staticClass: "text-center font18pt" }, [
-          _c("a", { attrs: { href: "mailto:" + _vm.contactEmail } }, [
+          _c("a", { attrs: { href: "mailto:" + _vm.email } }, [
             _c(
               "button",
               {

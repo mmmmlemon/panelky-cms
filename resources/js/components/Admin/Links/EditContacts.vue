@@ -3,10 +3,11 @@
 <template>
     <div class="row justify-content-center">
         <div class="col-8">
-            <div class="row">
-                <div class="col-12 goUpAnim">
+            <div class="row justify-content-center">
+                <Error v-if="email === false" errorMessage="Произошла ошибка при получении контактов"/>
+                <div class="col-12 goUpAnim" v-if="email !== -1 && email !== false">
                     <!-- форма редактирования имейла -->
-                    <form method="POST">
+                    <form method="POST" @submit.prevent="submit">
                         <div class="row justify-content-center">
                             <div class="col-5 mb-3">
                                 <h6>E-Mail</h6>
@@ -33,6 +34,14 @@
 <script>
 export default {
     //хуки
+    created(){
+        axios.get('/api/getEmail').then(response => {
+            this.email = response.data;
+        }).catch(error => {
+            this.email = false;
+        })
+    },
+
     mounted(){
         //текущая вкладка в Links.vue
         this.$parent.currentTab = "editContacts";
@@ -41,7 +50,7 @@ export default {
     //данные
     data: () => {
         return{
-            email: 'zhmyhalo@mail.ru',
+            email: -1,
             edit: false,
             backup: null,
             errors: null,
@@ -65,6 +74,19 @@ export default {
                 this.email = this.backup;
             }
         },
+
+        //сохранить email
+        submit(){
+           
+           let formData = new FormData();
+           formData.append('email', this.email);
+           axios.post('/admin/editEmail', formData).then(response => {
+               this.edit = false;
+           }).catch(error => {
+               //
+           })
+
+        }
     }
 }
 </script>

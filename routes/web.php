@@ -40,6 +40,7 @@ Route::post('/admin/editLink', [AdminController::class, 'editLink']);
 Route::post('/admin/addLink', [AdminController::class, 'addLink']);
 Route::post('/admin/deleteLink', [AdminController::class, 'deleteLink']);
 Route::post('/admin/setNewOrderForLinks', [AdminController::class, 'setNewOrderForLinks']);
+Route::post('/admin/editEmail', [AdminController::class, 'editEmail']);
 
 Route::get('/admin', [AdminController::class, 'index']);
 Route::get('/admin/{any}', [AdminController::class, 'index']);
