@@ -1976,7 +1976,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('/api/getEmail').then(function (response) {
-      _this.email = response.data;
+      _this.email = response.data.email;
     })["catch"](function (error) {
       _this.email = false;
     });
@@ -2020,7 +2020,11 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('email', this.email);
       axios.post('/admin/editEmail', formData).then(function (response) {
         _this2.edit = false;
-      })["catch"](function (error) {//
+        _this2.errors = null;
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          _this2.errors = error.response.data.errors || {};
+        }
       });
     }
   }
@@ -4109,6 +4113,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
@@ -4116,7 +4122,7 @@ __webpack_require__.r(__webpack_exports__);
 
     this.$store.dispatch('getLinks');
     axios.get('/api/getEmail').then(function (response) {
-      _this.email = response.data;
+      _this.email = _this.reverseString(response.data.email);
     })["catch"](function (error) {
       _this.email = false;
     });
@@ -4124,7 +4130,8 @@ __webpack_require__.r(__webpack_exports__);
   //данные
   data: function data() {
     return {
-      email: -1
+      email: -1,
+      emailVisible: false
     };
   },
   props: {
@@ -4144,6 +4151,31 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     links: function links() {
       return this.$store.state.AdminStates.links;
+    }
+  },
+  //методы
+  methods: {
+    reverseString: function reverseString(str) {
+      // Step 1. Use the split() method to return a new array
+      var splitString = str.split(""); // var splitString = "hello".split("");
+      // ["h", "e", "l", "l", "o"]
+      // Step 2. Use the reverse() method to reverse the new created array
+
+      var reverseArray = splitString.reverse(); // var reverseArray = ["h", "e", "l", "l", "o"].reverse();
+      // ["o", "l", "l", "e", "h"]
+      // Step 3. Use the join() method to join all elements of the array into a string
+
+      var joinArray = reverseArray.join(""); // var joinArray = ["o", "l", "l", "e", "h"].join("");
+      // "olleh"
+      //Step 4. Return the reversed string
+
+      return joinArray; // "olleh"
+    },
+    showEmail: function showEmail() {
+      if (this.emailVisible !== true) {
+        this.email = this.reverseString(this.email);
+        this.emailVisible = true;
+      }
     }
   }
 });
@@ -47345,8 +47377,7 @@ var render = function() {
                           staticClass: "form-control",
                           attrs: {
                             type: "text",
-                            placeholder: "username@mail.ru",
-                            required: ""
+                            placeholder: "username@mail.ru"
                           },
                           domProps: { value: _vm.email },
                           on: {
@@ -47360,7 +47391,13 @@ var render = function() {
                               _vm.email = $event.target.value
                             }
                           }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.email
+                          ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                              _vm._v(_vm._s(_vm.errors.email[0]))
+                            ])
+                          : _vm._e()
                       ])
                     ]),
                     _vm._v(" "),
@@ -50311,7 +50348,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "row h-75 w-75 bigCard d-flex justify-content-center" },
+    {
+      staticClass:
+        "row h-75 w-75 bigCard d-flex justify-content-center fadeInAnim"
+    },
     [
       _c("div", { staticClass: "div-12 textVertical" }, [
         _vm.links !== false
@@ -50356,22 +50396,38 @@ var render = function() {
         _vm._v(" "),
         _vm.links !== false ? _c("br") : _vm._e(),
         _vm._v(" "),
-        _c("p", { staticClass: "text-center font18pt" }, [
-          _c("a", { attrs: { href: "mailto:" + _vm.email } }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-lg btn-outline-light",
-                attrs: { type: "button" }
-              },
-              [
-                _c("span", [_vm._v(_vm._s(_vm.contactTitle))]),
-                _vm._v(" "),
-                _vm._m(0)
-              ]
-            )
-          ])
-        ])
+        _vm.email !== null && _vm.email !== -1
+          ? _c("p", { staticClass: "text-center font18pt" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-lg btn-outline-light",
+                  attrs: { type: "button" },
+                  on: { click: _vm.showEmail }
+                },
+                [
+                  _c("span", [_vm._v(_vm._s(_vm.contactTitle))]),
+                  _vm._v(" "),
+                  _vm._m(0)
+                ]
+              ),
+              _vm._v(" "),
+              _c("br"),
+              _c("br"),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  class: {
+                    "zeroOpacity unclickable": _vm.emailVisible === false,
+                    goUpAnim: _vm.emailVisible === true
+                  },
+                  attrs: { href: "mailto:" + _vm.email }
+                },
+                [_c("b", [_vm._v(_vm._s(_vm.email))])]
+              )
+            ])
+          : _vm._e()
       ])
     ]
   )

@@ -367,6 +367,10 @@ class AdminController extends Controller
     //сохранить изменения в Email
     public function editEmail(Request $request)
     {
+        $this->validate($request, [
+            'email' => 'email|max:150|nullable',
+        ]);
+
         $settings = Settings::get()[0];
         $settings->contact_email = $request->email;
         $settings->save();

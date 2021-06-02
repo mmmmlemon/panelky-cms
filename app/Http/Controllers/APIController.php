@@ -182,6 +182,10 @@ class APIController extends Controller
     public function getEmail()
     {
         $email = Settings::get()[0]->contact_email;
-        return response()->json($email, 200);
+
+        if($email == '')
+        { $email = null; }
+
+        return response()->json(['email'=>$email], 200);
     }
 }

@@ -11,8 +11,8 @@
                         <div class="row justify-content-center">
                             <div class="col-5 mb-3">
                                 <h6>E-Mail</h6>
-                                <input type="text" class="form-control" placeholder="username@mail.ru" v-on:keydown="toggleEdit(true)" v-model="email" required>
-                                <!-- <div v-if="errors && errors.link_title" class="text-danger goUpAnim">{{ errors.link_title[0] }}</div> -->
+                                <input type="text" class="form-control" placeholder="username@mail.ru" v-on:keydown="toggleEdit(true)" v-model="email">
+                                <div v-if="errors && errors.email" class="text-danger goUpAnim">{{ errors.email[0] }}</div>
                             </div>
                         </div> 
                         <div class="row justify-content-center goUpAnim" v-if="edit === true">
@@ -36,7 +36,7 @@ export default {
     //хуки
     created(){
         axios.get('/api/getEmail').then(response => {
-            this.email = response.data;
+            this.email = response.data.email;
         }).catch(error => {
             this.email = false;
         })
@@ -82,8 +82,11 @@ export default {
            formData.append('email', this.email);
            axios.post('/admin/editEmail', formData).then(response => {
                this.edit = false;
+               this.errors = null;
            }).catch(error => {
-               //
+               if(error.response.status === 422){ 
+                        this.errors = error.response.data.errors || {};
+                }
            })
 
         }
