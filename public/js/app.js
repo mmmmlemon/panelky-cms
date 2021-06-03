@@ -3880,10 +3880,155 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   mounted: function mounted() {
     this.$parent.currentTab = 'homeSettings';
+  },
+  //данные
+  data: function data() {
+    return {
+      side_nav: 1,
+      about: 1,
+      site_owner: 1,
+      projects: 1,
+      footer: 1,
+      saved: false
+    };
+  },
+  //методы
+  methods: {
+    toggleValue: function toggleValue(data, value) {
+      if (data == 'side_nav') {
+        this.side_nav = value;
+      }
+
+      if (data == 'about') {
+        this.about = value;
+      }
+
+      if (data == 'site_owner') {
+        this.site_owner = value;
+      }
+
+      if (data == 'projects') {
+        this.projects = value;
+      }
+
+      if (data == 'footer') {
+        this.footer = value;
+      }
+    }
   }
 });
 
@@ -50632,15 +50777,454 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-8" }, [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col-12" }, [
+          _c(
+            "form",
+            {
+              attrs: { method: "POST" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.submit($event)
+                }
+              }
+            },
+            [
+              _c("h6", { staticClass: "text-center mb-4" }, [
+                _vm._v("Отображение элементов на главной странице")
+              ]),
+              _vm._v(" "),
+              _vm.side_nav != -1
+                ? _c(
+                    "div",
+                    { staticClass: "row justify-content-center goUpAnim" },
+                    [
+                      _vm.side_nav != -1
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "col-8 text-center font14pt form-check"
+                            },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "btn-group col-10",
+                                  attrs: {
+                                    role: "group",
+                                    "aria-label": "Basic example"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn",
+                                      class: {
+                                        "btn-light": _vm.side_nav === 1,
+                                        "btn-outline-light": _vm.side_nav === 0
+                                      },
+                                      attrs: { type: "button" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.toggleValue("side_nav", 1)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm.side_nav === 1
+                                        ? _c("i", {
+                                            staticClass:
+                                              "bi bi-check2 fadeInAnim"
+                                          })
+                                        : _vm._e(),
+                                      _vm._v(
+                                        "\n                                    Боковое меню\n                                "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn",
+                                      class: {
+                                        "btn-light": _vm.side_nav === 0,
+                                        "btn-outline-light": _vm.side_nav === 1
+                                      },
+                                      attrs: { type: "button" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.toggleValue("side_nav", 0)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm.side_nav === 0
+                                        ? _c("i", {
+                                            staticClass:
+                                              "bi bi-check2 fadeInAnim"
+                                          })
+                                        : _vm._e(),
+                                      _vm._v(
+                                        "\n                                    Без бокового меню\n                                "
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "col-8 text-center font14pt form-check mt-3"
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "btn-group col-10",
+                              attrs: {
+                                role: "group",
+                                "aria-label": "Basic example"
+                              }
+                            },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
+                                    "btn-light": _vm.about === 1,
+                                    "btn-outline-light": _vm.about === 0
+                                  },
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.toggleValue("about", 1)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm.about === 1
+                                    ? _c("i", {
+                                        staticClass: "bi bi-check2 fadeInAnim"
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(
+                                    '\n                                    Раздел "О себе"\n                                '
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
+                                    "btn-light": _vm.about === 0,
+                                    "btn-outline-light": _vm.about === 1
+                                  },
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.toggleValue("about", 0)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm.about === 0
+                                    ? _c("i", {
+                                        staticClass: "bi bi-check2 fadeInAnim"
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(
+                                    '\n                                    Без раздела "О себе"\n                                '
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "col-8 text-center font14pt form-check mt-3"
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "btn-group col-10",
+                              attrs: {
+                                role: "group",
+                                "aria-label": "Basic example"
+                              }
+                            },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
+                                    "btn-light": _vm.site_owner === 1,
+                                    "btn-outline-light": _vm.site_owner === 0
+                                  },
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.toggleValue("site_owner", 1)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm.site_owner === 1
+                                    ? _c("i", {
+                                        staticClass: "bi bi-check2 fadeInAnim"
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(
+                                    "\n                                    Карточка приветствия\n                                "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
+                                    "btn-light": _vm.site_owner === 0,
+                                    "btn-outline-light": _vm.site_owner === 1
+                                  },
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.toggleValue("site_owner", 0)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm.site_owner === 0
+                                    ? _c("i", {
+                                        staticClass: "bi bi-check2 fadeInAnim"
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(
+                                    "\n                                    Без карточки приветствия\n                                "
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "col-8 text-center font14pt form-check mt-3"
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "btn-group col-10",
+                              attrs: {
+                                role: "group",
+                                "aria-label": "Basic example"
+                              }
+                            },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
+                                    "btn-light": _vm.projects === 1,
+                                    "btn-outline-light": _vm.projects === 0
+                                  },
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.toggleValue("projects", 1)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm.projects === 1
+                                    ? _c("i", {
+                                        staticClass: "bi bi-check2 fadeInAnim"
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(
+                                    "\n                                    Карточки проектов\n                                "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
+                                    "btn-light": _vm.projects === 0,
+                                    "btn-outline-light": _vm.projects === 1
+                                  },
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.toggleValue("projects", 0)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm.projects === 0
+                                    ? _c("i", {
+                                        staticClass: "bi bi-check2 fadeInAnim"
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(
+                                    "\n                                    Без карточек проектов\n                                "
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "col-8 text-center font14pt form-check mt-3"
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "btn-group col-10",
+                              attrs: {
+                                role: "group",
+                                "aria-label": "Basic example"
+                              }
+                            },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
+                                    "btn-light": _vm.footer === 1,
+                                    "btn-outline-light": _vm.footer === 0
+                                  },
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.toggleValue("footer", 1)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm.footer === 1
+                                    ? _c("i", {
+                                        staticClass: "bi bi-check2 fadeInAnim"
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(
+                                    "\n                                    Ссылки и контакты\n                                "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
+                                    "btn-light": _vm.footer === 0,
+                                    "btn-outline-light": _vm.footer === 1
+                                  },
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.toggleValue("footer", 0)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm.footer === 0
+                                    ? _c("i", {
+                                        staticClass: "bi bi-check2 fadeInAnim"
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(
+                                    "\n                                    Без ссылок и контактов\n                                "
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.side_nav != -1
+                ? _c(
+                    "div",
+                    { staticClass: "row justify-content-center goUpAnim m-5" },
+                    [_vm._m(0)]
+                  )
+                : _vm._e()
+            ]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "col-12 p-1 text-center unclickable zeroOpacity",
+        class: { blinkAnim: _vm.saved }
+      },
+      [_c("h5", [_vm._v("Изменения сохранены")])]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center" }, [
-      _c("h3", [_vm._v("HomeSettings.vue")])
+    return _c("div", { staticClass: "col-5" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-light btn-lg btn-block ml-2",
+          attrs: { title: "Сохранить изменения" }
+        },
+        [
+          _vm._v(
+            "\n                                Сохранить\n                            "
+          )
+        ]
+      )
     ])
   }
 ]
