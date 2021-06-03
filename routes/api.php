@@ -29,3 +29,4 @@ Route::get('/getAllProjects', [APIController::class, 'getAllProjects']);
 Route::post('/setProjectStatus', [APIController::class, 'setProjectStatus']);
 Route::get('/getLinks', [APIController::class, 'getLinks']);
 Route::get('/getEmail', [APIController::class, 'getEmail']);
+Route::get('/getBasicSettings', [APIController::class, 'getBasicSettings']);

@@ -23,7 +23,8 @@ class AdminController extends Controller
     //показать layout админки
     public function index() {
         
-        return view('indexAdmin');
+        $site_title = Settings::get()[0]->site_title . " - Панель управления";
+        return view('indexAdmin', compact('site_title'));
     }
 
     //saveSiteOwnerInfo
@@ -375,6 +376,24 @@ class AdminController extends Controller
         $settings->contact_email = $request->email;
         $settings->save();
         return response()->json(true, 200);
+    }
+
+    //saveBasicSettings
+    //сохранить базовые настройки
+    public function saveBasicSettings(Request $request)
+    {
+        $this->validate($request, [
+            'site_title' => 'string|max:255|required',
+        ]);
+
+        $settings = Settings::get()[0];
+
+        $settings->site_title = $request->site_title;
+
+        $settings->save();
+
+        return response()->json(true, 200);
+
     }
 
 }

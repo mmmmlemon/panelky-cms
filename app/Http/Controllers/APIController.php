@@ -188,4 +188,16 @@ class APIController extends Controller
 
         return response()->json(['email'=>$email], 200);
     }
+
+    //getBasicSettings
+    //получить базовые настройки сайта
+    public function getBasicSettings()
+    {
+        $settings = Settings::get()[0];
+
+        $basicSettings = ['site_title' => $settings->site_title];
+
+        return response()->json($basicSettings, 200);
+
+    }
 }

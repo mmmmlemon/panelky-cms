@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Settings;
 
 class HomeController extends Controller
 {
@@ -26,6 +27,7 @@ class HomeController extends Controller
     //домашаняя страница сайта
     public function index()
     {
-        return view('index');
+        $site_title = Settings::get()[0]->site_title;
+        return view('index', compact('site_title'));
     }
 }

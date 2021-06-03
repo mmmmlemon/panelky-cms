@@ -1970,10 +1970,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
@@ -1995,8 +1991,7 @@ __webpack_require__.r(__webpack_exports__);
       email: -1,
       edit: false,
       backup: null,
-      errors: null,
-      saved: false
+      errors: null
     };
   },
   //методы
@@ -2021,11 +2016,9 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this2 = this;
 
-      this.saved = false;
       var formData = new FormData();
       formData.append('email', this.email);
       axios.post('/admin/editEmail', formData).then(function (response) {
-        _this2.saved = true;
         _this2.edit = false;
         _this2.errors = null;
       })["catch"](function (error) {
@@ -3733,10 +3726,96 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
+  created: function created() {
+    var _this = this;
+
+    axios.get('/api/getBasicSettings').then(function (response) {
+      _this.site_title = response.data.site_title;
+    })["catch"](function (error) {
+      _this.site_title = false;
+    });
+  },
   mounted: function mounted() {
     this.$parent.currentTab = 'basicSettings';
+  },
+  //данные
+  data: function data() {
+    return {
+      site_title: -1,
+      errors: null,
+      saved: false,
+      edit: false,
+      backup: null
+    };
+  },
+  //методы
+  methods: {
+    //вкл\выкл режим редактирования
+    toggleEdit: function toggleEdit(value) {
+      if (value === true) {
+        if (this.edit === false) {
+          this.backup = {
+            'site_title': this.site_title
+          };
+          this.edit = true;
+        } else {
+          this.edit = true;
+        }
+      }
+
+      if (value === false) {
+        this.edit = value;
+        this.errors = null;
+        this.site_title = this.backup.site_title;
+      }
+    },
+    //сохранить
+    submit: function submit() {
+      var _this2 = this;
+
+      this.saved = false;
+      var formData = new FormData();
+      formData.append('site_title', this.site_title);
+      axios.post('/admin/saveBasicSettings', formData).then(function (response) {
+        _this2.edit = false;
+        _this2.saved = true;
+        _this2.errors = null;
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          _this2.errors = error.response.data.errors || {};
+        }
+      });
+    }
   }
 });
 
@@ -47797,16 +47876,7 @@ var render = function() {
         ],
         1
       )
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "col-12 p-3 text-center unclickable zeroOpacity",
-        class: { blinkAnim: _vm.saved }
-      },
-      [_c("h5", [_vm._v("Изменения сохранены")])]
-    )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -50248,16 +50318,123 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-8" }, [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col-12" }, [
+          _c(
+            "form",
+            {
+              attrs: { method: "POST" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.submit($event)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "row justify-content-center" }, [
+                _vm.site_title != -1
+                  ? _c("div", { staticClass: "col-8 mb-3 goUpAnim" }, [
+                      _c("h6", [_vm._v("Название сайта")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.site_title,
+                            expression: "site_title"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Название сайта" },
+                        domProps: { value: _vm.site_title },
+                        on: {
+                          keydown: function($event) {
+                            return _vm.toggleEdit(true)
+                          },
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.site_title = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors && _vm.errors.site_title
+                        ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                            _vm._v(_vm._s(_vm.errors.site_title[0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _vm.edit === true
+                ? _c(
+                    "div",
+                    { staticClass: "row justify-content-center goUpAnim" },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-light ",
+                          attrs: { title: "Отмена" },
+                          on: {
+                            click: function($event) {
+                              return _vm.toggleEdit(false)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "bi bi-x" }),
+                          _vm._v(
+                            "\n                            Отмена\n                        "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm._m(0)
+                    ]
+                  )
+                : _vm._e()
+            ]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "col-12 p-3 text-center unclickable zeroOpacity",
+        class: { blinkAnim: _vm.saved }
+      },
+      [_c("h5", [_vm._v("Изменения сохранены")])]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center" }, [
-      _c("h3", [_vm._v("BasicSettings.vue")])
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-light ml-2",
+        attrs: { title: "Сохранить изменения" }
+      },
+      [
+        _c("i", { staticClass: "bi bi-save" }),
+        _vm._v(
+          "\n                            Сохранить\n                        "
+        )
+      ]
+    )
   }
 ]
 render._withStripped = true
