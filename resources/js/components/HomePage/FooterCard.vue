@@ -16,9 +16,8 @@
                     </div>
                 </h1>
             </div>  
-            <hr v-if="links !== false">
-            <br v-if="links !== false">
-            <p class="text-center font18pt" v-if="email !== null && email !== -1">
+            <hr>
+            <div class="col-12 text-center mt-5" v-if="email !== null && email !== -1">
                 <button type="button" class="btn btn-lg btn-outline-light" v-on:click="showEmail">
                     <span>{{contactTitle}}</span>
                     <span aria-hidden="true">
@@ -26,12 +25,12 @@
                     </span>
                 </button>
                 <br><br>
-                <a :href="'mailto:'+email" v-bind:class="{'zeroOpacity unclickable': emailVisible === false, 'goUpAnim': emailVisible === true}">
+                <a class="font18pt" :href="'mailto:'+email" v-bind:class="{'zeroOpacity unclickable': emailVisible === false, 'goUpAnim': emailVisible === true}">
                     <b>{{email}}</b>
                 </a>
-            </p>
+            </div> 
         </div>
-       
+        
     </div>
 </template>
 <script>

@@ -18,6 +18,9 @@ import AllProjects from './components/Admin/Projects/AllProjects.vue';
 import AddNewProject from './components/Admin/Projects/AddNewProject.vue';
 import EditLinks from './components/Admin/Links/EditLinks.vue';
 import EditContacts from './components/Admin/Links/EditContacts';
+import BasicSettings from './components/Admin/Settings/BasicSettings.vue';
+import HomeSettings from './components/Admin/Settings/HomeSettings.vue';
+import DesignSettings from './components/Admin/Settings/DesignSettings.vue';
 
 import PageNotFound from './components/Misc/PageNotFound.vue';
 
@@ -94,6 +97,20 @@ const routes = [
                 //settings
                 path: '/admin/settings',
                 component: Settings,
+                children: [
+                    {
+                        path: '/admin/settings',
+                        component: BasicSettings,
+                    },
+                    {
+                        path: '/admin/settings/home',
+                        component: HomeSettings,
+                    },
+                    {
+                        path: '/admin/settings/design',
+                        component: DesignSettings,
+                    },
+                ]
             },
             {
                 //edit project
