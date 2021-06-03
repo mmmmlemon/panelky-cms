@@ -204,4 +204,22 @@ class APIController extends Controller
         return response()->json($basicSettings, 200);
 
     }
+
+    //getAccessStatus
+    //получить статус доступа к сайту
+    public function getAccessStatus()
+    {
+        $settings = Settings::get()[0];
+        
+        return response()->json($settings->public_access, 200);
+    }
+
+    //getPublicAccessMessage
+    //получить сообщение о закрытии сайта
+    public function getPublicAccessMessage()
+    {
+        $settings = Settings::get()[0];
+        
+        return response()->json($settings->public_access_message, 200);
+    }
 }

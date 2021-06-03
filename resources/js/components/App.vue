@@ -4,16 +4,29 @@
 
     <div class="container col-12 vh-100">
         <!-- навигация -->
-        <Nav />
+        <Nav v-if="public_access == 1"/>
         <!-- кнопка навигации в верхнем углу экрана -->
-        <NavButton />
+        <NavButton v-if="public_access == 1"/>
         <!-- кнопка "Наверх" -->
-        <NavScroll :navScrollStyle="navScrollStyle"/>
+        <NavScroll v-if="public_access == 1" :navScrollStyle="navScrollStyle"/>
         
         <!-- пока не загрузился список проектов, не показывать router-view -->
-        <router-view v-if="fullProjectList !== -1"
+        <router-view v-if="public_access == 1 && fullProjectList !== -1"
                      v-touch:swipe.left="showNavMenu">
         </router-view>
+
+        <div class="row h-100 d-flex text-center justify-content-center goUpAnim" v-if="public_access == 0">
+             <div class="textVertical text-center fadeInAnim">
+                <h1 class="font2-5rem">Сайт недоступен</h1>
+                <hr>
+                <i class="bi bi-lock font2-5rem"></i>
+                <p v-if="public_access_message !== -1" class="font1-2rem fadeInAnim">{{public_access_message}}</p>
+                
+                <h4><a href="/">🐍</a></h4>
+            </div>
+
+        </div>
+
     </div>
 
 </template>
@@ -23,10 +36,22 @@ export default {
 
     //хуки
     created(){
-        //при событии scroll будет срабатывать метод handleNavScroll
-        window.addEventListener('scroll', this.handleNavScroll);
-        //получение полного списка проектов для HomePage.vue
-        this.$store.dispatch('getFullProjectList');
+
+        axios.get('/api/getAccessStatus').then(response => {
+            this.public_access = response.data;
+
+            if(this.public_access == 0){
+                axios.get('/api/getPublicAccessMessage').then(response => {
+                    this.public_access_message = response.data;
+                });
+            }
+            else if (this.public_access == 1)
+            {       
+                //при событии scroll будет срабатывать метод handleNavScroll
+                window.addEventListener('scroll', this.handleNavScroll);
+                //получение полного списка проектов для HomePage.vue
+                this.$store.dispatch('getFullProjectList'); }
+            });
     },
 
     destroyed() {
@@ -41,6 +66,9 @@ export default {
             navScrollStyle: undefined,
             //вкл. анимацию для HeaderCard.vue
             startHeaderCardTransition: false,
+            //статус сайта
+            public_access: -1,
+            public_access_message: -1,
         }
     },
 

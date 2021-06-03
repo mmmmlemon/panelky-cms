@@ -4027,13 +4027,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
-    //при событии scroll будет срабатывать метод handleNavScroll
-    window.addEventListener('scroll', this.handleNavScroll); //получение полного списка проектов для HomePage.vue
+    var _this = this;
 
-    this.$store.dispatch('getFullProjectList');
+    axios.get('/api/getAccessStatus').then(function (response) {
+      _this.public_access = response.data;
+
+      if (_this.public_access == 0) {
+        axios.get('/api/getPublicAccessMessage').then(function (response) {
+          _this.public_access_message = response.data;
+        });
+      } else if (_this.public_access == 1) {
+        //при событии scroll будет срабатывать метод handleNavScroll
+        window.addEventListener('scroll', _this.handleNavScroll); //получение полного списка проектов для HomePage.vue
+
+        _this.$store.dispatch('getFullProjectList');
+      }
+    });
   },
   destroyed: function destroyed() {
     //убрать listener для события scroll
@@ -4045,7 +4070,10 @@ __webpack_require__.r(__webpack_exports__);
       //стиль для кнопки "Наверх"
       navScrollStyle: undefined,
       //вкл. анимацию для HeaderCard.vue
-      startHeaderCardTransition: false
+      startHeaderCardTransition: false,
+      //статус сайта
+      public_access: -1,
+      public_access_message: -1
     };
   },
   computed: {
@@ -50860,13 +50888,15 @@ var render = function() {
     "div",
     { staticClass: "container col-12 vh-100" },
     [
-      _c("Nav"),
+      _vm.public_access == 1 ? _c("Nav") : _vm._e(),
       _vm._v(" "),
-      _c("NavButton"),
+      _vm.public_access == 1 ? _c("NavButton") : _vm._e(),
       _vm._v(" "),
-      _c("NavScroll", { attrs: { navScrollStyle: _vm.navScrollStyle } }),
+      _vm.public_access == 1
+        ? _c("NavScroll", { attrs: { navScrollStyle: _vm.navScrollStyle } })
+        : _vm._e(),
       _vm._v(" "),
-      _vm.fullProjectList !== -1
+      _vm.public_access == 1 && _vm.fullProjectList !== -1
         ? _c("router-view", {
             directives: [
               {
@@ -50879,12 +50909,52 @@ var render = function() {
               }
             ]
           })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.public_access == 0
+        ? _c(
+            "div",
+            {
+              staticClass:
+                "row h-100 d-flex text-center justify-content-center goUpAnim"
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "textVertical text-center fadeInAnim" },
+                [
+                  _c("h1", { staticClass: "font2-5rem" }, [
+                    _vm._v("Сайт недоступен")
+                  ]),
+                  _vm._v(" "),
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "bi bi-lock font2-5rem" }),
+                  _vm._v(" "),
+                  _vm.public_access_message !== -1
+                    ? _c("p", { staticClass: "font1-2rem fadeInAnim" }, [
+                        _vm._v(_vm._s(_vm.public_access_message))
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._m(0)
+                ]
+              )
+            ]
+          )
         : _vm._e()
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", [_c("a", { attrs: { href: "/" } }, [_vm._v("🐍")])])
+  }
+]
 render._withStripped = true
 
 
