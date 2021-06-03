@@ -194,8 +194,12 @@ class APIController extends Controller
     public function getBasicSettings()
     {
         $settings = Settings::get()[0];
-
-        $basicSettings = ['site_title' => $settings->site_title];
+        $publicAccessMessage = '';
+        if($settings->public_access_message != null)
+        { $publicAccessMessage = $settings->public_access_message; }
+        $basicSettings = ['site_title' => $settings->site_title, 
+                          'public_access' => $settings->public_access,
+                           'public_access_message' => $publicAccessMessage];
 
         return response()->json($basicSettings, 200);
 

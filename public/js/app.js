@@ -3754,6 +3754,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
@@ -3761,6 +3782,8 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.get('/api/getBasicSettings').then(function (response) {
       _this.site_title = response.data.site_title;
+      _this.public_access = response.data.public_access;
+      _this.public_access_message = response.data.public_access_message;
     })["catch"](function (error) {
       _this.site_title = false;
     });
@@ -3772,32 +3795,22 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       site_title: -1,
+      public_access: -1,
+      public_access_message: -1,
       errors: null,
       saved: false,
-      edit: false,
       backup: null
     };
   },
   //методы
   methods: {
-    //вкл\выкл режим редактирования
-    toggleEdit: function toggleEdit(value) {
-      if (value === true) {
-        if (this.edit === false) {
-          this.backup = {
-            'site_title': this.site_title
-          };
-          this.edit = true;
-        } else {
-          this.edit = true;
-        }
+    //вкл\выкл доступ к сайту
+    togglePublicAccess: function togglePublicAccess(value) {
+      if (this.public_access != value) {
+        this.edit = true;
       }
 
-      if (value === false) {
-        this.edit = value;
-        this.errors = null;
-        this.site_title = this.backup.site_title;
-      }
+      this.public_access = value;
     },
     //сохранить
     submit: function submit() {
@@ -3806,8 +3819,9 @@ __webpack_require__.r(__webpack_exports__);
       this.saved = false;
       var formData = new FormData();
       formData.append('site_title', this.site_title);
+      formData.append('public_access', this.public_access);
+      formData.append('public_access_message', this.public_access_message);
       axios.post('/admin/saveBasicSettings', formData).then(function (response) {
-        _this2.edit = false;
         _this2.saved = true;
         _this2.errors = null;
       })["catch"](function (error) {
@@ -50352,9 +50366,6 @@ var render = function() {
                         attrs: { type: "text", placeholder: "Название сайта" },
                         domProps: { value: _vm.site_title },
                         on: {
-                          keydown: function($event) {
-                            return _vm.toggleEdit(true)
-                          },
                           input: function($event) {
                             if ($event.target.composing) {
                               return
@@ -50373,32 +50384,131 @@ var render = function() {
                   : _vm._e()
               ]),
               _vm._v(" "),
-              _vm.edit === true
+              _vm.public_access != -1
                 ? _c(
                     "div",
-                    { staticClass: "row justify-content-center goUpAnim" },
+                    { staticClass: "row justify-content-center mt-5 goUpAnim" },
                     [
                       _c(
-                        "button",
+                        "div",
                         {
-                          staticClass: "btn btn-light ",
-                          attrs: { title: "Отмена" },
-                          on: {
-                            click: function($event) {
-                              return _vm.toggleEdit(false)
-                            }
-                          }
+                          staticClass: "col-8 text-center font14pt form-check"
                         },
                         [
-                          _c("i", { staticClass: "bi bi-x" }),
-                          _vm._v(
-                            "\n                            Отмена\n                        "
+                          _c(
+                            "div",
+                            {
+                              staticClass: "btn-group col-10",
+                              attrs: {
+                                role: "group",
+                                "aria-label": "Basic example"
+                              }
+                            },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
+                                    "btn-light": _vm.public_access === 1,
+                                    "btn-outline-light": _vm.public_access === 0
+                                  },
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.togglePublicAccess(1)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm.public_access === 1
+                                    ? _c("i", {
+                                        staticClass: "bi bi-check2 fadeInAnim"
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(
+                                    "\n                                    Сайт открыт для посетителей\n                                "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
+                                    "btn-light": _vm.public_access === 0,
+                                    "btn-outline-light": _vm.public_access === 1
+                                  },
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.togglePublicAccess(0)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm.public_access === 0
+                                    ? _c("i", {
+                                        staticClass: "bi bi-check2 fadeInAnim"
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(
+                                    "\n                                    Сайт закрыт\n                                "
+                                  )
+                                ]
+                              )
+                            ]
                           )
                         ]
-                      ),
-                      _vm._v(" "),
-                      _vm._m(0)
+                      )
                     ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.public_access === 0
+                ? _c(
+                    "div",
+                    { staticClass: "row justify-content-center mt-3 goUpAnim" },
+                    [
+                      _c("div", { staticClass: "col-6 form-floating" }, [
+                        _c("h6", [_vm._v("Текст сообщения для посетителей")]),
+                        _vm._v(" "),
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.public_access_message,
+                              expression: "public_access_message"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            placeholder:
+                              "Например: Сайт закрыт на технические работы",
+                            id: "floatingTextarea"
+                          },
+                          domProps: { value: _vm.public_access_message },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.public_access_message = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.site_title != -1
+                ? _c(
+                    "div",
+                    { staticClass: "row justify-content-center goUpAnim m-5" },
+                    [_vm._m(0)]
                   )
                 : _vm._e()
             ]
@@ -50410,7 +50520,7 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "col-12 p-3 text-center unclickable zeroOpacity",
+        staticClass: "col-12 p-1 text-center unclickable zeroOpacity",
         class: { blinkAnim: _vm.saved }
       },
       [_c("h5", [_vm._v("Изменения сохранены")])]
@@ -50422,19 +50532,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-light ml-2",
-        attrs: { title: "Сохранить изменения" }
-      },
-      [
-        _c("i", { staticClass: "bi bi-save" }),
-        _vm._v(
-          "\n                            Сохранить\n                        "
-        )
-      ]
-    )
+    return _c("div", { staticClass: "col-5" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-light btn-lg btn-block ml-2",
+          attrs: { title: "Сохранить изменения" }
+        },
+        [
+          _vm._v(
+            "\n                                Сохранить\n                            "
+          )
+        ]
+      )
+    ])
   }
 ]
 render._withStripped = true

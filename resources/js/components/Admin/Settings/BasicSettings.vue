@@ -9,26 +9,47 @@
                         <div class="row justify-content-center">
                             <div class="col-8 mb-3 goUpAnim" v-if="site_title != -1">
                                 <h6>Название сайта</h6>
-                                <input type="text" class="form-control" placeholder="Название сайта" v-model="site_title" v-on:keydown="toggleEdit(true)">
+                                <input type="text" class="form-control" placeholder="Название сайта" v-model="site_title">
                                 <div v-if="errors && errors.site_title" class="text-danger goUpAnim">{{ errors.site_title[0] }}</div>
                             </div>
                         </div> 
-                        <div class="row justify-content-center goUpAnim" v-if="edit === true">
-                            <button class="btn btn-light " title="Отмена" v-on:click="toggleEdit(false)">
-                                <i class="bi bi-x"></i>
-                                Отмена
-                            </button>
-                            <button class="btn btn-light ml-2" title="Сохранить изменения">
-                                <i class="bi bi-save"></i>
-                                Сохранить
-                            </button>
+                        <div class="row justify-content-center mt-5 goUpAnim" v-if="public_access != -1">
+                            <div class="col-8 text-center font14pt form-check">
+                                <div class="btn-group col-10" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn" 
+                                            v-bind:class="{'btn-light': public_access === 1, 'btn-outline-light': public_access === 0}"
+                                            v-on:click="togglePublicAccess(1)">
+                                        <i class="bi bi-check2 fadeInAnim" v-if="public_access === 1"></i>
+                                        Сайт открыт для посетителей
+                                    </button>
+                                    <button type="button" class="btn"
+                                            v-bind:class="{'btn-light': public_access === 0, 'btn-outline-light': public_access === 1}"
+                                            v-on:click="togglePublicAccess(0)">
+                                        <i class="bi bi-check2 fadeInAnim" v-if="public_access === 0"></i>
+                                        Сайт закрыт
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-3 goUpAnim" v-if="public_access === 0">
+                            <div class="col-6 form-floating">
+                                <h6>Текст сообщения для посетителей</h6>
+                                <textarea class="form-control" placeholder="Например: Сайт закрыт на технические работы" id="floatingTextarea" v-model="public_access_message"></textarea>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center goUpAnim m-5" v-if="site_title != -1">
+                            <div class="col-5">
+                                <button class="btn btn-outline-light btn-lg btn-block ml-2" title="Сохранить изменения">
+                                    Сохранить
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
         <!-- сообщение о сохранении настроек -->
-        <div class="col-12 p-3 text-center unclickable zeroOpacity" v-bind:class="{ blinkAnim: saved }">
+        <div class="col-12 p-1 text-center unclickable zeroOpacity" v-bind:class="{ blinkAnim: saved }">
             <h5>Изменения сохранены</h5>
         </div>
     </div>
@@ -39,6 +60,8 @@ export default {
     created(){
         axios.get('/api/getBasicSettings').then(response => {
             this.site_title = response.data.site_title;
+            this.public_access = response.data.public_access;
+            this.public_access_message = response.data.public_access_message;
         }).catch(error => {
             this.site_title = false;
         })
@@ -51,32 +74,21 @@ export default {
     data: () => {
         return {
             site_title: -1,
+            public_access: -1,
+            public_access_message: -1,
             errors: null,
             saved: false,
-            edit: false,
             backup: null,
         }
     },
 
     //методы
     methods: {
-        //вкл\выкл режим редактирования
-        toggleEdit(value){
-            if(value === true){
-                if(this.edit === false){ 
-                    this.backup = {'site_title': this.site_title};
-                    this.edit = true;
-                }
-                else
-                { this.edit = true; }
-            
-            }
-
-            if(value === false){ 
-                this.edit = value;
-                this.errors = null;
-                this.site_title = this.backup.site_title;
-            }
+        //вкл\выкл доступ к сайту
+        togglePublicAccess(value){
+            if(this.public_access != value)
+            { this.edit = true; }
+            this.public_access = value;
         },
 
         //сохранить
@@ -84,8 +96,9 @@ export default {
             this.saved = false;
             let formData = new FormData();
             formData.append('site_title', this.site_title);
+            formData.append('public_access', this.public_access);
+            formData.append('public_access_message', this.public_access_message);
             axios.post('/admin/saveBasicSettings', formData).then(response => {
-                this.edit = false;
                 this.saved = true;
                 this.errors = null;
             }).catch(error => {

@@ -384,11 +384,17 @@ class AdminController extends Controller
     {
         $this->validate($request, [
             'site_title' => 'string|max:255|required',
+            'public_access_message' => 'string|max:500|nullable'
         ]);
 
         $settings = Settings::get()[0];
 
         $settings->site_title = $request->site_title;
+        $settings->public_access = $request->public_access;
+        if($request->public_access_message === 'null')
+        {  $settings->public_access_message = null; }
+        else
+        { $settings->public_access_message = $request->public_access_message; }
 
         $settings->save();
 
