@@ -419,4 +419,18 @@ class AdminController extends Controller
         return response()->json(true, 200);
     }
 
+    //saveBgColors
+    //сохранить настройки цветов фона
+    public function saveBgColors(Request $request)
+    {
+        $settings = Settings::get()[0];
+
+        $settings->bg_first_color = $request->bg_first_color;
+        $settings->bg_second_color = $request->bg_second_color;
+
+        $settings->save();
+
+        return response()->json(true, 200);
+    }
+
 }

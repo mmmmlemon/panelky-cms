@@ -13,6 +13,9 @@ import draggable from 'vuedraggable';
 import store from './store';
 Vue.component('draggable', draggable);
 
+import InputColorPicker from "vue-native-color-picker";
+Vue.use(InputColorPicker);
+
 //иморты плагинов
 //isMobile
 import { isMobile } from 'mobile-device-detect';

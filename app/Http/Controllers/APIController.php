@@ -239,4 +239,18 @@ class APIController extends Controller
 
         return response()->json($homeSettings, 200);
     }
+
+    //getBgColors
+    //получить цвета фона
+    public function getBgColors()
+    {
+        $settings = Settings::get()[0];
+
+        $bgSettings = [
+            'bg_first_color' => $settings->bg_first_color,
+            'bg_second_color' => $settings->bg_second_color,
+        ];
+
+        return response()->json($bgSettings, 200);
+    }
 }

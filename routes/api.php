@@ -33,3 +33,4 @@ Route::get('/getBasicSettings', [APIController::class, 'getBasicSettings']);
 Route::get('/getAccessStatus', [APIController::class, 'getAccessStatus']);
 Route::get('/getPublicAccessMessage', [APIController::class, 'getPublicAccessMessage']);
 Route::get('/getHomeSettings', [APIController::class, 'getHomeSettings']);
+Route::get('/getBgColors', [APIController::class, 'getBgColors']);

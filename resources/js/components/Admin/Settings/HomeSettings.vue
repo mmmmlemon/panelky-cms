@@ -6,7 +6,7 @@
             <div class="row justify-content-center">
                 <div class="col-12">
                     <form method="POST" @submit.prevent="submit">
-                        <h6 class="text-center mb-4">Отображение элементов на главной странице</h6>
+                        <h6 class="text-center mb-4 goUpAnim">Отображение элементов на главной странице</h6>
                         <div class="row justify-content-center goUpAnim" v-if="side_nav != -1">
                             <!-- боковое меню -->
                             <div class="col-8 text-center font14pt form-check" v-if="side_nav != -1">

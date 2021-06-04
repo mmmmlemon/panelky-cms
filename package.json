@@ -26,6 +26,7 @@
     },
     "dependencies": {
         "mobile-device-detect": "^0.4.3",
+        "vue-native-color-picker": "^1.2.0",
         "vue-router": "^3.5.1",
         "vue2-touch-events": "^3.2.0",
         "vuedraggable": "^2.24.3",
