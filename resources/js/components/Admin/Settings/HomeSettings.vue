@@ -33,13 +33,13 @@
                                             v-bind:class="{'btn-light': about === 1, 'btn-outline-light': about === 0}"
                                             v-on:click="toggleValue('about', 1)">
                                         <i class="bi bi-check2 fadeInAnim" v-if="about=== 1"></i>
-                                        Раздел "О себе"
+                                        Раздел "О сайте"
                                     </button>
                                     <button type="button" class="btn"
                                             v-bind:class="{'btn-light': about === 0, 'btn-outline-light': about === 1}"
                                             v-on:click="toggleValue('about', 0)">
                                         <i class="bi bi-check2 fadeInAnim" v-if="about === 0"></i>
-                                        Без раздела "О себе"
+                                        Без раздела "О сайте"
                                     </button>
                                 </div>
                             </div>

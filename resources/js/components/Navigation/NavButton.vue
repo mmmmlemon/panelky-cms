@@ -1,7 +1,7 @@
 //NavButton
 //кнопка навигации с боковым меню
 <template>
-    <div>
+    <div v-if="links != -1 && links != false || fullProjectList != -1 && fullProjectList != false">
         <!-- кнопка меню -->
         <!-- видна только на десктопе -->
         <button v-on:click="showNavMenu()" class="d-none d-md-block navButton zIndex3 fadeInAnim">
@@ -17,7 +17,7 @@
                 </button>
                 <!-- пункты меню -->
                 <!-- проекты -->
-                <div class="col-12" v-if="fullProjectList.home !== false">
+                <div class="col-12" v-if="fullProjectList != -1 && fullProjectList.home !== false">
                     <h6 class="text-center">
                         <b>Проекты</b>
                     </h6>
@@ -36,7 +36,7 @@
                      <br>
                 </div>
                 <!-- ссылки -->
-                <div class="col-12" v-if="links !== false">
+                <div class="col-12" v-if="links !== false && links != -1">
                     <h6 class="text-center">
                         <b>Ссылки</b>
                     </h6>

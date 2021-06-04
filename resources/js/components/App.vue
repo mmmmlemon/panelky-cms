@@ -4,14 +4,14 @@
 
     <div class="container col-12 vh-100">
         <!-- навигация -->
-        <Nav v-if="public_access == 1"/>
+        <Nav v-if="public_access == 1 && settings.about === 1"/>
         <!-- кнопка навигации в верхнем углу экрана -->
-        <NavButton v-if="public_access == 1"/>
+        <NavButton v-if="public_access == 1 && settings.side_nav === 1"/>
         <!-- кнопка "Наверх" -->
         <NavScroll v-if="public_access == 1" :navScrollStyle="navScrollStyle"/>
         
         <!-- пока не загрузился список проектов, не показывать router-view -->
-        <router-view v-if="public_access == 1 && fullProjectList !== -1"
+        <router-view v-if="public_access == 1"
                      v-touch:swipe.left="showNavMenu">
         </router-view>
 
@@ -24,13 +24,9 @@
                 
                 <h4><a href="/">🐍</a></h4>
             </div>
-
         </div>
-
     </div>
-
 </template>
-
 <script>
 export default {
 
@@ -46,11 +42,27 @@ export default {
                 });
             }
             else if (this.public_access == 1)
-            {       
+            {    
+                axios.get('/api/getHomeSettings').then(response => {
+                    this.settings = response.data;
+
+                    if(this.settings.site_owner === 1){
+                        //получить информацию о владельце сайта
+                        this.$store.dispatch('getSiteOwnerInfo');
+                    }
+                    
+                    if(this.settings.projects === 1){
+                        //получение полного списка проектов для HomePage.vue
+                        this.$store.dispatch('getFullProjectList'); 
+                    }
+
+                });
+
                 //при событии scroll будет срабатывать метод handleNavScroll
                 window.addEventListener('scroll', this.handleNavScroll);
-                //получение полного списка проектов для HomePage.vue
-                this.$store.dispatch('getFullProjectList'); }
+
+              
+            }
             });
     },
 
@@ -69,6 +81,7 @@ export default {
             //статус сайта
             public_access: -1,
             public_access_message: -1,
+            settings: -1,
         }
     },
 

@@ -1852,7 +1852,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  beforeMount: function beforeMount() {
+    if (this.about !== 1) {
+      window.location.href = "/";
+    }
+  },
+  computed: {
+    about: function about() {
+      return this.$parent.settings.about;
+    }
+  }
+});
 
 /***/ }),
 
@@ -4212,10 +4223,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
@@ -4229,10 +4236,21 @@ __webpack_require__.r(__webpack_exports__);
           _this.public_access_message = response.data;
         });
       } else if (_this.public_access == 1) {
-        //при событии scroll будет срабатывать метод handleNavScroll
-        window.addEventListener('scroll', _this.handleNavScroll); //получение полного списка проектов для HomePage.vue
+        axios.get('/api/getHomeSettings').then(function (response) {
+          _this.settings = response.data;
 
-        _this.$store.dispatch('getFullProjectList');
+          if (_this.settings.site_owner === 1) {
+            //получить информацию о владельце сайта
+            _this.$store.dispatch('getSiteOwnerInfo');
+          }
+
+          if (_this.settings.projects === 1) {
+            //получение полного списка проектов для HomePage.vue
+            _this.$store.dispatch('getFullProjectList');
+          }
+        }); //при событии scroll будет срабатывать метод handleNavScroll
+
+        window.addEventListener('scroll', _this.handleNavScroll);
       }
     });
   },
@@ -4249,7 +4267,8 @@ __webpack_require__.r(__webpack_exports__);
       startHeaderCardTransition: false,
       //статус сайта
       public_access: -1,
-      public_access_message: -1
+      public_access_message: -1,
+      settings: -1
     };
   },
   computed: {
@@ -4474,10 +4493,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
-  created: function created() {
-    //получить информацию о владельце сайта
-    this.$store.dispatch('getSiteOwnerInfo');
-  },
+  created: function created() {},
   //данные
   computed: {
     //информация о владельце сайта
@@ -4487,6 +4503,10 @@ __webpack_require__.r(__webpack_exports__);
     //полный список проектов
     fullProjectList: function fullProjectList() {
       return this.$store.state.GlobalStates.fullProjectList;
+    },
+    //settings.footer
+    footer: function footer() {
+      return this.$parent.settings.footer;
     }
   }
 });
@@ -47858,18 +47878,13 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _vm.about === 1
+    ? _c("div", { staticClass: "row h-50 justify-content-center" }, [
+        _c("h1", [_vm._v("About")])
+      ])
+    : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row h-50 justify-content-center" }, [
-      _c("h1", [_vm._v("About")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -50951,7 +50966,7 @@ var render = function() {
                                       })
                                     : _vm._e(),
                                   _vm._v(
-                                    '\n                                    Раздел "О себе"\n                                '
+                                    '\n                                    Раздел "О сайте"\n                                '
                                   )
                                 ]
                               ),
@@ -50978,7 +50993,7 @@ var render = function() {
                                       })
                                     : _vm._e(),
                                   _vm._v(
-                                    '\n                                    Без раздела "О себе"\n                                '
+                                    '\n                                    Без раздела "О сайте"\n                                '
                                   )
                                 ]
                               )
@@ -51503,15 +51518,17 @@ var render = function() {
     "div",
     { staticClass: "container col-12 vh-100" },
     [
-      _vm.public_access == 1 ? _c("Nav") : _vm._e(),
+      _vm.public_access == 1 && _vm.settings.about === 1 ? _c("Nav") : _vm._e(),
       _vm._v(" "),
-      _vm.public_access == 1 ? _c("NavButton") : _vm._e(),
+      _vm.public_access == 1 && _vm.settings.side_nav === 1
+        ? _c("NavButton")
+        : _vm._e(),
       _vm._v(" "),
       _vm.public_access == 1
         ? _c("NavScroll", { attrs: { navScrollStyle: _vm.navScrollStyle } })
         : _vm._e(),
       _vm._v(" "),
-      _vm.public_access == 1 && _vm.fullProjectList !== -1
+      _vm.public_access == 1
         ? _c("router-view", {
             directives: [
               {
@@ -51806,35 +51823,35 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.siteOwnerInfo !== -1
-    ? _c(
-        "div",
-        { staticClass: "row h-100 justify-content-center" },
-        [
-          _c("HeaderCard", { attrs: { info: _vm.siteOwnerInfo } }),
-          _vm._v(" "),
-          _vm._l(_vm.fullProjectList.home, function(project) {
-            return _c("ProjectCard", {
-              key: project.id,
-              attrs: {
-                project: project,
-                type: project.orientation,
-                isVisible: false
-              }
-            })
-          }),
-          _vm._v(" "),
-          _vm.fullProjectList !== -1 && _vm.fullProjectList.other.length > 0
-            ? _c("OtherProjectsCard", {
-                attrs: { projects: _vm.fullProjectList.other }
-              })
-            : _vm._e(),
-          _vm._v(" "),
-          _c("FooterCard")
-        ],
-        2
-      )
-    : _vm._e()
+  return _c(
+    "div",
+    { staticClass: "row h-100 justify-content-center" },
+    [
+      _vm.siteOwnerInfo !== -1
+        ? _c("HeaderCard", { attrs: { info: _vm.siteOwnerInfo } })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.fullProjectList.home, function(project) {
+        return _c("ProjectCard", {
+          key: project.id,
+          attrs: {
+            project: project,
+            type: project.orientation,
+            isVisible: false
+          }
+        })
+      }),
+      _vm._v(" "),
+      _vm.fullProjectList !== -1 && _vm.fullProjectList.other.length > 0
+        ? _c("OtherProjectsCard", {
+            attrs: { projects: _vm.fullProjectList.other }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.footer === 1 ? _c("FooterCard") : _vm._e()
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -51863,7 +51880,7 @@ var render = function() {
     "div",
     {
       staticClass:
-        "row h-75 w-75 bigCard d-flex justify-content-center fadeInAnim"
+        "row h-75 w-75 bigCard d-flex justify-content-center goUpAnim"
     },
     [
       _c("div", { staticClass: "div-12 textVertical" }, [
@@ -52851,159 +52868,166 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "button",
-      {
-        staticClass: "d-none d-md-block navButton zIndex3 fadeInAnim",
-        on: {
-          click: function($event) {
-            return _vm.showNavMenu()
-          }
-        }
-      },
-      [_c("i", { staticClass: "bi bi-three-dots-vertical" })]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "col-12 col-md-2 navMenu",
-        style: {
-          right: _vm.navMenuStyle["right"],
-          opacity: _vm.navMenuStyle["opacity"],
-          zIndex: 5
-        }
-      },
-      [
-        _vm.fullProjectList !== undefined
-          ? _c(
-              "div",
-              { staticClass: "row justify-content-end" },
-              [
-                _c(
-                  "button",
-                  {
-                    staticClass: "navButtonClose",
-                    on: {
-                      click: function($event) {
-                        return _vm.closeNavMenu()
-                      }
-                    }
-                  },
-                  [_c("i", { staticClass: "bi bi-x" })]
-                ),
-                _vm._v(" "),
-                _vm.fullProjectList.home !== false
-                  ? _c("div", { staticClass: "col-12" }, [
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _c("hr")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm._l(_vm.fullProjectList.home, function(project) {
-                  return _c(
-                    "div",
-                    { key: project.slug, staticClass: "col-12 text-center" },
-                    [
-                      _c("h6", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#" + project.slug },
-                            on: {
-                              click: function($event) {
-                                return _vm.closeNavMenu()
-                              }
-                            }
-                          },
-                          [_vm._v(_vm._s(project.project_title))]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("br")
-                    ]
-                  )
-                }),
-                _vm._v(" "),
-                _vm.fullProjectList !== -1 &&
-                _vm.fullProjectList.other.length > 0
-                  ? _c("div", { staticClass: "col-12 text-center" }, [
-                      _c("h6", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#other" },
-                            on: {
-                              click: function($event) {
-                                return _vm.closeNavMenu()
-                              }
-                            }
-                          },
-                          [_vm._v("Другие проекты")]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("br")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.links !== false
-                  ? _c("div", { staticClass: "col-12" }, [
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c("hr")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.links !== false && _vm.links !== -1
-                  ? _c(
-                      "div",
-                      { staticClass: "col-12 text-center" },
-                      [
-                        _vm._l(_vm.links, function(link) {
-                          return _c(
-                            "h6",
-                            { key: link.slug, staticClass: "mb-3" },
-                            [
-                              _c(
-                                "a",
-                                {
-                                  attrs: {
-                                    target: "_blank",
-                                    href: link.link_url
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.closeNavMenu()
-                                    }
+  return (_vm.links != -1 && _vm.links != false) ||
+    (_vm.fullProjectList != -1 && _vm.fullProjectList != false)
+    ? _c("div", [
+        _c(
+          "button",
+          {
+            staticClass: "d-none d-md-block navButton zIndex3 fadeInAnim",
+            on: {
+              click: function($event) {
+                return _vm.showNavMenu()
+              }
+            }
+          },
+          [_c("i", { staticClass: "bi bi-three-dots-vertical" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "col-12 col-md-2 navMenu",
+            style: {
+              right: _vm.navMenuStyle["right"],
+              opacity: _vm.navMenuStyle["opacity"],
+              zIndex: 5
+            }
+          },
+          [
+            _vm.fullProjectList !== undefined
+              ? _c(
+                  "div",
+                  { staticClass: "row justify-content-end" },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "navButtonClose",
+                        on: {
+                          click: function($event) {
+                            return _vm.closeNavMenu()
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "bi bi-x" })]
+                    ),
+                    _vm._v(" "),
+                    _vm.fullProjectList != -1 &&
+                    _vm.fullProjectList.home !== false
+                      ? _c("div", { staticClass: "col-12" }, [
+                          _vm._m(0),
+                          _vm._v(" "),
+                          _c("hr")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm._l(_vm.fullProjectList.home, function(project) {
+                      return _c(
+                        "div",
+                        {
+                          key: project.slug,
+                          staticClass: "col-12 text-center"
+                        },
+                        [
+                          _c("h6", [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#" + project.slug },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.closeNavMenu()
                                   }
-                                },
+                                }
+                              },
+                              [_vm._v(_vm._s(project.project_title))]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("br")
+                        ]
+                      )
+                    }),
+                    _vm._v(" "),
+                    _vm.fullProjectList !== -1 &&
+                    _vm.fullProjectList.other.length > 0
+                      ? _c("div", { staticClass: "col-12 text-center" }, [
+                          _c("h6", [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#other" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.closeNavMenu()
+                                  }
+                                }
+                              },
+                              [_vm._v("Другие проекты")]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("br")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.links !== false && _vm.links != -1
+                      ? _c("div", { staticClass: "col-12" }, [
+                          _vm._m(1),
+                          _vm._v(" "),
+                          _c("hr")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.links !== false && _vm.links !== -1
+                      ? _c(
+                          "div",
+                          { staticClass: "col-12 text-center" },
+                          [
+                            _vm._l(_vm.links, function(link) {
+                              return _c(
+                                "h6",
+                                { key: link.slug, staticClass: "mb-3" },
                                 [
-                                  _vm._v(
-                                    "\n                        " +
-                                      _vm._s(link.link_title) +
-                                      "\n                    "
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        target: "_blank",
+                                        href: link.link_url
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.closeNavMenu()
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                        " +
+                                          _vm._s(link.link_title) +
+                                          "\n                    "
+                                      )
+                                    ]
                                   )
                                 ]
                               )
-                            ]
-                          )
-                        }),
-                        _vm._v(" "),
-                        _c("hr")
-                      ],
-                      2
-                    )
-                  : _vm._e()
-              ],
-              2
-            )
-          : _vm._e()
-      ]
-    )
-  ])
+                            }),
+                            _vm._v(" "),
+                            _c("hr")
+                          ],
+                          2
+                        )
+                      : _vm._e()
+                  ],
+                  2
+                )
+              : _vm._e()
+          ]
+        )
+      ])
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {

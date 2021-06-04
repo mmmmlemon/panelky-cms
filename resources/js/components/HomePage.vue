@@ -1,10 +1,10 @@
 //HomePage
 //домашняя страница
 <template>
-    <div class="row h-100 justify-content-center" v-if="siteOwnerInfo !== -1">
+    <div class="row h-100 justify-content-center">
     
         <!-- карточка с информацией о владельце -->
-        <HeaderCard
+        <HeaderCard v-if="siteOwnerInfo !== -1"
             :info="siteOwnerInfo"/>
         
         <!-- карточки проектов (выводятся в цикле) -->
@@ -15,7 +15,7 @@
         <OtherProjectsCard v-if="fullProjectList !== -1 && fullProjectList.other.length > 0" :projects="fullProjectList.other"/>
 
         <!-- карточка футер -->
-        <FooterCard />    
+        <FooterCard v-if="footer === 1"/>    
     </div>
 </template>
 
@@ -23,8 +23,7 @@
 export default {
     //хуки
     created(){
-        //получить информацию о владельце сайта
-        this.$store.dispatch('getSiteOwnerInfo');
+   
     },
 
     //данные
@@ -37,6 +36,11 @@ export default {
         //полный список проектов
         fullProjectList: function(){
             return this.$store.state.GlobalStates.fullProjectList;
+        },
+
+        //settings.footer
+        footer: function(){
+            return this.$parent.settings.footer;
         }
     }
 }

@@ -1,7 +1,7 @@
 //FooterCard
 //футер с контактами и ссылками
 <template>
-    <div class="row h-75 w-75 bigCard d-flex justify-content-center fadeInAnim">
+    <div class="row h-75 w-75 bigCard d-flex justify-content-center goUpAnim">
         <div class="div-12 textVertical">
             <div class="col-12" v-if="links !== false">
                 <h1 class="text-center textVertical">
