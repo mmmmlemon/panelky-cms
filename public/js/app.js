@@ -3992,13 +3992,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
+  created: function created() {
+    var _this = this;
+
+    axios.get('/api/getHomeSettings').then(function (response) {
+      _this.side_nav = response.data.side_nav;
+      _this.about = response.data.about;
+      _this.site_owner = response.data.site_owner;
+      _this.projects = response.data.projects;
+      _this.footer = response.data.footer;
+    });
+  },
   mounted: function mounted() {
     this.$parent.currentTab = 'homeSettings';
   },
   //данные
   data: function data() {
     return {
-      side_nav: 1,
+      side_nav: -1,
       about: 1,
       site_owner: 1,
       projects: 1,
@@ -4028,6 +4039,26 @@ __webpack_require__.r(__webpack_exports__);
       if (data == 'footer') {
         this.footer = value;
       }
+    },
+    //сохранить изменения
+    submit: function submit() {
+      var _this2 = this;
+
+      this.saved = false;
+      var formData = new FormData();
+      formData.append('side_nav', this.side_nav);
+      formData.append('about', this.about);
+      formData.append('site_owner', this.site_owner);
+      formData.append('projects', this.projects);
+      formData.append('footer', this.footer);
+      axios.post('/admin/saveHomeSettings', formData).then(function (response) {
+        _this2.saved = true;
+        _this2.errors = null;
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          _this2.errors = error.response.data.errors || {};
+        }
+      });
     }
   }
 });

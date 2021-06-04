@@ -118,6 +118,15 @@
 <script>
 export default {
     //хуки
+    created(){
+        axios.get('/api/getHomeSettings').then(response => {
+            this.side_nav = response.data.side_nav;
+            this.about = response.data.about;
+            this.site_owner = response.data.site_owner;
+            this.projects = response.data.projects;
+            this.footer = response.data.footer;
+        })
+    },
     mounted(){
         this.$parent.currentTab = 'homeSettings';
     },
@@ -125,7 +134,7 @@ export default {
     //данные
     data: () => {
         return {
-            side_nav: 1,
+            side_nav: -1,
             about: 1,
             site_owner: 1,
             projects: 1,
@@ -157,7 +166,27 @@ export default {
                 this.footer = value;
             }
 
-        }
+        },
+
+        //сохранить изменения
+        submit(){
+            this.saved = false;
+            let formData = new FormData();
+            formData.append('side_nav', this.side_nav);
+            formData.append('about', this.about);
+            formData.append('site_owner', this.site_owner);
+            formData.append('projects', this.projects);
+            formData.append('footer', this.footer);
+            axios.post('/admin/saveHomeSettings', formData).then(response => {
+                this.saved = true;
+                this.errors = null;
+            }).catch(error => {
+                 if(error.response.status === 422){ 
+                        this.errors = error.response.data.errors || {};
+                    }
+            });
+            
+        }   
     }
 
 }

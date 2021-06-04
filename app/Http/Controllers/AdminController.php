@@ -402,4 +402,21 @@ class AdminController extends Controller
 
     }
 
+    //saveHomeSettings
+    //сохранить настройки для главного экрана
+    public function saveHomeSettings(Request $request)
+    {
+        $settings = Settings::get()[0];
+        
+        $settings->side_nav = $request->side_nav;
+        $settings->about = $request->about;
+        $settings->site_owner = $request->site_owner;
+        $settings->projects = $request->projects;
+        $settings->footer = $request->footer;
+
+        $settings->save();
+
+        return response()->json(true, 200);
+    }
+
 }

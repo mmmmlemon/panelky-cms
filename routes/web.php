@@ -42,6 +42,7 @@ Route::post('/admin/deleteLink', [AdminController::class, 'deleteLink']);
 Route::post('/admin/setNewOrderForLinks', [AdminController::class, 'setNewOrderForLinks']);
 Route::post('/admin/editEmail', [AdminController::class, 'editEmail']);
 Route::post('/admin/saveBasicSettings', [AdminController::class, 'saveBasicSettings']);
+Route::post('/admin/saveHomeSettings', [AdminController::class, 'saveHomeSettings']);
 
 Route::get('/admin', [AdminController::class, 'index']);
 Route::get('/admin/{any}', [AdminController::class, 'index']);

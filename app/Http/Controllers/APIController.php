@@ -222,4 +222,21 @@ class APIController extends Controller
         
         return response()->json($settings->public_access_message, 200);
     }
+
+    //getHomeSettings
+    //настройки главной страницы
+    public function getHomeSettings()
+    {
+        $settings = Settings::get()[0];
+
+        $homeSettings = [
+            'side_nav' => $settings->side_nav,
+            'about' => $settings->about,
+            'site_owner' => $settings->site_owner,
+            'projects' => $settings->projects,
+            'footer' => $settings->footer,
+        ];
+
+        return response()->json($homeSettings, 200);
+    }
 }
