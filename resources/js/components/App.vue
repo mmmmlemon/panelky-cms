@@ -32,7 +32,7 @@ export default {
 
     //хуки
     created(){
-
+        
         axios.get('/api/getAccessStatus').then(response => {
             this.public_access = response.data;
 

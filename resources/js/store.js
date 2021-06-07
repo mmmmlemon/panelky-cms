@@ -74,6 +74,8 @@ const AdminStates = {
         errors: -1,
         //ссылки
         links: -1,
+        //animatedBackground
+        animatedBackground: -1,
     },
 
     mutations: {
@@ -182,6 +184,26 @@ const AdminStates = {
                 else
                 { context.commit('setState', { state: 'links', value: false}); }
             });
+        },
+
+        //getAnimatedBackground
+        getAnimatedBackground(context){
+            axios.get('/api/getBgColors').then(response => {
+                if(response.data !== false)
+                {   
+                    let bg_first_color = response.data.bg_first_color;
+                    let bg_second_color =response.data.bg_second_color;
+                    let style = {
+                        background: `linear-gradient(to right top, ${bg_first_color}, ${bg_second_color})`,
+                        backgroundSize: '100%',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundAttachment: 'fixed',
+                    };
+                    context.commit('setState', { state: 'animatedBackground', value: style}); 
+                }
+                else
+                { context.commit('setState', { state: 'animatedBackground', value: false}); }
+            })
         }
     }
 }

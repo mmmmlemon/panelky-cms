@@ -84,6 +84,10 @@
 </template>
 <script>
 export default {
+    //хуки
+    created(){
+        this.$store.dispatch('getAnimatedBackground');
+    },
 
     //данные
     data: function() {

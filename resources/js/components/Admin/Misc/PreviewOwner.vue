@@ -4,7 +4,7 @@
     <div class="col-12 fadeInAnim">  
       
         <!-- мини-превью -->
-        <div class="col-12 d-flex justify-content-center animatedBackground previewCard" v-bind:class="{zeroOpacity: siteOwnerInfo === undefined}">
+        <div class="col-12 d-flex justify-content-center previewCard" v-bind:style="animatedBackground" v-bind:class="{zeroOpacity: siteOwnerInfo === undefined}">
             <HeaderCard :info="siteOwnerInfo" />
             
             <!-- кнопка развернуть на весь экран -->
@@ -14,7 +14,7 @@
         </div>
 
         <!-- превью на весь экран -->
-        <div class="container col-12 vh-100 animatedBackground fullscreenCard" :style="fullscreenStyle">
+        <div class="container col-12 vh-100 fullscreenCard" :style="fullscreenStyle">
             <button class="btn btn-light btn-lg fullscreenButton" title="Развернуть на полный экран" v-on:click="closeFullscreenPreview">
                 <i class="bi bi-fullscreen-exit"></i>
             </button>
@@ -46,15 +46,25 @@ export default {
         }},
     },
 
+    computed: {
+        animatedBackground: function(){
+            return this.$store.state.AdminStates.animatedBackground;
+        }
+    },
+
     methods: {
         //показать превью на полный экран
         showFullscreenPreview: function(){
             this.fullscreenStyle = { left: '0px', opacity: 1 };
+            this.fullscreenStyle.background = this.animatedBackground.background;
+            this.fullscreenStyle.backgroundSize =  this.animatedBackground.backgroundSize;
+            this.fullscreenStyle.backgroundRepeat = this.animatedBackground.backgroundRepeat;
         },
 
         //скрыть превью на полный экран
         closeFullscreenPreview: function(){
-            this.fullscreenStyle = { left: '5000px', opacity: 0 };
+            this.fullscreenStyle.left = '5000px';
+            this.fullscreenStyle.opacity = 0;
         }
     }
 }

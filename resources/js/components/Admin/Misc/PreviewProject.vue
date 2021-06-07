@@ -1,7 +1,7 @@
 //PreviewProject
 //превью проекта в админке
 <template>
-    <div class="col-12 d-flex h-100 justify-content-center animatedBackground previewCard fadeInAnim" v-if="currentProject !== -1">
+    <div class="col-12 d-flex h-100 justify-content-center previewCard fadeInAnim" v-bind:style="animatedBackground" v-if="currentProject !== -1">
         <!-- МИНИ ПРЕВЬЮ (в HomeProjects.vue) -->
         <div v-if="type === 'mini'" class="row text-center textVertical">
             <!-- название -->
@@ -95,16 +95,27 @@ export default {
             }}
         },
     
+    computed: {
+        animatedBackground: function(){
+            return this.$store.state.AdminStates.animatedBackground;
+        },
+    },
+    
     //методы
     methods: {
         //показать превью на полный экран
         showFullscreenPreview: function(){
             this.orientation = 'left';
             this.fullscreenStyle = { left: '0px', opacity: 1 };
+            this.fullscreenStyle.background = this.animatedBackground.background;
+            this.fullscreenStyle.backgroundSize =  this.animatedBackground.backgroundSize;
+            this.fullscreenStyle.backgroundRepeat = this.animatedBackground.backgroundRepeat;
+
         },
         //свернуть превью на полный экран
         closeFullscreenPreview: function(){
-            this.fullscreenStyle = { left: '5000px', opacity: 0 };
+            this.fullscreenStyle.left = '5000px';
+            this.fullscreenStyle.opacity = 0;
         },
         //сменить ориентацию в превью на полный экран
         changeOrientation(){

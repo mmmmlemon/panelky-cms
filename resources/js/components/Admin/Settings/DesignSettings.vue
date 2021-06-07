@@ -20,7 +20,7 @@
                                 <!-- <div v-if="errors && errors.site_title" class="text-danger goUpAnim">{{ errors.site_title[0] }}</div> -->
                             </div>
                         </div> 
-                        <div class="row justify-content-center goUpAnim">
+                        <div class="row justify-content-center goUpAnim" v-if="bg_first_color != -1 && bg_second_color != -1">
                             <div class="col-5 text-center" v-bind:style="previewStyle">
                                 <br><br>
                                 <h3>Превью</h3>
@@ -39,9 +39,9 @@
             </div>
         </div>
         <!-- сообщение о сохранении настроек -->
-        <!-- <div class="col-12 p-1 text-center unclickable zeroOpacity" v-bind:class="{ blinkAnim: saved }">
+        <div class="col-12 p-1 text-center unclickable zeroOpacity" v-bind:class="{ blinkAnim: saved }">
             <h5>Изменения сохранены</h5>
-        </div> -->
+        </div>
     </div>
 </template>
 <script>
@@ -51,7 +51,13 @@ export default {
         axios.get('/api/getBgColors').then(response => {
             this.bg_first_color = response.data.bg_first_color;
             this.bg_second_color = response.data.bg_second_color;
-            this.previewStyle.background = `linear-gradient(to right top, ${this.bg_first_color}, ${this.bg_second_color})`;
+            this.previewStyle = {
+                background: `linear-gradient(to right top, ${this.bg_first_color}, ${this.bg_second_color})`,
+                // backgroundSize: '100%',
+                // backgroundRepeat: 'no-repeat',
+                // backgroundAttachment: 'fixed',
+                borderRadius: '15px',
+            };
         })
     },
     mounted(){
@@ -64,14 +70,9 @@ export default {
             bg_first_color: -1,
             bg_second_color: -1,
             previewStyle: {
-                background: `linear-gradient(to right top, #000000, #000000)`,
-                backgroundSize: '400%',
-                transition: 'all 1s ease-in-out',
-                backgroundRepeat: 'no-repeat',
-                backgroundAttachment: 'fixed',
-                animation: 'backgroundGradient 5s ease-in-out infinite',
-                borderRadius: '15px',
-            }
+                //
+            },
+            saved: false,
         }
     },
 
@@ -86,6 +87,7 @@ export default {
         },
         changeFirstColor(result){
             this.previewStyle.background = `linear-gradient(to right top, ${result}, ${this.bg_second_color})`;
+
         },
         changeSecondColor(result){
             this.previewStyle.background = `linear-gradient(to right top, ${this.bg_first_color}, ${result})`;   
@@ -93,13 +95,16 @@ export default {
 
         //сохранить
         submit(){
+            this.saved = false;
+
             let formData = new FormData();
 
             formData.append('bg_first_color', this.bg_first_color);
             formData.append('bg_second_color', this.bg_second_color);
 
             axios.post('/admin/saveBgColors', formData).then(response => {
-                alert('Saved')
+                this.saved = true;
+                this.$store.dispatch('getAnimatedBackground');
             }).catch(error => {
                 //
             })

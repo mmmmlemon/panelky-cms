@@ -27,7 +27,24 @@ class HomeController extends Controller
     //домашаняя страница сайта
     public function index()
     {
-        $site_title = Settings::get()[0]->site_title;
-        return view('index', compact('site_title'));
+
+        $settings = Settings::get()[0];
+        $site_title = $settings->site_title;
+        
+        $bgSettings = [
+            'bg_first_color' => $settings->bg_first_color,
+            'bg_second_color' => $settings->bg_second_color,
+        ];
+
+        $firstColor = $settings->bg_first_color;
+        $secondColor = $settings->bg_second_color;
+
+        $style = 'background: linear-gradient(to right top, '.$firstColor.', '.$secondColor.');';
+
+        $style .= ' background-size: 400%; background-repeat: no-repeat; background-attachment: fixed;';
+
+        $style .= ' animation: backgroundGradient 5s ease-in-out infinite;';
+
+        return view('index', compact('site_title', 'style'));
     }
 }

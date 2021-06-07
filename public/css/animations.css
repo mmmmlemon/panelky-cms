@@ -96,7 +96,7 @@
 }
 
 .animatedBackground{
-    background: linear-gradient(to right top, #3b3280, #b92b35);
+    background: linear-gradient(to right top, #00bfff, #f50000);
     background-size: 400%;
     background-repeat: no-repeat;
     background-attachment: fixed;

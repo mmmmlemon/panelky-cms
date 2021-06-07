@@ -2637,6 +2637,11 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
+  computed: {
+    animatedBackground: function animatedBackground() {
+      return this.$store.state.AdminStates.animatedBackground;
+    }
+  },
   methods: {
     //показать превью на полный экран
     showFullscreenPreview: function showFullscreenPreview() {
@@ -2644,13 +2649,14 @@ __webpack_require__.r(__webpack_exports__);
         left: '0px',
         opacity: 1
       };
+      this.fullscreenStyle.background = this.animatedBackground.background;
+      this.fullscreenStyle.backgroundSize = this.animatedBackground.backgroundSize;
+      this.fullscreenStyle.backgroundRepeat = this.animatedBackground.backgroundRepeat;
     },
     //скрыть превью на полный экран
     closeFullscreenPreview: function closeFullscreenPreview() {
-      this.fullscreenStyle = {
-        left: '5000px',
-        opacity: 0
-      };
+      this.fullscreenStyle.left = '5000px';
+      this.fullscreenStyle.opacity = 0;
     }
   }
 });
@@ -2768,6 +2774,11 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
+  computed: {
+    animatedBackground: function animatedBackground() {
+      return this.$store.state.AdminStates.animatedBackground;
+    }
+  },
   //методы
   methods: {
     //показать превью на полный экран
@@ -2777,13 +2788,14 @@ __webpack_require__.r(__webpack_exports__);
         left: '0px',
         opacity: 1
       };
+      this.fullscreenStyle.background = this.animatedBackground.background;
+      this.fullscreenStyle.backgroundSize = this.animatedBackground.backgroundSize;
+      this.fullscreenStyle.backgroundRepeat = this.animatedBackground.backgroundRepeat;
     },
     //свернуть превью на полный экран
     closeFullscreenPreview: function closeFullscreenPreview() {
-      this.fullscreenStyle = {
-        left: '5000px',
-        opacity: 0
-      };
+      this.fullscreenStyle.left = '5000px';
+      this.fullscreenStyle.opacity = 0;
     },
     //сменить ориентацию в превью на полный экран
     changeOrientation: function changeOrientation() {
@@ -3911,7 +3923,13 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('/api/getBgColors').then(function (response) {
       _this.bg_first_color = response.data.bg_first_color;
       _this.bg_second_color = response.data.bg_second_color;
-      _this.previewStyle.background = "linear-gradient(to right top, ".concat(_this.bg_first_color, ", ").concat(_this.bg_second_color, ")");
+      _this.previewStyle = {
+        background: "linear-gradient(to right top, ".concat(_this.bg_first_color, ", ").concat(_this.bg_second_color, ")"),
+        // backgroundSize: '100%',
+        // backgroundRepeat: 'no-repeat',
+        // backgroundAttachment: 'fixed',
+        borderRadius: '15px'
+      };
     });
   },
   mounted: function mounted() {
@@ -3922,15 +3940,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       bg_first_color: -1,
       bg_second_color: -1,
-      previewStyle: {
-        background: "linear-gradient(to right top, #000000, #000000)",
-        backgroundSize: '400%',
-        transition: 'all 1s ease-in-out',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed',
-        animation: 'backgroundGradient 5s ease-in-out infinite',
-        borderRadius: '15px'
-      }
+      previewStyle: {//
+      },
+      saved: false
     };
   },
   //методы
@@ -3950,11 +3962,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     //сохранить
     submit: function submit() {
+      var _this2 = this;
+
+      this.saved = false;
       var formData = new FormData();
       formData.append('bg_first_color', this.bg_first_color);
       formData.append('bg_second_color', this.bg_second_color);
       axios.post('/admin/saveBgColors', formData).then(function (response) {
-        alert('Saved');
+        _this2.saved = true;
+
+        _this2.$store.dispatch('getAnimatedBackground');
       })["catch"](function (error) {//
       });
     }
@@ -4510,6 +4527,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  //хуки
+  created: function created() {
+    this.$store.dispatch('getAnimatedBackground');
+  },
   //данные
   data: function data() {
     return {
@@ -5811,7 +5832,9 @@ var AdminStates = {
     //ошибки для AppAdmin
     errors: -1,
     //ссылки
-    links: -1
+    links: -1,
+    //animatedBackground
+    animatedBackground: -1
   },
   mutations: {
     //установить стейт
@@ -5957,6 +5980,30 @@ var AdminStates = {
         } else {
           context.commit('setState', {
             state: 'links',
+            value: false
+          });
+        }
+      });
+    },
+    //getAnimatedBackground
+    getAnimatedBackground: function getAnimatedBackground(context) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getBgColors').then(function (response) {
+        if (response.data !== false) {
+          var bg_first_color = response.data.bg_first_color;
+          var bg_second_color = response.data.bg_second_color;
+          var style = {
+            background: "linear-gradient(to right top, ".concat(bg_first_color, ", ").concat(bg_second_color, ")"),
+            backgroundSize: '100%',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: 'fixed'
+          };
+          context.commit('setState', {
+            state: 'animatedBackground',
+            value: style
+          });
+        } else {
+          context.commit('setState', {
+            state: 'animatedBackground',
             value: false
           });
         }
@@ -48923,9 +48970,9 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass:
-          "col-12 d-flex justify-content-center animatedBackground previewCard",
-        class: { zeroOpacity: _vm.siteOwnerInfo === undefined }
+        staticClass: "col-12 d-flex justify-content-center previewCard",
+        class: { zeroOpacity: _vm.siteOwnerInfo === undefined },
+        style: _vm.animatedBackground
       },
       [
         _c("HeaderCard", { attrs: { info: _vm.siteOwnerInfo } }),
@@ -48946,8 +48993,7 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass:
-          "container col-12 vh-100 animatedBackground fullscreenCard",
+        staticClass: "container col-12 vh-100 fullscreenCard",
         style: _vm.fullscreenStyle
       },
       [
@@ -48999,7 +49045,8 @@ var render = function() {
         "div",
         {
           staticClass:
-            "col-12 d-flex h-100 justify-content-center animatedBackground previewCard fadeInAnim"
+            "col-12 d-flex h-100 justify-content-center previewCard fadeInAnim",
+          style: _vm.animatedBackground
         },
         [
           _vm.type === "mini"
@@ -50987,35 +51034,46 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "row justify-content-center goUpAnim" },
-                [
-                  _c(
+              _vm.bg_first_color != -1 && _vm.bg_second_color != -1
+                ? _c(
                     "div",
-                    {
-                      staticClass: "col-5 text-center",
-                      style: _vm.previewStyle
-                    },
+                    { staticClass: "row justify-content-center goUpAnim" },
                     [
-                      _c("br"),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c("h3", [_vm._v("Превью")]),
-                      _vm._v(" "),
-                      _c("br"),
-                      _c("br")
+                      _c(
+                        "div",
+                        {
+                          staticClass: "col-5 text-center",
+                          style: _vm.previewStyle
+                        },
+                        [
+                          _c("br"),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("h3", [_vm._v("Превью")]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _c("br")
+                        ]
+                      )
                     ]
                   )
-                ]
-              ),
+                : _vm._e(),
               _vm._v(" "),
               _vm._m(0)
             ]
           )
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "col-12 p-1 text-center unclickable zeroOpacity",
+        class: { blinkAnim: _vm.saved }
+      },
+      [_c("h5", [_vm._v("Изменения сохранены")])]
+    )
   ])
 }
 var staticRenderFns = [
