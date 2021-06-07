@@ -16,16 +16,12 @@
 
         <!-- карточка футер -->
         <FooterCard v-if="footer === 1"/>    
+        
     </div>
 </template>
 
 <script>
 export default {
-    //хуки
-    created(){
-   
-    },
-
     //данные
     computed: {
         //информация о владельце сайта

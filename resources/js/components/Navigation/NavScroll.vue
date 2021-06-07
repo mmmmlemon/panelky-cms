@@ -15,6 +15,7 @@ export default {
 
     //методы
     methods: {
+        //проскроллить наверх
         scrollToTop: function() {
             window.scrollTo(0,0);
         },

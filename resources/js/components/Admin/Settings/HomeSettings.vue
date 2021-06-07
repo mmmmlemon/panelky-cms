@@ -5,6 +5,7 @@
         <div class="col-8">
             <div class="row justify-content-center">
                 <div class="col-12">
+                    <!-- форма -->
                     <form method="POST" @submit.prevent="submit">
                         <h6 class="text-center mb-4 goUpAnim">Отображение элементов на главной странице</h6>
                         <div class="row justify-content-center goUpAnim" v-if="side_nav != -1">
@@ -98,6 +99,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Сохранить -->
                         <div class="row justify-content-center goUpAnim m-5" v-if="side_nav != -1">
                             <div class="col-5">
                                 <button class="btn btn-outline-light btn-lg btn-block ml-2" title="Сохранить изменения">
@@ -119,6 +121,7 @@
 export default {
     //хуки
     created(){
+        //получить настройки
         axios.get('/api/getHomeSettings').then(response => {
             this.side_nav = response.data.side_nav;
             this.about = response.data.about;
@@ -127,6 +130,7 @@ export default {
             this.footer = response.data.footer;
         })
     },
+
     mounted(){
         this.$parent.currentTab = 'homeSettings';
     },
@@ -134,10 +138,15 @@ export default {
     //данные
     data: () => {
         return {
+            //боковая навигация, вкл\выкл
             side_nav: -1,
+            //о сайте, вкл\выкл
             about: 1,
+            //карточка приветствия, вкл\выкл
             site_owner: 1,
+            //проекты, вкл\выкл
             projects: 1,
+            //ссылки и контакты, вкл\выкл
             footer: 1,
             saved: false,
         }
@@ -145,27 +154,22 @@ export default {
 
     //методы
     methods: {
+        //переключить настройку
         toggleValue(data, value){
-            if(data == 'side_nav'){
-                this.side_nav = value;
-            }
+            if(data == 'side_nav')
+            { this.side_nav = value; }
 
-            if(data == 'about'){
-                this.about = value;
-            }
+            if(data == 'about')
+            { this.about = value; }
 
-            if(data == 'site_owner'){
-                this.site_owner = value;
-            }
+            if(data == 'site_owner')
+            { this.site_owner = value; }
 
-            if(data == 'projects'){
-                this.projects = value;
-            }
+            if(data == 'projects')
+            { this.projects = value; }
 
-            if(data == 'footer'){
-                this.footer = value;
-            }
-
+            if(data == 'footer')
+            { this.footer = value; }
         },
 
         //сохранить изменения
@@ -185,9 +189,7 @@ export default {
                         this.errors = error.response.data.errors || {};
                     }
             });
-            
         }   
     }
-
 }
 </script>

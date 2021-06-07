@@ -2,6 +2,7 @@
 //кнопка навигации с боковым меню
 <template>
     <div v-if="links != -1 && links != false || fullProjectList != -1 && fullProjectList != false">
+
         <!-- кнопка меню -->
         <!-- видна только на десктопе -->
         <button v-on:click="showNavMenu()" class="d-none d-md-block navButton zIndex3 fadeInAnim">
@@ -23,6 +24,7 @@
                     </h6>
                     <hr>
                 </div>
+                <!-- список проектов -->
                 <div v-for="project in fullProjectList.home" :key="project.slug" class="col-12 text-center">
                     <h6>
                         <a v-on:click="closeNavMenu()" :href="`#${project.slug}`">{{project.project_title}}</a>
@@ -33,7 +35,7 @@
                     <h6>
                         <a v-on:click="closeNavMenu()" :href="`#other`">Другие проекты</a>
                     </h6>
-                     <br>
+                    <hr>
                 </div>
                 <!-- ссылки -->
                 <div class="col-12" v-if="links !== false && links != -1">
@@ -48,6 +50,13 @@
                         <a v-on:click="closeNavMenu()" target="_blank" :href="link.link_url">
                             {{link.link_title}}
                         </a>
+                    </h6>
+                    <hr>
+                </div>
+                <!-- ссылки -->
+                <div class="col-12" v-if="links !== false && links != -1">
+                    <h6 class="text-center">
+                        <a href="#contacts"><b>Контакты</b></a>
                     </h6>
                     <hr>
                 </div>

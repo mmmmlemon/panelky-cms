@@ -3798,11 +3798,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
     var _this = this;
 
+    //получить настройки
     axios.get('/api/getBasicSettings').then(function (response) {
       _this.site_title = response.data.site_title;
       _this.public_access = response.data.public_access;
@@ -3817,8 +3822,11 @@ __webpack_require__.r(__webpack_exports__);
   //данные
   data: function data() {
     return {
+      //заголовок сайта
       site_title: -1,
+      //статус сайта, открыт\закрыт
       public_access: -1,
+      //сообщение для посетителей, если закрыт
       public_access_message: -1,
       errors: null,
       saved: false,
@@ -3915,20 +3923,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
     var _this = this;
 
+    //получить настройки
     axios.get('/api/getBgColors').then(function (response) {
       _this.bg_first_color = response.data.bg_first_color;
       _this.bg_second_color = response.data.bg_second_color;
       _this.previewStyle = {
-        background: "linear-gradient(to right top, ".concat(_this.bg_first_color, ", ").concat(_this.bg_second_color, ")"),
-        // backgroundSize: '100%',
-        // backgroundRepeat: 'no-repeat',
-        // backgroundAttachment: 'fixed',
-        borderRadius: '15px'
+        background: "linear-gradient(to right top, ".concat(_this.bg_first_color, ", ").concat(_this.bg_second_color, ")")
       };
     });
   },
@@ -3938,10 +3946,12 @@ __webpack_require__.r(__webpack_exports__);
   //данные
   data: function data() {
     return {
+      //первый цвет
       bg_first_color: -1,
+      //второй цвет
       bg_second_color: -1,
-      previewStyle: {//
-      },
+      //стили для превью
+      previewStyle: {},
       saved: false
     };
   },
@@ -3972,7 +3982,10 @@ __webpack_require__.r(__webpack_exports__);
         _this2.saved = true;
 
         _this2.$store.dispatch('getAnimatedBackground');
-      })["catch"](function (error) {//
+      })["catch"](function (error) {
+        var errors = error.response.data;
+
+        _this2.$store.dispatch('setErrors', error.response.data.message);
       });
     }
   }
@@ -4108,11 +4121,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
     var _this = this;
 
+    //получить настройки
     axios.get('/api/getHomeSettings').then(function (response) {
       _this.side_nav = response.data.side_nav;
       _this.about = response.data.about;
@@ -4127,16 +4143,22 @@ __webpack_require__.r(__webpack_exports__);
   //данные
   data: function data() {
     return {
+      //боковая навигация, вкл\выкл
       side_nav: -1,
+      //о сайте, вкл\выкл
       about: 1,
+      //карточка приветствия, вкл\выкл
       site_owner: 1,
+      //проекты, вкл\выкл
       projects: 1,
+      //ссылки и контакты, вкл\выкл
       footer: 1,
       saved: false
     };
   },
   //методы
   methods: {
+    //переключить настройку
     toggleValue: function toggleValue(data, value) {
       if (data == 'side_nav') {
         this.side_nav = value;
@@ -4330,39 +4352,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
     var _this = this;
 
+    //проверяем статус сайта
     axios.get('/api/getAccessStatus').then(function (response) {
-      _this.public_access = response.data;
+      _this.public_access = response.data; //если сайт закрыт для посетителей
 
       if (_this.public_access == 0) {
         axios.get('/api/getPublicAccessMessage').then(function (response) {
           _this.public_access_message = response.data;
         });
-      } else if (_this.public_access == 1) {
-        axios.get('/api/getHomeSettings').then(function (response) {
-          _this.settings = response.data;
+      } //если сайт открыт
+      else if (_this.public_access == 1) {
+          //получаем настройки главной страницы
+          axios.get('/api/getHomeSettings').then(function (response) {
+            _this.settings = response.data; //если нужно показать карточку о владельце сайта, то получаем информацию о владельце
 
-          if (_this.settings.site_owner === 1) {
-            //получить информацию о владельце сайта
-            _this.$store.dispatch('getSiteOwnerInfo');
-          }
+            if (_this.settings.site_owner === 1) {
+              //получить информацию о владельце сайта
+              _this.$store.dispatch('getSiteOwnerInfo');
+            } //если показываем проекты, то получаем список проектов
 
-          if (_this.settings.projects === 1) {
-            //получение полного списка проектов для HomePage.vue
-            _this.$store.dispatch('getFullProjectList');
-          }
-        }); //при событии scroll будет срабатывать метод handleNavScroll
 
-        window.addEventListener('scroll', _this.handleNavScroll);
-      }
+            if (_this.settings.projects === 1) {
+              _this.$store.dispatch('getFullProjectList');
+            }
+          }); //при событии scroll будет срабатывать метод handleNavScroll
+          //чтобы отображалась кнопка "Наверх"
+
+          window.addEventListener('scroll', _this.handleNavScroll);
+        }
     });
   },
   destroyed: function destroyed() {
-    //убрать listener для события scroll
+    //убрать listener для события scroll при уничтожении компонента
     window.removeEventListener('scroll', this.handleNavScroll);
   },
   //данные
@@ -4374,7 +4402,9 @@ __webpack_require__.r(__webpack_exports__);
       startHeaderCardTransition: false,
       //статус сайта
       public_access: -1,
+      //сообщение если сайт недоступен
       public_access_message: -1,
+      //настройки главной страницы
       settings: -1
     };
   },
@@ -4442,6 +4472,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -4602,9 +4633,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  //хуки
-  created: function created() {},
   //данные
   computed: {
     //информация о владельце сайта
@@ -4670,6 +4700,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
@@ -4685,47 +4718,29 @@ __webpack_require__.r(__webpack_exports__);
   //данные
   data: function data() {
     return {
+      //контактная почта
       email: -1,
+      //видимость почты
       emailVisible: false
     };
   },
-  props: {
-    footerTitle: {
-      type: String,
-      "default": 'Ссылки'
-    },
-    contactTitle: {
-      type: String,
-      "default": 'Связаться со мной'
-    },
-    contactEmail: {
-      type: String,
-      "default": 'contact@mail.com'
-    }
-  },
   computed: {
+    //список ссылок
     links: function links() {
       return this.$store.state.AdminStates.links;
     }
   },
   //методы
   methods: {
+    //сделать реверс строки
+    //используется для того чтобы спам-боты не увидели почту в верстке
     reverseString: function reverseString(str) {
-      // Step 1. Use the split() method to return a new array
-      var splitString = str.split(""); // var splitString = "hello".split("");
-      // ["h", "e", "l", "l", "o"]
-      // Step 2. Use the reverse() method to reverse the new created array
-
-      var reverseArray = splitString.reverse(); // var reverseArray = ["h", "e", "l", "l", "o"].reverse();
-      // ["o", "l", "l", "e", "h"]
-      // Step 3. Use the join() method to join all elements of the array into a string
-
-      var joinArray = reverseArray.join(""); // var joinArray = ["o", "l", "l", "e", "h"].join("");
-      // "olleh"
-      //Step 4. Return the reversed string
-
-      return joinArray; // "olleh"
+      var splitString = str.split("");
+      var reverseArray = splitString.reverse();
+      var joinArray = reverseArray.join("");
+      return joinArray;
     },
+    //показать почту по нажатию кнопки
     showEmail: function showEmail() {
       if (this.emailVisible !== true) {
         this.email = this.reverseString(this.email);
@@ -4842,11 +4857,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  //хуки
   mounted: function mounted() {
+    //если компонент на главной странице сайта
+    //то включить анимацию
     if (this.$route.path != '/admin') {
+      //$parent.$parent - App.vue
       this.$parent.$parent.startHeaderCardTransition = true;
     }
   },
+  //данные
   props: {
     info: {
       type: Object,
@@ -4916,9 +4936,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   props: {
+    //список проектов
     projects: {
       type: Array,
       "default": undefined
@@ -5104,25 +5128,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {
-    this.setVisible = this.isVisible;
-  },
+  //данные
   data: function data() {
     return {
+      //видимость карточки
       visible: false
     };
   },
   //данные
   props: {
+    //тип карточки, "левая" или "правая"
     type: {
       type: String,
       "default": 'left'
     },
-    isVisible: {
-      type: Boolean,
-      "default": true
-    },
+    //инф-ция о проекте
     project: {
       type: Object,
       "default": function _default() {
@@ -5139,6 +5162,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
+    //видимость карточки
     setVisible: {
       get: function get() {
         this.visible = false;
@@ -5150,6 +5174,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   //методы
   methods: {
+    //при скролле страницы показать карточку когда она будет 
+    //в поле видимости
     handleScroll: function handleScroll(evt, el) {
       if (el.getBoundingClientRect().top < 300) {
         this.setVisible = true;
@@ -5184,6 +5210,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
+    //текст ошибки
     errorMessage: {
       type: String,
       "default": "Error message text"
@@ -5334,6 +5361,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   computed: {
@@ -5414,6 +5450,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   //методы
   methods: {
+    //проскроллить наверх
     scrollToTop: function scrollToTop() {
       window.scrollTo(0, 0);
     }
@@ -52075,7 +52112,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12 text-center mt-5" }, [
-      _c("h4", [_vm._v("Панель администратора")]),
+      _c("h4", [_vm._v("Панель управления сайтом")]),
       _vm._v(" "),
       _c("hr")
     ])
@@ -52190,7 +52227,7 @@ var render = function() {
           ? _c("div", { staticClass: "col-12" }, [
               _c("h1", { staticClass: "text-center textVertical" }, [
                 _c("p", { staticClass: "text-center textVertical font14pt" }, [
-                  _vm._v(_vm._s(_vm.footerTitle))
+                  _vm._v("Ссылки")
                 ]),
                 _vm._v(" "),
                 _c("hr", { staticClass: "mb-0" }),
@@ -52227,37 +52264,44 @@ var render = function() {
         _c("hr"),
         _vm._v(" "),
         _vm.email !== null && _vm.email !== -1
-          ? _c("div", { staticClass: "col-12 text-center mt-5" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-lg btn-outline-light",
-                  attrs: { type: "button" },
-                  on: { click: _vm.showEmail }
-                },
-                [
-                  _c("span", [_vm._v(_vm._s(_vm.contactTitle))]),
-                  _vm._v(" "),
-                  _vm._m(0)
-                ]
-              ),
-              _vm._v(" "),
-              _c("br"),
-              _c("br"),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "font18pt",
-                  class: {
-                    "zeroOpacity unclickable": _vm.emailVisible === false,
-                    goUpAnim: _vm.emailVisible === true
+          ? _c(
+              "div",
+              {
+                staticClass: "col-12 text-center mt-5",
+                attrs: { id: "contacts" }
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-lg btn-outline-light",
+                    attrs: { type: "button" },
+                    on: { click: _vm.showEmail }
                   },
-                  attrs: { href: "mailto:" + _vm.email }
-                },
-                [_c("b", [_vm._v(_vm._s(_vm.email))])]
-              )
-            ])
+                  [
+                    _c("span", [_vm._v("Связаться со мной")]),
+                    _vm._v(" "),
+                    _vm._m(0)
+                  ]
+                ),
+                _vm._v(" "),
+                _c("br"),
+                _c("br"),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "font18pt",
+                    class: {
+                      "zeroOpacity unclickable": _vm.emailVisible === false,
+                      goUpAnim: _vm.emailVisible === true
+                    },
+                    attrs: { href: "mailto:" + _vm.email }
+                  },
+                  [_c("b", [_vm._v(_vm._s(_vm.email))])]
+                )
+              ]
+            )
           : _vm._e()
       ])
     ]
@@ -52386,7 +52430,7 @@ var render = function() {
         { staticClass: "d-block d-md-none div-12 textVertical fadeInAnim" },
         [
           _c("transition", { attrs: { name: "name" } }, [
-            _vm.info.name != undefined
+            _vm.startTransition === true && _vm.info.name != undefined
               ? _c(
                   "h1",
                   { staticClass: "text-center textVertical font2-5rem" },
@@ -52396,11 +52440,13 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("transition", { attrs: { name: "occupation" } }, [
-            _vm.info.occupation != undefined ? _c("hr") : _vm._e()
+            _vm.startTransition === true && _vm.info.occupation != undefined
+              ? _c("hr")
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c("transition", { attrs: { name: "occupation" } }, [
-            _vm.info.occupation != undefined
+            _vm.startTransition === true && _vm.info.occupation != undefined
               ? _c(
                   "p",
                   { staticClass: "text-center textVertical font1-8rem" },
@@ -52416,11 +52462,13 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("transition", { attrs: { name: "occupation" } }, [
-            _vm.info.occupation != undefined ? _c("hr") : _vm._e()
+            _vm.startTransition === true && _vm.info.occupation != undefined
+              ? _c("hr")
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c("transition", { attrs: { name: "aboutMe" } }, [
-            _vm.info.aboutMe != undefined
+            _vm.startTransition === true && _vm.info.aboutMe != undefined
               ? _c("p", { staticClass: "text-center font1-2rem" }, [
                   _vm._v(
                     "\n                " +
@@ -52434,7 +52482,7 @@ var render = function() {
           _c("br"),
           _vm._v(" "),
           _c("transition", { attrs: { name: "bottomText" } }, [
-            _vm.info.bottomText != undefined
+            _vm.startTransition === true && _vm.info.bottomText != undefined
               ? _c("h6", { staticClass: "text-center font1-2rem" }, [
                   _c("b", [_vm._v(_vm._s(_vm.info["bottomText"]))])
                 ])
@@ -53270,7 +53318,7 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _c("br")
+                          _c("hr")
                         ])
                       : _vm._e(),
                     _vm._v(" "),
@@ -53321,6 +53369,14 @@ var render = function() {
                           ],
                           2
                         )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.links !== false && _vm.links != -1
+                      ? _c("div", { staticClass: "col-12" }, [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _c("hr")
+                        ])
                       : _vm._e()
                   ],
                   2
@@ -53346,6 +53402,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("h6", { staticClass: "text-center" }, [
       _c("b", [_vm._v("Ссылки")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h6", { staticClass: "text-center" }, [
+      _c("a", { attrs: { href: "#contacts" } }, [_c("b", [_vm._v("Контакты")])])
     ])
   }
 ]

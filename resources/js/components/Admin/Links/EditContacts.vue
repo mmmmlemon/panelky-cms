@@ -77,7 +77,6 @@ export default {
 
         //сохранить email
         submit(){
-           
            let formData = new FormData();
            formData.append('email', this.email);
            axios.post('/admin/editEmail', formData).then(response => {

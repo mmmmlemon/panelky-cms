@@ -14,7 +14,8 @@
         <router-view v-if="public_access == 1"
                      v-touch:swipe.left="showNavMenu">
         </router-view>
-
+        
+        <!-- сообщение - сайт недоступен -->
         <div class="row h-100 d-flex text-center justify-content-center goUpAnim" v-if="public_access == 0">
              <div class="textVertical text-center fadeInAnim">
                 <h1 class="font2-5rem">Сайт недоступен</h1>
@@ -26,48 +27,50 @@
             </div>
         </div>
     </div>
+
 </template>
 <script>
 export default {
-
     //хуки
     created(){
-        
+        //проверяем статус сайта
         axios.get('/api/getAccessStatus').then(response => {
             this.public_access = response.data;
 
+            //если сайт закрыт для посетителей
             if(this.public_access == 0){
                 axios.get('/api/getPublicAccessMessage').then(response => {
                     this.public_access_message = response.data;
                 });
             }
-            else if (this.public_access == 1)
+            //если сайт открыт
+            else if(this.public_access == 1)
             {    
+                //получаем настройки главной страницы
                 axios.get('/api/getHomeSettings').then(response => {
                     this.settings = response.data;
 
+                    //если нужно показать карточку о владельце сайта, то получаем информацию о владельце
                     if(this.settings.site_owner === 1){
                         //получить информацию о владельце сайта
                         this.$store.dispatch('getSiteOwnerInfo');
                     }
                     
+                    //если показываем проекты, то получаем список проектов
                     if(this.settings.projects === 1){
-                        //получение полного списка проектов для HomePage.vue
                         this.$store.dispatch('getFullProjectList'); 
                     }
-
                 });
 
                 //при событии scroll будет срабатывать метод handleNavScroll
+                //чтобы отображалась кнопка "Наверх"
                 window.addEventListener('scroll', this.handleNavScroll);
-
-              
             }
             });
     },
 
     destroyed() {
-        //убрать listener для события scroll
+        //убрать listener для события scroll при уничтожении компонента
         window.removeEventListener('scroll', this.handleNavScroll);
     },
 
@@ -80,7 +83,9 @@ export default {
             startHeaderCardTransition: false,
             //статус сайта
             public_access: -1,
+            //сообщение если сайт недоступен
             public_access_message: -1,
+            //настройки главной страницы
             settings: -1,
         }
     },

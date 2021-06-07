@@ -52,29 +52,29 @@
 
             <!-- имя автора -->
             <transition name="name">
-                <h1 v-if="info.name != undefined" class="text-center textVertical font2-5rem">
+                <h1 v-if="startTransition === true && info.name != undefined" class="text-center textVertical font2-5rem">
                     <b>{{info['name']}}</b>
                 </h1>
             </transition>
 
             <transition name="occupation">
-                <hr v-if="info.occupation != undefined">
+                <hr v-if="startTransition === true && info.occupation != undefined">
             </transition>
 
             <!-- род занятий -->
             <transition name="occupation">
-                <p v-if="info.occupation != undefined" class="text-center textVertical font1-8rem">
+                <p v-if="startTransition === true && info.occupation != undefined" class="text-center textVertical font1-8rem">
                     {{info['occupation']}}
                 </p>
             </transition>
 
             <transition name="occupation">
-                <hr v-if="info.occupation != undefined">
+                <hr v-if="startTransition === true && info.occupation != undefined">
             </transition>
 
             <!-- о себе -->
             <transition name="aboutMe">
-                <p v-if="info.aboutMe != undefined" class="text-center font1-2rem">
+                <p v-if="startTransition === true && info.aboutMe != undefined" class="text-center font1-2rem">
                     {{info['aboutMe']}}
                 </p>
             </transition>
@@ -83,7 +83,7 @@
 
             <transition name="bottomText">
             <!-- нижний текст -->
-                <h6 v-if="info.bottomText != undefined" class="text-center font1-2rem">
+                <h6 v-if="startTransition === true && info.bottomText != undefined" class="text-center font1-2rem">
                     <b>{{info['bottomText']}}</b>
                 </h6>
             </transition>
@@ -94,13 +94,17 @@
 <script>
 export default {
 
+    //хуки
     mounted(){
+        //если компонент на главной странице сайта
+        //то включить анимацию
         if(this.$route.path != '/admin'){
+            //$parent.$parent - App.vue
             this.$parent.$parent.startHeaderCardTransition = true;
         }
-       
     },
 
+    //данные
     props: {
         info: { type: Object, default: function() {
             return {

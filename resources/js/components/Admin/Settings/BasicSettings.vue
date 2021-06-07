@@ -5,7 +5,9 @@
         <div class="col-8">
             <div class="row justify-content-center">
                 <div class="col-12">
+                    <!-- форма -->
                     <form method="POST" @submit.prevent="submit">
+                        <!-- название сайта -->
                         <div class="row justify-content-center">
                             <div class="col-8 mb-3 goUpAnim" v-if="site_title != -1">
                                 <h6>Название сайта</h6>
@@ -13,6 +15,7 @@
                                 <div v-if="errors && errors.site_title" class="text-danger goUpAnim">{{ errors.site_title[0] }}</div>
                             </div>
                         </div> 
+                        <!-- статус сайта - открыт\закрыт -->
                         <div class="row justify-content-center mt-5 goUpAnim" v-if="public_access != -1">
                             <div class="col-8 text-center font14pt form-check">
                                 <div class="btn-group col-10" role="group" aria-label="Basic example">
@@ -31,6 +34,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- текст сообщения, если сайт закрыт -->
                         <div class="row justify-content-center mt-3 goUpAnim" v-if="public_access === 0">
                             <div class="col-6 form-floating">
                                 <h6>Текст сообщения для посетителей</h6>
@@ -58,6 +62,7 @@
 export default {
     //хуки
     created(){
+        //получить настройки
         axios.get('/api/getBasicSettings').then(response => {
             this.site_title = response.data.site_title;
             this.public_access = response.data.public_access;
@@ -73,8 +78,11 @@ export default {
     //данные
     data: () => {
         return {
+            //заголовок сайта
             site_title: -1,
+            //статус сайта, открыт\закрыт
             public_access: -1,
+            //сообщение для посетителей, если закрыт
             public_access_message: -1,
             errors: null,
             saved: false,

@@ -2,8 +2,10 @@
 //Карточка для проектов
 <template>
     <div class="row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1 projectCard" 
-    v-bind:class="{'zeroOpacity': visible === false}" v-scroll="handleScroll" :id="project.slug">
-
+            v-bind:class="{'zeroOpacity': visible === false}" 
+            v-scroll="handleScroll" :id="project.slug">
+        
+        <!-- ошибка -->
         <div class="col-10" v-if="project === false">
             <Error errorMessage="Не удалось загрузить информацию о проекте"/>
         </div>
@@ -165,20 +167,19 @@
 </template>
 <script>
 export default {
-
-    mounted(){
-        this.setVisible = this.isVisible;
-    },
-
+    //данные
     data: () => {
         return {
+            //видимость карточки
             visible: false,
         }
     },
+
     //данные
     props: {
+        //тип карточки, "левая" или "правая"
         type: { type: String, default: 'left' },
-        isVisible: { type: Boolean, default: true },
+        //инф-ция о проекте
         project: {type: Object, default: function(){
             return {
                 'project_title': undefined,
@@ -193,6 +194,7 @@ export default {
     },
 
     computed: {
+        //видимость карточки
         setVisible: {
            get() {
                this.visible = false;
@@ -205,6 +207,8 @@ export default {
 
     //методы
     methods: {
+        //при скролле страницы показать карточку когда она будет 
+        //в поле видимости
         handleScroll: function (evt, el){
             if (el.getBoundingClientRect().top < 300) {
                 this.setVisible = true;

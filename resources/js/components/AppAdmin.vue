@@ -10,11 +10,12 @@
             </button>
             <Error :errorMessage="errors"/>
         </div>
+
         <!-- модальное окно для удаления проектов -->
         <DeleteModal />
 
         <div class="col-12 text-center mt-5">
-            <h4>Панель администратора</h4>
+            <h4>Панель управления сайтом</h4>
             <hr>
         </div>
         
@@ -41,7 +42,7 @@
         <div class="row justify-content-center">
             <div class="col-8 ">
                 <ul class="nav nav-fill">
-                    <!-- Владлец сайта -->
+                    <!-- Владелец сайта -->
                     <li class="nav-item mr-2">
                         <router-link v-bind:class="{'btn-light': currentTab === 'admin', 
                                                     'btn-outline-light': currentTab !== 'admin'}"
@@ -113,9 +114,7 @@ export default {
     methods: {
         //очистить ошибки
         clearError()
-        {
-            this.$store.dispatch('setErrors', -1);
-        },
+        { this.$store.dispatch('setErrors', -1); },
         //логаут
         logout: function(){
             //отправить POST-запрос на выход из профиля и перенаправить на главную страницу
