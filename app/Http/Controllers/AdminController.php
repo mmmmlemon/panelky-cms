@@ -9,6 +9,7 @@ use File;
 use App\Models\Settings;
 use App\Models\Project;
 use App\Models\Link;
+use Image;
 
 //AdminController
 //функции админки
@@ -105,10 +106,11 @@ class AdminController extends Controller
         { 
             $fileIcon = $request->projectIcon; 
             $filename = md5(time().rand(0,9)).".".$fileIcon->getClientOriginalExtension();
-            $path = "public/projectsImages/".$filename;
-            Storage::put($path, file_get_contents($fileIcon));
+            $path = "app/public/projectsImages/".$filename;
+            $img = Image::make(file_get_contents($fileIcon))->widen(100);
+            $img->save(storage_path($path), 100);
+            // Storage::put($path, file_get_contents($fileIcon));
 
-        
             //удаление старой картинки перед сохранением ссылки на новую
             Storage::disk('public')->delete(str_replace('storage/','',$project->project_icon));
             $project->project_icon = "storage/projectsImages/".$filename;
@@ -121,8 +123,10 @@ class AdminController extends Controller
         { 
             $fileImage = $request->projectImage; 
             $filename = md5(time().rand(0,9)).".".$fileImage->getClientOriginalExtension();
-            $path = "public/projectsImages/".$filename;
-            Storage::put($path, file_get_contents($fileImage));
+            $path = "app/public/projectsImages/".$filename;
+            $img = Image::make(file_get_contents($fileImage))->widen(400);
+            $img->save(storage_path($path), 100);
+            // Storage::put($path, file_get_contents($fileImage));
 
             //удаление старой картинки перед сохранением ссылки на новую
             Storage::disk('public')->delete(str_replace('storage/', '', $project->project_image));
@@ -209,16 +213,19 @@ class AdminController extends Controller
             if($request->project_icon != null)
             {
                 $filename = md5(time().rand(0,9)).".png";
-                $path = "public/projectsImages/".$filename;
-                Storage::put($path, file_get_contents(storage_path('app/public/temp/'.$request->randomFolderName."/".$request->project_icon)));
+                $path = "app/public/projectsImages/".$filename;
+                $img = Image::make(file_get_contents(storage_path('app/public/temp/'.$request->randomFolderName."/".$request->project_icon)))->widen(100);
+                $img->save(storage_path($path), 100);
                 $project->project_icon = "storage/projectsImages/".$filename;
             }
 
             if($request->project_image != null)
             {
                 $filename = md5(time().rand(0,9)).".png";
-                $path = "public/projectsImages/".$filename;
-                Storage::put($path, file_get_contents(storage_path('app/public/temp/'.$request->randomFolderName."/".$request->project_image)));
+                $path = "app/public/projectsImages/".$filename;
+                $img = Image::make(file_get_contents(storage_path('app/public/temp/'.$request->randomFolderName."/".$request->project_image)))->widen(400);
+                $img->save(storage_path($path), 100);
+                // Storage::put($path, file_get_contents(storage_path('app/public/temp/'.$request->randomFolderName."/".$request->project_image)));
                 $project->project_image = "storage/projectsImages/".$filename;
             }
         }
@@ -240,7 +247,9 @@ class AdminController extends Controller
 
         if($request->hasFile('file'))
         {
+
             $filename = $request->filename;
+
             Storage::put("/public/".$path.$filename, file_get_contents($request->file));
             return response()->json(asset("storage/".$path.$filename), 200);
         }
