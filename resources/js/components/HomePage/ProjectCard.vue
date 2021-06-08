@@ -167,6 +167,11 @@
 </template>
 <script>
 export default {
+
+     mounted(){
+        this.setVisible = this.isVisible;
+    },
+
     //данные
     data: () => {
         return {
@@ -179,6 +184,7 @@ export default {
     props: {
         //тип карточки, "левая" или "правая"
         type: { type: String, default: 'left' },
+        isVisible: { type: Boolean, default: true },
         //инф-ция о проекте
         project: {type: Object, default: function(){
             return {

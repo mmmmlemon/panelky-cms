@@ -2804,7 +2804,10 @@ __webpack_require__.r(__webpack_exports__);
     //удалить проект
     deleteProject: function deleteProject() {
       this.$store.dispatch('setDeleteModalInfo', {
-        deleteInfo: this.currentProject,
+        deleteInfo: {
+          project_title: this.currentProject.title,
+          slug: this.currentProject.slug
+        },
         page: 'homeProjects',
         type: 'project'
       });
@@ -3333,8 +3336,12 @@ __webpack_require__.r(__webpack_exports__);
     //удалить проект
     deleteProject: function deleteProject(project) {
       this.$store.dispatch('setDeleteModalInfo', {
-        deleteInfo: project,
-        page: 'allProjects'
+        deleteInfo: {
+          project_title: project.title,
+          slug: project.slug
+        },
+        page: 'allProjects',
+        type: 'project'
       });
     }
   }
@@ -5131,6 +5138,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mounted: function mounted() {
+    this.setVisible = this.isVisible;
+  },
   //данные
   data: function data() {
     return {
@@ -5144,6 +5154,10 @@ __webpack_require__.r(__webpack_exports__);
     type: {
       type: String,
       "default": 'left'
+    },
+    isVisible: {
+      type: Boolean,
+      "default": true
     },
     //инф-ция о проекте
     project: {

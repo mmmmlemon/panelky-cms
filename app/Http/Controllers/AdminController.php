@@ -124,7 +124,7 @@ class AdminController extends Controller
             $fileImage = $request->projectImage; 
             $filename = md5(time().rand(0,9)).".".$fileImage->getClientOriginalExtension();
             $path = "app/public/projectsImages/".$filename;
-            $img = Image::make(file_get_contents($fileImage))->widen(400);
+            $img = Image::make(file_get_contents($fileImage))->widen(800);
             $img->save(storage_path($path), 100);
             // Storage::put($path, file_get_contents($fileImage));
 
@@ -223,7 +223,7 @@ class AdminController extends Controller
             {
                 $filename = md5(time().rand(0,9)).".png";
                 $path = "app/public/projectsImages/".$filename;
-                $img = Image::make(file_get_contents(storage_path('app/public/temp/'.$request->randomFolderName."/".$request->project_image)))->widen(400);
+                $img = Image::make(file_get_contents(storage_path('app/public/temp/'.$request->randomFolderName."/".$request->project_image)))->widen(800);
                 $img->save(storage_path($path), 100);
                 // Storage::put($path, file_get_contents(storage_path('app/public/temp/'.$request->randomFolderName."/".$request->project_image)));
                 $project->project_image = "storage/projectsImages/".$filename;
