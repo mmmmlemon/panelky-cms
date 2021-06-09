@@ -16,6 +16,8 @@ const GlobalStates = {
         fullProjectList: -1,
         //ссылки
         links: -1,
+        //email
+        email: -1,
         //animatedBackground
         animatedBackground: -1,
     },
@@ -66,6 +68,21 @@ const GlobalStates = {
                 { context.commit('setState', { state: 'links', value: false}); }
             });
         },
+
+        //getEmail
+        //получить email
+        getEmail(context){
+            axios.get('/api/getEmail').then(response => {
+                var splitString = response.data.email.split(""); 
+                var reverseArray = splitString.reverse(); 
+                var email = reverseArray.join(""); 
+                if(response.data !== false)
+                { context.commit('setState', { state: 'email', value: {email: email, emailVisible: false}}); }
+                else
+                { context.commit('setState', { state: 'email', value: false}); }
+            });
+        },
+
 
         //getAnimatedBackground
         getAnimatedBackground(context){

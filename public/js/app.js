@@ -4713,30 +4713,58 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
-    var _this = this;
+    if (this.links === -1) {
+      this.$store.dispatch('getLinks');
 
-    this.$store.dispatch('getLinks');
-    axios.get('/api/getEmail').then(function (response) {
-      _this.email = _this.reverseString(response.data.email);
-      _this.isVisible = true;
-    })["catch"](function (error) {
-      _this.email = false;
-    });
+      if (this.email === -1) {
+        this.$store.dispatch('getEmail');
+      }
+
+      this.isVisible = true;
+    } // axios.get('/api/getEmail').then(response => {
+    //     this.email = this.reverseString(response.data.email);
+    //     this.isVisible = true;
+    // }).catch(error => {
+    //     this.email = false;
+    // });
+
   },
   //данные
   data: function data() {
-    return {
-      //контактная почта
-      email: -1,
-      //видимость почты
-      emailVisible: false,
-      isVisible: false
+    return {//видимость почты
+      // emailVisible: false,
     };
   },
   computed: {
     //список ссылок
     links: function links() {
-      return this.$store.state.AdminStates.links;
+      return this.$store.state.GlobalStates.links;
+    },
+    //email
+    email: {
+      get: function get() {
+        return this.$store.state.GlobalStates.email;
+      },
+      set: function set(email) {
+        this.$store.commit('setState', {
+          state: 'email',
+          value: {
+            email: email,
+            emailVisible: true
+          }
+        });
+      }
+    },
+    isVisible: {
+      get: function get() {
+        if (this.email !== -1 && this.links !== -1) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      set: function set() {//
+      }
     }
   },
   //методы
@@ -4751,9 +4779,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     //показать почту по нажатию кнопки
     showEmail: function showEmail() {
-      if (this.emailVisible !== true) {
-        this.email = this.reverseString(this.email);
-        this.emailVisible = true;
+      if (this.email.emailVisible !== true) {
+        this.email = this.reverseString(this.email.email);
       }
     }
   }
@@ -5816,6 +5843,8 @@ var GlobalStates = {
     fullProjectList: -1,
     //ссылки
     links: -1,
+    //email
+    email: -1,
     //animatedBackground
     animatedBackground: -1
   },
@@ -5880,6 +5909,30 @@ var GlobalStates = {
         } else {
           context.commit('setState', {
             state: 'links',
+            value: false
+          });
+        }
+      });
+    },
+    //getEmail
+    //получить email
+    getEmail: function getEmail(context) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getEmail').then(function (response) {
+        var splitString = response.data.email.split("");
+        var reverseArray = splitString.reverse();
+        var email = reverseArray.join("");
+
+        if (response.data !== false) {
+          context.commit('setState', {
+            state: 'email',
+            value: {
+              email: email,
+              emailVisible: false
+            }
+          });
+        } else {
+          context.commit('setState', {
+            state: 'email',
             value: false
           });
         }
@@ -52240,91 +52293,98 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "div-12 textVertical" }, [
-            _vm.links !== false
-              ? _c("div", { staticClass: "col-12" }, [
-                  _c("h1", { staticClass: "text-center textVertical" }, [
-                    _c(
-                      "p",
-                      { staticClass: "text-center textVertical font14pt" },
-                      [_vm._v("Ссылки")]
-                    ),
-                    _vm._v(" "),
-                    _c("hr", { staticClass: "mb-0" }),
-                    _vm._v(" "),
-                    _vm.links !== undefined && _vm.links !== -1
-                      ? _c(
-                          "div",
-                          { staticClass: "row font21pt" },
-                          _vm._l(_vm.links, function(link) {
-                            return _c(
-                              "div",
-                              {
-                                key: link.slug,
-                                staticClass: "col-12 col-md-12 mt-3"
-                              },
-                              [
-                                _c(
-                                  "a",
-                                  {
-                                    attrs: {
-                                      href: link.link_url,
-                                      target: "_blank"
-                                    }
-                                  },
-                                  [_c("b", [_vm._v(_vm._s(link.link_title))])]
-                                )
-                              ]
-                            )
-                          }),
-                          0
-                        )
-                      : _vm._e()
-                  ])
+            _c(
+              "div",
+              {
+                staticClass: "col-12 fadeInAnim",
+                class: { zeroOpacity: _vm.links == null && _vm.links == -1 }
+              },
+              [
+                _c("h1", { staticClass: "text-center textVertical" }, [
+                  _c(
+                    "p",
+                    { staticClass: "text-center textVertical font14pt" },
+                    [_vm._v("Ссылки")]
+                  ),
+                  _vm._v(" "),
+                  _c("hr", { staticClass: "mb-0" }),
+                  _vm._v(" "),
+                  _vm.links !== undefined && _vm.links !== -1
+                    ? _c(
+                        "div",
+                        { staticClass: "row font21pt" },
+                        _vm._l(_vm.links, function(link) {
+                          return _c(
+                            "div",
+                            {
+                              key: link.slug,
+                              staticClass: "col-12 col-md-12 mt-3"
+                            },
+                            [
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href: link.link_url,
+                                    target: "_blank"
+                                  }
+                                },
+                                [_c("b", [_vm._v(_vm._s(link.link_title))])]
+                              )
+                            ]
+                          )
+                        }),
+                        0
+                      )
+                    : _vm._e()
                 ])
-              : _vm._e(),
+              ]
+            ),
             _vm._v(" "),
             _c("hr"),
             _vm._v(" "),
-            _vm.email !== null && _vm.email !== -1
-              ? _c(
-                  "div",
+            _c(
+              "div",
+              {
+                staticClass: "col-12 text-center mt-5 fadeInAnim",
+                class: {
+                  zeroOpacity: _vm.email.email == null && _vm.email == -1
+                },
+                attrs: { id: "contacts" }
+              },
+              [
+                _c(
+                  "button",
                   {
-                    staticClass: "col-12 text-center mt-5",
-                    attrs: { id: "contacts" }
+                    staticClass: "btn btn-lg btn-outline-light",
+                    attrs: { type: "button" },
+                    on: { click: _vm.showEmail }
                   },
                   [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-lg btn-outline-light",
-                        attrs: { type: "button" },
-                        on: { click: _vm.showEmail }
-                      },
-                      [
-                        _c("span", [_vm._v("Связаться со мной")]),
-                        _vm._v(" "),
-                        _vm._m(0)
-                      ]
-                    ),
+                    _c("span", [_vm._v("Связаться со мной")]),
                     _vm._v(" "),
-                    _c("br"),
-                    _c("br"),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "font18pt",
-                        class: {
-                          "zeroOpacity unclickable": _vm.emailVisible === false,
-                          goUpAnim: _vm.emailVisible === true
-                        },
-                        attrs: { href: "mailto:" + _vm.email }
-                      },
-                      [_c("b", [_vm._v(_vm._s(_vm.email))])]
-                    )
+                    _vm._m(0)
                   ]
+                ),
+                _vm._v(" "),
+                _c("br"),
+                _c("br"),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "font18pt",
+                    class: {
+                      "zeroOpacity unclickable":
+                        _vm.email.emailVisible === false,
+                      goUpAnim: _vm.email.emailVisible === true
+                    },
+                    attrs: { href: "mailto:" + _vm.email.email }
+                  },
+                  [_c("b", [_vm._v(_vm._s(_vm.email.email))])]
                 )
-              : _vm._e()
+              ]
+            )
           ])
         ]
       )
@@ -53396,7 +53456,20 @@ var render = function() {
                     _vm._v(" "),
                     _vm.links !== false && _vm.links != -1
                       ? _c("div", { staticClass: "col-12" }, [
-                          _vm._m(2),
+                          _c("h6", { staticClass: "text-center" }, [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#contacts" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.closeNavMenu()
+                                  }
+                                }
+                              },
+                              [_c("b", [_vm._v("Контакты")])]
+                            )
+                          ]),
                           _vm._v(" "),
                           _c("hr")
                         ])
@@ -53425,14 +53498,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("h6", { staticClass: "text-center" }, [
       _c("b", [_vm._v("Ссылки")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h6", { staticClass: "text-center" }, [
-      _c("a", { attrs: { href: "#contacts" } }, [_c("b", [_vm._v("Контакты")])])
     ])
   }
 ]

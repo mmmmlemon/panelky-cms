@@ -5,7 +5,7 @@
     <div class="row h-75 w-75 bigCard d-flex justify-content-center goUpAnim" v-if="isVisible">
         <div class="div-12 textVertical">
             <!-- ссылки -->
-            <div class="col-12" v-if="links !== false">
+            <div class="col-12 fadeInAnim" v-bind:class="{'zeroOpacity':links == null && links == -1}">
                 <h1 class="text-center textVertical">
                     <p class="text-center textVertical font14pt">Ссылки</p>
                     <hr class="mb-0">
@@ -20,7 +20,7 @@
             </div>  
             <hr>
             <!-- контактная почта -->
-            <div class="col-12 text-center mt-5" v-if="email !== null && email !== -1" id="contacts">
+            <div class="col-12 text-center mt-5 fadeInAnim" v-bind:class="{'zeroOpacity':email.email == null && email == -1}" id="contacts">
                 <button type="button" class="btn btn-lg btn-outline-light" v-on:click="showEmail">
                     <span>Связаться со мной</span>
                     <span aria-hidden="true">
@@ -28,8 +28,8 @@
                     </span>
                 </button>
                 <br><br>
-                <a class="font18pt" :href="'mailto:'+email" v-bind:class="{'zeroOpacity unclickable': emailVisible === false, 'goUpAnim': emailVisible === true}">
-                    <b>{{email}}</b>
+                <a class="font18pt" :href="'mailto:'+email.email" v-bind:class="{'zeroOpacity unclickable': email.emailVisible === false, 'goUpAnim': email.emailVisible === true}">
+                    <b>{{email.email}}</b>
                 </a>
             </div> 
         </div>  
@@ -40,31 +40,61 @@
 export default {
     //хуки
     created(){
-        this.$store.dispatch('getLinks');
-        axios.get('/api/getEmail').then(response => {
-            this.email = this.reverseString(response.data.email);
+        
+        if(this.links === -1)
+        {
+            this.$store.dispatch('getLinks');
+            if(this.email === -1)
+            { this.$store.dispatch('getEmail'); }
+
             this.isVisible = true;
-        }).catch(error => {
-            this.email = false;
-        })
+        }
+  
+        // axios.get('/api/getEmail').then(response => {
+        //     this.email = this.reverseString(response.data.email);
+        //     this.isVisible = true;
+        // }).catch(error => {
+        //     this.email = false;
+        // });
+
     },
 
     //данные
     data: () => {
         return {
-            //контактная почта
-            email: -1,
             //видимость почты
-            emailVisible: false,
-            isVisible: false,
+            // emailVisible: false,
         }
     },
 
     computed: {
         //список ссылок
         links: function(){
-            return this.$store.state.AdminStates.links;
-        }
+            return this.$store.state.GlobalStates.links;
+        },
+        //email
+        email: {
+            get(){
+                return this.$store.state.GlobalStates.email;
+            },
+            set: function(email){
+                this.$store.commit('setState', {state: 'email', value: { email: email, emailVisible: true }});
+            } 
+        },
+
+        isVisible: {
+            get(){  
+                if(this.email !== -1 && this.links !== -1)
+                { return true; }
+                else
+                { return false; }
+            },
+            set(){
+                //
+            }
+        },
+
+
     },
 
     //методы
@@ -80,9 +110,8 @@ export default {
 
         //показать почту по нажатию кнопки
         showEmail(){
-            if(this.emailVisible !== true){
-                this.email = this.reverseString(this.email);
-                this.emailVisible = true;
+            if(this.email.emailVisible !== true){
+                this.email = this.reverseString(this.email.email);
             }
         }
     }

@@ -56,7 +56,7 @@
                 <!-- ссылки -->
                 <div class="col-12" v-if="links !== false && links != -1">
                     <h6 class="text-center">
-                        <a href="#contacts"><b>Контакты</b></a>
+                        <a v-on:click="closeNavMenu()" href="#contacts"><b>Контакты</b></a>
                     </h6>
                     <hr>
                 </div>
