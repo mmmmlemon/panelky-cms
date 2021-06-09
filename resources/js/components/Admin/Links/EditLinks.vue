@@ -86,7 +86,7 @@ export default {
     computed: {
         links: {
             get(){
-                 return this.$store.state.AdminStates.links;
+                 return this.$store.state.GlobalStates.links;
             },
 
             set(value){

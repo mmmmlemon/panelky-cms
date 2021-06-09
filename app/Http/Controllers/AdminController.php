@@ -254,7 +254,7 @@ class AdminController extends Controller
             return response()->json(asset("storage/".$path.$filename), 200);
         }
         else
-        { return response()-json(null, 500); }
+        { return response()->json(null, 200); }
     }
 
     //removeFolderFromTemp

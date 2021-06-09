@@ -2142,7 +2142,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     links: {
       get: function get() {
-        return this.$store.state.AdminStates.links;
+        return this.$store.state.GlobalStates.links;
       },
       set: function set(value) {
         var _this = this;
@@ -4718,6 +4718,7 @@ __webpack_require__.r(__webpack_exports__);
     this.$store.dispatch('getLinks');
     axios.get('/api/getEmail').then(function (response) {
       _this.email = _this.reverseString(response.data.email);
+      _this.isVisible = true;
     })["catch"](function (error) {
       _this.email = false;
     });
@@ -4728,7 +4729,8 @@ __webpack_require__.r(__webpack_exports__);
       //контактная почта
       email: -1,
       //видимость почты
-      emailVisible: false
+      emailVisible: false,
+      isVisible: false
     };
   },
   computed: {
@@ -5397,7 +5399,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     //ссылки
     links: function links() {
-      return this.$store.state.AdminStates.links;
+      return this.$store.state.GlobalStates.links;
     }
   },
   //методы
@@ -5811,7 +5813,11 @@ var GlobalStates = {
     //информация о владельце сайта
     siteOwnerInfo: -1,
     //полный список проектов для главной страницы
-    fullProjectList: -1
+    fullProjectList: -1,
+    //ссылки
+    links: -1,
+    //animatedBackground
+    animatedBackground: -1
   },
   mutations: {
     //установить стейт
@@ -5861,6 +5867,47 @@ var GlobalStates = {
           });
         }
       });
+    },
+    //getLinks
+    //получить ссылки
+    getLinks: function getLinks(context) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getLinks').then(function (response) {
+        if (response.data !== false) {
+          context.commit('setState', {
+            state: 'links',
+            value: response.data
+          });
+        } else {
+          context.commit('setState', {
+            state: 'links',
+            value: false
+          });
+        }
+      });
+    },
+    //getAnimatedBackground
+    getAnimatedBackground: function getAnimatedBackground(context) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getBgColors').then(function (response) {
+        if (response.data !== false) {
+          var bg_first_color = response.data.bg_first_color;
+          var bg_second_color = response.data.bg_second_color;
+          var style = {
+            background: "linear-gradient(to right top, ".concat(bg_first_color, ", ").concat(bg_second_color, ")"),
+            backgroundSize: '100%',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: 'fixed'
+          };
+          context.commit('setState', {
+            state: 'animatedBackground',
+            value: style
+          });
+        } else {
+          context.commit('setState', {
+            state: 'animatedBackground',
+            value: false
+          });
+        }
+      });
     }
   }
 };
@@ -5881,11 +5928,7 @@ var AdminStates = {
     //инф-ция для модального окна удаления проеткта
     deleteModalInfo: -1,
     //ошибки для AppAdmin
-    errors: -1,
-    //ссылки
-    links: -1,
-    //animatedBackground
-    animatedBackground: -1
+    errors: -1
   },
   mutations: {
     //установить стейт
@@ -6017,47 +6060,6 @@ var AdminStates = {
       context.commit('setState', {
         state: 'errors',
         value: errors
-      });
-    },
-    //getLinks
-    //получить ссылки
-    getLinks: function getLinks(context) {
-      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getLinks').then(function (response) {
-        if (response.data !== false) {
-          context.commit('setState', {
-            state: 'links',
-            value: response.data
-          });
-        } else {
-          context.commit('setState', {
-            state: 'links',
-            value: false
-          });
-        }
-      });
-    },
-    //getAnimatedBackground
-    getAnimatedBackground: function getAnimatedBackground(context) {
-      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getBgColors').then(function (response) {
-        if (response.data !== false) {
-          var bg_first_color = response.data.bg_first_color;
-          var bg_second_color = response.data.bg_second_color;
-          var style = {
-            background: "linear-gradient(to right top, ".concat(bg_first_color, ", ").concat(bg_second_color, ")"),
-            backgroundSize: '100%',
-            backgroundRepeat: 'no-repeat',
-            backgroundAttachment: 'fixed'
-          };
-          context.commit('setState', {
-            state: 'animatedBackground',
-            value: style
-          });
-        } else {
-          context.commit('setState', {
-            state: 'animatedBackground',
-            value: false
-          });
-        }
       });
     }
   }
@@ -52229,97 +52231,104 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass:
-        "row h-75 w-75 bigCard d-flex justify-content-center goUpAnim"
-    },
-    [
-      _c("div", { staticClass: "div-12 textVertical" }, [
-        _vm.links !== false
-          ? _c("div", { staticClass: "col-12" }, [
-              _c("h1", { staticClass: "text-center textVertical" }, [
-                _c("p", { staticClass: "text-center textVertical font14pt" }, [
-                  _vm._v("Ссылки")
-                ]),
-                _vm._v(" "),
-                _c("hr", { staticClass: "mb-0" }),
-                _vm._v(" "),
-                _vm.links !== undefined && _vm.links !== -1
-                  ? _c(
-                      "div",
-                      { staticClass: "row font21pt" },
-                      _vm._l(_vm.links, function(link) {
-                        return _c(
+  return _vm.isVisible
+    ? _c(
+        "div",
+        {
+          staticClass:
+            "row h-75 w-75 bigCard d-flex justify-content-center goUpAnim"
+        },
+        [
+          _c("div", { staticClass: "div-12 textVertical" }, [
+            _vm.links !== false
+              ? _c("div", { staticClass: "col-12" }, [
+                  _c("h1", { staticClass: "text-center textVertical" }, [
+                    _c(
+                      "p",
+                      { staticClass: "text-center textVertical font14pt" },
+                      [_vm._v("Ссылки")]
+                    ),
+                    _vm._v(" "),
+                    _c("hr", { staticClass: "mb-0" }),
+                    _vm._v(" "),
+                    _vm.links !== undefined && _vm.links !== -1
+                      ? _c(
                           "div",
-                          {
-                            key: link.slug,
-                            staticClass: "col-12 col-md-12 mt-3"
-                          },
-                          [
-                            _c(
-                              "a",
+                          { staticClass: "row font21pt" },
+                          _vm._l(_vm.links, function(link) {
+                            return _c(
+                              "div",
                               {
-                                attrs: { href: link.link_url, target: "_blank" }
+                                key: link.slug,
+                                staticClass: "col-12 col-md-12 mt-3"
                               },
-                              [_c("b", [_vm._v(_vm._s(link.link_title))])]
+                              [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href: link.link_url,
+                                      target: "_blank"
+                                    }
+                                  },
+                                  [_c("b", [_vm._v(_vm._s(link.link_title))])]
+                                )
+                              ]
                             )
-                          ]
+                          }),
+                          0
                         )
-                      }),
-                      0
-                    )
-                  : _vm._e()
-              ])
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("hr"),
-        _vm._v(" "),
-        _vm.email !== null && _vm.email !== -1
-          ? _c(
-              "div",
-              {
-                staticClass: "col-12 text-center mt-5",
-                attrs: { id: "contacts" }
-              },
-              [
-                _c(
-                  "button",
+                      : _vm._e()
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _vm.email !== null && _vm.email !== -1
+              ? _c(
+                  "div",
                   {
-                    staticClass: "btn btn-lg btn-outline-light",
-                    attrs: { type: "button" },
-                    on: { click: _vm.showEmail }
+                    staticClass: "col-12 text-center mt-5",
+                    attrs: { id: "contacts" }
                   },
                   [
-                    _c("span", [_vm._v("Связаться со мной")]),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-lg btn-outline-light",
+                        attrs: { type: "button" },
+                        on: { click: _vm.showEmail }
+                      },
+                      [
+                        _c("span", [_vm._v("Связаться со мной")]),
+                        _vm._v(" "),
+                        _vm._m(0)
+                      ]
+                    ),
                     _vm._v(" "),
-                    _vm._m(0)
+                    _c("br"),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "font18pt",
+                        class: {
+                          "zeroOpacity unclickable": _vm.emailVisible === false,
+                          goUpAnim: _vm.emailVisible === true
+                        },
+                        attrs: { href: "mailto:" + _vm.email }
+                      },
+                      [_c("b", [_vm._v(_vm._s(_vm.email))])]
+                    )
                   ]
-                ),
-                _vm._v(" "),
-                _c("br"),
-                _c("br"),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "font18pt",
-                    class: {
-                      "zeroOpacity unclickable": _vm.emailVisible === false,
-                      goUpAnim: _vm.emailVisible === true
-                    },
-                    attrs: { href: "mailto:" + _vm.email }
-                  },
-                  [_c("b", [_vm._v(_vm._s(_vm.email))])]
                 )
-              ]
-            )
-          : _vm._e()
-      ])
-    ]
-  )
+              : _vm._e()
+          ])
+        ]
+      )
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {

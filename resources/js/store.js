@@ -14,6 +14,10 @@ const GlobalStates = {
         siteOwnerInfo: -1,
         //полный список проектов для главной страницы
         fullProjectList: -1,
+        //ссылки
+        links: -1,
+        //animatedBackground
+        animatedBackground: -1,
     },
 
     mutations: {
@@ -50,6 +54,37 @@ const GlobalStates = {
                 else
                 { context.commit('setState', {state: 'fullProjectList', value: false}); }
             });
+        },
+
+        //getLinks
+        //получить ссылки
+        getLinks(context){
+            axios.get('/api/getLinks').then(response => {
+                if(response.data !== false)
+                { context.commit('setState', { state: 'links', value: response.data}); }
+                else
+                { context.commit('setState', { state: 'links', value: false}); }
+            });
+        },
+
+        //getAnimatedBackground
+        getAnimatedBackground(context){
+            axios.get('/api/getBgColors').then(response => {
+                if(response.data !== false)
+                {   
+                    let bg_first_color = response.data.bg_first_color;
+                    let bg_second_color =response.data.bg_second_color;
+                    let style = {
+                        background: `linear-gradient(to right top, ${bg_first_color}, ${bg_second_color})`,
+                        backgroundSize: '100%',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundAttachment: 'fixed',
+                    };
+                    context.commit('setState', { state: 'animatedBackground', value: style}); 
+                }
+                else
+                { context.commit('setState', { state: 'animatedBackground', value: false}); }
+            })
         }
     }
 }
@@ -72,10 +107,6 @@ const AdminStates = {
         deleteModalInfo: -1,
         //ошибки для AppAdmin
         errors: -1,
-        //ссылки
-        links: -1,
-        //animatedBackground
-        animatedBackground: -1,
     },
 
     mutations: {
@@ -174,37 +205,6 @@ const AdminStates = {
         setErrors(context, errors){
             context.commit('setState', {state: 'errors', value: errors});
         },
-
-        //getLinks
-        //получить ссылки
-        getLinks(context){
-            axios.get('/api/getLinks').then(response => {
-                if(response.data !== false)
-                { context.commit('setState', { state: 'links', value: response.data}); }
-                else
-                { context.commit('setState', { state: 'links', value: false}); }
-            });
-        },
-
-        //getAnimatedBackground
-        getAnimatedBackground(context){
-            axios.get('/api/getBgColors').then(response => {
-                if(response.data !== false)
-                {   
-                    let bg_first_color = response.data.bg_first_color;
-                    let bg_second_color =response.data.bg_second_color;
-                    let style = {
-                        background: `linear-gradient(to right top, ${bg_first_color}, ${bg_second_color})`,
-                        backgroundSize: '100%',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundAttachment: 'fixed',
-                    };
-                    context.commit('setState', { state: 'animatedBackground', value: style}); 
-                }
-                else
-                { context.commit('setState', { state: 'animatedBackground', value: false}); }
-            })
-        }
     }
 }
 

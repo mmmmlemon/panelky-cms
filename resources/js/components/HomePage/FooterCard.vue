@@ -2,7 +2,7 @@
 //футер с контактами и ссылками
 <template>
 
-    <div class="row h-75 w-75 bigCard d-flex justify-content-center goUpAnim">
+    <div class="row h-75 w-75 bigCard d-flex justify-content-center goUpAnim" v-if="isVisible">
         <div class="div-12 textVertical">
             <!-- ссылки -->
             <div class="col-12" v-if="links !== false">
@@ -43,6 +43,7 @@ export default {
         this.$store.dispatch('getLinks');
         axios.get('/api/getEmail').then(response => {
             this.email = this.reverseString(response.data.email);
+            this.isVisible = true;
         }).catch(error => {
             this.email = false;
         })
@@ -55,6 +56,7 @@ export default {
             email: -1,
             //видимость почты
             emailVisible: false,
+            isVisible: false,
         }
     },
 

@@ -43,7 +43,7 @@ class HomeController extends Controller
 
         $style .= ' background-size: 400%; background-repeat: no-repeat; background-attachment: fixed;';
 
-        $style .= ' animation: backgroundGradient 5s ease-in-out infinite;';
+        $style .= ' animation: backgroundGradient 30s ease-in-out infinite;';
 
         return view('index', compact('site_title', 'style'));
     }

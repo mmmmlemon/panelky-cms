@@ -78,7 +78,7 @@
             },
             //ссылки
             links: function(){
-                return this.$store.state.AdminStates.links;
+                return this.$store.state.GlobalStates.links;
             }
         },
 
