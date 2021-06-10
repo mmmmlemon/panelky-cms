@@ -2,13 +2,16 @@
 //список других проектов
 <template>
 
-    <div class="row width90pc bigCard d-flex justify-content-center borderUnderline" id="other">
+    <div class="row width90pc bigCard d-flex justify-content-center borderUnderline" style="transition: all 1s;" id="other" 
+            v-scroll="handleScroll" v-bind:class="{'zeroOpacity unclickable': visible == false}">
         <div class="d-block d-md-block col-12 textVertical fadeInAnim m-5 goUpCardAnim">
             <h3 class="text-center mb-5">Другие проекты</h3>
             <!-- список проектов -->
             <div class="row justify-content-center">
-                <div v-for="project in projects" :key="project.slug" class="col-12 col-md-2 transparentCard m-1">
-                    <!-- если у проекта есть лого -->
+                <div v-for="(project, index) in projects" :key="project.slug" class="col-12 col-md-2 transparentCard m-1 otherProject" 
+                    :style="`transition: all 0.8s  ease-out; transition-delay: ${index/5}s;`"
+                    v-bind:class="{'zeroOpacity' : visible == false}">
+                    <!-- если у прое,кта есть лого -->
                     <div class="card-body text-center" v-if="project.project_icon !== null">
                         <!-- заголовок -->
                         <h4 class="card-title text-center">
@@ -39,5 +42,41 @@ export default {
         //список проектов
         projects: { type: Array, default: undefined },
     },
+
+    //данные
+    data: () => {
+        return {
+            //видимость карточки
+            visible: false,
+            translateY: '1135px',
+        }
+    },
+
+
+    computed: {
+        //видимость карточки
+        setVisible: {
+           get() {
+               this.visible = false;
+               this.translateY = '1135px';
+           },
+           set(value){
+               this.visible = value;
+               this.translateY = '0px';
+           }
+        }
+    },
+
+    //методы
+    methods: {
+        //при скролле страницы показать карточку когда она будет 
+        //в поле видимости
+        handleScroll: function (evt, el){
+            if (el.getBoundingClientRect().top < 400) {
+                this.setVisible = true;
+            }
+            return el.getBoundingClientRect().top < 400;
+        }
+    }
 }
 </script>

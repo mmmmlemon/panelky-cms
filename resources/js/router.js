@@ -22,6 +22,8 @@ import BasicSettings from './components/Admin/Settings/BasicSettings.vue';
 import HomeSettings from './components/Admin/Settings/HomeSettings.vue';
 import DesignSettings from './components/Admin/Settings/DesignSettings.vue';
 
+import test from './components/test.vue';
+
 import PageNotFound from './components/Misc/PageNotFound.vue';
 
 
@@ -42,6 +44,10 @@ const routes = [
                 component: About
             }
         ]
+    },
+    {
+        path:'/test',
+        component: test,
     },
     //admin side
     {

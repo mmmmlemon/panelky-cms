@@ -3,7 +3,7 @@
 <template>
 
     <!-- навигация -->
-    <ul class="nav justify-content-center mt-3 font18pt">
+    <ul class="nav justify-content-center mt-3 font18pt fadeInAnim">
         <!-- Главная -->
         <li class="nav-item">
             <router-link class="nav-link active" aria-current="page" to="/">

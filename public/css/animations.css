@@ -225,4 +225,13 @@
   transition: all 0.5s;
   animation: blinkshort 2s infinite;
 }
+
+.otherProject.zeroOpacity{
+    transform: translateY(35px);
+}
+
+.otherProject{
+    transform: translateY(0px);
+}
+
 /* //////////////////// */
