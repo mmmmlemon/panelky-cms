@@ -15,7 +15,7 @@
 
         <!-- превью на весь экран -->
         <div class="container col-12 vh-100 fullscreenCard" :style="fullscreenStyle">
-            <button class="btn btn-light btn-lg fullscreenButton" title="Развернуть на полный экран" v-on:click="closeFullscreenPreview">
+            <button class="btn btn-light btn-lg fullscreenButton" title="Свернуть" v-on:click="closeFullscreenPreview">
                 <i class="bi bi-fullscreen-exit"></i>
             </button>
             <div class="row h-100 justify-content-center">

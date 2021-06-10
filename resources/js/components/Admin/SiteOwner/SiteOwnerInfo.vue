@@ -1,9 +1,9 @@
 //SiteOwnerInfo
 //вкладка в админке, информация о владельце сайта
 <template> 
-    <div class="row justify-content-center"> 
+    <div class="row justify-content-center fadeInAnim" v-if="siteOwnerInfo !== -1"> 
         <!-- форма редактирования -->
-        <div class="col-12 col-md-4 mt-5 fadeInAnim" v-bind:class="{zeroOpacity: siteOwnerInfo === -1}">
+        <div class="col-12 col-md-4 mt-2 fadeInAnim" v-bind:class="{'zeroOpacity': siteOwnerInfo === -1}">
             <h5>Информация о владельце</h5>
             <hr>
             <form @submit.prevent="submit" method="POST">
@@ -44,7 +44,7 @@
 
         </div>
         <!-- превью -->
-        <div class="col-md-6 mt-5" v-if="siteOwnerInfo !== -1">
+        <div class="col-md-6 mt-2" v-if="siteOwnerInfo !== -1">
             <h5>Превью</h5>
             <hr>
             <PreviewOwner :siteOwnerInfo="siteOwnerInfo"/>
@@ -57,9 +57,12 @@ export default {
     //хуки
     beforeCreate(){
         //текущая вкладка
-        this.$store.dispatch('setCurrentTab', 'admin');
+        this.$parent.currentTab = "headerCard";
         //получить информацию о владельце
-        this.$store.dispatch('getSiteOwnerInfo');
+
+            // alert()
+            this.$store.dispatch('getSiteOwnerInfo');
+        
     },
 
     //данные

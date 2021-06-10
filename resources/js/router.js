@@ -8,7 +8,9 @@ import HomePage from './components/HomePage.vue';
 import About from './components/About.vue';
 
 import AppAdmin from './components/AppAdmin.vue';
-import SiteOwnerInfo from './components/Admin/SiteOwnerInfo.vue';
+import SiteOwnerSettings from './components/Admin/SiteOwnerSettings.vue';
+import SiteOwnerInfo from './components/Admin/SiteOwner/SiteOwnerInfo.vue';
+import SiteOwnerAbout from './components/Admin/SiteOwner/SiteOwnerAbout.vue';
 import Projects from './components/Admin/Projects.vue';
 import Links from './components/Admin/Links.vue';
 import Settings from './components/Admin/Settings.vue';
@@ -56,9 +58,18 @@ const routes = [
         children: [
             {
                 //admin home
-                path: '/admin',
-                component: SiteOwnerInfo,
-
+                path: '/admin/siteOwner',
+                component: SiteOwnerSettings,
+                children: [
+                    {
+                        path: '/admin/siteOwner',
+                        component: SiteOwnerInfo,
+                    },
+                    {
+                        path: '/admin/siteOwner/about',
+                        component: SiteOwnerAbout,
+                    }
+                ]
             },
             {
                 //projects
@@ -101,11 +112,11 @@ const routes = [
             },
             {
                 //settings
-                path: '/admin/settings',
+                path: '/admin',
                 component: Settings,
                 children: [
                     {
-                        path: '/admin/settings',
+                        path: '/admin',
                         component: BasicSettings,
                     },
                     {

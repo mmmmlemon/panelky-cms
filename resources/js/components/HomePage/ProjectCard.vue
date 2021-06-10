@@ -14,9 +14,9 @@
         <div v-if="type=='left' && project !== undefined" class="row justify-content-center">
 
             <!-- для десктопа -->
-            <div class="d-none d-md-block col-12 text-center textVertical goUpCardAnim" 
+            <div class="d-none d-md-block col-12 text-center textVertical p-5 transparentCard goUpCardAnim" 
                         v-bind:class="{'col-md-12': project.project_image === null, 
-                                        'col-md-5': project.prokect_image !== null}"
+                                        'col-md-5': project.project_image !== null}"
                         v-if="visible === true">
                 <!-- название проекта -->
                 <h1 class="text-center textVertical font3-8rem">
@@ -98,7 +98,7 @@
             <div v-bind:class="{'col-md-12': project.project_image === null, 
                                 'col-md-5': project.prokect_image !== null}"
                  v-if="visible === true"
-                 class="d-none d-md-block col-12 text-center textVertical goUpCardAnim">
+                 class="d-none d-md-block col-12 text-center textVertical p-5 transparentCard goUpCardAnim">
                 <!-- название проекта -->
                 <h1 class="text-center textVertical font3-8rem">
                     <b>{{project.project_title}}</b>

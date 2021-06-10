@@ -10,7 +10,7 @@
             <div class="row justify-content-center">
                 <div v-for="(project, index) in projects" :key="project.slug" class="col-12 col-md-2 transparentCard m-1 otherProject" 
                     :style="`transition: all 0.8s  ease-out; transition-delay: ${index/5}s;`"
-                    v-bind:class="{'zeroOpacity' : visible == false}">
+                    v-bind:class="{'zeroOpacity unclickable' : visible == false}">
                     <!-- если у прое,кта есть лого -->
                     <div class="card-body text-center" v-if="project.project_icon !== null">
                         <!-- заголовок -->

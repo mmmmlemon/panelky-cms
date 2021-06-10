@@ -42,11 +42,19 @@
         <div class="row justify-content-center">
             <div class="col-8 ">
                 <ul class="nav nav-fill">
+                    <!-- Настройки сайта -->
+                    <li class="nav-item mr-2">
+                        <router-link v-bind:class="{'btn-light': currentTab === 'settings', 
+                                                    'btn-outline-light': currentTab !== 'settings'}" 
+                                                    to="/admin" class="btn btn-block font14pt">
+                            Настройки
+                        </router-link>
+                    </li>
                     <!-- Владелец сайта -->
                     <li class="nav-item mr-2">
-                        <router-link v-bind:class="{'btn-light': currentTab === 'admin', 
-                                                    'btn-outline-light': currentTab !== 'admin'}"
-                                                    to="/admin" class="btn btn-block font14pt" aria-current="page">
+                        <router-link v-bind:class="{'btn-light': currentTab === 'siteOwner', 
+                                                    'btn-outline-light': currentTab !== 'siteOwner'}"
+                                                    to="/admin/siteOwner" class="btn btn-block font14pt" aria-current="page">
                             Владелец сайта
                         </router-link>
                     </li>
@@ -64,14 +72,6 @@
                                                     'btn-outline-light': currentTab !== 'links'}" 
                                                     to="/admin/links" class="btn btn-block font14pt">
                             Ссылки и контакты
-                        </router-link>
-                    </li>
-                    <!-- Настройки сайта -->
-                    <li class="nav-item mr-2">
-                        <router-link v-bind:class="{'btn-light': currentTab === 'settings', 
-                                                    'btn-outline-light': currentTab !== 'settings'}" 
-                                                    to="/admin/settings" class="btn btn-block font14pt">
-                            Настройки
                         </router-link>
                     </li>
                 </ul>

@@ -210,6 +210,8 @@ hr {
     background-color: rgba(255, 255, 255, 0.205);
 }
 
+
+
 .transparentCard.deleteModalCard{
     background-color: rgba(255, 255, 255, 1);
     position: absolute;

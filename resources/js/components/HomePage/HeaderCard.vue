@@ -12,7 +12,7 @@
 
             <!-- имя автора -->
             <transition name="name">
-                <h1 v-if="startTransition === true && info.name != undefined" class="text-center textVertical font5rem">
+                <h1 v-if="startTransition === true && info.name != undefined" class="text-center  textVertical font5rem">
                     <b>{{info['name']}}</b>
                 </h1>
             </transition>
@@ -98,7 +98,7 @@ export default {
     mounted(){
         //если компонент на главной странице сайта
         //то включить анимацию
-        if(this.$route.path != '/admin'){
+        if(this.$route.path != '/admin/siteOwner'){
             //$parent.$parent - App.vue
             this.$parent.$parent.startHeaderCardTransition = true;
         }
@@ -119,7 +119,7 @@ export default {
     computed: {
         //вкл. анимацию
         startTransition: function(){
-            if(this.$route.path !== '/admin')
+            if(this.$route.path !== '/admin/siteOwner')
             { return this.$parent.$parent.startHeaderCardTransition;}
             else
             { return true; }

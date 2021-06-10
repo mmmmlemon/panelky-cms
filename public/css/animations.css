@@ -20,11 +20,13 @@
 @keyframes goUpCard {
     0% { 
         opacity: 0;
+        filter: blur(5px);
         transform: translateY(100px);
     }
 
     100% {
         opacity: 1;
+        filter: blur(0px);
         transform: translateY(0px);
     }
 }
@@ -152,6 +154,7 @@
 /* анимации vue transition для HeaderCard */
 .name-enter-active {
     transition: all 0.5s ease;
+    transition-delay: 0.5s;
 }
 .name-enter {
   transform: translateY(17px);
@@ -160,7 +163,7 @@
 
 .occupation-enter-active {
     transition: all 0.5s ease;
-    transition-delay: 0.5s;
+    transition-delay: 1s;
 }
 
 .occupation-enter {
@@ -169,7 +172,7 @@
 
 .aboutMe-enter-active {
     transition: all 0.5s ease;
-    transition-delay: 1s;
+    transition-delay: 1.5s;
 }
 
 .aboutMe-enter {
@@ -178,7 +181,7 @@
 
 .bottomText-enter-active {
     transition: all 0.5s ease;
-    transition-delay: 1.5s;
+    transition-delay: 2s;
 }
 .bottomText-enter {
   transform: translateY(-17px);
@@ -228,10 +231,12 @@
 
 .otherProject.zeroOpacity{
     transform: translateY(35px);
+    filter: blur(5px);
 }
 
 .otherProject{
     transform: translateY(0px);
+    filter: blur(0px);
 }
 
 /* //////////////////// */

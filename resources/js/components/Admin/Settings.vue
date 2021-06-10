@@ -6,7 +6,7 @@
             <ul class="nav nav-fill">
                 <!-- Ссылки -->
                 <li class="nav-item mr-2">
-                    <router-link to="/admin/settings" class="btn btn-sm btn-block" aria-current="page"
+                    <router-link to="/admin" class="btn btn-sm btn-block" aria-current="page"
                                     v-bind:class="{'btn-light': currentTab === 'basicSettings', 
                                                     'btn-outline-light': currentTab !== 'basicSettings'}">
                         <i class="bi bi-gear"></i>
