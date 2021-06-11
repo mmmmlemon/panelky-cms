@@ -47,6 +47,10 @@
 
 <script>
 export default {
+    //хуки
+    mounted(){
+        this.$store.dispatch('setCurrentTab', 'projects');
+    },
     //данные
     data: () => {
         return {

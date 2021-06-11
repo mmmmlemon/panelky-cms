@@ -1,11 +1,11 @@
 //EditProject
 //редактировать проект
 <template>
-    <div class="row mt-5 justify-content-center fadeInAnim">
-        <div class="col-12" v-if="currentProject !== -1 && currentProject !== false">
+    <div class="row mt-5 justify-content-center ">
+        <div class="col-12 fadeInAnim" v-if="currentProject !== -1 && currentProject !== false">
             <div class="row justify-content-center">
-                <div class="col-4">
-                    <h5>Информация о проекте</h5>
+                <div class="col-5">
+                    <h5>Редактирование проекта</h5>
                     <hr>
                     <!-- вкладки -->
                     <div class="col-12 mb-4">
@@ -24,10 +24,21 @@
                                     Изображения
                                 </button>
                             </li>
+                            <!-- изображения -->
+                            <li class="nav-item mr-2">
+                                <button class="btn btn-block btn-sm" v-on:click="showPreview"
+                                        v-bind:class="{'btn-light': previewMode === true, 'btn-outline-light': previewMode === false}">
+                                    Превью
+                                </button>
+                            </li>
                         </ul>
                     </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-5" v-bind:class="{'col-5': previewMode === false, 'col-8': previewMode === true}">
                     <!-- основная форма -->
-                    <form @submit.prevent="submitBasic" method="POST" v-if="basicFormActive === true">
+                    <form @submit.prevent="submitBasic" class="fadeInAnim" method="POST" v-if="basicFormActive === true">
                         <input type="text" v-model="currentProject.id" class="invisible">
                         <!-- Название проекта -->
                         <div class="mb-3">
@@ -65,7 +76,7 @@
                         </button>
                     </form> 
                     <!-- форма для картинок -->
-                    <form @submit.prevent="submitImages" method="POST" action="/admin/saveProjectImages" v-if="imageFormActive === true">
+                    <form @submit.prevent="submitImages" class="fadeInAnim" method="POST" action="/admin/saveProjectImages" v-if="imageFormActive === true">
                         <!-- Лого\иконка -->
                         <div class="mb-3">
                             <h6>Логотип проекта</h6>
@@ -90,20 +101,25 @@
                             Загрузить и сохранить
                         </button>
                     </form>
-                    <!-- сообщение о сохранении настроек -->
-                    <div class="col-12 p-3 text-center unclickable zeroOpacity" v-bind:class="{ blinkAnim: saved }">
-                        <h5>Изменения сохранены</h5>
+                    
+                    <!-- превью -->
+                    <div class="row justify-content-center"  v-if="currentProject !== -1 && currentProject !== false && previewMode === true">
+                        <div class="col-12">
+                            <PreviewProject type="full" :currentProject="currentProject"/>
+                        </div> 
                     </div>
                 </div>
-                <!-- превью -->
-                <div class="col-6">
-                    <h5>Превью</h5>
-                    <hr>
-                    <PreviewProject type="full" :currentProject="currentProject"/>
-                </div> 
+          
+                  
+            </div>
+               
+            </div>
+            <!-- сообщение о сохранении настроек -->
+            <div class="col-12 p-3 text-center unclickable zeroOpacity" v-bind:class="{ blinkAnim: saved }">
+                <h5>Изменения сохранены</h5>
             </div>
         </div>
-    </div>
+
 </template>
 <script>
 export default {
@@ -113,17 +129,20 @@ export default {
         const slug = this.$route.params.slug;
         //получаем проект
         this.$store.dispatch('getProject', {value: slug, type: 'full'});
+        this.$store.dispatch('setCurrentTab', 'projects');
+        this.basicFormActive = true;
     },
 
     //данные
     data: () => {
         return {
-            basicFormActive: true,
+            basicFormActive: false,
             imageFormActive: false,
             projectIcon: undefined,
             projectImage: undefined,
             errors: {},
             saved: false,
+            previewMode: false,
         }
     },
 
@@ -140,12 +159,21 @@ export default {
         showImageForm: function(){
             this.imageFormActive = true;
             this.basicFormActive = false;
+            this.previewMode = false;
         },
 
         //показать общую форму
         showBasicForm: function(){
             this.basicFormActive = true;
             this.imageFormActive = false;
+            this.previewMode = false;
+        },
+
+        //показать превью
+        showPreview: function(){
+            this.basicFormActive = false;
+            this.imageFormActive = false;
+            this.previewMode = true;
         },
 
         //отправить основную форму

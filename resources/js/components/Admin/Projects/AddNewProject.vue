@@ -2,11 +2,34 @@
 //меню добавления нового проекта
 <template>
     <div class="row justify-content-center fadeInAnim">
-        <div class="col-12 mb-4">
+        <div class="col-12 mb-5">
             <div class="row justify-content-center">
-                <div class="col-4">
-                    <h5>Информация о проекте</h5>
-                    <hr>
+                <div class="col-5">
+                    <!-- вкладки -->
+                    <div class="col-12 mb-4">
+                        <ul class="nav nav-fill">
+                            <!-- Информация о проекте -->
+                            <li class="nav-item mr-2">
+                                <button class="btn btn-block btn-sm" v-on:click="showPreview(false)" 
+                                        v-bind:class="{'btn-light': previewMode === false, 'btn-outline-light': previewMode === true}">
+                                    Информация о проекте
+                                </button>
+                            </li>
+                            <!-- изображения -->
+                            <li class="nav-item mr-2">
+                                <button class="btn btn-block btn-sm" v-on:click="showPreview(true)"
+                                        v-bind:class="{'btn-light': previewMode === true, 'btn-outline-light': previewMode === false}">
+                                    Превью
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                    <div class="col-5" v-if="previewMode === false">
+                        
                     <!-- основная форма -->
                     <form @submit.prevent="submit" method="POST">
                         <input type="text" class="invisible">
@@ -55,15 +78,13 @@
                             <div v-if="errors && errors.image" class="text-danger">{{ errors.projectImage[0] }}</div>
                         </div>
                     
-                        <button class="btn btn-lg btn-block btn-outline-light">
+                        <button class="btn btn-lg btn-block btn-outline-light" :disabled="saved === true">
                             Сохранить проект
                         </button>
                     </form> 
                 </div>
                 <!-- превью -->
-                <div class="col-6">
-                    <h5>Превью</h5>
-                    <hr>
+                <div class="col-8" v-if="previewMode === true">
                     <PreviewProject type="full" :currentProject="currentProject"/>
                 </div> 
             </div>
@@ -111,6 +132,7 @@ export default {
             }),
             projectIconName: undefined,
             projectImageName: undefined,
+            previewMode: false,
             saved: false,
             errors: [],
         }
@@ -125,6 +147,11 @@ export default {
 
     //методы
     methods: {
+
+        showPreview(value){
+            this.previewMode = value;
+        },
+
         //залить файл картинки в temp
         handleFileUpload(type){
             let formData = new FormData();
@@ -178,7 +205,7 @@ export default {
 
         //добавить проект
         submit(){
-            this.saved = false;
+            this.saved = true;
 
             //добавление всех полей в js-форму
             let formData = new FormData();
@@ -209,6 +236,7 @@ export default {
                   
                 }).catch(error => {
                     if(error.response.status === 422){
+                        this.saved = false;
                         this.errors = error.response.data.errors || {};
                     }
                 });

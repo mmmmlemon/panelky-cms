@@ -126,7 +126,7 @@
                 </h6>
                 <br>
                 <!-- кнопка "Посетить" -->
-                <button v-if="project.project_url !== null"
+                <button v-if="project.project_url !== undefined && project.project_url !== ''"
                         type="button" class="btn btn-lg btn-outline-light">
                     <a :href="project.project_url" target="_blank">
                         Перейти к проекту

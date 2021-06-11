@@ -4,7 +4,7 @@
     <div class="row justify-content-center" v-if="currentProject !== -1">
         <div class="col-8">
             <!-- Ошибки -->
-            <Error v-if="projectsList === -1" errorMessage="Не удалось загрузить список проектов"/>
+            <Error v-if="projectsList === false" errorMessage="Не удалось загрузить список проектов"/>
             
             <!-- сообщение если нет проектов -->
             <div v-if="projectsList === false" class="row justify-content-center text-center goUpAnim">

@@ -39,11 +39,13 @@
 @keyframes goLeftCard {
     0% { 
         opacity: 0;
+        filter: blur(5px);
         transform: translateX(100px);
     }
 
     100% {
         opacity: 1;
+        filter: blur(0px);
         transform: translateX(0px);
     }
 }
@@ -56,11 +58,13 @@
 @keyframes goRightCard {
     0% { 
         opacity: 0;
+        filter: blur(5px);
         transform: translateX(-100px);
     }
 
     100% {
         opacity: 1;
+        filter: blur(0px);
         transform: translateX(0px);
     }
 }
@@ -84,6 +88,8 @@
     animation-name: fadeIn;
     animation-duration: 0.7s;
 }
+
+
 
 @keyframes backgroundGradient {
 	0% {

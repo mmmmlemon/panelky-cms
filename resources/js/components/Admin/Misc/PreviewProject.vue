@@ -126,7 +126,7 @@ export default {
         },
         //удалить проект
         deleteProject(){
-            this.$store.dispatch('setDeleteModalInfo', {deleteInfo: {project_title: this.currentProject.title, slug: this.currentProject.slug}, page: 'homeProjects', type: 'project'});
+            this.$store.dispatch('setDeleteModalInfo', {deleteInfo: {project_title: this.currentProject.project_title, slug: this.currentProject.slug}, page: 'homeProjects', type: 'project'});
         }
     }
 }
