@@ -3072,7 +3072,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
@@ -3255,6 +3254,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -5372,6 +5373,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     this.setVisible = this.isVisible;
@@ -5436,7 +5443,8 @@ __webpack_require__.r(__webpack_exports__);
         img.onload = function () {
           if (img.width > img.height) {
             _this.classForImage = 'projectImageHorizontal';
-            console.log(_this.classForImage);
+          } else {
+            _this.classForImage = 'projectImageVertical';
           }
         };
 
@@ -48651,7 +48659,7 @@ var render = function() {
     "div",
     { staticClass: "row mt-5 justify-content-center fadeInAnim" },
     [
-      _c("div", { staticClass: "col-6 mb-5" }, [
+      _c("div", { staticClass: "col-12 col-md-6 mb-5" }, [
         _c("ul", { staticClass: "nav nav-fill" }, [
           _c(
             "li",
@@ -48745,7 +48753,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center" }, [
-    _c("div", { staticClass: "col-8" }, [
+    _c("div", { staticClass: "col-12 col-md-8" }, [
       _c(
         "div",
         { staticClass: "row justify-content-center" },
@@ -48773,7 +48781,7 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "row justify-content-center" }, [
-                      _c("div", { staticClass: "col-5 mb-3" }, [
+                      _c("div", { staticClass: "col-12 col-md-5 mb-3" }, [
                         _c("h6", [_vm._v("E-Mail")]),
                         _vm._v(" "),
                         _c("input", {
@@ -48895,7 +48903,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center" }, [
-    _c("div", { staticClass: "col-8 mt-2" }, [
+    _c("div", { staticClass: "col-12 col-md-8 mt-2" }, [
       _c(
         "button",
         {
@@ -48932,7 +48940,7 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "col-8 mt-5 goUpAnim",
+        staticClass: "col-12 col-md-8 mt-5 goUpAnim",
         class: { invisible: _vm.addNewLink === false }
       },
       [
@@ -48949,13 +48957,13 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "row justify-content-center" }, [
-              _c("div", { staticClass: "col-2 text-center" }, [
+              _c("div", { staticClass: "col-12 col-md-2 text-center" }, [
                 _c("h6", [_vm._v(" ")]),
                 _vm._v(" "),
                 _c("h4", [_vm._v(_vm._s(_vm.newLink.link_title))])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-3 mb-3" }, [
+              _c("div", { staticClass: "col-12 col-md-3 mb-3" }, [
                 _c("h6", [_vm._v("Название ресурса")]),
                 _vm._v(" "),
                 _c("input", {
@@ -48987,7 +48995,7 @@ var render = function() {
                   : _vm._e()
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-4 mb-3" }, [
+              _c("div", { staticClass: "col-12 col-md-4 mb-3" }, [
                 _c("h6", [_vm._v("URL")]),
                 _vm._v(" "),
                 _c("input", {
@@ -49034,7 +49042,7 @@ var render = function() {
       ? _c(
           "div",
           {
-            staticClass: "col-8 mt-5 text-center goUpAnim",
+            staticClass: "col-12 col-md-8 mt-5 text-center goUpAnim",
             class: { invisible: _vm.addNewLink === true }
           },
           [
@@ -49053,7 +49061,7 @@ var render = function() {
       ? _c(
           "div",
           {
-            staticClass: "col-8 mt-5 goUpAnim",
+            staticClass: "col-12 col-md-8 mt-5 goUpAnim",
             class: { invisible: _vm.addNewLink === true }
           },
           [
@@ -49096,7 +49104,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3 mb-3" }, [
+    return _c("div", { staticClass: "col-12 col-md-3 mb-3" }, [
       _c("h6", [_vm._v(" ")]),
       _vm._v(" "),
       _c(
@@ -49141,7 +49149,10 @@ var render = function() {
           _vm.deleteModalInfo.type === "project"
             ? _c(
                 "div",
-                { staticClass: "col-4 transparentCard deleteModalCard m-1" },
+                {
+                  staticClass:
+                    "col-11 col-md-4 transparentCard deleteModalCard m-1"
+                },
                 [
                   _c("div", { staticClass: "card-body" }, [
                     _c("h2", { staticClass: "card-title" }, [
@@ -49199,7 +49210,10 @@ var render = function() {
           _vm.deleteModalInfo.type === "link"
             ? _c(
                 "div",
-                { staticClass: "col-4 transparentCard deleteModalCard m-1" },
+                {
+                  staticClass:
+                    "col-11 col-md-4 transparentCard deleteModalCard m-1"
+                },
                 [
                   _c("div", { staticClass: "card-body" }, [
                     _c("h2", { staticClass: "card-title" }, [
@@ -49320,13 +49334,13 @@ var render = function() {
           attrs: { id: _vm.link.slug }
         },
         [
-          _c("div", { staticClass: "col-2 text-center" }, [
+          _c("div", { staticClass: "col-12 col-md-2 text-center" }, [
             _c("h6", [_vm._v(" ")]),
             _vm._v(" "),
             _c("h4", [_vm._v(_vm._s(_vm.link.link_title))])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-3 mb-3" }, [
+          _c("div", { staticClass: "col-12 col-md-3 mb-3" }, [
             _c("h6", [_vm._v("Название ресурса")]),
             _vm._v(" "),
             _c("input", {
@@ -49361,7 +49375,7 @@ var render = function() {
               : _vm._e()
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-4 mb-3" }, [
+          _c("div", { staticClass: "col-12 col-md-4 mb-3" }, [
             _c("h6", [
               _vm._v("URL "),
               _c(
@@ -49413,7 +49427,7 @@ var render = function() {
               : _vm._e()
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-3 mb-3" }, [
+          _c("div", { staticClass: "col-12 col-md-3 mb-3" }, [
             _c("h6", [_vm._v(" ")]),
             _vm._v(" "),
             _vm.edit === false
@@ -49758,7 +49772,7 @@ var render = function() {
                 _c("ul", { staticClass: "nav nav-fill" }, [
                   _vm.currentProject.project_image !== null &&
                   _vm.currentProject.project_image !== undefined
-                    ? _c("li", { staticClass: "nav-item" }, [
+                    ? _c("li", { staticClass: "nav-item d-none d-md-block" }, [
                         _c(
                           "button",
                           {
@@ -49831,7 +49845,7 @@ var render = function() {
     ? _c(
         "div",
         {
-          staticClass: "col-11 m-1 fadeInAnim",
+          staticClass: "col-12 col-md-11 m-1 fadeInAnim",
           on: {
             mousedown: function($event) {
               return _vm.getProject(_vm.slug)
@@ -49908,12 +49922,12 @@ var render = function() {
     "div",
     { staticClass: "row mt-5 justify-content-center fadeInAnim" },
     [
-      _c("div", { staticClass: "col-6 mb-5" }, [
+      _c("div", { staticClass: "col-12 col-md-6 mb-5" }, [
         _c("ul", { staticClass: "nav nav-fill" }, [
           _c(
             "li",
             {
-              staticClass: "nav-item mr-2",
+              staticClass: "nav-item mr-2 mb-1",
               on: {
                 click: function($event) {
                   return _vm.changeCurrentTab("homeProjects")
@@ -49943,7 +49957,7 @@ var render = function() {
           _c(
             "li",
             {
-              staticClass: "nav-item mr-2",
+              staticClass: "nav-item mr-2 mb-1",
               on: {
                 click: function($event) {
                   return _vm.changeCurrentTab("allProjects")
@@ -49975,7 +49989,7 @@ var render = function() {
           _c(
             "li",
             {
-              staticClass: "nav-item mr-2",
+              staticClass: "nav-item mr-2 mb-1",
               on: {
                 click: function($event) {
                   return _vm.changeCurrentTab("addProject")
@@ -50038,7 +50052,7 @@ var render = function() {
   return _c("div", { staticClass: "row justify-content-center fadeInAnim" }, [
     _c("div", { staticClass: "col-12 mb-5" }, [
       _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-5" }, [
+        _c("div", { staticClass: "col-12 col-md-5" }, [
           _c("div", { staticClass: "col-12 mb-4" }, [
             _c("ul", { staticClass: "nav nav-fill" }, [
               _c("li", { staticClass: "nav-item mr-2" }, [
@@ -50093,7 +50107,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "row justify-content-center" }, [
         _vm.previewMode === false
-          ? _c("div", { staticClass: "col-5" }, [
+          ? _c("div", { staticClass: "col-12 col-md-5" }, [
               _c(
                 "form",
                 {
@@ -50400,7 +50414,7 @@ var render = function() {
         _vm.previewMode === true
           ? _c(
               "div",
-              { staticClass: "col-8" },
+              { staticClass: "col-12 col-md-8" },
               [
                 _c("PreviewProject", {
                   attrs: { type: "full", currentProject: _vm.currentProject }
@@ -50443,7 +50457,7 @@ var render = function() {
         [
           _c(
             "div",
-            { staticClass: "col-4 m-1" },
+            { staticClass: "col-11 col-md-4 m-1" },
             [
               _c("h4", [_vm._v("Главные проекты")]),
               _vm._v(" "),
@@ -50524,7 +50538,17 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_c("i", { staticClass: "bi bi-arrow-right" })]
+                              [
+                                _c("i", {
+                                  staticClass:
+                                    "d-none d-md-block bi bi-arrow-right"
+                                }),
+                                _vm._v(" "),
+                                _c("i", {
+                                  staticClass:
+                                    "d-block d-md-none bi bi-arrow-down"
+                                })
+                              ]
                             )
                           ],
                           1
@@ -50541,7 +50565,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "col-4 m-1" },
+            { staticClass: "col-11 col-md-4 m-1" },
             [
               _c("h4", [_vm._v("Другие проекты")]),
               _vm._v(" "),
@@ -50602,7 +50626,17 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_c("i", { staticClass: "bi bi-arrow-left" })]
+                              [
+                                _c("i", {
+                                  staticClass:
+                                    "d-block d-md-none bi bi-arrow-up"
+                                }),
+                                _vm._v(" "),
+                                _c("i", {
+                                  staticClass:
+                                    "d-none d-md-block bi bi-arrow-left"
+                                })
+                              ]
                             ),
                             _vm._v(" "),
                             _c(
@@ -50670,7 +50704,7 @@ var render = function() {
     _vm.currentProject !== -1 && _vm.currentProject !== false
       ? _c("div", { staticClass: "col-12 fadeInAnim" }, [
           _c("div", { staticClass: "row justify-content-center" }, [
-            _c("div", { staticClass: "col-5" }, [
+            _c("div", { staticClass: "col-12 col-md-5" }, [
               _c("h5", [_vm._v("Редактирование проекта")]),
               _vm._v(" "),
               _c("hr"),
@@ -50742,7 +50776,7 @@ var render = function() {
             _c(
               "div",
               {
-                staticClass: "col-5",
+                staticClass: "col-12 col-md-5",
                 class: {
                   "col-5": _vm.previewMode === false,
                   "col-8": _vm.previewMode === true
@@ -51190,7 +51224,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _vm.currentProject !== -1 && _vm.visible === true
     ? _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-8" }, [
+        _c("div", { staticClass: "col-12 col-md-8" }, [
           _vm.projectsList === false
             ? _c(
                 "div",
@@ -51228,7 +51262,7 @@ var render = function() {
             ? _c("div", { staticClass: "row" }, [
                 _c(
                   "div",
-                  { staticClass: "col-4" },
+                  { staticClass: "col-12 col-md-4" },
                   [
                     _c("h6", [_vm._v("Порядок")]),
                     _vm._v(" "),
@@ -51243,7 +51277,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "col-8 fadeIn" },
+                  { staticClass: "col-12 col-md-8 fadeIn" },
                   [
                     _c("h6", [_vm._v(" ")]),
                     _vm._v(" "),
@@ -51291,7 +51325,7 @@ var render = function() {
     "div",
     { staticClass: "row mt-5 justify-content-center fadeInAnim" },
     [
-      _c("div", { staticClass: "col-6 mb-5" }, [
+      _c("div", { staticClass: "col-12 col-md-6 mb-5" }, [
         _c("ul", { staticClass: "nav nav-fill" }, [
           _c(
             "li",
@@ -51394,7 +51428,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center" }, [
-    _c("div", { staticClass: "col-8" }, [
+    _c("div", { staticClass: "col-12 col-md-8" }, [
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", { staticClass: "col-12" }, [
           _c(
@@ -51411,37 +51445,44 @@ var render = function() {
             [
               _c("div", { staticClass: "row justify-content-center" }, [
                 _vm.site_title != -1
-                  ? _c("div", { staticClass: "col-8 mb-3 goUpAnim" }, [
-                      _c("h6", [_vm._v("Название сайта")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.site_title,
-                            expression: "site_title"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", placeholder: "Название сайта" },
-                        domProps: { value: _vm.site_title },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                  ? _c(
+                      "div",
+                      { staticClass: "col-12 col-md-8 mb-3 goUpAnim" },
+                      [
+                        _c("h6", [_vm._v("Название сайта")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.site_title,
+                              expression: "site_title"
                             }
-                            _vm.site_title = $event.target.value
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            placeholder: "Название сайта"
+                          },
+                          domProps: { value: _vm.site_title },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.site_title = $event.target.value
+                            }
                           }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.errors && _vm.errors.site_title
-                        ? _c("div", { staticClass: "text-danger goUpAnim" }, [
-                            _vm._v(_vm._s(_vm.errors.site_title[0]))
-                          ])
-                        : _vm._e()
-                    ])
+                        }),
+                        _vm._v(" "),
+                        _vm.errors && _vm.errors.site_title
+                          ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                              _vm._v(_vm._s(_vm.errors.site_title[0]))
+                            ])
+                          : _vm._e()
+                      ]
+                    )
                   : _vm._e()
               ]),
               _vm._v(" "),
@@ -51453,13 +51494,14 @@ var render = function() {
                       _c(
                         "div",
                         {
-                          staticClass: "col-8 text-center font14pt form-check"
+                          staticClass:
+                            "col-12 col-md-8 text-center font14pt form-check"
                         },
                         [
                           _c(
                             "div",
                             {
-                              staticClass: "btn-group col-10",
+                              staticClass: "btn-group col-12 col-md-10",
                               attrs: {
                                 role: "group",
                                 "aria-label": "Basic example"
@@ -51532,35 +51574,39 @@ var render = function() {
                     "div",
                     { staticClass: "row justify-content-center mt-3 goUpAnim" },
                     [
-                      _c("div", { staticClass: "col-6 form-floating" }, [
-                        _c("h6", [_vm._v("Текст сообщения для посетителей")]),
-                        _vm._v(" "),
-                        _c("textarea", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.public_access_message,
-                              expression: "public_access_message"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            placeholder:
-                              "Например: Сайт закрыт на технические работы",
-                            id: "floatingTextarea"
-                          },
-                          domProps: { value: _vm.public_access_message },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                      _c(
+                        "div",
+                        { staticClass: "col-12 col-md-6 form-floating" },
+                        [
+                          _c("h6", [_vm._v("Текст сообщения для посетителей")]),
+                          _vm._v(" "),
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.public_access_message,
+                                expression: "public_access_message"
                               }
-                              _vm.public_access_message = $event.target.value
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              placeholder:
+                                "Например: Сайт закрыт на технические работы",
+                              id: "floatingTextarea"
+                            },
+                            domProps: { value: _vm.public_access_message },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.public_access_message = $event.target.value
+                              }
                             }
-                          }
-                        })
-                      ])
+                          })
+                        ]
+                      )
                     ]
                   )
                 : _vm._e(),
@@ -51593,7 +51639,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-5" }, [
+    return _c("div", { staticClass: "col-12 col-md-5" }, [
       _c(
         "button",
         {
@@ -51632,7 +51678,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center" }, [
-    _c("div", { staticClass: "col-8" }, [
+    _c("div", { staticClass: "col-12 col-md-8" }, [
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", { staticClass: "col-12" }, [
           _c(
@@ -51651,7 +51697,7 @@ var render = function() {
                 _vm.bg_first_color !== -1
                   ? _c(
                       "div",
-                      { staticClass: "col-2 mb-3 goUpAnim" },
+                      { staticClass: "col-6 col-md-2 mb-3 goUpAnim" },
                       [
                         _c("h6", [_vm._v("Цвет фона №1")]),
                         _vm._v(" "),
@@ -51696,7 +51742,7 @@ var render = function() {
                 _vm.bg_second_color !== -1
                   ? _c(
                       "div",
-                      { staticClass: "col-2 mb-3 goUpAnim" },
+                      { staticClass: "col-6 col-md-2 mb-3 goUpAnim" },
                       [
                         _c("h6", [_vm._v("Цвет фона №2")]),
                         _vm._v(" "),
@@ -51747,7 +51793,7 @@ var render = function() {
                       _c(
                         "div",
                         {
-                          staticClass: "col-5 text-center",
+                          staticClass: "col-12 col-md-5 text-center",
                           style: _vm.previewStyle
                         },
                         [
@@ -51792,7 +51838,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-5" }, [
+    return _c("div", { staticClass: "col-12 col-md-5" }, [
       _c(
         "button",
         {
@@ -51831,7 +51877,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center" }, [
-    _c("div", { staticClass: "col-8" }, [
+    _c("div", { staticClass: "col-12 col-md-8" }, [
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", { staticClass: "col-12" }, [
           _c(
@@ -51860,13 +51906,13 @@ var render = function() {
                             "div",
                             {
                               staticClass:
-                                "col-8 text-center font14pt form-check"
+                                "col-12 col-md-8 text-center font14pt form-check"
                             },
                             [
                               _c(
                                 "div",
                                 {
-                                  staticClass: "btn-group col-10",
+                                  staticClass: "btn-group col-12 col-md-10",
                                   attrs: {
                                     role: "group",
                                     "aria-label": "Basic example"
@@ -51938,13 +51984,13 @@ var render = function() {
                         "div",
                         {
                           staticClass:
-                            "col-8 text-center font14pt form-check mt-3"
+                            "col-12 col-md-8 text-center font14pt form-check mt-3"
                         },
                         [
                           _c(
                             "div",
                             {
-                              staticClass: "btn-group col-10",
+                              staticClass: "btn-group col-12 col-md-10",
                               attrs: {
                                 role: "group",
                                 "aria-label": "Basic example"
@@ -52013,13 +52059,13 @@ var render = function() {
                         "div",
                         {
                           staticClass:
-                            "col-8 text-center font14pt form-check mt-3"
+                            "col-12 col-md-8 text-center font14pt form-check mt-3"
                         },
                         [
                           _c(
                             "div",
                             {
-                              staticClass: "btn-group col-10",
+                              staticClass: "btn-group col-12 col-md-10",
                               attrs: {
                                 role: "group",
                                 "aria-label": "Basic example"
@@ -52088,13 +52134,13 @@ var render = function() {
                         "div",
                         {
                           staticClass:
-                            "col-8 text-center font14pt form-check mt-3"
+                            "col-12 col-md-8 text-center font14pt form-check mt-3"
                         },
                         [
                           _c(
                             "div",
                             {
-                              staticClass: "btn-group col-10",
+                              staticClass: "btn-group col-12 col-md-10",
                               attrs: {
                                 role: "group",
                                 "aria-label": "Basic example"
@@ -52163,13 +52209,13 @@ var render = function() {
                         "div",
                         {
                           staticClass:
-                            "col-8 text-center font14pt form-check mt-3"
+                            "col-12 col-md-8 text-center font14pt form-check mt-3"
                         },
                         [
                           _c(
                             "div",
                             {
-                              staticClass: "btn-group col-10",
+                              staticClass: "btn-group col-12 col-md-10",
                               attrs: {
                                 role: "group",
                                 "aria-label": "Basic example"
@@ -52265,7 +52311,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-5" }, [
+    return _c("div", { staticClass: "col-12 col-md-5" }, [
       _c(
         "button",
         {
@@ -52307,7 +52353,7 @@ var render = function() {
     "div",
     { staticClass: "row mt-5 justify-content-center fadeInAnim" },
     [
-      _c("div", { staticClass: "col-6 mb-5" }, [
+      _c("div", { staticClass: "col-12 col-md-6 mb-5" }, [
         _c("ul", { staticClass: "nav nav-fill" }, [
           _c(
             "li",
@@ -52609,7 +52655,7 @@ var render = function() {
         _vm.siteOwnerInfo !== -1
           ? _c(
               "div",
-              { staticClass: "col-md-6 mt-2" },
+              { staticClass: "col-12 col-md-6 mt-2" },
               [
                 _c("h5", [_vm._v("Превью")]),
                 _vm._v(" "),
@@ -52682,7 +52728,7 @@ var render = function() {
             "div",
             {
               staticClass:
-                "row h-100 d-flex text-center justify-content-center goUpAnim"
+                "row h-100 d-flex text-center justify-content-center goUpAnim m-1"
             },
             [
               _c(
@@ -52795,11 +52841,11 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-8 " }, [
+        _c("div", { staticClass: "col-10 col-md-8" }, [
           _c("ul", { staticClass: "nav nav-fill" }, [
             _c(
               "li",
-              { staticClass: "nav-item mr-2" },
+              { staticClass: "nav-item mr-2 mb-1" },
               [
                 _c(
                   "router-link",
@@ -52823,7 +52869,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "li",
-              { staticClass: "nav-item mr-2" },
+              { staticClass: "nav-item mr-2 mb-1" },
               [
                 _c(
                   "router-link",
@@ -52847,7 +52893,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "li",
-              { staticClass: "nav-item mr-2" },
+              { staticClass: "nav-item mr-2 mb-1" },
               [
                 _c(
                   "router-link",
@@ -52871,7 +52917,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "li",
-              { staticClass: "nav-item mr-2" },
+              { staticClass: "nav-item mr-2 mb-1" },
               [
                 _c(
                   "router-link",
@@ -53099,7 +53145,7 @@ var render = function() {
                 _c(
                   "a",
                   {
-                    staticClass: "font18pt",
+                    staticClass: "font18pt mb-5",
                     class: {
                       "zeroOpacity unclickable":
                         _vm.email.emailVisible === false,
@@ -53608,7 +53654,7 @@ var render = function() {
                   [
                     _c(
                       "h1",
-                      { staticClass: "text-center textVertical font3-8rem" },
+                      { staticClass: "text-center textVertical font3-2rem" },
                       [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
                     ),
                     _vm._v(" "),
@@ -53621,13 +53667,23 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "p",
-                      { staticClass: "text-center textVertical font2rem" },
+                      { staticClass: "text-center textVertical font1-2rem" },
                       [_vm._v(_vm._s(_vm.project.project_subtitle))]
                     ),
                     _vm._v(" "),
-                    _c("br"),
+                    _vm.project.project_bottomText !== null
+                      ? _c("hr")
+                      : _vm._e(),
                     _vm._v(" "),
-                    _vm._m(0),
+                    _vm.project.project_bottomText !== null
+                      ? _c("h6", { staticClass: "text-center" }, [
+                          _c("b", [
+                            _vm._v(_vm._s(_vm.project.project_bottomText))
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("br"),
                     _vm._v(" "),
                     _c(
                       "button",
@@ -53646,7 +53702,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                    View project\n                "
+                              "\n                    Перейти к проекту\n                "
                             )
                           ]
                         )
@@ -53779,7 +53835,7 @@ var render = function() {
                   [
                     _c(
                       "h1",
-                      { staticClass: "text-center textVertical font3rem" },
+                      { staticClass: "text-center textVertical font3-2rem" },
                       [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
                     ),
                     _vm._v(" "),
@@ -53792,13 +53848,23 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "p",
-                      { staticClass: "text-center textVertical font2rem" },
+                      { staticClass: "text-center textVertical font1-2rem" },
                       [_vm._v(_vm._s(_vm.project.project_subtitle))]
                     ),
                     _vm._v(" "),
-                    _c("br"),
+                    _vm.project.project_bottomText !== null
+                      ? _c("hr")
+                      : _vm._e(),
                     _vm._v(" "),
-                    _vm._m(1),
+                    _vm.project.project_bottomText !== null
+                      ? _c("h6", { staticClass: "text-center" }, [
+                          _c("b", [
+                            _vm._v(_vm._s(_vm.project.project_bottomText))
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("br"),
                     _vm._v(" "),
                     _c(
                       "button",
@@ -53817,7 +53883,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                    View project\n                "
+                              "\n                    Перейти к проекту\n                "
                             )
                           ]
                         )
@@ -53840,44 +53906,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "d-block d-md-none col-12 col-md-6 text-center textVertical"
-      },
-      [
-        _c("img", {
-          staticClass: "projectImageMobile",
-          attrs: { src: "/stock/spoti_mobile.png", alt: "" }
-        })
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "d-block d-md-none col-12 col-md-6 text-center textVertical"
-      },
-      [
-        _c("img", {
-          staticClass: "projectImageMobile",
-          attrs: { src: "/stock/mr_mobile.png", alt: "" }
-        })
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

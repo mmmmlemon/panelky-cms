@@ -51,7 +51,7 @@
                 <ul class="nav nav-fill">
                     <!-- TODO шознах тут с версткой, переделать -->
                     <!-- кнопка ориентации -->
-                    <li class="nav-item" v-if="currentProject.project_image !== null && currentProject.project_image !== undefined">
+                    <li class="nav-item d-none d-md-block" v-if="currentProject.project_image !== null && currentProject.project_image !== undefined">
                          <button class="btn btn-light btn-lg fullscreenButton" title="Изменить ориентацию" v-on:click="changeOrientation">
                             <i class="bi bi-arrow-left-right"></i>
                         </button>

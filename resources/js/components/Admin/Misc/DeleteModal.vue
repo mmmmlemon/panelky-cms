@@ -4,7 +4,7 @@
     <div class="deleteModalBody fadeInAnim" v-if="deleteModalInfo !== -1 && deleteModalInfo !== undefined">
         <div class="row justify-content-center">
             <!-- удаление проектов -->
-            <div class="col-4 transparentCard deleteModalCard m-1" v-if="deleteModalInfo.type === 'project'">
+            <div class="col-11 col-md-4 transparentCard deleteModalCard m-1" v-if="deleteModalInfo.type === 'project'">
                 <div class="card-body">
                     <h2 class="card-title">Удаление проекта</h2>
                     <hr>
@@ -26,7 +26,7 @@
                 </div> 
             </div>
             <!-- удаление ссылок -->
-            <div class="col-4 transparentCard deleteModalCard m-1" v-if="deleteModalInfo.type === 'link'">
+            <div class="col-11 col-md-4 transparentCard deleteModalCard m-1" v-if="deleteModalInfo.type === 'link'">
                 <div class="card-body">
                     <h2 class="card-title">Удаление ссылки</h2>
                     <hr>

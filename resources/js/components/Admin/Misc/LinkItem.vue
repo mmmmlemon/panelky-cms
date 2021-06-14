@@ -4,25 +4,25 @@
 <template>
     <form method="POST" @submit.prevent="submit()">
         <div class="row justify-content-center linkItem" :id="link.slug">
-            <div class="col-2 text-center">
+            <div class="col-12 col-md-2 text-center">
                 <h6>&nbsp;</h6>
                 <h4>{{link.link_title}}</h4>
             </div>
-            <div class="col-3 mb-3">
+            <div class="col-12 col-md-3 mb-3">
                 <h6>Название ресурса</h6>
                 <input type="text" class="form-control" placeholder="Twitter" 
                         v-model="link.link_title" 
                         v-on:keydown="toggleEdit(true)" required>
                 <div v-if="errors && errors.link_title" class="text-danger goUpAnim">{{ errors.link_title[0] }}</div>
             </div>
-            <div class="col-4 mb-3">
+            <div class="col-12 col-md-4 mb-3">
                 <h6>URL <a :href="link.link_url" target="_blank" title="Проверить ссылку"><i class="bi bi-link"></i></a></h6>
 
                 <input type="text" class="form-control" placeholder="https://twitter.com/username" 
                        v-model="link.link_url" v-on:keydown="toggleEdit(true)" required>
                 <div v-if="errors && errors.link_url" class="text-danger goUpAnim">{{ errors.link_url[0] }}</div>
             </div>
-            <div class="col-3 mb-3">
+            <div class="col-12 col-md-3 mb-3">
                 <h6>&nbsp;</h6>
                 <!-- кнопка переместить ссылку -->
                 <div class="btn btn-light fadeInAnim handle" title="Переместить" v-if="edit === false">

@@ -2,7 +2,7 @@
 //настройки главной страницы
 <template>
     <div class="row justify-content-center">
-        <div class="col-8">
+        <div class="col-12 col-md-8">
             <div class="row justify-content-center">
                 <div class="col-12">
                     <!-- форма -->
@@ -10,8 +10,8 @@
                         <h6 class="text-center mb-4 goUpAnim">Отображение элементов на главной странице</h6>
                         <div class="row justify-content-center goUpAnim" v-if="side_nav != -1">
                             <!-- боковое меню -->
-                            <div class="col-8 text-center font14pt form-check" v-if="side_nav != -1">
-                                <div class="btn-group col-10" role="group" aria-label="Basic example">
+                            <div class="col-12 col-md-8 text-center font14pt form-check" v-if="side_nav != -1">
+                                <div class="btn-group col-12 col-md-10" role="group" aria-label="Basic example">
                                     <button type="button" class="btn" 
                                             v-bind:class="{'btn-light': side_nav === 1, 'btn-outline-light': side_nav === 0}"
                                             v-on:click="toggleValue('side_nav', 1)">
@@ -28,8 +28,8 @@
                             </div>
 
                             <!-- о себе -->
-                            <div class="col-8 text-center font14pt form-check mt-3">
-                                <div class="btn-group col-10" role="group" aria-label="Basic example">
+                            <div class="col-12 col-md-8 text-center font14pt form-check mt-3">
+                                <div class="btn-group col-12 col-md-10" role="group" aria-label="Basic example">
                                     <button type="button" class="btn" 
                                             v-bind:class="{'btn-light': about === 1, 'btn-outline-light': about === 0}"
                                             v-on:click="toggleValue('about', 1)">
@@ -46,8 +46,8 @@
                             </div>
 
                             <!-- информация о владельце -->
-                            <div class="col-8 text-center font14pt form-check mt-3">
-                                <div class="btn-group col-10" role="group" aria-label="Basic example">
+                            <div class="col-12 col-md-8 text-center font14pt form-check mt-3">
+                                <div class="btn-group col-12 col-md-10" role="group" aria-label="Basic example">
                                     <button type="button" class="btn" 
                                             v-bind:class="{'btn-light': site_owner === 1, 'btn-outline-light': site_owner === 0}"
                                             v-on:click="toggleValue('site_owner', 1)">
@@ -64,8 +64,8 @@
                             </div>
 
                             <!-- проекты -->
-                            <div class="col-8 text-center font14pt form-check mt-3">
-                                <div class="btn-group col-10" role="group" aria-label="Basic example">
+                            <div class="col-12 col-md-8 text-center font14pt form-check mt-3">
+                                <div class="btn-group col-12 col-md-10" role="group" aria-label="Basic example">
                                     <button type="button" class="btn" 
                                             v-bind:class="{'btn-light': projects === 1, 'btn-outline-light': projects === 0}"
                                             v-on:click="toggleValue('projects', 1)">
@@ -82,8 +82,8 @@
                             </div>
 
                             <!-- футер -->
-                            <div class="col-8 text-center font14pt form-check mt-3">
-                                <div class="btn-group col-10" role="group" aria-label="Basic example">
+                            <div class="col-12 col-md-8 text-center font14pt form-check mt-3">
+                                <div class="btn-group col-12 col-md-10" role="group" aria-label="Basic example">
                                     <button type="button" class="btn" 
                                             v-bind:class="{'btn-light': footer === 1, 'btn-outline-light': footer === 0}"
                                             v-on:click="toggleValue('footer', 1)">
@@ -101,7 +101,7 @@
                         </div>
                         <!-- Сохранить -->
                         <div class="row justify-content-center goUpAnim m-5" v-if="side_nav != -1">
-                            <div class="col-5">
+                            <div class="col-12 col-md-5">
                                 <button class="btn btn-outline-light btn-lg btn-block ml-2" title="Сохранить изменения">
                                     Сохранить
                                 </button>

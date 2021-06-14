@@ -61,7 +61,7 @@
             <!-- TODO для мобилок -->
             <div class="d-block d-md-none col-12 text-center textVertical goUpCardAnim" v-if="visible === true">
                 <!-- название проекта -->
-                <h1 class="text-center textVertical font3-8rem">
+                <h1 class="text-center textVertical font3-2rem">
                     <b>{{project.project_title}}</b>
                 </h1>
                 <!-- лого -->
@@ -69,16 +69,18 @@
                 <br>
                 
                 <!-- краткое описание -->
-                <p class="text-center textVertical font2rem">{{project.project_subtitle}}</p>
+                <p class="text-center textVertical font1-2rem">{{project.project_subtitle}}</p>
+                <hr v-if="project.project_bottomText !== null">
+                <!-- футер -->
+                <h6 v-if="project.project_bottomText !== null"
+                    class="text-center">
+                    <b>{{project.project_bottomText}}</b>
+                </h6>
                 <br>
-                <!-- скриншот проекта -->
-                <div class="d-block d-md-none col-12 col-md-6 text-center textVertical">
-                    <img src="/stock/spoti_mobile.png" class="projectImageMobile" alt="">
-                </div>
                 <!-- кнопка "Посетить" -->
                 <button type="button" class="btn btn-lg btn-outline-light">
                     <a :href="project.project_url" target="_blank">
-                        View project
+                        Перейти к проекту
                     </a>
                 </button>
             </div>
@@ -137,22 +139,26 @@
             <!-- TODO для мобилок -->
             <div class="d-block d-md-none col-12 text-center textVertical goUpCardAnim" v-if="visible === true">
                 <!-- название проекта -->
-                <h1 class="text-center textVertical font3rem">
+                <h1 class="text-center textVertical font3-2rem">
                     <b>{{project.project_title}}</b>
                 </h1>
                 <!-- лого -->
                 <img :src="project.project_icon" class="projectLogo" alt="">
                 <br>
+                
                 <!-- краткое описание -->
-                <p class="text-center textVertical font2rem">{{project.project_subtitle}}</p>
+                <p class="text-center textVertical font1-2rem">{{project.project_subtitle}}</p>
+                <hr v-if="project.project_bottomText !== null">
+                <!-- футер -->
+                <h6 v-if="project.project_bottomText !== null"
+                    class="text-center">
+                    <b>{{project.project_bottomText}}</b>
+                </h6>
                 <br>
-                <div class="d-block d-md-none col-12 col-md-6 text-center textVertical">
-                    <img src="/stock/mr_mobile.png" class="projectImageMobile" alt="">
-                </div>
                 <!-- кнопка "Посетить" -->
                 <button type="button" class="btn btn-lg btn-outline-light">
                     <a :href="project.project_url" target="_blank">
-                        View project
+                        Перейти к проекту
                     </a>
                 </button>
             </div>
@@ -225,7 +231,9 @@ export default {
 
                    if(img.width > img.height){
                        this.classForImage = 'projectImageHorizontal';
-                       console.log(this.classForImage)
+                   }
+                   else{
+                       this.classForImage = 'projectImageVertical';
                    }
                 }
 

@@ -3,7 +3,7 @@
 <template>
     <div class="row justify-content-center text-center fadeInAnim" v-if="allProjects !== -1">
         <!-- Главные проекты -->
-        <div class="col-4 m-1">
+        <div class="col-11 col-md-4 m-1">
             <h4>Главные проекты</h4>
             <hr>
             <h6>Отображаются в самом начале в виде карточек</h6>
@@ -36,7 +36,8 @@
                                 <!-- убрать из Главных -->
                                 <button class="btn btn-light" type="button"
                                         v-on:click="setProjectStatus(project.slug)">
-                                    <i class="bi bi-arrow-right"></i>
+                                    <i class="d-none d-md-block bi bi-arrow-right"></i>
+                                    <i class="d-block d-md-none bi bi-arrow-down"></i>
                                 </button>
                             </div>
                         </div>
@@ -44,7 +45,7 @@
                 </transition-group>
         </div>
         <!-- Другие проекты -->
-        <div class="col-4 m-1">
+        <div class="col-11 col-md-4 m-1">
             <h4>Другие проекты</h4>
             <hr>
             <h6>Отображаются в самом конце в виде названий</h6>
@@ -69,7 +70,8 @@
                             <button class="btn btn-light" type="button"
                                         v-on:click="setProjectStatus(project.slug)" 
                                         :disabled="allProjects.home.length >=5">
-                                <i class="bi bi-arrow-left"></i>
+                                <i class="d-block d-md-none bi bi-arrow-up"></i>
+                                <i class="d-none d-md-block bi bi-arrow-left"></i>
                             </button>
                             <!-- ред. -->
                             <router-link class="btn btn-light" :to="`/admin/edit/${project.slug}`">

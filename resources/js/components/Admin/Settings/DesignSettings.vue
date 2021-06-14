@@ -2,20 +2,20 @@
 //настройки дизайна
 <template>
     <div class="row justify-content-center">
-        <div class="col-8">
+        <div class="col-12 col-md-8">
             <div class="row justify-content-center">
                 <div class="col-12">
                     <!-- форма -->
                     <form method="POST" @submit.prevent="submit">
                         <div class="row justify-content-center">
                             <!-- цвет фона 1 -->
-                            <div class="col-2 mb-3 goUpAnim" v-if="bg_first_color !== -1">
+                            <div class="col-6 col-md-2 mb-3 goUpAnim" v-if="bg_first_color !== -1">
                                 <h6>Цвет фона №1</h6>
                                 <v-input-colorpicker  v-model="bg_first_color"  @change="changeFirstColor"/>
                                 <input type="text" class="form-control" placeholder="HEX" v-model="bg_first_color" v-on:keyup="changeFirstColorInput">
                             </div>
                             <!-- цвет фона 2 -->
-                            <div class="col-2 mb-3 goUpAnim"  v-if="bg_second_color !== -1">
+                            <div class="col-6 col-md-2 mb-3 goUpAnim"  v-if="bg_second_color !== -1">
                                 <h6>Цвет фона №2</h6>
                                 <v-input-colorpicker  v-model="bg_second_color" @change="changeSecondColor"/>
                                 <input type="text" class="form-control" placeholder="HEX" v-model="bg_second_color" v-on:keyup="changeSecondColorInput">
@@ -23,7 +23,7 @@
                         </div> 
                         <!-- превью -->
                         <div class="row justify-content-center goUpAnim" v-if="bg_first_color != -1 && bg_second_color != -1">
-                            <div class="col-5 text-center" v-bind:style="previewStyle">
+                            <div class="col-12 col-md-5 text-center" v-bind:style="previewStyle">
                                 <br><br>
                                 <h3>Превью</h3>
                                 <br><br>
@@ -31,7 +31,7 @@
                         </div>
                         <!-- Сохранить -->
                         <div class="row justify-content-center goUpAnim m-5" v-if="bg_first_color != -1 && bg_second_color != -1">
-                            <div class="col-5">
+                            <div class="col-12 col-md-5">
                                 <button class="btn btn-outline-light btn-lg btn-block ml-2" title="Сохранить изменения">
                                     Сохранить
                                 </button>

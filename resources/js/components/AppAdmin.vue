@@ -40,10 +40,10 @@
 
         <!-- меню админки -->
         <div class="row justify-content-center">
-            <div class="col-8 ">
+            <div class="col-10 col-md-8">
                 <ul class="nav nav-fill">
                     <!-- Настройки сайта -->
-                    <li class="nav-item mr-2">
+                    <li class="nav-item mr-2 mb-1">
                         <router-link v-bind:class="{'btn-light': currentTab === 'settings', 
                                                     'btn-outline-light': currentTab !== 'settings'}" 
                                                     to="/admin" class="btn btn-block font14pt">
@@ -51,7 +51,7 @@
                         </router-link>
                     </li>
                     <!-- Владелец сайта -->
-                    <li class="nav-item mr-2">
+                    <li class="nav-item mr-2 mb-1">
                         <router-link v-bind:class="{'btn-light': currentTab === 'siteOwner', 
                                                     'btn-outline-light': currentTab !== 'siteOwner'}"
                                                     to="/admin/siteOwner" class="btn btn-block font14pt" aria-current="page">
@@ -59,7 +59,7 @@
                         </router-link>
                     </li>
                     <!-- Проекты -->
-                    <li class="nav-item mr-2">
+                    <li class="nav-item mr-2 mb-1">
                         <router-link v-bind:class="{'btn-light': currentTab === 'projects', 
                                                     'btn-outline-light': currentTab !== 'projects'}"
                                                     to="/admin/projects" class="btn btn-block font14pt" >
@@ -67,7 +67,7 @@
                         </router-link>
                     </li>
                     <!-- Ссылки и контакты -->
-                    <li class="nav-item mr-2">
+                    <li class="nav-item mr-2 mb-1">
                         <router-link v-bind:class="{'btn-light': currentTab === 'links', 
                                                     'btn-outline-light': currentTab !== 'links'}" 
                                                     to="/admin/links" class="btn btn-block font14pt">

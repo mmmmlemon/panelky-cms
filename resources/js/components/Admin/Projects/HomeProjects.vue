@@ -2,7 +2,7 @@
 //управление проектами на главной странице сайта
 <template>
     <div class="row justify-content-center" v-if="currentProject !== -1 && visible === true">
-        <div class="col-8">
+        <div class="col-12 col-md-8">
             
             <!-- сообщение если нет проектов -->
             <div v-if="projectsList === false" class="row justify-content-center text-center goUpAnim">
@@ -16,13 +16,13 @@
 
             <div class="row" v-if="projectsList !== -1 && projectsList !== false">
                 <!-- список проектов -->
-                <div class="col-4">
+                <div class="col-12 col-md-4">
                     <h6>Порядок</h6>
                     <hr>
                     <ListOfProjects :projectsList="projectsList"/>      
                 </div>
                 <!-- мини-превью проекта -->
-                <div class="col-8 fadeIn">
+                <div class="col-12 col-md-8 fadeIn">
                      <h6>&nbsp;</h6>
                     <hr>
                     <PreviewProject type="mini" :currentProject="currentProject"/>

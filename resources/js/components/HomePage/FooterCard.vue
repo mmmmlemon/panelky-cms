@@ -28,7 +28,7 @@
                     </span>
                 </button>
                 <br><br>
-                <a class="font18pt" :href="'mailto:'+email.email" v-bind:class="{'zeroOpacity unclickable': email.emailVisible === false, 'goUpAnim': email.emailVisible === true}">
+                <a class="font18pt mb-5" :href="'mailto:'+email.email" v-bind:class="{'zeroOpacity unclickable': email.emailVisible === false, 'goUpAnim': email.emailVisible === true}">
                     <b>{{email.email}}</b>
                 </a>
             </div> 

@@ -16,7 +16,7 @@
         </router-view>
         
         <!-- сообщение - сайт недоступен -->
-        <div class="row h-100 d-flex text-center justify-content-center goUpAnim" v-if="public_access == 0">
+        <div class="row h-100 d-flex text-center justify-content-center goUpAnim m-1" v-if="public_access == 0">
              <div class="textVertical text-center fadeInAnim">
                 <h1 class="font2-5rem">Сайт недоступен</h1>
                 <hr>

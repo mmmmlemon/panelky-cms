@@ -44,7 +44,7 @@
 
         </div>
         <!-- превью -->
-        <div class="col-md-6 mt-2" v-if="siteOwnerInfo !== -1">
+        <div class="col-12 col-md-6 mt-2" v-if="siteOwnerInfo !== -1">
             <h5>Превью</h5>
             <hr>
             <PreviewOwner :siteOwnerInfo="siteOwnerInfo"/>

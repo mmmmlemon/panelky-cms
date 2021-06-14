@@ -2,14 +2,14 @@
 //общие настройки
 <template>
     <div class="row justify-content-center">
-        <div class="col-8">
+        <div class="col-12 col-md-8">
             <div class="row justify-content-center">
                 <div class="col-12">
                     <!-- форма -->
                     <form method="POST" @submit.prevent="submit">
                         <!-- название сайта -->
                         <div class="row justify-content-center">
-                            <div class="col-8 mb-3 goUpAnim" v-if="site_title != -1">
+                            <div class="col-12 col-md-8 mb-3 goUpAnim" v-if="site_title != -1">
                                 <h6>Название сайта</h6>
                                 <input type="text" class="form-control" placeholder="Название сайта" v-model="site_title">
                                 <div v-if="errors && errors.site_title" class="text-danger goUpAnim">{{ errors.site_title[0] }}</div>
@@ -17,8 +17,8 @@
                         </div> 
                         <!-- статус сайта - открыт\закрыт -->
                         <div class="row justify-content-center mt-5 goUpAnim" v-if="public_access != -1">
-                            <div class="col-8 text-center font14pt form-check">
-                                <div class="btn-group col-10" role="group" aria-label="Basic example">
+                            <div class="col-12 col-md-8 text-center font14pt form-check">
+                                <div class="btn-group col-12 col-md-10" role="group" aria-label="Basic example">
                                     <button type="button" class="btn" 
                                             v-bind:class="{'btn-light': public_access === 1, 'btn-outline-light': public_access === 0}"
                                             v-on:click="togglePublicAccess(1)">
@@ -36,13 +36,13 @@
                         </div>
                         <!-- текст сообщения, если сайт закрыт -->
                         <div class="row justify-content-center mt-3 goUpAnim" v-if="public_access === 0">
-                            <div class="col-6 form-floating">
+                            <div class="col-12 col-md-6 form-floating">
                                 <h6>Текст сообщения для посетителей</h6>
                                 <textarea class="form-control" placeholder="Например: Сайт закрыт на технические работы" id="floatingTextarea" v-model="public_access_message"></textarea>
                             </div>
                         </div>
                         <div class="row justify-content-center goUpAnim m-5" v-if="site_title != -1">
-                            <div class="col-5">
+                            <div class="col-12 col-md-5">
                                 <button class="btn btn-outline-light btn-lg btn-block ml-2" title="Сохранить изменения">
                                     Сохранить
                                 </button>

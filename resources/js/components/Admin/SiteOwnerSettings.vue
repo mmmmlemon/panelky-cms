@@ -2,7 +2,7 @@
 //настройки с информацией о владельце сайта
 <template>
     <div class="row mt-5 justify-content-center fadeInAnim">
-        <div class="col-6 mb-5">
+        <div class="col-12 col-md-6 mb-5">
             <ul class="nav nav-fill">
                 <!-- Карточка приветствия -->
                 <li class="nav-item mr-2">
