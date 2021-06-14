@@ -116,9 +116,9 @@ export default {
 
     destroyed(){
         //при "уничтожении" компонента, удалить временную папку в temp
-        // let formData = new FormData();
-        // formData.append('randomFolderName', this.randomFolderName);
-        // axios.post('/admin/removeFolderFromTemp', formData);
+        let formData = new FormData();
+        formData.append('randomFolderName', this.randomFolderName);
+        axios.post('/admin/removeFolderFromTemp', formData);
     },
 
     //данные

@@ -55,7 +55,7 @@
             <!-- скриншот проекта -->
             <div class="d-none d-md-block col-12 col-md-6 text-center textVertical goLeftCardAnim" 
                  v-if="project.project_image !== null && visible === true">
-                <img :src="project.project_image" class="projectImage" alt="">
+                <img :src="project.project_image" :class="classForImage" alt="">
             </div>
 
             <!-- TODO для мобилок -->
@@ -92,7 +92,7 @@
             <!-- скриншот проекта -->
             <div v-if="project.project_image !== null && visible === true"
                  class="d-none d-md-block col-12 col-md-6 text-center textVertical goRightCardAnim" >
-                <img :src="project.project_image" class="projectImage" alt="">
+                <img :src="project.project_image" :class="classForImage" alt="">
             </div>
 
             <div v-bind:class="{'col-md-12': project.project_image === null, 
@@ -177,6 +177,7 @@ export default {
         return {
             //видимость карточки
             visible: false,
+            classForImage: 'projectImageVertical',
         }
     },
 
@@ -217,9 +218,21 @@ export default {
         //в поле видимости
         handleScroll: function (evt, el){
             if (el.getBoundingClientRect().top < 300) {
+
+                let img = new Image();
+                img.src = this.project.project_image;
+                img.onload = () => {
+
+                   if(img.width > img.height){
+                       this.classForImage = 'projectImageHorizontal';
+                       console.log(this.classForImage)
+                   }
+                }
+
                 this.setVisible = true;
             }
             return el.getBoundingClientRect().top < 300;
+            
         }
     }
 }

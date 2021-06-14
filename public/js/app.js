@@ -3090,10 +3090,11 @@ __webpack_require__.r(__webpack_exports__);
       _this.currentProject.project_image = response.data.image;
     });
   },
-  destroyed: function destroyed() {//при "уничтожении" компонента, удалить временную папку в temp
-    // let formData = new FormData();
-    // formData.append('randomFolderName', this.randomFolderName);
-    // axios.post('/admin/removeFolderFromTemp', formData);
+  destroyed: function destroyed() {
+    //при "уничтожении" компонента, удалить временную папку в temp
+    var formData = new FormData();
+    formData.append('randomFolderName', this.randomFolderName);
+    axios.post('/admin/removeFolderFromTemp', formData);
   },
   //данные
   data: function data() {
@@ -3707,8 +3708,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   mounted: function mounted() {
@@ -3721,7 +3720,18 @@ __webpack_require__.r(__webpack_exports__);
     if (currentProject === -1) {
       //установить первый проект в списке выбранным по умолчанию
       this.$store.dispatch('setFirstProjectSlug');
+      this.visible = true;
+    } else if (currentProject !== -1 && currentProject !== false && currentProject.is_home === 0) {
+      this.$store.dispatch('setFirstProjectSlug');
+      this.visible = true;
+    } else {
+      this.visible = true;
     }
+  },
+  data: function data() {
+    return {
+      visible: false
+    };
   },
   computed: {
     //список проектов
@@ -5370,7 +5380,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       //видимость карточки
-      visible: false
+      visible: false,
+      classForImage: 'projectImageVertical'
     };
   },
   //данные
@@ -5416,7 +5427,19 @@ __webpack_require__.r(__webpack_exports__);
     //при скролле страницы показать карточку когда она будет 
     //в поле видимости
     handleScroll: function handleScroll(evt, el) {
+      var _this = this;
+
       if (el.getBoundingClientRect().top < 300) {
+        var img = new Image();
+        img.src = this.project.project_image;
+
+        img.onload = function () {
+          if (img.width > img.height) {
+            _this.classForImage = 'projectImageHorizontal';
+            console.log(_this.classForImage);
+          }
+        };
+
         this.setVisible = true;
       }
 
@@ -51165,93 +51188,79 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.currentProject !== -1
+  return _vm.currentProject !== -1 && _vm.visible === true
     ? _c("div", { staticClass: "row justify-content-center" }, [
-        _c(
-          "div",
-          { staticClass: "col-8" },
-          [
-            _vm.projectsList === false
-              ? _c("Error", {
-                  attrs: {
-                    errorMessage: "Не удалось загрузить список проектов"
-                  }
-                })
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.projectsList === false
-              ? _c(
+        _c("div", { staticClass: "col-8" }, [
+          _vm.projectsList === false
+            ? _c(
+                "div",
+                {
+                  staticClass: "row justify-content-center text-center goUpAnim"
+                },
+                [
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("h3", [_vm._v("Нет главных проектов")]),
+                    _vm._v(" "),
+                    _c("i", {
+                      staticClass: "bi bi-file-earmark-check font1-8rem"
+                    }),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c(
+                      "h5",
+                      [
+                        _vm._v("Их можно добавить в разделе  "),
+                        _c(
+                          "router-link",
+                          { attrs: { to: "/admin/projects/all" } },
+                          [_c("b", [_vm._v("Управление проектами")])]
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.projectsList !== -1 && _vm.projectsList !== false
+            ? _c("div", { staticClass: "row" }, [
+                _c(
                   "div",
-                  {
-                    staticClass:
-                      "row justify-content-center text-center goUpAnim"
-                  },
+                  { staticClass: "col-4" },
                   [
-                    _c("div", { staticClass: "col-12" }, [
-                      _c("h3", [_vm._v("Нет главных проектов")]),
-                      _vm._v(" "),
-                      _c("i", {
-                        staticClass: "bi bi-file-earmark-check font1-8rem"
-                      }),
-                      _vm._v(" "),
-                      _c("hr"),
-                      _vm._v(" "),
-                      _c(
-                        "h5",
-                        [
-                          _vm._v("Их можно добавить в разделе  "),
-                          _c(
-                            "router-link",
-                            { attrs: { to: "/admin/projects/all" } },
-                            [_c("b", [_vm._v("Управление проектами")])]
-                          )
-                        ],
-                        1
-                      )
-                    ])
-                  ]
+                    _c("h6", [_vm._v("Порядок")]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("ListOfProjects", {
+                      attrs: { projectsList: _vm.projectsList }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-8 fadeIn" },
+                  [
+                    _c("h6", [_vm._v(" ")]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("PreviewProject", {
+                      attrs: {
+                        type: "mini",
+                        currentProject: _vm.currentProject
+                      }
+                    })
+                  ],
+                  1
                 )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.projectsList !== -1 && _vm.projectsList !== false
-              ? _c("div", { staticClass: "row" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col-4" },
-                    [
-                      _c("h6", [_vm._v("Порядок")]),
-                      _vm._v(" "),
-                      _c("hr"),
-                      _vm._v(" "),
-                      _c("ListOfProjects", {
-                        attrs: { projectsList: _vm.projectsList }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "col-8 fadeIn" },
-                    [
-                      _c("h6", [_vm._v(" ")]),
-                      _vm._v(" "),
-                      _c("hr"),
-                      _vm._v(" "),
-                      _c("PreviewProject", {
-                        attrs: {
-                          type: "mini",
-                          currentProject: _vm.currentProject
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ])
-              : _vm._e()
-          ],
-          1
-        )
+              ])
+            : _vm._e()
+        ])
       ])
     : _vm._e()
 }
@@ -53582,7 +53591,7 @@ var render = function() {
                   },
                   [
                     _c("img", {
-                      staticClass: "projectImage",
+                      class: _vm.classForImage,
                       attrs: { src: _vm.project.project_image, alt: "" }
                     })
                   ]
@@ -53658,7 +53667,7 @@ var render = function() {
                   },
                   [
                     _c("img", {
-                      staticClass: "projectImage",
+                      class: _vm.classForImage,
                       attrs: { src: _vm.project.project_image, alt: "" }
                     })
                   ]

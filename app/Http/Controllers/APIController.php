@@ -85,7 +85,8 @@ class APIController extends Controller
             return response()->json(['slug' => $project->slug, 
                                     'project_title' => $project->project_title, 
                                     'project_subtitle' => $project->project_subtitle, 
-                                    'project_icon' => $project->project_icon], 200); 
+                                    'project_icon' => $project->project_icon,
+                                    'is_home' => $project->is_home], 200); 
         }
         else
         { return response()->json(false, 422); }
