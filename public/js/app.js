@@ -3069,6 +3069,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
@@ -3108,7 +3112,9 @@ __webpack_require__.r(__webpack_exports__);
       projectImageName: undefined,
       previewMode: false,
       saved: false,
-      errors: []
+      errors: [],
+      previousIconName: undefined,
+      previousImageName: undefined
     };
   },
   computed: {
@@ -3126,43 +3132,49 @@ __webpack_require__.r(__webpack_exports__);
     handleFileUpload: function handleFileUpload(type) {
       var _this2 = this;
 
-      var formData = new FormData();
-      var filename = Math.random(0, 999).toString(36).substring(3) + ".png";
-      formData.append('randomFolderName', this.randomFolderName); //если файл - иконка
+      if (this.$refs.icon.files[0] === undefined && type === 'icon') {//если пользователь нажал "Отмена", то ничего не делаем
+      } else if (this.$refs.image.files[0] == undefined && type === 'image') {//если пользователь нажал "Отмена", то ничего не делаем
+      } else {
+        var formData = new FormData();
+        var filename = Math.random(0, 999).toString(36).substring(3) + ".png";
+        formData.append('randomFolderName', this.randomFolderName); //если файл - иконка
 
-      if (type === 'icon') {
-        formData.append('filename', filename);
-        formData.append('file', this.$refs.icon.files[0]);
-      } //если файл - скриншот
-
-
-      if (type === 'image') {
-        formData.append('filename', filename);
-        formData.append('file', this.$refs.image.files[0]);
-      } //отправка формы с файлом
-
-
-      axios.post('/admin/saveImageToTemp', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }).then(function (response) {
-        //если иконка, то меняем иконку в превью
         if (type === 'icon') {
-          _this2.currentProject.project_icon = response.data;
-          _this2.projectIconName = filename;
-        } //если скриншот, то меняем в превью скриншот
+          formData.append('filename', filename);
+          formData.append('file', this.$refs.icon.files[0]);
+          this.previousIconName = this.$refs.icon.files[0].name;
+        } //если файл - скриншот
 
 
         if (type === 'image') {
-          _this2.currentProject.project_image = response.data;
-          _this2.projectImageName = filename;
-        }
-      })["catch"](function (error) {
-        if (error.response.status === 422 || error.response.status === 500) {
-          _this2.$store.dispatch('setErrors', error.response.data.message);
-        }
-      });
+          formData.append('filename', filename);
+          formData.append('file', this.$refs.image.files[0]);
+          this.previousImageName = this.$refs.image.files[0].name;
+        } //отправка формы с файлом
+
+
+        axios.post('/admin/saveImageToTemp', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function (response) {
+          //если иконка, то меняем иконку в превью
+          if (type === 'icon') {
+            _this2.currentProject.project_icon = response.data;
+            _this2.projectIconName = filename;
+          } //если скриншот, то меняем в превью скриншот
+
+
+          if (type === 'image') {
+            _this2.currentProject.project_image = response.data;
+            _this2.projectImageName = filename;
+          }
+        })["catch"](function (error) {
+          if (error.response.status === 422 || error.response.status === 500) {
+            _this2.$store.dispatch('setErrors', error.response.data.message);
+          }
+        });
+      }
     },
     //удалить временную папку
     removeFromTemp: function removeFromTemp() {
@@ -50275,8 +50287,10 @@ var render = function() {
                     _c("input", {
                       ref: "icon",
                       staticClass: "form-control-file",
+                      staticStyle: { display: "none" },
                       attrs: {
                         type: "file",
+                        id: "icon",
                         name: "icon",
                         accept: "image/jpeg, image/png"
                       },
@@ -50284,6 +50298,17 @@ var render = function() {
                         change: function($event) {
                           return _vm.handleFileUpload("icon")
                         }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("label", [_vm._v(_vm._s(this.previousIconName))]),
+                    _vm.previousIconName !== undefined ? _c("br") : _vm._e(),
+                    _vm._v(" "),
+                    _c("input", {
+                      attrs: {
+                        type: "button",
+                        value: "Выбрать файл",
+                        onclick: "document.getElementById('icon').click();"
                       }
                     }),
                     _vm._v(" "),
@@ -50300,8 +50325,10 @@ var render = function() {
                     _c("input", {
                       ref: "image",
                       staticClass: "form-control-file",
+                      staticStyle: { display: "none" },
                       attrs: {
                         type: "file",
+                        id: "image",
                         name: "image",
                         accept: "image/jpeg, image/png"
                       },
@@ -50309,6 +50336,17 @@ var render = function() {
                         change: function($event) {
                           return _vm.handleFileUpload("image")
                         }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("label", [_vm._v(_vm._s(this.previousImageName))]),
+                    _vm.previousIconName !== undefined ? _c("br") : _vm._e(),
+                    _vm._v(" "),
+                    _c("input", {
+                      attrs: {
+                        type: "button",
+                        value: "Выбрать файл",
+                        onclick: "document.getElementById('image').click();"
                       }
                     }),
                     _vm._v(" "),

@@ -66,15 +66,19 @@
                         <!-- Логотип\иконка -->
                         <div class="mb-3">
                             <h6>Логотип проекта</h6>
-                            <input type="file" ref="icon" name="icon" class="form-control-file" v-on:change="handleFileUpload('icon')"
-                                    accept="image/jpeg, image/png">
+                            <input type="file" ref="icon" id="icon" name="icon" class="form-control-file" v-on:change="handleFileUpload('icon')"
+                                    accept="image/jpeg, image/png" style="display: none;">
+                            <label>{{this.previousIconName}}</label><br v-if="previousIconName !== undefined">
+                            <input type="button" value="Выбрать файл" onclick="document.getElementById('icon').click();" />
                             <div v-if="errors && errors.icon" class="text-danger">{{ errors.projectIcon[0] }}</div>
                         </div>
                         <!-- Скриншот -->
                         <div class="mb-3">
                             <h6>Изображение\скриншот проекта</h6>
-                            <input type="file" ref="image" name="image" class="form-control-file" v-on:change="handleFileUpload('image')"
-                                    accept="image/jpeg, image/png">
+                            <input type="file" ref="image" id="image" name="image" class="form-control-file" v-on:change="handleFileUpload('image')"
+                                    accept="image/jpeg, image/png" style="display: none;">
+                            <label>{{this.previousImageName}}</label><br v-if="previousIconName !== undefined">
+                            <input type="button" value="Выбрать файл" onclick="document.getElementById('image').click();" />
                             <div v-if="errors && errors.image" class="text-danger">{{ errors.projectImage[0] }}</div>
                         </div>
                     
@@ -135,6 +139,8 @@ export default {
             previewMode: false,
             saved: false,
             errors: [],
+            previousIconName: undefined,
+            previousImageName: undefined,
         }
     },
 
@@ -154,43 +160,58 @@ export default {
 
         //залить файл картинки в temp
         handleFileUpload(type){
-            let formData = new FormData();
-            var filename = Math.random(0,999).toString(36).substring(3)+".png";
-            formData.append('randomFolderName', this.randomFolderName);
-            //если файл - иконка
-            if(type === 'icon')
-            {
-                formData.append('filename', filename);
-                formData.append('file', this.$refs.icon.files[0]);
+
+        
+            if(this.$refs.icon.files[0] === undefined && type === 'icon'){
+                //если пользователь нажал "Отмена", то ничего не делаем
+                
             }
-            //если файл - скриншот
-            if(type === 'image')
-            {
-                formData.append('filename', filename);
-                formData.append('file', this.$refs.image.files[0]);
+            else if (this.$refs.image.files[0] == undefined && type === 'image'){
+                //если пользователь нажал "Отмена", то ничего не делаем
+                
             }
-            
-            //отправка формы с файлом
-            axios.post('/admin/saveImageToTemp', formData, {
-                headers: {'Content-Type': 'multipart/form-data'} 
-            }).then(response => {
-                //если иконка, то меняем иконку в превью
+            else {
+              
+                let formData = new FormData();
+                var filename = Math.random(0,999).toString(36).substring(3)+".png";
+                formData.append('randomFolderName', this.randomFolderName);
+                //если файл - иконка
                 if(type === 'icon')
-                { 
-                    this.currentProject.project_icon = response.data; 
-                    this.projectIconName = filename;
+                {
+                    formData.append('filename', filename);
+                    formData.append('file', this.$refs.icon.files[0]);
+                    this.previousIconName = this.$refs.icon.files[0].name;
                 }
-                //если скриншот, то меняем в превью скриншот
+                //если файл - скриншот
                 if(type === 'image')
-                { 
-                    this.currentProject.project_image = response.data; 
-                    this.projectImageName = filename;
+                {
+                    formData.append('filename', filename);
+                    formData.append('file', this.$refs.image.files[0]);
+                    this.previousImageName = this.$refs.image.files[0].name;
                 }
-            }).catch(error => {
-                if(error.response.status === 422 || error.response.status === 500){ 
-                        this.$store.dispatch('setErrors', error.response.data.message);
-                     }
-            });
+                
+                //отправка формы с файлом
+                axios.post('/admin/saveImageToTemp', formData, {
+                    headers: {'Content-Type': 'multipart/form-data'} 
+                }).then(response => {
+                    //если иконка, то меняем иконку в превью
+                    if(type === 'icon')
+                    { 
+                        this.currentProject.project_icon = response.data; 
+                        this.projectIconName = filename;
+                    }
+                    //если скриншот, то меняем в превью скриншот
+                    if(type === 'image')
+                    { 
+                        this.currentProject.project_image = response.data; 
+                        this.projectImageName = filename;
+                    }
+                }).catch(error => {
+                    if(error.response.status === 422 || error.response.status === 500){ 
+                            this.$store.dispatch('setErrors', error.response.data.message);
+                        }
+                });
+            }
         },
 
         //удалить временную папку
