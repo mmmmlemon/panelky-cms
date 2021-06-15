@@ -50,7 +50,7 @@
             <hr>
             <h5>Но их всегда можно добавить!</h5>
         </div>
-        <div class="col-12 col-md-8 mt-5 goUpAnim" v-if="links !== -1" v-bind:class="{ 'invisible': addNewLink === true }" >
+        <div class="col-12 сol-md-12 col-xl-8 mt-5 goUpAnim" v-if="links !== -1" v-bind:class="{ 'invisible': addNewLink === true }" >
             <!-- форма редактирования имеющихся ссылок -->
             <draggable v-model="links" handle=".handle" v-bind="dragOptions" class="col-12">
                 <div v-for="item in links" :key="item.id">

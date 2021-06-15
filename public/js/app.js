@@ -5379,6 +5379,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     this.setVisible = this.isVisible;
@@ -48659,7 +48662,7 @@ var render = function() {
     "div",
     { staticClass: "row mt-5 justify-content-center fadeInAnim" },
     [
-      _c("div", { staticClass: "col-12 col-md-6 mb-5" }, [
+      _c("div", { staticClass: "col-12 col-md-8 col-xl-6 mb-5" }, [
         _c("ul", { staticClass: "nav nav-fill" }, [
           _c(
             "li",
@@ -49061,7 +49064,7 @@ var render = function() {
       ? _c(
           "div",
           {
-            staticClass: "col-12 col-md-8 mt-5 goUpAnim",
+            staticClass: "col-12 сol-md-12 col-xl-8 mt-5 goUpAnim",
             class: { invisible: _vm.addNewLink === true }
           },
           [
@@ -50779,7 +50782,7 @@ var render = function() {
                 staticClass: "col-12 col-md-5",
                 class: {
                   "col-5": _vm.previewMode === false,
-                  "col-8": _vm.previewMode === true
+                  "col-12 col-md-8": _vm.previewMode === true
                 }
               },
               [
@@ -53547,8 +53550,24 @@ var render = function() {
                   [
                     _c(
                       "h1",
-                      { staticClass: "text-center textVertical font3-8rem" },
+                      {
+                        staticClass:
+                          "d-md-block d-sm-none text-center textVertical font3-8rem"
+                      },
                       [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "h1",
+                      {
+                        staticClass:
+                          "d-md-none d-sm-block text-center textVertical font1-2rem"
+                      },
+                      [
+                        _c("b", [
+                          _vm._v(_vm._s(_vm.project.project_title) + "fdfdf")
+                        ])
+                      ]
                     ),
                     _vm._v(" "),
                     _vm.project.project_icon !== null

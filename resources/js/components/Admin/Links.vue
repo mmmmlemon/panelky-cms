@@ -2,7 +2,7 @@
 //ссылки и контакты
 <template>
      <div class="row mt-5 justify-content-center fadeInAnim">
-        <div class="col-12 col-md-6 mb-5">
+        <div class="col-12 col-md-8 col-xl-6 mb-5">
             <ul class="nav nav-fill">
                 <!-- Ссылки -->
                 <li class="nav-item mr-2" v-on:click="changeCurrentTab('editLinks')">

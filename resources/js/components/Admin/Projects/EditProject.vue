@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col-12 col-md-5" v-bind:class="{'col-5': previewMode === false, 'col-8': previewMode === true}">
+                <div class="col-12 col-md-5" v-bind:class="{'col-5': previewMode === false, 'col-12 col-md-8': previewMode === true}">
                     <!-- основная форма -->
                     <form @submit.prevent="submitBasic" class="fadeInAnim" method="POST" v-if="basicFormActive === true">
                         <input type="text" v-model="currentProject.id" class="invisible">

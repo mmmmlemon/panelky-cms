@@ -49,6 +49,40 @@ h1, h4, h6, input {
     font-size: 3.8rem;
 }
 
+
+@media screen and (min-width:800px) { 
+    .font2rem{
+        font-size: 1rem;
+    }
+    
+    .font3-8rem {
+        font-size: 2rem;
+    }
+}
+
+
+@media screen and (min-width:1366px) { 
+    .font2rem{
+        font-size: 1.5rem;
+    }
+    
+    .font3-8rem {
+        font-size: 2.8rem;
+    }
+}
+
+
+@media screen and (min-width:1600px) { 
+    .font2rem{
+        font-size: 2rem;
+    }
+    
+    
+    .font3-8rem {
+        font-size: 3.8rem;
+    }
+}
+
 .font5rem {
     font-size: 5rem;
 }

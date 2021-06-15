@@ -19,8 +19,11 @@
                                         'col-md-5': project.project_image !== null}"
                         v-if="visible === true">
                 <!-- название проекта -->
-                <h1 class="text-center textVertical font3-8rem">
+                <h1 class="d-md-block d-sm-none text-center textVertical font3-8rem">
                     <b>{{project.project_title}}</b>
+                </h1>
+                <h1 class="d-md-none d-sm-block text-center textVertical font1-2rem">
+                    <b>{{project.project_title}}fdfdf</b>
                 </h1>
                 <!-- лого -->
                 <img v-if="project.project_icon !== null" 
