@@ -5,6 +5,7 @@
     src: url("../fonts/Montserrat-Regular.ttf");
    }
 
+   
 
 h1, h4, h6, input {
     font-family: Montserrat;
@@ -49,43 +50,145 @@ h1, h4, h6, input {
     font-size: 3.8rem;
 }
 
+.font5rem {
+    font-size: 5rem;
+}
 
-@media screen and (min-width:800px) { 
-    .font2rem{
+@media screen and (min-width:300px) { 
+    /* rem */
+
+    .font1-2rem {
+       font-size: 1.1rem;
+   }
+
+   .font1-8rem {
+       font-size: 1rem;
+   }
+
+   .font2rem{
+       font-size: 1.6rem;
+   }
+
+   .font2-5rem {
+       font-size: 2rem;
+   }
+
+   .font3rem {
+       font-size: 1rem;
+   }
+
+   .font3-8rem {
+       font-size: 1.8rem;
+   }
+
+   .font5rem {
+       font-size: 2.3rem;
+   }
+}
+
+
+@media screen and (min-width:700px) { 
+     /* rem */
+
+     .font1-2rem {
         font-size: 1rem;
     }
-    
+
+    .font1-8rem {
+        font-size: 1rem;
+    }
+
+    .font2rem{
+        font-size: 0.6rem;
+    }
+
+    .font2-5rem {
+        font-size: 1.1rem;
+    }
+
+    .font3rem {
+        font-size: 1rem;
+    }
+
     .font3-8rem {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+
+    .font5rem {
+        font-size: 2.3rem;
     }
 }
 
 
 @media screen and (min-width:1366px) { 
+
+    /* rem */
+
+    .font1-2rem {
+        font-size: 1rem;
+    }
+
+    .font1-8rem {
+        font-size: 1.2rem;
+    }
+
     .font2rem{
+        font-size: 1rem;
+    }
+
+    .font2-5rem {
         font-size: 1.5rem;
     }
-    
-    .font3-8rem {
-        font-size: 2.8rem;
+
+    .font3rem {
+        font-size: 2rem;
     }
+
+    .font3-8rem {
+        font-size: 2.6rem;
+    }
+
+    .font5rem {
+        font-size: 3.5rem;
+    }
+
+    
 }
 
 
 @media screen and (min-width:1600px) { 
+  /* rem */
+
+    .font1-2rem {
+        font-size: 1.2rem;
+    }
+
+    .font1-8rem {
+        font-size: 1.8rem;
+    }
+
     .font2rem{
         font-size: 2rem;
     }
-    
-    
+
+    .font2-5rem {
+        font-size: 2.5rem;
+    }
+
+    .font3rem {
+        font-size: 3rem;
+    }
+
     .font3-8rem {
         font-size: 3.8rem;
     }
+
+    .font5rem {
+        font-size: 5rem;
+    }
+
 }
 
-.font5rem {
-    font-size: 5rem;
-}
 
 
 

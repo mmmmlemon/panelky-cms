@@ -4,7 +4,7 @@
     <div class="row justify-content-center fadeInAnim">
         <div class="col-12 mb-5">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-5">
+                <div class="col-12 col-md-8">
                     <!-- вкладки -->
                     <div class="col-12 mb-4">
                         <ul class="nav nav-fill">
@@ -28,7 +28,7 @@
             </div>
 
             <div class="row justify-content-center">
-                    <div class="col-12 col-md-5" v-if="previewMode === false">
+                    <div class="col-12 col-md-8" v-if="previewMode === false">
                     <!-- основная форма -->
                     <form @submit.prevent="submit" method="POST">
                         <input type="text" class="invisible">
@@ -87,7 +87,7 @@
                     </form> 
                 </div>
                 <!-- превью -->
-                <div class="col-12 col-md-8" v-if="previewMode === true">
+                <div class="col-12 col-md-11" v-if="previewMode === true">
                     <PreviewProject type="full" :currentProject="currentProject"/>
                 </div> 
             </div>

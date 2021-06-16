@@ -19,10 +19,10 @@
             <hr>
         </div>
         
-        <div class="row mb-5">
+        <div class="row justify-content-center mb-5">
             <!-- ссылка на главную страницу -->
             <div class="col-12 col-md-4 mb-3">
-                <h6 class="text-right">
+                <h6 class="text-center">
                     <a href="/">
                         На главную <i class="bi bi-house"></i>
                     </a>
@@ -30,7 +30,7 @@
             </div>
             <!-- ссылка на logout -->
             <div class="col-12 col-md-4">
-                <h6 class="text-right" v-on:click.prevent="logout">
+                <h6 class="text-center" v-on:click.prevent="logout">
                     <a href="#exit">
                         Выйти <i class="bi bi-box-arrow-right"></i>
                     </a>
@@ -40,7 +40,7 @@
 
         <!-- меню админки -->
         <div class="row justify-content-center">
-            <div class="col-10 col-md-8">
+            <div class="col-12 col-md-10">
                 <ul class="nav nav-fill">
                     <!-- Настройки сайта -->
                     <li class="nav-item mr-2 mb-1">

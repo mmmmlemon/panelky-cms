@@ -2,7 +2,7 @@
 //вкладка в админке, список проектов
 <template>
     <div class="row mt-5 justify-content-center fadeInAnim">
-        <div class="col-12 col-md-6 mb-5">
+        <div class="col-12 col-md-9 mb-5">
             <ul class="nav nav-fill">
                 <!-- Главные проекты -->
                 <li class="nav-item mr-2 mb-1" v-on:click="changeCurrentTab('homeProjects')">
@@ -38,7 +38,7 @@
         </div>
         <br>
         <!-- router-view для вкладок -->
-        <div class="col-12">
+        <div class="col-12 mb-2">
             <router-view>
             </router-view>  
         </div>

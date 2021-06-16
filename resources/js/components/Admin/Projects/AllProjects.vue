@@ -3,7 +3,7 @@
 <template>
     <div class="row justify-content-center text-center fadeInAnim" v-if="allProjects !== -1">
         <!-- Главные проекты -->
-        <div class="col-11 col-md-4 m-1">
+        <div class="col-11 col-md-4 mt-md-1 m-1">
             <h4>Главные проекты</h4>
             <hr>
             <h6>Отображаются в самом начале в виде карточек</h6>
@@ -45,7 +45,7 @@
                 </transition-group>
         </div>
         <!-- Другие проекты -->
-        <div class="col-11 col-md-4 m-1">
+        <div class="col-11 col-md-4 m-1 mt-md-1 mt-5 ">
             <h4>Другие проекты</h4>
             <hr>
             <h6>Отображаются в самом конце в виде названий</h6>

@@ -1,8 +1,8 @@
 //EditLinks
 //форма редактирования ссылок
 <template>
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-8 mt-2">
+    <div class="row justify-content-center mb-5">
+        <div class="col-12 col-md-10 mt-2">
             <button class="btn btn-light fadeInAnim" title="Добавить ссылку" 
                     v-on:click="toggleAddNewLink" v-bind:class="{ 'invisible': addNewLink === true   }">
                 <i class="bi bi-plus"></i>
@@ -15,15 +15,15 @@
                 Назад
             </button>
         </div>
-        <div class="col-12 col-md-8 mt-5 goUpAnim" v-bind:class="{ 'invisible': addNewLink === false }">
+        <div class="col-12 col-md-10 mt-5 goUpAnim" v-bind:class="{ 'invisible': addNewLink === false }">
             <!-- форма редактирования имеющихся ссылок -->
             <form method="POST" @submit.prevent="submit()">
                 <div class="row justify-content-center">
-                    <div class="col-12 col-md-2 text-center">
+                    <!-- <div class="col-12 col-md-2 text-center">
                         <h6>&nbsp;</h6>
                         <h4>{{newLink.link_title}}</h4>
-                    </div>
-                    <div class="col-12 col-md-3 mb-3">
+                    </div> -->
+                    <div class="col-12 col-md-4 mb-3">
                         <h6>Название ресурса</h6>
                         <input type="text" class="form-control" placeholder="Twitter" v-model="newLink.link_title" required>
                         <div v-if="errors && errors.link_title" class="text-danger goUpAnim">{{ errors.link_title[0] }}</div>
@@ -33,7 +33,7 @@
                         <input type="text" class="form-control" placeholder="https://twitter.com/username" v-model="newLink.link_url" required>
                         <div v-if="errors && errors.link_url" class="text-danger goUpAnim">{{ errors.link_url[0] }}</div>
                     </div>
-                    <div class="col-12 col-md-3 mb-3">
+                    <div class="col-12 col-md-4 mb-3">
                         <h6>&nbsp;</h6>
                         <!-- кнопка удалить ссылку -->
                         <button class="btn btn-light ml-2" title="Добавить ссылку">
@@ -50,7 +50,7 @@
             <hr>
             <h5>Но их всегда можно добавить!</h5>
         </div>
-        <div class="col-12 сol-md-12 col-xl-8 mt-5 goUpAnim" v-if="links !== -1" v-bind:class="{ 'invisible': addNewLink === true }" >
+        <div class="col-12 col-md-10 mt-5 goUpAnim" v-if="links !== -1" v-bind:class="{ 'invisible': addNewLink === true }" >
             <!-- форма редактирования имеющихся ссылок -->
             <draggable v-model="links" handle=".handle" v-bind="dragOptions" class="col-12">
                 <div v-for="item in links" :key="item.id">

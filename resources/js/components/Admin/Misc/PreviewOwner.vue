@@ -1,7 +1,7 @@
 //Preview
 //компонент для показа превью карточек
 <template>
-    <div class="col-12 fadeInAnim">  
+    <div class="col-12 p-0 fadeInAnim">  
       
         <!-- мини-превью -->
         <div class="col-12 d-flex justify-content-center previewCard" v-bind:style="animatedBackground" v-bind:class="{zeroOpacity: siteOwnerInfo === undefined}">

@@ -2,10 +2,10 @@
 //настройки сайта
 <template>
     <div class="row mt-5 justify-content-center fadeInAnim">
-        <div class="col-12 col-md-6 mb-5">
+        <div class="col-12 col-md-9 mb-5">
             <ul class="nav nav-fill">
                 <!-- Ссылки -->
-                <li class="nav-item mr-2">
+                <li class="nav-item mr-2 mb-1">
                     <router-link to="/admin" class="btn btn-sm btn-block" aria-current="page"
                                     v-bind:class="{'btn-light': currentTab === 'basicSettings', 
                                                     'btn-outline-light': currentTab !== 'basicSettings'}">

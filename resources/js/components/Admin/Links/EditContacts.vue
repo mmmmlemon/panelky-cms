@@ -9,7 +9,7 @@
                     <!-- форма редактирования имейла -->
                     <form method="POST" @submit.prevent="submit">
                         <div class="row justify-content-center">
-                            <div class="col-12 col-md-5 mb-3">
+                            <div class="col-12 col-md-8 mb-3">
                                 <h6>E-Mail</h6>
                                 <input type="text" class="form-control" placeholder="username@mail.ru" v-on:keydown="toggleEdit(true)" v-model="email">
                                 <div v-if="errors && errors.email" class="text-danger goUpAnim">{{ errors.email[0] }}</div>
