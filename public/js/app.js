@@ -5187,6 +5187,9 @@ __webpack_require__.r(__webpack_exports__);
         this.visible = value;
         this.translateY = '0px';
       }
+    },
+    isMobile: function isMobile() {
+      return this.$isMobile;
     }
   },
   //методы
@@ -48970,7 +48973,13 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "row justify-content-center" }, [
-              _c("div", { staticClass: "col-12 col-md-4 mb-3" }, [
+              _c("div", { staticClass: "col-12 col-md-2 text-center" }, [
+                _c("h6", [_vm._v(" ")]),
+                _vm._v(" "),
+                _c("h4", [_vm._v(_vm._s(_vm.newLink.link_title))])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-12 col-md-3 mb-3" }, [
                 _c("h6", [_vm._v("Название ресурса")]),
                 _vm._v(" "),
                 _c("input", {
@@ -49111,7 +49120,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12 col-md-4 mb-3" }, [
+    return _c("div", { staticClass: "col-12 col-md-3 mb-3" }, [
       _c("h6", [_vm._v(" ")]),
       _vm._v(" "),
       _c(
@@ -49341,7 +49350,13 @@ var render = function() {
           attrs: { id: _vm.link.slug }
         },
         [
-          _c("div", { staticClass: "col-12 col-md-4 mb-3" }, [
+          _c("div", { staticClass: "col-12 col-md-2 text-center" }, [
+            _c("h6", [_vm._v(" ")]),
+            _vm._v(" "),
+            _c("h4", [_vm._v(_vm._s(_vm.link.link_title))])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12 col-md-3 mb-3" }, [
             _c("h6", [_vm._v("Название ресурса")]),
             _vm._v(" "),
             _c("input", {
@@ -49428,7 +49443,7 @@ var render = function() {
               : _vm._e()
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-12 col-md-4 mb-5 mb-md-3" }, [
+          _c("div", { staticClass: "col-12 col-md-3 mb-5 mb-md-3" }, [
             _c("h6", [_vm._v(" ")]),
             _vm._v(" "),
             _vm.edit === false
@@ -53436,7 +53451,10 @@ var render = function() {
                   key: project.slug,
                   staticClass:
                     "col-12 col-md-2 transparentCard m-1 otherProject",
-                  class: { "zeroOpacity unclickable": _vm.visible == false },
+                  class: {
+                    "zeroOpacity unclickable": _vm.visible == false,
+                    invisible: _vm.isMobile === true && index > 4
+                  },
                   style:
                     "transition: all 0.8s  ease-out; transition-delay: " +
                     index / 5 +

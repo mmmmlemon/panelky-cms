@@ -10,7 +10,7 @@
             <div class="row justify-content-center">
                 <div v-for="(project, index) in projects" :key="project.slug" class="col-12 col-md-2 transparentCard m-1 otherProject" 
                     :style="`transition: all 0.8s  ease-out; transition-delay: ${index/5}s;`"
-                    v-bind:class="{'zeroOpacity unclickable' : visible == false}">
+                    v-bind:class="{'zeroOpacity unclickable' : visible == false, 'invisible': isMobile === true && index > 4}">
                     <!-- если у прое,кта есть лого -->
                     <div class="card-body text-center" v-if="project.project_icon !== null">
                         <!-- заголовок -->
@@ -64,6 +64,9 @@ export default {
                this.visible = value;
                this.translateY = '0px';
            }
+        },
+        isMobile: function(){
+            return this.$isMobile;
         }
     },
 
