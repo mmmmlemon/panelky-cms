@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col-12 col-md-8" v-bind:class="{'col-5': previewMode === false, 'col-12 col-md-8': previewMode === true}">
+                <div class="col-12 col-md-8" v-bind:class="{'col-5': previewMode === false, 'col-12 col-md-8': previewMode === true}" v-if="previewMode == false">
                     <!-- основная форма -->
                     <form @submit.prevent="submitBasic" class="fadeInAnim" method="POST" v-if="basicFormActive === true">
                         <input type="text" v-model="currentProject.id" class="invisible">
@@ -101,18 +101,18 @@
                             Загрузить и сохранить
                         </button>
                     </form>
-               
+
+                
                 </div>
 
-                     
-                    <!-- превью -->
-                    <div class="row justify-content-center"  v-if="currentProject !== -1 && currentProject !== false && previewMode === true">
+                <!-- превью -->
+                <div class="col-12"  v-if="currentProject !== -1 && currentProject !== false && previewMode === true">
+                    <div class="row justify-content-center">
                         <div class="col-10">
                             <PreviewProject type="full" :currentProject="currentProject"/>
                         </div> 
                     </div>
-          
-                  
+                </div>
             </div>
                
             </div>

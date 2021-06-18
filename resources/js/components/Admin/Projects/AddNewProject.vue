@@ -68,6 +68,7 @@
                             <input type="file" ref="icon" id="icon" name="icon" class="form-control-file" v-on:change="handleFileUpload('icon')"
                                     accept="image/jpeg, image/png" style="display: none;">
                             <label>{{this.previousIconName}}</label><br v-if="previousIconName !== undefined">
+                            <a v-if="this.previousIconName" class="mr-2" v-on:click="deleteFile('icon')">Убрать файл</a>
                             <input type="button" value="Выбрать файл" onclick="document.getElementById('icon').click();" />
                             <div v-if="errors && errors.icon" class="text-danger">{{ errors.projectIcon[0] }}</div>
                         </div>
@@ -77,7 +78,9 @@
                             <input type="file" ref="image" id="image" name="image" class="form-control-file" v-on:change="handleFileUpload('image')"
                                     accept="image/jpeg, image/png" style="display: none;">
                             <label>{{this.previousImageName}}</label><br v-if="previousIconName !== undefined">
+                            <a v-if="this.previousImageName" class="mr-2" v-on:click="deleteFile('image')">Убрать файл</a>
                             <input type="button" value="Выбрать файл" onclick="document.getElementById('image').click();" />
+          
                             <div v-if="errors && errors.image" class="text-danger">{{ errors.projectImage[0] }}</div>
                         </div>
                     
@@ -110,6 +113,7 @@ export default {
         axios.get(`/api/getStockImages`).then(response => {
               this.currentProject.project_icon = response.data.icon;
               this.currentProject.project_image = response.data.image;
+              this.imagePlaceholders = response.data;
          });
     },
 
@@ -140,6 +144,7 @@ export default {
             errors: [],
             previousIconName: undefined,
             previousImageName: undefined,
+            imagePlaceholders: undefined,
         }
     },
 
@@ -155,6 +160,20 @@ export default {
 
         showPreview(value){
             this.previewMode = value;
+        },
+
+        deleteFile(type){
+
+            if(type === 'image'){
+                this.currentProject.project_image = this.imagePlaceholders.image;
+                this.projectImageName = undefined;
+                this.previousImageName = undefined;
+            }
+            else if (type === 'icon'){
+                this.currentProject.project_icon = this.imagePlaceholders.icon;
+                this.projectIconName = undefined;
+                this.previousIconName = undefined;
+            }
         },
 
         //залить файл картинки в temp

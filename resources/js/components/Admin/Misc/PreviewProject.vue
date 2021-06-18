@@ -52,12 +52,12 @@
                 <ul class="nav nav-pills justify-content-right">
                     <!-- кнопка ориентации -->
                     <li class="nav-item d-none d-md-block m-1">
-                        <button class="btn btn-light btn-lg" title="Изменить ориентацию" v-on:click="changeOrientation">
+                        <button class="btn btn-light btn-lg" title="Изменить ориентацию" v-on:click="changeOrientation" v-if="currentProject.project_image !== null && currentProject.project_image !== undefined">
                                 <i class="bi bi-arrow-left-right"></i>
                         </button>
                     </li>
                         <!-- кнопка свернуть -->
-                    <li class="nav-item m-1"  v-if="currentProject.project_image !== null && currentProject.project_image !== undefined">
+                    <li class="nav-item m-1">
                         <button class="btn btn-light btn-lg" title="Свернуть" v-on:click="closeFullscreenPreview">
                             <i class="bi bi-fullscreen-exit"></i>
                         </button>

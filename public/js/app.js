@@ -3074,6 +3074,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
@@ -3089,6 +3092,7 @@ __webpack_require__.r(__webpack_exports__);
     axios.get("/api/getStockImages").then(function (response) {
       _this.currentProject.project_icon = response.data.icon;
       _this.currentProject.project_image = response.data.image;
+      _this.imagePlaceholders = response.data;
     });
   },
   destroyed: function destroyed() {
@@ -3116,7 +3120,8 @@ __webpack_require__.r(__webpack_exports__);
       saved: false,
       errors: [],
       previousIconName: undefined,
-      previousImageName: undefined
+      previousImageName: undefined,
+      imagePlaceholders: undefined
     };
   },
   computed: {
@@ -3129,6 +3134,17 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     showPreview: function showPreview(value) {
       this.previewMode = value;
+    },
+    deleteFile: function deleteFile(type) {
+      if (type === 'image') {
+        this.currentProject.project_image = this.imagePlaceholders.image;
+        this.projectImageName = undefined;
+        this.previousImageName = undefined;
+      } else if (type === 'icon') {
+        this.currentProject.project_icon = this.imagePlaceholders.icon;
+        this.projectIconName = undefined;
+        this.previousIconName = undefined;
+      }
     },
     //залить файл картинки в temp
     handleFileUpload: function handleFileUpload(type) {
@@ -5590,6 +5606,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -49793,32 +49811,36 @@ var render = function() {
                       "li",
                       { staticClass: "nav-item d-none d-md-block m-1" },
                       [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-light btn-lg",
-                            attrs: { title: "Изменить ориентацию" },
-                            on: { click: _vm.changeOrientation }
-                          },
-                          [_c("i", { staticClass: "bi bi-arrow-left-right" })]
-                        )
+                        _vm.currentProject.project_image !== null &&
+                        _vm.currentProject.project_image !== undefined
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-light btn-lg",
+                                attrs: { title: "Изменить ориентацию" },
+                                on: { click: _vm.changeOrientation }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "bi bi-arrow-left-right"
+                                })
+                              ]
+                            )
+                          : _vm._e()
                       ]
                     ),
                     _vm._v(" "),
-                    _vm.currentProject.project_image !== null &&
-                    _vm.currentProject.project_image !== undefined
-                      ? _c("li", { staticClass: "nav-item m-1" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-light btn-lg",
-                              attrs: { title: "Свернуть" },
-                              on: { click: _vm.closeFullscreenPreview }
-                            },
-                            [_c("i", { staticClass: "bi bi-fullscreen-exit" })]
-                          )
-                        ])
-                      : _vm._e()
+                    _c("li", { staticClass: "nav-item m-1" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-light btn-lg",
+                          attrs: { title: "Свернуть" },
+                          on: { click: _vm.closeFullscreenPreview }
+                        },
+                        [_c("i", { staticClass: "bi bi-fullscreen-exit" })]
+                      )
+                    ])
                   ]
                 )
               ]),
@@ -50366,6 +50388,21 @@ var render = function() {
                     _c("label", [_vm._v(_vm._s(this.previousIconName))]),
                     _vm.previousIconName !== undefined ? _c("br") : _vm._e(),
                     _vm._v(" "),
+                    this.previousIconName
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "mr-2",
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteFile("icon")
+                              }
+                            }
+                          },
+                          [_vm._v("Убрать файл")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
                     _c("input", {
                       attrs: {
                         type: "button",
@@ -50403,6 +50440,21 @@ var render = function() {
                     _vm._v(" "),
                     _c("label", [_vm._v(_vm._s(this.previousImageName))]),
                     _vm.previousIconName !== undefined ? _c("br") : _vm._e(),
+                    _vm._v(" "),
+                    this.previousImageName
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "mr-2",
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteFile("image")
+                              }
+                            }
+                          },
+                          [_vm._v("Убрать файл")]
+                        )
+                      : _vm._e(),
                     _vm._v(" "),
                     _c("input", {
                       attrs: {
@@ -50798,416 +50850,435 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row justify-content-center" }, [
-            _c(
-              "div",
-              {
-                staticClass: "col-12 col-md-8",
-                class: {
-                  "col-5": _vm.previewMode === false,
-                  "col-12 col-md-8": _vm.previewMode === true
-                }
-              },
-              [
-                _vm.basicFormActive === true
-                  ? _c(
-                      "form",
-                      {
-                        staticClass: "fadeInAnim",
-                        attrs: { method: "POST" },
-                        on: {
-                          submit: function($event) {
-                            $event.preventDefault()
-                            return _vm.submitBasic($event)
-                          }
-                        }
-                      },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.currentProject.id,
-                              expression: "currentProject.id"
-                            }
-                          ],
-                          staticClass: "invisible",
-                          attrs: { type: "text" },
-                          domProps: { value: _vm.currentProject.id },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.currentProject,
-                                "id",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "mb-3" }, [
-                          _c("h6", [_vm._v("Название проекта")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.currentProject.project_title,
-                                expression: "currentProject.project_title"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "text" },
-                            domProps: {
-                              value: _vm.currentProject.project_title
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.currentProject,
-                                  "project_title",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors && _vm.errors.project_title
-                            ? _c(
-                                "div",
-                                { staticClass: "text-danger goUpAnim" },
-                                [_vm._v(_vm._s(_vm.errors.project_title[0]))]
-                              )
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "mb-3" }, [
-                          _c("h6", [_vm._v("Подзаголовок")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.currentProject.project_subtitle,
-                                expression: "currentProject.project_subtitle"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "text" },
-                            domProps: {
-                              value: _vm.currentProject.project_subtitle
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.currentProject,
-                                  "project_subtitle",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors && _vm.errors.project_subtitle
-                            ? _c(
-                                "div",
-                                { staticClass: "text-danger goUpAnim" },
-                                [_vm._v(_vm._s(_vm.errors.project_subtitle[0]))]
-                              )
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "mb-3" }, [
-                          _c("h6", [_vm._v("Краткое описание")]),
-                          _vm._v(" "),
-                          _c("textarea", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.currentProject.project_desc,
-                                expression: "currentProject.project_desc"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            domProps: {
-                              value: _vm.currentProject.project_desc
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.currentProject,
-                                  "project_desc",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors && _vm.errors.project_desc
-                            ? _c(
-                                "div",
-                                { staticClass: "text-danger goUpAnim" },
-                                [_vm._v(_vm._s(_vm.errors.project_desc[0]))]
-                              )
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "mb-3" }, [
-                          _c("h6", [_vm._v("Нижний текст")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.currentProject.project_bottomText,
-                                expression: "currentProject.project_bottomText"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "text" },
-                            domProps: {
-                              value: _vm.currentProject.project_bottomText
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.currentProject,
-                                  "project_bottomText",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors && _vm.errors.project_bottomText
-                            ? _c(
-                                "div",
-                                { staticClass: "text-danger goUpAnim" },
-                                [
-                                  _vm._v(
-                                    _vm._s(_vm.errors.project_bottomText[0])
-                                  )
-                                ]
-                              )
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "mb-3" }, [
-                          _c("h6", [_vm._v("Ссылка на проект")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.currentProject.project_url,
-                                expression: "currentProject.project_url"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "text" },
-                            domProps: { value: _vm.currentProject.project_url },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.currentProject,
-                                  "project_url",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors && _vm.errors.project_url
-                            ? _c(
-                                "div",
-                                { staticClass: "text-danger goUpAnim" },
-                                [_vm._v(_vm._s(_vm.errors.project_url[0]))]
-                              )
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "button",
+            _vm.previewMode == false
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "col-12 col-md-8",
+                    class: {
+                      "col-5": _vm.previewMode === false,
+                      "col-12 col-md-8": _vm.previewMode === true
+                    }
+                  },
+                  [
+                    _vm.basicFormActive === true
+                      ? _c(
+                          "form",
                           {
-                            staticClass:
-                              "btn btn-lg btn-block btn-outline-light",
-                            on: { click: _vm.submitBasic }
-                          },
-                          [
-                            _vm._v(
-                              "\n                        Сохранить\n                    "
-                            )
-                          ]
-                        )
-                      ]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.imageFormActive === true
-                  ? _c(
-                      "form",
-                      {
-                        staticClass: "fadeInAnim",
-                        attrs: {
-                          method: "POST",
-                          action: "/admin/saveProjectImages"
-                        },
-                        on: {
-                          submit: function($event) {
-                            $event.preventDefault()
-                            return _vm.submitImages($event)
-                          }
-                        }
-                      },
-                      [
-                        _c("div", { staticClass: "mb-3" }, [
-                          _c("h6", [_vm._v("Логотип проекта")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            ref: "icon",
-                            staticClass: "form-control-file",
-                            attrs: {
-                              type: "file",
-                              accept: "image/jpeg, image/png"
-                            },
+                            staticClass: "fadeInAnim",
+                            attrs: { method: "POST" },
                             on: {
-                              change: function($event) {
-                                return _vm.handleFile("icon")
+                              submit: function($event) {
+                                $event.preventDefault()
+                                return _vm.submitBasic($event)
                               }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors && _vm.errors.projectIcon
-                            ? _c("div", { staticClass: "text-danger" }, [
-                                _vm._v(_vm._s(_vm.errors.projectIcon[0]))
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.currentProject.project_icon !== null
-                            ? _c(
-                                "a",
-                                {
-                                  staticClass: "btn btn-sm btn-light mt-3",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleteImage("icon")
-                                    }
-                                  }
-                                },
-                                [_vm._v("Удалить иконку")]
-                              )
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c("br"),
-                        _c("br"),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "mb-3" }, [
-                          _c("h6", [_vm._v("Изображение\\скриншот проекта")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            ref: "image",
-                            staticClass: "form-control-file",
-                            attrs: {
-                              type: "file",
-                              accept: "image/jpeg, image/png"
-                            },
-                            on: {
-                              change: function($event) {
-                                return _vm.handleFile("image")
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors && _vm.errors.projectImage
-                            ? _c("div", { staticClass: "text-danger" }, [
-                                _vm._v(_vm._s(_vm.errors.projectImage[0]))
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.currentProject.project_image !== null
-                            ? _c(
-                                "a",
-                                {
-                                  staticClass: "btn btn-sm btn-light mt-3",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleteImage("image")
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                            Удалить изображение\\скриншот\n                        "
-                                  )
-                                ]
-                              )
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "btn btn-lg btn-block btn-outline-light",
-                            attrs: {
-                              disabled:
-                                _vm.projectIcon === undefined &&
-                                _vm.projectImage === undefined
                             }
                           },
                           [
-                            _vm._v(
-                              "\n                        Загрузить и сохранить\n                    "
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.currentProject.id,
+                                  expression: "currentProject.id"
+                                }
+                              ],
+                              staticClass: "invisible",
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.currentProject.id },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.currentProject,
+                                    "id",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3" }, [
+                              _c("h6", [_vm._v("Название проекта")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.currentProject.project_title,
+                                    expression: "currentProject.project_title"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "text" },
+                                domProps: {
+                                  value: _vm.currentProject.project_title
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.currentProject,
+                                      "project_title",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors && _vm.errors.project_title
+                                ? _c(
+                                    "div",
+                                    { staticClass: "text-danger goUpAnim" },
+                                    [
+                                      _vm._v(
+                                        _vm._s(_vm.errors.project_title[0])
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3" }, [
+                              _c("h6", [_vm._v("Подзаголовок")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.currentProject.project_subtitle,
+                                    expression:
+                                      "currentProject.project_subtitle"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "text" },
+                                domProps: {
+                                  value: _vm.currentProject.project_subtitle
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.currentProject,
+                                      "project_subtitle",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors && _vm.errors.project_subtitle
+                                ? _c(
+                                    "div",
+                                    { staticClass: "text-danger goUpAnim" },
+                                    [
+                                      _vm._v(
+                                        _vm._s(_vm.errors.project_subtitle[0])
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3" }, [
+                              _c("h6", [_vm._v("Краткое описание")]),
+                              _vm._v(" "),
+                              _c("textarea", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.currentProject.project_desc,
+                                    expression: "currentProject.project_desc"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                domProps: {
+                                  value: _vm.currentProject.project_desc
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.currentProject,
+                                      "project_desc",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors && _vm.errors.project_desc
+                                ? _c(
+                                    "div",
+                                    { staticClass: "text-danger goUpAnim" },
+                                    [_vm._v(_vm._s(_vm.errors.project_desc[0]))]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3" }, [
+                              _c("h6", [_vm._v("Нижний текст")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value:
+                                      _vm.currentProject.project_bottomText,
+                                    expression:
+                                      "currentProject.project_bottomText"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "text" },
+                                domProps: {
+                                  value: _vm.currentProject.project_bottomText
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.currentProject,
+                                      "project_bottomText",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors && _vm.errors.project_bottomText
+                                ? _c(
+                                    "div",
+                                    { staticClass: "text-danger goUpAnim" },
+                                    [
+                                      _vm._v(
+                                        _vm._s(_vm.errors.project_bottomText[0])
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3" }, [
+                              _c("h6", [_vm._v("Ссылка на проект")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.currentProject.project_url,
+                                    expression: "currentProject.project_url"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "text" },
+                                domProps: {
+                                  value: _vm.currentProject.project_url
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.currentProject,
+                                      "project_url",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors && _vm.errors.project_url
+                                ? _c(
+                                    "div",
+                                    { staticClass: "text-danger goUpAnim" },
+                                    [_vm._v(_vm._s(_vm.errors.project_url[0]))]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-lg btn-block btn-outline-light",
+                                on: { click: _vm.submitBasic }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                        Сохранить\n                    "
+                                )
+                              ]
                             )
                           ]
                         )
-                      ]
-                    )
-                  : _vm._e()
-              ]
-            ),
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.imageFormActive === true
+                      ? _c(
+                          "form",
+                          {
+                            staticClass: "fadeInAnim",
+                            attrs: {
+                              method: "POST",
+                              action: "/admin/saveProjectImages"
+                            },
+                            on: {
+                              submit: function($event) {
+                                $event.preventDefault()
+                                return _vm.submitImages($event)
+                              }
+                            }
+                          },
+                          [
+                            _c("div", { staticClass: "mb-3" }, [
+                              _c("h6", [_vm._v("Логотип проекта")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                ref: "icon",
+                                staticClass: "form-control-file",
+                                attrs: {
+                                  type: "file",
+                                  accept: "image/jpeg, image/png"
+                                },
+                                on: {
+                                  change: function($event) {
+                                    return _vm.handleFile("icon")
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors && _vm.errors.projectIcon
+                                ? _c("div", { staticClass: "text-danger" }, [
+                                    _vm._v(_vm._s(_vm.errors.projectIcon[0]))
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.currentProject.project_icon !== null
+                                ? _c(
+                                    "a",
+                                    {
+                                      staticClass: "btn btn-sm btn-light mt-3",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleteImage("icon")
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Удалить иконку")]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("br"),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mb-3" }, [
+                              _c("h6", [
+                                _vm._v("Изображение\\скриншот проекта")
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                ref: "image",
+                                staticClass: "form-control-file",
+                                attrs: {
+                                  type: "file",
+                                  accept: "image/jpeg, image/png"
+                                },
+                                on: {
+                                  change: function($event) {
+                                    return _vm.handleFile("image")
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors && _vm.errors.projectImage
+                                ? _c("div", { staticClass: "text-danger" }, [
+                                    _vm._v(_vm._s(_vm.errors.projectImage[0]))
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.currentProject.project_image !== null
+                                ? _c(
+                                    "a",
+                                    {
+                                      staticClass: "btn btn-sm btn-light mt-3",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleteImage("image")
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                            Удалить изображение\\скриншот\n                        "
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-lg btn-block btn-outline-light",
+                                attrs: {
+                                  disabled:
+                                    _vm.projectIcon === undefined &&
+                                    _vm.projectImage === undefined
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                        Загрузить и сохранить\n                    "
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      : _vm._e()
+                  ]
+                )
+              : _vm._e(),
             _vm._v(" "),
             _vm.currentProject !== -1 &&
             _vm.currentProject !== false &&
             _vm.previewMode === true
-              ? _c("div", { staticClass: "row justify-content-center" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col-10" },
-                    [
-                      _c("PreviewProject", {
-                        attrs: {
-                          type: "full",
-                          currentProject: _vm.currentProject
-                        }
-                      })
-                    ],
-                    1
-                  )
+              ? _c("div", { staticClass: "col-12" }, [
+                  _c("div", { staticClass: "row justify-content-center" }, [
+                    _c(
+                      "div",
+                      { staticClass: "col-10" },
+                      [
+                        _c("PreviewProject", {
+                          attrs: {
+                            type: "full",
+                            currentProject: _vm.currentProject
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
                 ])
               : _vm._e()
           ])
@@ -53099,7 +53170,8 @@ var render = function() {
         "div",
         {
           staticClass:
-            "row h-75 w-75 bigCard d-flex justify-content-center goUpAnim"
+            "row h-75 w-75 bigCard d-flex justify-content-center goUpAnim",
+          attrs: { id: "links" }
         },
         [
           _c("div", { staticClass: "div-12 textVertical" }, [
@@ -54242,7 +54314,20 @@ var render = function() {
                     _vm._v(" "),
                     _vm.links !== false && _vm.links != -1
                       ? _c("div", { staticClass: "col-12" }, [
-                          _vm._m(1),
+                          _c("h6", { staticClass: "text-center" }, [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#links" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.closeNavMenu()
+                                  }
+                                }
+                              },
+                              [_c("b", [_vm._v("Ссылки")])]
+                            )
+                          ]),
                           _vm._v(" "),
                           _c("hr")
                         ])
@@ -54253,10 +54338,14 @@ var render = function() {
                           "div",
                           { staticClass: "col-12 text-center" },
                           [
-                            _vm._l(_vm.links, function(link) {
+                            _vm._l(_vm.links, function(link, index) {
                               return _c(
                                 "h6",
-                                { key: link.slug, staticClass: "mb-3" },
+                                {
+                                  key: link.slug,
+                                  staticClass: "mb-3",
+                                  class: { invisible: index > 2 }
+                                },
                                 [
                                   _c(
                                     "a",
@@ -54325,14 +54414,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("h6", { staticClass: "text-center" }, [
       _c("b", [_vm._v("Проекты")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h6", { staticClass: "text-center" }, [
-      _c("b", [_vm._v("Ссылки")])
     ])
   }
 ]
