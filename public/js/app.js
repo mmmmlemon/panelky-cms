@@ -4391,9 +4391,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   created: function created() {
     this.$parent.currentTab = "about";
+  },
+  //данные
+  data: function data() {
+    return {
+      errors: {},
+      saved: false
+    };
   }
 });
 
@@ -52530,15 +52564,66 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row justify-content-center fadeInAnim" }, [
+    _c("div", { staticClass: "col-10 p-0" }, [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c(
+          "div",
+          {
+            staticClass: "col-12 col-md-10 mt-2 fadeInAnim",
+            class: { zeroOpacity: _vm.siteOwnerInfo === -1 }
+          },
+          [
+            _c("h5", [_vm._v("О сайте")]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                attrs: { method: "POST" },
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.submit($event)
+                  }
+                }
+              },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "btn btn-lg btn-block btn-outline-light" },
+                  [_vm._v("\n                    Сохранить\n                ")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "col-12 p-3 text-center unclickable zeroOpacity",
+                class: { blinkAnim: _vm.saved }
+              },
+              [_c("h5", [_vm._v("Изменения сохранены")])]
+            )
+          ]
+        )
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center fadeInAnim" }, [
-      _c("h1", [_vm._v("SiteOwnerAbout.vue")])
+    return _c("div", { staticClass: "mb-3" }, [
+      _c("textarea", {
+        staticClass: "form-control",
+        attrs: { required: "", rows: "10" }
+      })
     ])
   }
 ]
