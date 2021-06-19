@@ -31,14 +31,15 @@
                     </h6>
                     <br>
                 </div>
-                <div class="col-12 text-center" v-if="fullProjectList !== -1 && fullProjectList.other.length > 0">
+                <div class="d-none d-md-block col-12 text-center" v-if="fullProjectList !== -1 && fullProjectList.other.length > 0">
                     <h6>
                         <a v-on:click="closeNavMenu()" :href="`#other`">Другие проекты</a>
                     </h6>
-                    <hr>
+                   
                 </div>
                 <!-- ссылки -->
                 <div class="col-12" v-if="links !== false && links != -1">
+                    <hr>
                     <h6 class="text-center">
                         <a href="#links" v-on:click="closeNavMenu()">
                             <b>Ссылки</b>
@@ -47,7 +48,7 @@
                     <hr>
                 </div>
                 <!-- список ссылок -->
-                <div class="col-12 text-center" v-if="links !== false && links !== -1">
+                <div class="d-none d-md-block col-12 text-center" v-if="links !== false && links !== -1">
                     <h6 v-for="(link, index) in links" :key="link.slug" class="mb-3" v-bind:class="{'invisible': index > 2}">
                         <a v-on:click="closeNavMenu()" target="_blank" :href="link.link_url">
                             {{link.link_title}}

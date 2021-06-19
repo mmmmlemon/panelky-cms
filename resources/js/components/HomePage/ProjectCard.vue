@@ -179,6 +179,19 @@ export default {
 
      mounted(){
         this.setVisible = this.isVisible;
+
+        let img = new Image();
+        img.src = this.project.project_image;
+        img.onload = () => {
+
+            if(img.width > img.height){
+                this.classForImage = 'projectImageHorizontal';
+            }
+            else{
+                this.classForImage = 'projectImageVertical';
+            }
+        }
+
     },
 
     //данные
@@ -227,18 +240,6 @@ export default {
         //в поле видимости
         handleScroll: function (evt, el){
             if (el.getBoundingClientRect().top < 300) {
-
-                let img = new Image();
-                img.src = this.project.project_image;
-                img.onload = () => {
-
-                   if(img.width > img.height){
-                       this.classForImage = 'projectImageHorizontal';
-                   }
-                   else{
-                       this.classForImage = 'projectImageVertical';
-                   }
-                }
 
                 this.setVisible = true;
             }

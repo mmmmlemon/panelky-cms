@@ -5413,7 +5413,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
+    var _this = this;
+
     this.setVisible = this.isVisible;
+    var img = new Image();
+    img.src = this.project.project_image;
+
+    img.onload = function () {
+      if (img.width > img.height) {
+        _this.classForImage = 'projectImageHorizontal';
+      } else {
+        _this.classForImage = 'projectImageVertical';
+      }
+    };
   },
   //данные
   data: function data() {
@@ -5466,20 +5478,7 @@ __webpack_require__.r(__webpack_exports__);
     //при скролле страницы показать карточку когда она будет 
     //в поле видимости
     handleScroll: function handleScroll(evt, el) {
-      var _this = this;
-
       if (el.getBoundingClientRect().top < 300) {
-        var img = new Image();
-        img.src = this.project.project_image;
-
-        img.onload = function () {
-          if (img.width > img.height) {
-            _this.classForImage = 'projectImageHorizontal';
-          } else {
-            _this.classForImage = 'projectImageVertical';
-          }
-        };
-
         this.setVisible = true;
       }
 
@@ -5606,6 +5605,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -54292,28 +54292,34 @@ var render = function() {
                     _vm._v(" "),
                     _vm.fullProjectList !== -1 &&
                     _vm.fullProjectList.other.length > 0
-                      ? _c("div", { staticClass: "col-12 text-center" }, [
-                          _c("h6", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#other" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.closeNavMenu()
+                      ? _c(
+                          "div",
+                          {
+                            staticClass: "d-none d-md-block col-12 text-center"
+                          },
+                          [
+                            _c("h6", [
+                              _c(
+                                "a",
+                                {
+                                  attrs: { href: "#other" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.closeNavMenu()
+                                    }
                                   }
-                                }
-                              },
-                              [_vm._v("Другие проекты")]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("hr")
-                        ])
+                                },
+                                [_vm._v("Другие проекты")]
+                              )
+                            ])
+                          ]
+                        )
                       : _vm._e(),
                     _vm._v(" "),
                     _vm.links !== false && _vm.links != -1
                       ? _c("div", { staticClass: "col-12" }, [
+                          _c("hr"),
+                          _vm._v(" "),
                           _c("h6", { staticClass: "text-center" }, [
                             _c(
                               "a",
@@ -54336,7 +54342,9 @@ var render = function() {
                     _vm.links !== false && _vm.links !== -1
                       ? _c(
                           "div",
-                          { staticClass: "col-12 text-center" },
+                          {
+                            staticClass: "d-none d-md-block col-12 text-center"
+                          },
                           [
                             _vm._l(_vm.links, function(link, index) {
                               return _c(
