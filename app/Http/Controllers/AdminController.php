@@ -104,6 +104,11 @@ class AdminController extends Controller
         $project = Project::find($request->id);
         if($request->hasFile('projectIcon'))
         { 
+
+            if($project->project_icon != null){
+                unlink(storage_path(str_replace('storage','/app/public', $project->project_icon)));
+            }
+
             $fileIcon = $request->projectIcon; 
             $filename = md5(time().rand(0,9)).".".$fileIcon->getClientOriginalExtension();
             $path = "app/public/projectsImages/".$filename;
@@ -121,6 +126,10 @@ class AdminController extends Controller
 
         if($request->hasFile('projectImage'))
         { 
+            if($project->project_image != null){
+                unlink(storage_path(str_replace('storage','/app/public', $project->project_image)));
+            }
+
             $fileImage = $request->projectImage; 
             $filename = md5(time().rand(0,9)).".".$fileImage->getClientOriginalExtension();
             $path = "app/public/projectsImages/".$filename;
