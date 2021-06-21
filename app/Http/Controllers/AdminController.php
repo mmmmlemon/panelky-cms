@@ -451,4 +451,16 @@ class AdminController extends Controller
         return response()->json(true, 200);
     }
 
+    //saveAboutSiteText
+    //сохранить форму 
+    public function saveAboutSiteText(Request $request)
+    {
+        $settings = Settings::get()[0];
+
+        $settings->about_site_text = $request->about_site_text;
+        $settings->save();
+
+        return response()->json(true, 200);
+    }
+
 }

@@ -20,6 +20,8 @@ const GlobalStates = {
         email: -1,
         //animatedBackground
         animatedBackground: -1,
+        //aboutSiteText
+        aboutSiteText: -1,
     },
 
     mutations: {
@@ -101,6 +103,17 @@ const GlobalStates = {
                 }
                 else
                 { context.commit('setState', { state: 'animatedBackground', value: false}); }
+            })
+        },
+
+        //getAboutSiteText
+        getAboutSiteText(context){
+            axios.get('/api/getAboutSiteText').then(response => {
+                if(response.data !== false){
+                    context.commit('setState', { state: 'aboutSiteText', value: response.data});
+                }
+                else
+                { context.commit('setState', { state: 'aboutSiteText', value: false}) }
             })
         }
     }

@@ -23,6 +23,8 @@ Vue.prototype.$isMobile = isMobile;
 //vue2-touch-events
 import Vue2TouchEvents from 'vue2-touch-events'
 Vue.use(Vue2TouchEvents, {swipeTolerance: 100,});
+import Vue2Editor from "vue2-editor";
+Vue.use(Vue2Editor);
 
 
 //иморты компонентов

@@ -254,4 +254,16 @@ class APIController extends Controller
 
         return response()->json($bgSettings, 200);
     }
+
+
+    //getAboutSiteText
+    //получить текст из раздела "О сайте"
+    public function getAboutSiteText()
+    {
+        $settings = Settings::get()[0];
+
+        return response()->json($settings->about_site_text, 200);
+    }
 }
+
+
