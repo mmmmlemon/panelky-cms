@@ -3760,7 +3760,63 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  // данные
+  data: function data() {
+    return {
+      errors: {},
+      saved: false,
+      slideMedia: undefined,
+      slideComment: undefined
+    };
+  },
+  props: {
+    projectId: {
+      "default": null
+    }
+  },
+  // методы
+  methods: {
+    // сохранить слайд
+    submitSlide: function submitSlide() {
+      var _this = this;
+
+      this.saved = false;
+      var formData = new FormData();
+
+      if (this.slideMedia !== undefined) {
+        formData.append('slideMedia', this.slideMedia);
+      }
+
+      if (this.projectId !== null) {
+        formData.append('projectId', this.projectId);
+      }
+
+      if (this.slideComment !== undefined) {
+        formData.append('slideComment', this.slideComment);
+      }
+
+      axios.post('/admin/saveProjectSlide', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (response) {
+        _this.saved = true;
+        _this.projectIcon = undefined;
+        _this.projectImage = undefined;
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          _this.errors = error.response.data.errors || {};
+          console.log(_this.errors);
+        }
+      });
+    },
+    //записать файл в projectIcon или в projectImage
+    handleMedia: function handleMedia() {
+      this.slideMedia = this.$refs.media.files[0];
+    }
+  }
+});
 
 /***/ }),
 
@@ -65161,7 +65217,9 @@ var render = function() {
                       : _vm._e(),
                     _vm._v(" "),
                     _vm.slideFormActive === true
-                      ? _c("EditProjectSlides")
+                      ? _c("EditProjectSlides", {
+                          attrs: { projectId: _vm.currentProject.id }
+                        })
                       : _vm._e()
                   ],
                   1
@@ -65226,47 +65284,83 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("form", { staticClass: "fadeInAnim", attrs: { method: "POST" } }, [
-    _c("div", { staticClass: "mb-3" }, [
-      _c("h6", [_vm._v("Скриншот, gif или короткое видео проекта")]),
-      _vm._v(" "),
-      _c("input", {
-        ref: "icon",
-        staticClass: "form-control-file",
-        attrs: {
-          type: "file",
-          accept:
-            "image/jpeg, image/png, image/gif, video/mp4,video/x-m4v,video/*"
+  return _c(
+    "form",
+    {
+      staticClass: "fadeInAnim",
+      attrs: { method: "POST" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.submitSlide($event)
         }
-      }),
+      }
+    },
+    [
+      _c("div", { staticClass: "mb-3" }, [
+        _c("h6", [_vm._v("Скриншот, gif или короткое видео проекта")]),
+        _vm._v(" "),
+        _c("input", {
+          ref: "media",
+          staticClass: "form-control-file",
+          attrs: {
+            type: "file",
+            accept:
+              "image/jpeg, image/png, image/gif, video/mp4,video/x-m4v,video/*"
+          },
+          on: { change: _vm.handleMedia }
+        }),
+        _vm._v(" "),
+        _vm.errors && _vm.errors.slideMedia
+          ? _c("div", { staticClass: "text-danger" }, [
+              _vm._v(_vm._s(_vm.errors.slideMedia[0]))
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("a", { staticClass: "btn btn-sm btn-light mt-3" }, [
+          _vm._v("Удалить медиа")
+        ])
+      ]),
       _vm._v(" "),
-      _c("a", { staticClass: "btn btn-sm btn-light mt-3" }, [
-        _vm._v("Удалить медиа")
+      _c("div", { staticClass: "mb-3" }, [
+        _c("h6", [_vm._v("Комментарий")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.slideComment,
+              expression: "slideComment"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", placeholder: "Комментарий к слайду" },
+          domProps: { value: _vm.slideComment },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.slideComment = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm.errors && _vm.errors.slideComment
+          ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+              _vm._v(_vm._s(_vm.errors.slideComment[0]))
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-lg btn-block btn-outline-light" }, [
+        _vm._v("\n        Загрузить и сохранить\n    ")
       ])
-    ]),
-    _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _c("button", { staticClass: "btn btn-lg btn-block btn-outline-light" }, [
-      _vm._v("\n        Загрузить и сохранить\n    ")
-    ])
-  ])
+    ]
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mb-3" }, [
-      _c("h6", [_vm._v("Комментарий")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", placeholder: "Комментарий к слайду" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

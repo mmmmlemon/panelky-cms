@@ -45,6 +45,7 @@ Route::post('/admin/saveBasicSettings', [AdminController::class, 'saveBasicSetti
 Route::post('/admin/saveHomeSettings', [AdminController::class, 'saveHomeSettings']);
 Route::post('/admin/saveBgColors', [AdminController::class, 'saveBgColors']);
 Route::post('/admin/saveAboutSiteText', [AdminController::class, 'saveAboutSiteText']);
+Route::post('/admin/saveProjectSlide', [AdminController::class, 'saveProjectSlide']);
 
 
 Route::get('/admin', [AdminController::class, 'index']);

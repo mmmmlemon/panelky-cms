@@ -109,7 +109,7 @@
                         </button>
                     </form>
                     <!-- форма для слайдов -->
-                    <EditProjectSlides v-if="slideFormActive === true"/>
+                    <EditProjectSlides v-if="slideFormActive === true" :projectId="currentProject.id"/>
 
 
                 

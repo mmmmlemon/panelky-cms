@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use File;
 use App\Models\Settings;
 use App\Models\Project;
+use App\Models\ProjectSlide;
 use App\Models\Link;
 use Image;
 
@@ -459,6 +460,49 @@ class AdminController extends Controller
 
         $settings->about_site_text = $request->about_site_text;
         $settings->save();
+
+        return response()->json(true, 200);
+    }
+
+    //saveProjectSlide
+    //сохранить слайд для проекта
+    public function saveProjectSlide(Request $request)
+    {
+        $this->validate($request, [
+            'slideMedia' => 'mimes:jpeg,jpg,png,mp4,gif',
+            'slideComment'=>'string|max:500|nullable',
+            'projectId' => 'int',
+        ]);
+
+        //путь до папки с медиа для слайдов
+        $path = "app/public/projectsSlideMedia/";
+
+        //проверка, есть ли папка projectsImages
+        $check = File::exists(storage_path($path));
+
+        //если нет, то создаём её
+        if($check == false)
+        { Storage::disk('public')->makeDirectory("projectsSlideMedia"); }
+
+        $slideMedia = null;
+
+        $response = [];
+
+        if($request->hasFile('slideMedia'))
+        {   
+            // сохраняем медиа файл
+            $mediaFile = $request->slideMedia;
+            $filename = md5(time().rand(0,9)).".".$mediaFile->getClientOriginalExtension();
+            $path = "public/projectsSlideMedia/".$filename;
+            Storage::put($path, file_get_contents($mediaFile));
+
+            // сохраняем запись в БД
+            $slide = new ProjectSlide;
+            $slide->media_url = "storage/projectsSlideMedia/".$filename;
+            $slide->commentary = $request->slideComment;
+            $slide->project_id = $request->projectId;
+            $slide->save();
+        }
 
         return response()->json(true, 200);
     }
