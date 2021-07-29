@@ -24,6 +24,13 @@
                                     Изображения
                                 </button>
                             </li>
+                            <!-- карточки -->
+                            <li class="nav-item mr-2">
+                                <button class="btn btn-block btn-sm" v-on:click="showCardForm"
+                                        v-bind:class="{'btn-light': slideFormActive === true, 'btn-outline-light': slideFormActive === false}">
+                                    Слайды
+                                </button>
+                            </li>
                             <!-- изображения -->
                             <li class="nav-item mr-2">
                                 <button class="btn btn-block btn-sm" v-on:click="showPreview"
@@ -101,6 +108,9 @@
                             Загрузить и сохранить
                         </button>
                     </form>
+                    <!-- форма для слайдов -->
+                    <EditProjectSlides v-if="slideFormActive === true"/>
+
 
                 
                 </div>
@@ -140,6 +150,7 @@ export default {
         return {
             basicFormActive: false,
             imageFormActive: false,
+            slideFormActive: false,
             projectIcon: undefined,
             projectImage: undefined,
             errors: {},
@@ -157,17 +168,27 @@ export default {
 
     //методы
     methods: {
-        //показать форму для картинок
-        showImageForm: function(){
-            this.imageFormActive = true;
-            this.basicFormActive = false;
-            this.previewMode = false;
-        },
-
         //показать общую форму
         showBasicForm: function(){
             this.basicFormActive = true;
             this.imageFormActive = false;
+            this.slideFormActive = false;
+            this.previewMode = false;
+        },
+
+        //показать форму для картинок
+        showImageForm: function(){
+            this.basicFormActive = false;
+            this.imageFormActive = true;
+            this.slideFormActive = false;
+            this.previewMode = false;
+        },
+
+        //показать форму для карточек
+        showCardForm: function(){
+            this.basicFormActive = false;
+            this.imageFormActive = false;
+            this.slideFormActive = true;
             this.previewMode = false;
         },
 
@@ -175,6 +196,7 @@ export default {
         showPreview: function(){
             this.basicFormActive = false;
             this.imageFormActive = false;
+            this.slideFormActive = false;
             this.previewMode = true;
         },
 

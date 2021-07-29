@@ -61,6 +61,9 @@ Vue.component('DeleteModal', DeleteModal);
 import LinkItem from './components/Admin/Misc/LinkItem.vue';
 Vue.component('LinkItem', LinkItem);
 
+import EditProjectSlides from './components/Admin/Projects/EditProjectSlides.vue';
+Vue.component('EditProjectSlides', EditProjectSlides);
+
 
 //Misc
 import Error from './components/Misc/Error.vue';
