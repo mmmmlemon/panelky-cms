@@ -504,7 +504,11 @@ class AdminController extends Controller
             $slide->save();
         }
 
-        return response()->json(true, 200);
+        $projectSlides = ProjectSlide::select('id', 'media_url', 'commentary')->where('project_id', $request->projectId)->get();
+        foreach($projectSlides as $slide)
+        { $slide->media_url = asset($slide->media_url); }
+
+        return response()->json(['result' => true, 'projectSlides' => $projectSlides], 200);
     }
 
 }

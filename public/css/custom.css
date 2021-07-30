@@ -255,6 +255,11 @@ hr {
     transition: opacity 0.5s ease-in-out;
 }
 
+.unavaliable{
+    opacity: 0.3;
+    pointer-events: none;
+}
+
 
 
 

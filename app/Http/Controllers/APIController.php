@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Settings;
 use App\Models\Project;
+use App\Models\ProjectSlide;
 use App\Models\Link;
 
 //APIController
@@ -78,7 +79,16 @@ class APIController extends Controller
         
         //полное превью
         if($type == "full")
-        { return response()->json($project, 200); }
+        {   
+            // получаем слайды проекта
+            $projectSlides = ProjectSlide::select('id', 'media_url', 'commentary')->where('project_id', $project->id)->get();
+            foreach($projectSlides as $slide)
+            {
+                $slide->media_url = asset($slide->media_url);
+            }
+            $project->slides = $projectSlides;
+            return response()->json($project, 200); 
+        }
         //мини-превью
         else if ($type == "mini")
         {   
@@ -109,7 +119,19 @@ class APIController extends Controller
             else
             { $homeProjects[$i]->orientation = "left"; }
         }
-        
+
+        //добавление слайдов к homeProjects
+
+        foreach($homeProjects as $project)
+        {
+            $projectSlides = ProjectSlide::select('id', 'media_url', 'commentary')->where('project_id', $project->id)->get();
+            foreach($projectSlides as $slide)
+            {
+                $slide->media_url = asset($slide->media_url);
+            }
+            $project->slides = $projectSlides;
+        }
+
         //если в БД нет ни одного проекта, то возвращаем false
         if(count($homeProjects) == 0)
         { return response()->json(['home' => false, 'other' => false], 200); }
