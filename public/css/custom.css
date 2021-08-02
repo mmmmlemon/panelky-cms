@@ -279,6 +279,44 @@ hr {
     color:rgb(182, 225, 250);
 }
 
+.projectCard{
+    position: relative;
+}
+
+.projectCardButtons{
+    position: absolute;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+}
+
+.projectButton{
+    height: 0 !important;
+    width: 0 !important;
+    position: relative;
+    display: flex;
+    top: 45%;
+    height: 2.5rem;
+    z-index: 1;
+    font-size: 3rem;
+    border-style: none;
+    cursor: pointer;
+}
+
+.projectButton.right{
+    right: -100% !important;
+}
+
+.projectButton.left{
+    left: -5% !important;
+}
+
+
+.projectButton:hover{
+    color:rgb(182, 225, 250);
+}
+
+
 /* /////////////////////// */
 /* margins, paddings, width, height */
 .width90pc {

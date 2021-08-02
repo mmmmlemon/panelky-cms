@@ -6,13 +6,19 @@
             v-scroll="handleScroll" :id="project.slug">
         
         <!-- ошибка -->
-        <div class="col-10" v-if="project === false">
+        <!-- <div class="col-10" v-if="project === false">
             <Error errorMessage="Не удалось загрузить информацию о проекте"/>
+        </div> -->
+        <div class="d-none d-md-block projectCardButtons fadeInAnimSlow" v-if="visible === true">
+            <b class="projectButton left" @click="prevSlide">
+                <i class="bi bi-chevron-left" v-if="slidePosition !== 0"></i>
+            </b>
+            <b class="projectButton right" @click="nextSlide">
+                <i class="bi bi-chevron-right" v-if="slidePosition < numOfSlides"></i>
+            </b>
         </div>
-
         <!-- КАРТОЧКА, ОПИСАНИЕ СЛЕВА -->
-        <div v-if="type=='left' && project !== undefined" class="row justify-content-center">
-
+        <div v-if="type=='left' && project !== undefined && slidePosition === 0" class="row justify-content-center">
             <!-- для десктопа -->
             <div class="d-none d-md-block col-12 text-center textVertical p-5 transparentCard goUpCardAnim" 
                         v-bind:class="{'col-md-12': project.project_image === null, 
@@ -89,9 +95,9 @@
             </div>
 
         </div>
-        
+
         <!-- КАРТОЧКА, ОПИСАНИЕ СПРАВА -->
-        <div v-else-if="type=='right' && project !== undefined" class="row justify-content-center">
+        <div v-else-if="type=='right' && project !== undefined && slidePosition === 0" class="row justify-content-center">
             <!-- для десктопа -->
 
             <!-- скриншот проекта -->
@@ -167,10 +173,14 @@
             </div>
         </div>
 
-        <div v-else class="textVertical">
-            <Error errorMessage="Неверный параметр 'type'"/>
+        <div class="row justify-content-center" v-for="(slide, index) in project.slides" v-bind:key="index" v-bind:class="{'invisible': (index + 1) !== slidePosition}">
+            <div class="d-none d-md-block col-12 text-center textVertical p-5 transparentCard" v-bind:class="slideAnimation">
+                <a :href="slide.media_url"><img :src="slide.media_url" width="70%" alt=""></a>
+                <hr>
+                <h4>{{slide.commentary}}</h4>
+            </div>
         </div>
-    
+        
     </div>
     
 </template>
@@ -200,6 +210,8 @@ export default {
             //видимость карточки
             visible: false,
             classForImage: 'projectImageVertical',
+            slidePosition: 0,
+            slideAnimation: 'goLeftCardAnim',
         }
     },
 
@@ -231,6 +243,10 @@ export default {
            set(value){
                this.visible = value;
            }
+        },
+
+        numOfSlides(){
+            return this.project.slides.length;
         }
     },
 
@@ -245,6 +261,24 @@ export default {
             }
             return el.getBoundingClientRect().top < 300;
             
+        },
+
+        prevSlide(){
+            
+            if(this.slidePosition - 1 >= 0)
+            {   
+                this.slideAnimation = "goRightCardAnim";
+                this.slidePosition -= 1; 
+            }
+ 
+        },
+
+        nextSlide(){
+            if(this.slidePosition + 1 <= this.numOfSlides)
+            { 
+                this.slideAnimation = "goLeftCardAnim";
+                this.slidePosition += 1; 
+            }
         }
     }
 }

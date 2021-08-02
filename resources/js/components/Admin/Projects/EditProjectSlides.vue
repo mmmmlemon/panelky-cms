@@ -78,6 +78,9 @@ export default {
                 this.saved = true;
                 this.projectIcon = undefined;
                 this.projectImage = undefined;
+                this.slideMedia = undefined;
+                this.slideComment = undefined;
+                this.$refs.media.value = null;
                 this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
             }).catch(error => {
                 if(error.response.status === 422){ 

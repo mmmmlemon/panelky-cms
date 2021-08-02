@@ -3825,6 +3825,9 @@ __webpack_require__.r(__webpack_exports__);
         _this.saved = true;
         _this.projectIcon = undefined;
         _this.projectImage = undefined;
+        _this.slideMedia = undefined;
+        _this.slideComment = undefined;
+        _this.$refs.media.value = null;
 
         _this.$store.dispatch('getProject', {
           value: _this.projectSlug,
@@ -5651,6 +5654,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     var _this = this;
@@ -5672,7 +5685,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       //видимость карточки
       visible: false,
-      classForImage: 'projectImageVertical'
+      classForImage: 'projectImageVertical',
+      slidePosition: 0,
+      slideAnimation: 'goLeftCardAnim'
     };
   },
   //данные
@@ -5711,6 +5726,9 @@ __webpack_require__.r(__webpack_exports__);
       set: function set(value) {
         this.visible = value;
       }
+    },
+    numOfSlides: function numOfSlides() {
+      return this.project.slides.length;
     }
   },
   //методы
@@ -5723,6 +5741,18 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return el.getBoundingClientRect().top < 300;
+    },
+    prevSlide: function prevSlide() {
+      if (this.slidePosition - 1 >= 0) {
+        this.slideAnimation = "goRightCardAnim";
+        this.slidePosition -= 1;
+      }
+    },
+    nextSlide: function nextSlide() {
+      if (this.slidePosition + 1 <= this.numOfSlides) {
+        this.slideAnimation = "goLeftCardAnim";
+        this.slidePosition += 1;
+      }
     }
   }
 });
@@ -67852,22 +67882,43 @@ var render = function() {
       attrs: { id: _vm.project.slug }
     },
     [
-      _vm.project === false
+      _vm.visible === true
         ? _c(
             "div",
-            { staticClass: "col-10" },
+            {
+              staticClass: "d-none d-md-block projectCardButtons fadeInAnimSlow"
+            },
             [
-              _c("Error", {
-                attrs: {
-                  errorMessage: "Не удалось загрузить информацию о проекте"
-                }
-              })
-            ],
-            1
+              _c(
+                "b",
+                {
+                  staticClass: "projectButton left",
+                  on: { click: _vm.prevSlide }
+                },
+                [
+                  _vm.slidePosition !== 0
+                    ? _c("i", { staticClass: "bi bi-chevron-left" })
+                    : _vm._e()
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "b",
+                {
+                  staticClass: "projectButton right",
+                  on: { click: _vm.nextSlide }
+                },
+                [
+                  _vm.slidePosition < _vm.numOfSlides
+                    ? _c("i", { staticClass: "bi bi-chevron-right" })
+                    : _vm._e()
+                ]
+              )
+            ]
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.type == "left" && _vm.project !== undefined
+      _vm.type == "left" && _vm.project !== undefined && _vm.slidePosition === 0
         ? _c("div", { staticClass: "row justify-content-center" }, [
             _vm.visible === true
               ? _c(
@@ -68064,7 +68115,9 @@ var render = function() {
                 )
               : _vm._e()
           ])
-        : _vm.type == "right" && _vm.project !== undefined
+        : _vm.type == "right" &&
+          _vm.project !== undefined &&
+          _vm.slidePosition === 0
         ? _c("div", { staticClass: "row justify-content-center" }, [
             _vm.project.project_image !== null && _vm.visible === true
               ? _c(
@@ -68245,17 +68298,41 @@ var render = function() {
                 )
               : _vm._e()
           ])
-        : _c(
-            "div",
-            { staticClass: "textVertical" },
-            [
-              _c("Error", {
-                attrs: { errorMessage: "Неверный параметр 'type'" }
-              })
-            ],
-            1
-          )
-    ]
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.project.slides, function(slide, index) {
+        return _c(
+          "div",
+          {
+            key: index,
+            staticClass: "row justify-content-center",
+            class: { invisible: index + 1 !== _vm.slidePosition }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "d-none d-md-block col-12 text-center textVertical p-5 transparentCard",
+                class: _vm.slideAnimation
+              },
+              [
+                _c("a", { attrs: { href: slide.media_url } }, [
+                  _c("img", {
+                    attrs: { src: slide.media_url, width: "70%", alt: "" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _c("h4", [_vm._v(_vm._s(slide.commentary))])
+              ]
+            )
+          ]
+        )
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []

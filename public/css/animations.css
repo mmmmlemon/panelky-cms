@@ -89,6 +89,12 @@
     animation-duration: 0.7s;
 }
 
+.fadeInAnimSlow {
+    animation-name: fadeIn;
+    animation-duration: 1.7s;
+}
+
+
 
 
 @keyframes backgroundGradient {
