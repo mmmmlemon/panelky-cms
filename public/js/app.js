@@ -3760,6 +3760,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   // данные
   data: function data() {
@@ -3773,6 +3786,14 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     projectId: {
       "default": null
+    },
+    projectSlug: {
+      "default": null
+    }
+  },
+  computed: {
+    projectSlides: function projectSlides() {
+      return this.$store.state.AdminStates.currentProject.slides;
     }
   },
   // методы
@@ -3804,11 +3825,33 @@ __webpack_require__.r(__webpack_exports__);
         _this.saved = true;
         _this.projectIcon = undefined;
         _this.projectImage = undefined;
+
+        _this.$store.dispatch('getProject', {
+          value: _this.projectSlug,
+          type: 'full'
+        });
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this.errors = error.response.data.errors || {};
           console.log(_this.errors);
         }
+      });
+    },
+    //удалить слайд
+    deleteSlide: function deleteSlide(slideId) {
+      var _this2 = this;
+
+      var formData = new FormData();
+      formData.append('slideId', slideId);
+      axios.post('/admin/deleteProjectSlide', formData).then(function (response) {
+        if (response.data === true) {
+          _this2.$store.dispatch('getProject', {
+            value: _this2.projectSlug,
+            type: 'full'
+          });
+        }
+      })["catch"](function (error) {
+        console.log(error.errors);
       });
     },
     //записать файл в projectIcon или в projectImage
@@ -65218,7 +65261,10 @@ var render = function() {
                     _vm._v(" "),
                     _vm.slideFormActive === true
                       ? _c("EditProjectSlides", {
-                          attrs: { projectId: _vm.currentProject.id }
+                          attrs: {
+                            projectId: _vm.currentProject.id,
+                            projectSlug: _vm.currentProject.slug
+                          }
                         })
                       : _vm._e()
                   ],
@@ -65287,7 +65333,7 @@ var render = function() {
   return _c(
     "form",
     {
-      staticClass: "fadeInAnim",
+      staticClass: "fadeInAnim ",
       attrs: { method: "POST" },
       on: {
         submit: function($event) {
@@ -65297,65 +65343,119 @@ var render = function() {
       }
     },
     [
-      _c("div", { staticClass: "mb-3" }, [
-        _c("h6", [_vm._v("Скриншот, gif или короткое видео проекта")]),
-        _vm._v(" "),
-        _c("input", {
-          ref: "media",
-          staticClass: "form-control-file",
-          attrs: {
-            type: "file",
-            accept:
-              "image/jpeg, image/png, image/gif, video/mp4,video/x-m4v,video/*"
-          },
-          on: { change: _vm.handleMedia }
-        }),
-        _vm._v(" "),
-        _vm.errors && _vm.errors.slideMedia
-          ? _c("div", { staticClass: "text-danger" }, [
-              _vm._v(_vm._s(_vm.errors.slideMedia[0]))
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("a", { staticClass: "btn btn-sm btn-light mt-3" }, [
-          _vm._v("Удалить медиа")
-        ])
-      ]),
+      _c(
+        "div",
+        {
+          staticClass: "mb-3 slideForm",
+          class: { unavaliable: _vm.projectSlides.length >= 5 }
+        },
+        [
+          _c("h6", [_vm._v("Скриншот, gif или короткое видео проекта")]),
+          _vm._v(" "),
+          _c("input", {
+            ref: "media",
+            staticClass: "form-control-file",
+            attrs: {
+              type: "file",
+              accept:
+                "image/jpeg, image/png, image/gif, video/mp4,video/x-m4v,video/*"
+            },
+            on: { change: _vm.handleMedia }
+          }),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.slideMedia
+            ? _c("div", { staticClass: "text-danger" }, [
+                _vm._v(_vm._s(_vm.errors.slideMedia[0]))
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("a", { staticClass: "btn btn-sm btn-light mt-3" }, [
+            _vm._v("Удалить медиа")
+          ])
+        ]
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "mb-3" }, [
-        _c("h6", [_vm._v("Комментарий")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.slideComment,
-              expression: "slideComment"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", placeholder: "Комментарий к слайду" },
-          domProps: { value: _vm.slideComment },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+      _c(
+        "div",
+        {
+          staticClass: "mb-3 slideForm",
+          class: { unavaliable: _vm.projectSlides.length >= 5 }
+        },
+        [
+          _c("h6", [_vm._v("Комментарий")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.slideComment,
+                expression: "slideComment"
               }
-              _vm.slideComment = $event.target.value
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", placeholder: "Комментарий к слайду" },
+            domProps: { value: _vm.slideComment },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.slideComment = $event.target.value
+              }
             }
-          }
-        }),
-        _vm._v(" "),
-        _vm.errors && _vm.errors.slideComment
-          ? _c("div", { staticClass: "text-danger goUpAnim" }, [
-              _vm._v(_vm._s(_vm.errors.slideComment[0]))
-            ])
-          : _vm._e()
-      ]),
+          }),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.slideComment
+            ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                _vm._v(_vm._s(_vm.errors.slideComment[0]))
+              ])
+            : _vm._e()
+        ]
+      ),
       _vm._v(" "),
-      _c("button", { staticClass: "btn btn-lg btn-block btn-outline-light" }, [
-        _vm._v("\n        Загрузить и сохранить\n    ")
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-lg btn-block btn-outline-light slideForm",
+          class: { unavaliable: _vm.projectSlides.length >= 5 }
+        },
+        [_vm._v("\n        Загрузить и сохранить\n    ")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "row justify-content-center mt-3" }, [
+        _c("div", { staticClass: "col-12" }, [
+          _c(
+            "div",
+            { staticClass: "row justify-content-center" },
+            _vm._l(_vm.projectSlides, function(slide, index) {
+              return _c(
+                "div",
+                { key: index, staticClass: "col-4 text-center fadeInAnim" },
+                [
+                  _c("img", {
+                    staticClass: "slideImage",
+                    attrs: { src: slide.media_url }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "h6",
+                    {
+                      staticClass: "deleteSlide",
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteSlide(slide.id)
+                        }
+                      }
+                    },
+                    [_c("b", [_vm._v("Удалить")])]
+                  )
+                ]
+              )
+            }),
+            0
+          )
+        ])
       ])
     ]
   )
