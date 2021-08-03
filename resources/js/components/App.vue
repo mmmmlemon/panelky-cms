@@ -9,10 +9,9 @@
         <NavButton v-if="public_access == 1 && settings.side_nav === 1"/>
         <!-- кнопка "Наверх" -->
         <NavScroll v-if="public_access == 1" :navScrollStyle="navScrollStyle"/>
-        
+
         <!-- пока не загрузился список проектов, не показывать router-view -->
-        <router-view v-if="public_access == 1"
-                     v-touch:swipe.left="showNavMenu">
+        <router-view v-if="public_access == 1">
         </router-view>
         
         <!-- сообщение - сайт недоступен -->
@@ -114,12 +113,16 @@ export default {
 
         //показать боковое меню
         showNavMenu: function(){
-            if(this.$isMobile){   
-                //устанавливаем стиль для NavMenu
-                this.$store.dispatch('setNavMenuStyle', {'right':'0px', 'opacity':'1'});
-                //отключаем скролл страницы пока открыто меню
-                document.body.style.overflow = 'hidden'; 
-             }
+            if(this.settings.side_nav !== 0)
+            {
+                if(this.$isMobile)
+                {   
+                    //устанавливаем стиль для NavMenu
+                    this.$store.dispatch('setNavMenuStyle', {'right':'0px', 'opacity':'1'});
+                    //отключаем скролл страницы пока открыто меню
+                    document.body.style.overflow = 'hidden'; 
+                }
+            }   
         },
 
         //закрыть боковое меню

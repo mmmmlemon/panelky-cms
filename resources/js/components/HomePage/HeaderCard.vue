@@ -52,7 +52,7 @@
 
             <!-- имя автора -->
             <transition name="name">
-                <h1 v-if="startTransition === true && info.name != undefined" class="text-center textVertical font2-5rem">
+                <h1 v-if="startTransition === true && info.name != undefined" class="text-center textVertical font3-8rem">
                     <b>{{info['name']}}</b>
                 </h1>
             </transition>

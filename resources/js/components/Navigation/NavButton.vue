@@ -5,8 +5,9 @@
 
         <!-- кнопка меню -->
         <!-- видна только на десктопе -->
-        <button v-on:click="showNavMenu()" class="d-none d-md-block navButton zIndex3 fadeInAnim">
-            <i class="bi bi-three-dots-vertical"></i>
+        <button v-on:click="showNavMenu()" class="d-block navButton zIndex3 fadeInAnim">
+            <i class="d-none d-md-block bi bi-three-dots-vertical"></i>
+            <i class="d-block d-md-none bi bi-three-dots"></i>
         </button>
         
         <!-- меню -->

@@ -9,14 +9,29 @@
         <!-- <div class="col-10" v-if="project === false">
             <Error errorMessage="Не удалось загрузить информацию о проекте"/>
         </div> -->
-        <div class="d-none d-md-block projectCardButtons fadeInAnimSlow" v-if="visible === true">
-            <b class="projectButton left" @click="prevSlide">
+        <div class=" projectCardButtons fadeInAnimSlow" v-if="visible === true">
+            <b class="d-none d-md-block projectButton left" @click="prevSlide">
                 <i class="bi bi-chevron-left" v-if="slidePosition !== 0"></i>
             </b>
-            <b class="projectButton right" @click="nextSlide">
+            <b class="d-none d-md-block projectButton right" @click="nextSlide">
                 <i class="bi bi-chevron-right" v-if="slidePosition < numOfSlides"></i>
             </b>
+            <div class="col-12 sliderMenu fadeInAnimSlow" v-if="numOfSlides !== 0">
+                <div class="row justify-content-center">
+                    <b class="m-1">
+                        <i v-if="slidePosition === 0" class="bi bi-circle-fill"></i>
+                        <i v-if="slidePosition !== 0" class="bi bi-circle"></i>
+                    </b>
+                    <b class="m-1" v-for="index in (numOfSlides)" v-bind:key="index">
+                        <i v-if="slidePosition === index" class="bi bi-circle-fill"></i>
+                        <i v-if="slidePosition !== index" class="bi bi-circle"></i>
+                    </b>
+                </div>
+            </div>
         </div>
+        
+        
+
         <!-- КАРТОЧКА, ОПИСАНИЕ СЛЕВА -->
         <div v-if="type=='left' && project !== undefined && slidePosition === 0" class="row justify-content-center">
             <!-- для десктопа -->
@@ -68,13 +83,14 @@
             </div>
 
             <!-- TODO для мобилок -->
-            <div class="d-block d-md-none col-12 text-center textVertical goUpCardAnim" v-if="visible === true">
+            <div class="d-block d-md-none col-12 text-center textVertical transparentCard p-4 goUpCardAnim" v-if="visible === true"
+                v-touch:swipe.left="nextSlide" v-touch:swipe.right="prevSlide">
                 <!-- название проекта -->
-                <h1 class="text-center textVertical font3-2rem">
+                <h1 class="text-center textVertical font3-8rem">
                     <b>{{project.project_title}}</b>
                 </h1>
                 <!-- лого -->
-                <img :src="project.project_icon" class="projectLogo" alt="">
+                <img :src="project.project_icon" class="projectLogo m-2" alt="">
                 <br>
                 
                 <!-- краткое описание -->
@@ -146,7 +162,8 @@
             </div>
 
             <!-- TODO для мобилок -->
-            <div class="d-block d-md-none col-12 text-center textVertical goUpCardAnim" v-if="visible === true">
+            <div class="d-block d-md-none col-12 text-center textVertical goUpCardAnim" v-if="visible === true"
+                v-touch:swipe.left="nextSlide" v-touch:swipe.right="prevSlide">
                 <!-- название проекта -->
                 <h1 class="text-center textVertical font3-2rem">
                     <b>{{project.project_title}}</b>
@@ -173,14 +190,20 @@
             </div>
         </div>
 
+        <!-- СЛАЙДЫ -->
         <div class="row justify-content-center" v-for="(slide, index) in project.slides" v-bind:key="index" v-bind:class="{'invisible': (index + 1) !== slidePosition}">
-            <div class="d-none d-md-block col-12 text-center textVertical p-5 transparentCard" v-bind:class="slideAnimation">
+            <div class="d-none d-md-block col-12 text-center textVertical" v-bind:class="slideAnimation">
                 <a :href="slide.media_url"><img :src="slide.media_url" width="70%" alt=""></a>
                 <hr>
                 <h4>{{slide.commentary}}</h4>
             </div>
-        </div>
-        
+            <div class="d-block d-md-none col-12 text-center textVertical p-0" v-bind:class="slideAnimation"
+             v-touch:swipe.left="nextSlide" v-touch:swipe.right="prevSlide">
+                <a :href="slide.media_url"><img :src="slide.media_url" width="100%" alt=""></a>
+                <hr>
+                <h5>{{slide.commentary}}</h5>
+            </div>
+        </div>     
     </div>
     
 </template>
@@ -270,14 +293,21 @@ export default {
                 this.slideAnimation = "goRightCardAnim";
                 this.slidePosition -= 1; 
             }
+            else{
+                this.slideAnimation = "goRightCardAnim";
+                this.slidePosition = this.numOfSlides;
+            }
  
         },
 
         nextSlide(){
             if(this.slidePosition + 1 <= this.numOfSlides)
             { 
-                this.slideAnimation = "goLeftCardAnim";
+                this.slideAnimation = "goLeftSlideAnim";
                 this.slidePosition += 1; 
+            } else {
+                this.slideAnimation = "goLeftSlideAnim";
+                this.slidePosition = 0;
             }
         }
     }

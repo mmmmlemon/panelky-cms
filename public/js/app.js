@@ -4797,7 +4797,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
@@ -4879,14 +4878,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     //показать боковое меню
     showNavMenu: function showNavMenu() {
-      if (this.$isMobile) {
-        //устанавливаем стиль для NavMenu
-        this.$store.dispatch('setNavMenuStyle', {
-          'right': '0px',
-          'opacity': '1'
-        }); //отключаем скролл страницы пока открыто меню
+      if (this.settings.side_nav !== 0) {
+        if (this.$isMobile) {
+          //устанавливаем стиль для NavMenu
+          this.$store.dispatch('setNavMenuStyle', {
+            'right': '0px',
+            'opacity': '1'
+          }); //отключаем скролл страницы пока открыто меню
 
-        document.body.style.overflow = 'hidden';
+          document.body.style.overflow = 'hidden';
+        }
       }
     },
     //закрыть боковое меню
@@ -5056,9 +5057,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
-//
 //
 //
 //
@@ -5664,6 +5662,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     var _this = this;
@@ -5746,12 +5767,18 @@ __webpack_require__.r(__webpack_exports__);
       if (this.slidePosition - 1 >= 0) {
         this.slideAnimation = "goRightCardAnim";
         this.slidePosition -= 1;
+      } else {
+        this.slideAnimation = "goRightCardAnim";
+        this.slidePosition = this.numOfSlides;
       }
     },
     nextSlide: function nextSlide() {
       if (this.slidePosition + 1 <= this.numOfSlides) {
-        this.slideAnimation = "goLeftCardAnim";
+        this.slideAnimation = "goLeftSlideAnim";
         this.slidePosition += 1;
+      } else {
+        this.slideAnimation = "goLeftSlideAnim";
+        this.slidePosition = 0;
       }
     }
   }
@@ -5875,6 +5902,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -67070,20 +67098,7 @@ var render = function() {
         ? _c("NavScroll", { attrs: { navScrollStyle: _vm.navScrollStyle } })
         : _vm._e(),
       _vm._v(" "),
-      _vm.public_access == 1
-        ? _c("router-view", {
-            directives: [
-              {
-                name: "touch",
-                rawName: "v-touch:swipe.left",
-                value: _vm.showNavMenu,
-                expression: "showNavMenu",
-                arg: "swipe",
-                modifiers: { left: true }
-              }
-            ]
-          })
-        : _vm._e(),
+      _vm.public_access == 1 ? _c("router-view") : _vm._e(),
       _vm._v(" "),
       _vm.public_access == 0
         ? _c(
@@ -67367,7 +67382,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "row h-100 justify-content-center" },
+    { staticClass: "row h-100 justify-content-center p-0 m-0" },
     [
       _vm.siteOwnerInfo !== -1
         ? _c("HeaderCard", { attrs: { info: _vm.siteOwnerInfo } })
@@ -67382,15 +67397,7 @@ var render = function() {
             isVisible: false
           }
         })
-      }),
-      _vm._v(" "),
-      _vm.fullProjectList !== -1 && _vm.fullProjectList.other.length > 0
-        ? _c("OtherProjectsCard", {
-            attrs: { projects: _vm.fullProjectList.other }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.footer === 1 ? _c("FooterCard") : _vm._e()
+      })
     ],
     2
   )
@@ -67653,7 +67660,7 @@ var render = function() {
             _vm.startTransition === true && _vm.info.name != undefined
               ? _c(
                   "h1",
-                  { staticClass: "text-center textVertical font2-5rem" },
+                  { staticClass: "text-center textVertical font3-8rem" },
                   [_c("b", [_vm._v(_vm._s(_vm.info["name"]))])]
                 )
               : _vm._e()
@@ -67883,39 +67890,66 @@ var render = function() {
     },
     [
       _vm.visible === true
-        ? _c(
-            "div",
-            {
-              staticClass: "d-none d-md-block projectCardButtons fadeInAnimSlow"
-            },
-            [
-              _c(
-                "b",
-                {
-                  staticClass: "projectButton left",
-                  on: { click: _vm.prevSlide }
-                },
-                [
-                  _vm.slidePosition !== 0
-                    ? _c("i", { staticClass: "bi bi-chevron-left" })
-                    : _vm._e()
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "b",
-                {
-                  staticClass: "projectButton right",
-                  on: { click: _vm.nextSlide }
-                },
-                [
-                  _vm.slidePosition < _vm.numOfSlides
-                    ? _c("i", { staticClass: "bi bi-chevron-right" })
-                    : _vm._e()
-                ]
-              )
-            ]
-          )
+        ? _c("div", { staticClass: " projectCardButtons fadeInAnimSlow" }, [
+            _c(
+              "b",
+              {
+                staticClass: "d-none d-md-block projectButton left",
+                on: { click: _vm.prevSlide }
+              },
+              [
+                _vm.slidePosition !== 0
+                  ? _c("i", { staticClass: "bi bi-chevron-left" })
+                  : _vm._e()
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "b",
+              {
+                staticClass: "d-none d-md-block projectButton right",
+                on: { click: _vm.nextSlide }
+              },
+              [
+                _vm.slidePosition < _vm.numOfSlides
+                  ? _c("i", { staticClass: "bi bi-chevron-right" })
+                  : _vm._e()
+              ]
+            ),
+            _vm._v(" "),
+            _vm.numOfSlides !== 0
+              ? _c("div", { staticClass: "col-12 sliderMenu fadeInAnimSlow" }, [
+                  _c(
+                    "div",
+                    { staticClass: "row justify-content-center" },
+                    [
+                      _c("b", { staticClass: "m-1" }, [
+                        _vm.slidePosition === 0
+                          ? _c("i", { staticClass: "bi bi-circle-fill" })
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.slidePosition !== 0
+                          ? _c("i", { staticClass: "bi bi-circle" })
+                          : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.numOfSlides, function(index) {
+                        return _c("b", { key: index, staticClass: "m-1" }, [
+                          _vm.slidePosition === index
+                            ? _c("i", { staticClass: "bi bi-circle-fill" })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.slidePosition !== index
+                            ? _c("i", { staticClass: "bi bi-circle" })
+                            : _vm._e()
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              : _vm._e()
+          ])
         : _vm._e(),
       _vm._v(" "),
       _vm.type == "left" && _vm.project !== undefined && _vm.slidePosition === 0
@@ -68051,18 +68085,36 @@ var render = function() {
               ? _c(
                   "div",
                   {
+                    directives: [
+                      {
+                        name: "touch",
+                        rawName: "v-touch:swipe.left",
+                        value: _vm.nextSlide,
+                        expression: "nextSlide",
+                        arg: "swipe",
+                        modifiers: { left: true }
+                      },
+                      {
+                        name: "touch",
+                        rawName: "v-touch:swipe.right",
+                        value: _vm.prevSlide,
+                        expression: "prevSlide",
+                        arg: "swipe",
+                        modifiers: { right: true }
+                      }
+                    ],
                     staticClass:
-                      "d-block d-md-none col-12 text-center textVertical goUpCardAnim"
+                      "d-block d-md-none col-12 text-center textVertical transparentCard p-4 goUpCardAnim"
                   },
                   [
                     _c(
                       "h1",
-                      { staticClass: "text-center textVertical font3-2rem" },
+                      { staticClass: "text-center textVertical font3-8rem" },
                       [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
                     ),
                     _vm._v(" "),
                     _c("img", {
-                      staticClass: "projectLogo",
+                      staticClass: "projectLogo m-2",
                       attrs: { src: _vm.project.project_icon, alt: "" }
                     }),
                     _vm._v(" "),
@@ -68234,6 +68286,24 @@ var render = function() {
               ? _c(
                   "div",
                   {
+                    directives: [
+                      {
+                        name: "touch",
+                        rawName: "v-touch:swipe.left",
+                        value: _vm.nextSlide,
+                        expression: "nextSlide",
+                        arg: "swipe",
+                        modifiers: { left: true }
+                      },
+                      {
+                        name: "touch",
+                        rawName: "v-touch:swipe.right",
+                        value: _vm.prevSlide,
+                        expression: "prevSlide",
+                        arg: "swipe",
+                        modifiers: { right: true }
+                      }
+                    ],
                     staticClass:
                       "d-block d-md-none col-12 text-center textVertical goUpCardAnim"
                   },
@@ -68313,7 +68383,7 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "d-none d-md-block col-12 text-center textVertical p-5 transparentCard",
+                  "d-none d-md-block col-12 text-center textVertical",
                 class: _vm.slideAnimation
               },
               [
@@ -68326,6 +68396,44 @@ var render = function() {
                 _c("hr"),
                 _vm._v(" "),
                 _c("h4", [_vm._v(_vm._s(slide.commentary))])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "touch",
+                    rawName: "v-touch:swipe.left",
+                    value: _vm.nextSlide,
+                    expression: "nextSlide",
+                    arg: "swipe",
+                    modifiers: { left: true }
+                  },
+                  {
+                    name: "touch",
+                    rawName: "v-touch:swipe.right",
+                    value: _vm.prevSlide,
+                    expression: "prevSlide",
+                    arg: "swipe",
+                    modifiers: { right: true }
+                  }
+                ],
+                staticClass:
+                  "d-block d-md-none col-12 text-center textVertical p-0",
+                class: _vm.slideAnimation
+              },
+              [
+                _c("a", { attrs: { href: slide.media_url } }, [
+                  _c("img", {
+                    attrs: { src: slide.media_url, width: "100%", alt: "" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _c("h5", [_vm._v(_vm._s(slide.commentary))])
               ]
             )
           ]
@@ -68514,14 +68622,20 @@ var render = function() {
         _c(
           "button",
           {
-            staticClass: "d-none d-md-block navButton zIndex3 fadeInAnim",
+            staticClass: "d-block navButton zIndex3 fadeInAnim",
             on: {
               click: function($event) {
                 return _vm.showNavMenu()
               }
             }
           },
-          [_c("i", { staticClass: "bi bi-three-dots-vertical" })]
+          [
+            _c("i", {
+              staticClass: "d-none d-md-block bi bi-three-dots-vertical"
+            }),
+            _vm._v(" "),
+            _c("i", { staticClass: "d-block d-md-none bi bi-three-dots" })
+          ]
         ),
         _vm._v(" "),
         _c(

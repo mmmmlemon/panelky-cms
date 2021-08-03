@@ -1,7 +1,7 @@
 //HomePage
 //домашняя страница
 <template>
-    <div class="row h-100 justify-content-center">
+    <div class="row h-100 justify-content-center p-0 m-0">
     
         <!-- карточка с информацией о владельце -->
         <HeaderCard v-if="siteOwnerInfo !== -1"
@@ -11,15 +11,12 @@
         <ProjectCard v-for="project in fullProjectList.home" :key="project.id"
                      :project="project" :type="project.orientation" :isVisible="false"/>
 
-
         <!-- другие проекты -->
-        <OtherProjectsCard v-if="fullProjectList !== -1 && fullProjectList.other.length > 0" :projects="fullProjectList.other"/>
+        <!-- <OtherProjectsCard v-if="fullProjectList !== -1 && fullProjectList.other.length > 0" :projects="fullProjectList.other"/> -->
 
         <!-- карточка футер -->
-        <FooterCard v-if="footer === 1"/>    
+        <!-- <FooterCard v-if="footer === 1"/>     -->
 
-
-        
     </div>
 </template>
 
