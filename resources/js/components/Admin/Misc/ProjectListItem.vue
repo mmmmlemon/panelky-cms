@@ -6,9 +6,9 @@
         <div class="col-12 transparentCard m-1 p-0"  v-bind:class="{ active: slug === currentProjectSlug }" >
             <div class="card-body p-3">
                 <!-- название -->
-                <h2 class="card-title text-right">
+                <h3 class="card-title text-right">
                     {{title}}
-                </h2>
+                </h3>
                 <hr>
                 <!-- кнопка перемещения в списке -->
                 <div class="row ">

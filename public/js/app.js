@@ -5476,6 +5476,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 //
 //
 //
@@ -5689,25 +5695,59 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    this.setVisible = this.isVisible;
-    var img = new Image();
-    img.src = this.project.project_image;
+    this.setVisible = this.isVisible; // определяем подходящий класс для скриншота проекта
 
-    img.onload = function () {
-      if (img.width > img.height) {
+    var projectImage = new Image();
+    projectImage.src = this.project.project_image;
+
+    projectImage.onload = function () {
+      if (projectImage.width > projectImage.height) {
         _this.classForImage = 'projectImageHorizontal';
       } else {
         _this.classForImage = 'projectImageVertical';
       }
-    };
+    }; //определяем подходящий класс для картинок в слайдах
+
+
+    var _iterator = _createForOfIteratorHelper(this.project.slides),
+        _step;
+
+    try {
+      var _loop = function _loop() {
+        var slide = _step.value;
+        var img = new Image();
+        img.src = slide.media_url;
+
+        img.onload = function () {
+          if (img.width > img.height) {
+            _this.classesForSlides["".concat(slide.id)] = 'projectImageHorizontal';
+          } else {
+            _this.classesForSlides["".concat(slide.id)] = 'projectImageVerticalSlide';
+          }
+        };
+      };
+
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        _loop();
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
   },
   //данные
   data: function data() {
     return {
       //видимость карточки
       visible: false,
+      // класс для скриншота проекта
       classForImage: 'projectImageVertical',
+      // классы для слайдов
+      classesForSlides: {},
+      // текущая позиция слайда
       slidePosition: 0,
+      // анимация для слайда
       slideAnimation: 'goLeftCardAnim'
     };
   },
@@ -5748,6 +5788,7 @@ __webpack_require__.r(__webpack_exports__);
         this.visible = value;
       }
     },
+    // кол-во слайдов в проекте
     numOfSlides: function numOfSlides() {
       return this.project.slides.length;
     }
@@ -5763,6 +5804,7 @@ __webpack_require__.r(__webpack_exports__);
 
       return el.getBoundingClientRect().top < 300;
     },
+    // перейти к предыдущему слайду
     prevSlide: function prevSlide() {
       if (this.slidePosition - 1 >= 0) {
         this.slideAnimation = "goRightCardAnim";
@@ -5772,6 +5814,7 @@ __webpack_require__.r(__webpack_exports__);
         this.slidePosition = this.numOfSlides;
       }
     },
+    // перейти к следующему слайду
     nextSlide: function nextSlide() {
       if (this.slidePosition + 1 <= this.numOfSlides) {
         this.slideAnimation = "goLeftSlideAnim";
@@ -5780,6 +5823,10 @@ __webpack_require__.r(__webpack_exports__);
         this.slideAnimation = "goLeftSlideAnim";
         this.slidePosition = 0;
       }
+    },
+    // переключить на выбранный слайд при нажатии на "точку"
+    changeCurrentSlidePosition: function changeCurrentSlidePosition(index) {
+      this.slidePosition = index;
     }
   }
 });
@@ -63949,7 +63996,7 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "card-body p-3" }, [
-                _c("h2", { staticClass: "card-title text-right" }, [
+                _c("h3", { staticClass: "card-title text-right" }, [
                   _vm._v(
                     "\n                " + _vm._s(_vm.title) + "\n            "
                   )
@@ -64608,7 +64655,7 @@ var render = function() {
                     },
                     [
                       _c("div", { staticClass: "card-body" }, [
-                        _c("h2", { staticClass: "card-title" }, [
+                        _c("h3", { staticClass: "card-title" }, [
                           _vm._v(_vm._s(project.project_title))
                         ]),
                         _vm._v(" "),
@@ -64716,7 +64763,7 @@ var render = function() {
                     },
                     [
                       _c("div", { staticClass: "card-body" }, [
-                        _c("h2", { staticClass: "card-title" }, [
+                        _c("h3", { staticClass: "card-title" }, [
                           _vm._v(_vm._s(project.project_title))
                         ]),
                         _vm._v(" "),
@@ -67397,7 +67444,15 @@ var render = function() {
             isVisible: false
           }
         })
-      })
+      }),
+      _vm._v(" "),
+      _vm.fullProjectList !== -1 && _vm.fullProjectList.other.length > 0
+        ? _c("OtherProjectsCard", {
+            attrs: { projects: _vm.fullProjectList.other }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.footer === 1 ? _c("FooterCard") : _vm._e()
     ],
     2
   )
@@ -67915,40 +67970,63 @@ var render = function() {
                   ? _c("i", { staticClass: "bi bi-chevron-right" })
                   : _vm._e()
               ]
-            ),
-            _vm._v(" "),
-            _vm.numOfSlides !== 0
-              ? _c("div", { staticClass: "col-12 sliderMenu fadeInAnimSlow" }, [
-                  _c(
-                    "div",
-                    { staticClass: "row justify-content-center" },
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.numOfSlides !== 0
+        ? _c("div", { staticClass: "col-12 sliderMenu fadeInAnimSlow" }, [
+            _c(
+              "div",
+              { staticClass: "row justify-content-center" },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "m-1 slideButton",
+                    on: {
+                      click: function($event) {
+                        return _vm.changeCurrentSlidePosition(0)
+                      }
+                    }
+                  },
+                  [
+                    _vm.slidePosition === 0
+                      ? _c("i", { staticClass: "bi bi-circle-fill" })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.slidePosition !== 0
+                      ? _c("i", { staticClass: "bi bi-circle" })
+                      : _vm._e()
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._l(_vm.numOfSlides, function(index) {
+                  return _c(
+                    "a",
+                    {
+                      key: index,
+                      staticClass: "m-1 slideButton",
+                      on: {
+                        click: function($event) {
+                          return _vm.changeCurrentSlidePosition(index)
+                        }
+                      }
+                    },
                     [
-                      _c("b", { staticClass: "m-1" }, [
-                        _vm.slidePosition === 0
-                          ? _c("i", { staticClass: "bi bi-circle-fill" })
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.slidePosition !== 0
-                          ? _c("i", { staticClass: "bi bi-circle" })
-                          : _vm._e()
-                      ]),
+                      _vm.slidePosition === index
+                        ? _c("i", { staticClass: "bi bi-circle-fill" })
+                        : _vm._e(),
                       _vm._v(" "),
-                      _vm._l(_vm.numOfSlides, function(index) {
-                        return _c("b", { key: index, staticClass: "m-1" }, [
-                          _vm.slidePosition === index
-                            ? _c("i", { staticClass: "bi bi-circle-fill" })
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.slidePosition !== index
-                            ? _c("i", { staticClass: "bi bi-circle" })
-                            : _vm._e()
-                        ])
-                      })
-                    ],
-                    2
+                      _vm.slidePosition !== index
+                        ? _c("i", { staticClass: "bi bi-circle" })
+                        : _vm._e()
+                    ]
                   )
-                ])
-              : _vm._e()
+                })
+              ],
+              2
+            )
           ])
         : _vm._e(),
       _vm._v(" "),
@@ -67981,16 +68059,12 @@ var render = function() {
                         staticClass:
                           "d-md-none d-sm-block text-center textVertical font1-2rem"
                       },
-                      [
-                        _c("b", [
-                          _vm._v(_vm._s(_vm.project.project_title) + "fdfdf")
-                        ])
-                      ]
+                      [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
                     ),
                     _vm._v(" "),
                     _vm.project.project_icon !== null
                       ? _c("img", {
-                          staticClass: "projectLogo",
+                          staticClass: "projectLogo m-2",
                           attrs: { src: _vm.project.project_icon, alt: "" }
                         })
                       : _vm._e(),
@@ -68305,7 +68379,7 @@ var render = function() {
                       }
                     ],
                     staticClass:
-                      "d-block d-md-none col-12 text-center textVertical goUpCardAnim"
+                      "d-block d-md-none col-12 text-center textVertical transparentCard p-4 goUpCardAnim"
                   },
                   [
                     _c(
@@ -68387,11 +68461,10 @@ var render = function() {
                 class: _vm.slideAnimation
               },
               [
-                _c("a", { attrs: { href: slide.media_url } }, [
-                  _c("img", {
-                    attrs: { src: slide.media_url, width: "70%", alt: "" }
-                  })
-                ]),
+                _c("img", {
+                  class: _vm.classesForSlides["" + slide.id],
+                  attrs: { src: slide.media_url }
+                }),
                 _vm._v(" "),
                 _c("hr"),
                 _vm._v(" "),

@@ -18,7 +18,7 @@
                     <div v-for="project in allProjects.home" :key="project.slug" class="col-12 transparentCard highlighted m-1">
                         <div class="card-body">
                             <!--название -->
-                            <h2 class="card-title">{{project.project_title}}</h2>
+                            <h3 class="card-title">{{project.project_title}}</h3>
                             <hr>
                             <!-- подзаголовок -->
                             <p class="card-text">{{project.project_subtitle}}</p>
@@ -60,7 +60,7 @@
                <div v-for="project in allProjects.other" :key="project.slug" class="col-12 transparentCard m-1">
                     <div class="card-body">
                         <!-- название -->
-                        <h2 class="card-title">{{project.project_title}}</h2>
+                        <h3 class="card-title">{{project.project_title}}</h3>
                         <hr>
                         <!-- подзаголовок -->
                         <p class="card-text">{{project.project_subtitle}}</p>

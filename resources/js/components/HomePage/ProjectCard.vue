@@ -10,30 +10,30 @@
             <Error errorMessage="Не удалось загрузить информацию о проекте"/>
         </div> -->
         <div class=" projectCardButtons fadeInAnimSlow" v-if="visible === true">
+            <!-- кнопки переключения слайдов -->
             <b class="d-none d-md-block projectButton left" @click="prevSlide">
                 <i class="bi bi-chevron-left" v-if="slidePosition !== 0"></i>
             </b>
             <b class="d-none d-md-block projectButton right" @click="nextSlide">
                 <i class="bi bi-chevron-right" v-if="slidePosition < numOfSlides"></i>
             </b>
-            <div class="col-12 sliderMenu fadeInAnimSlow" v-if="numOfSlides !== 0">
-                <div class="row justify-content-center">
-                    <b class="m-1">
-                        <i v-if="slidePosition === 0" class="bi bi-circle-fill"></i>
-                        <i v-if="slidePosition !== 0" class="bi bi-circle"></i>
-                    </b>
-                    <b class="m-1" v-for="index in (numOfSlides)" v-bind:key="index">
-                        <i v-if="slidePosition === index" class="bi bi-circle-fill"></i>
-                        <i v-if="slidePosition !== index" class="bi bi-circle"></i>
-                    </b>
-                </div>
+        </div>
+        <!-- "точки" для слайдов -->
+        <div class="col-12 sliderMenu fadeInAnimSlow" v-if="numOfSlides !== 0">
+            <div class="row justify-content-center">
+                <a class="m-1 slideButton" @click="changeCurrentSlidePosition(0)">
+                    <i v-if="slidePosition === 0" class="bi bi-circle-fill"></i>
+                    <i v-if="slidePosition !== 0" class="bi bi-circle"></i>
+                </a>
+                <a class="m-1 slideButton" v-for="index in (numOfSlides)" v-bind:key="index" @click="changeCurrentSlidePosition(index)">
+                    <i v-if="slidePosition === index" class="bi bi-circle-fill"></i>
+                    <i v-if="slidePosition !== index" class="bi bi-circle"></i>
+                </a>
             </div>
         </div>
-        
-        
-
+    
         <!-- КАРТОЧКА, ОПИСАНИЕ СЛЕВА -->
-        <div v-if="type=='left' && project !== undefined && slidePosition === 0" class="row justify-content-center">
+        <div v-if="type =='left' && project !== undefined && slidePosition === 0" class="row justify-content-center">
             <!-- для десктопа -->
             <div class="d-none d-md-block col-12 text-center textVertical p-5 transparentCard goUpCardAnim" 
                         v-bind:class="{'col-md-12': project.project_image === null, 
@@ -44,11 +44,11 @@
                     <b>{{project.project_title}}</b>
                 </h1>
                 <h1 class="d-md-none d-sm-block text-center textVertical font1-2rem">
-                    <b>{{project.project_title}}fdfdf</b>
+                    <b>{{project.project_title}}</b>
                 </h1>
                 <!-- лого -->
                 <img v-if="project.project_icon !== null" 
-                    :src="project.project_icon" class="projectLogo" alt="">
+                    :src="project.project_icon" class="projectLogo m-2" alt="">
                 <br>
                 <!-- краткое описание -->
                 <p v-if="project.project_subtitle !== null" 
@@ -162,7 +162,7 @@
             </div>
 
             <!-- TODO для мобилок -->
-            <div class="d-block d-md-none col-12 text-center textVertical goUpCardAnim" v-if="visible === true"
+            <div class="d-block d-md-none col-12 text-center textVertical transparentCard p-4 goUpCardAnim" v-if="visible === true"
                 v-touch:swipe.left="nextSlide" v-touch:swipe.right="prevSlide">
                 <!-- название проекта -->
                 <h1 class="text-center textVertical font3-2rem">
@@ -193,12 +193,12 @@
         <!-- СЛАЙДЫ -->
         <div class="row justify-content-center" v-for="(slide, index) in project.slides" v-bind:key="index" v-bind:class="{'invisible': (index + 1) !== slidePosition}">
             <div class="d-none d-md-block col-12 text-center textVertical" v-bind:class="slideAnimation">
-                <a :href="slide.media_url"><img :src="slide.media_url" width="70%" alt=""></a>
+                <img :src="slide.media_url" :class="classesForSlides[`${slide.id}`]">
                 <hr>
                 <h4>{{slide.commentary}}</h4>
             </div>
             <div class="d-block d-md-none col-12 text-center textVertical p-0" v-bind:class="slideAnimation"
-             v-touch:swipe.left="nextSlide" v-touch:swipe.right="prevSlide">
+                v-touch:swipe.left="nextSlide" v-touch:swipe.right="prevSlide">
                 <a :href="slide.media_url"><img :src="slide.media_url" width="100%" alt=""></a>
                 <hr>
                 <h5>{{slide.commentary}}</h5>
@@ -213,18 +213,32 @@ export default {
      mounted(){
         this.setVisible = this.isVisible;
 
-        let img = new Image();
-        img.src = this.project.project_image;
-        img.onload = () => {
-
-            if(img.width > img.height){
+        // определяем подходящий класс для скриншота проекта
+        let projectImage = new Image();
+        projectImage.src = this.project.project_image;
+        projectImage.onload = () => {
+            if(projectImage.width > projectImage.height){
                 this.classForImage = 'projectImageHorizontal';
             }
             else{
                 this.classForImage = 'projectImageVertical';
             }
-        }
+        };
 
+        //определяем подходящий класс для картинок в слайдах
+        for(let slide of this.project.slides){
+            
+            let img = new Image();
+            img.src = slide.media_url;
+            img.onload = () => {
+                if(img.width > img.height){
+                    this.classesForSlides[`${slide.id}`] = 'projectImageHorizontal';
+                }
+                else{
+                    this.classesForSlides[`${slide.id}`] = 'projectImageVerticalSlide';
+                }
+            };
+        }
     },
 
     //данные
@@ -232,8 +246,13 @@ export default {
         return {
             //видимость карточки
             visible: false,
+            // класс для скриншота проекта
             classForImage: 'projectImageVertical',
+            // классы для слайдов
+            classesForSlides: {},
+            // текущая позиция слайда
             slidePosition: 0,
+            // анимация для слайда
             slideAnimation: 'goLeftCardAnim',
         }
     },
@@ -268,6 +287,7 @@ export default {
            }
         },
 
+        // кол-во слайдов в проекте
         numOfSlides(){
             return this.project.slides.length;
         }
@@ -285,9 +305,9 @@ export default {
             return el.getBoundingClientRect().top < 300;
             
         },
-
+        
+        // перейти к предыдущему слайду
         prevSlide(){
-            
             if(this.slidePosition - 1 >= 0)
             {   
                 this.slideAnimation = "goRightCardAnim";
@@ -297,9 +317,9 @@ export default {
                 this.slideAnimation = "goRightCardAnim";
                 this.slidePosition = this.numOfSlides;
             }
- 
         },
 
+        // перейти к следующему слайду
         nextSlide(){
             if(this.slidePosition + 1 <= this.numOfSlides)
             { 
@@ -309,6 +329,11 @@ export default {
                 this.slideAnimation = "goLeftSlideAnim";
                 this.slidePosition = 0;
             }
+        },
+
+        // переключить на выбранный слайд при нажатии на "точку"
+        changeCurrentSlidePosition(index){
+            this.slidePosition = index;
         }
     }
 }
