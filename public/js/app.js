@@ -3773,6 +3773,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   // данные
   data: function data() {
@@ -3780,6 +3810,7 @@ __webpack_require__.r(__webpack_exports__);
       errors: {},
       saved: false,
       slideMedia: undefined,
+      slideVisibility: 'all',
       slideComment: undefined
     };
   },
@@ -3805,12 +3836,16 @@ __webpack_require__.r(__webpack_exports__);
       this.saved = false;
       var formData = new FormData();
 
+      if (this.projectId !== null) {
+        formData.append('projectId', this.projectId);
+      }
+
       if (this.slideMedia !== undefined) {
         formData.append('slideMedia', this.slideMedia);
       }
 
-      if (this.projectId !== null) {
-        formData.append('projectId', this.projectId);
+      if (this.slideVisibility !== undefined) {
+        formData.append('slideVisibility', this.slideVisibility);
       }
 
       if (this.slideComment !== undefined) {
@@ -65442,16 +65477,103 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _c("a", { staticClass: "btn btn-sm btn-light mt-3" }, [
-            _vm._v("Удалить медиа")
-          ])
+          _vm.slideMedia !== undefined
+            ? _c("a", { staticClass: "btn btn-sm btn-light mt-3" }, [
+                _vm._v("Удалить медиа")
+              ])
+            : _vm._e()
         ]
       ),
+      _vm._v(" "),
+      _c("div", { staticClass: "mt-5" }, [
+        _c("h6", [_vm._v("Видимость")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-check form-check-inline" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.slideVisibility,
+                expression: "slideVisibility"
+              }
+            ],
+            staticClass: "form-check-input",
+            attrs: { type: "radio", id: "inlineRadio3", value: "all" },
+            domProps: { checked: _vm._q(_vm.slideVisibility, "all") },
+            on: {
+              change: function($event) {
+                _vm.slideVisibility = "all"
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            { staticClass: "form-check-label", attrs: { for: "inlineRadio3" } },
+            [_vm._v("Везде")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-check form-check-inline" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.slideVisibility,
+                expression: "slideVisibility"
+              }
+            ],
+            staticClass: "form-check-input",
+            attrs: { type: "radio", id: "inlineRadio1", value: "desktop" },
+            domProps: { checked: _vm._q(_vm.slideVisibility, "desktop") },
+            on: {
+              change: function($event) {
+                _vm.slideVisibility = "desktop"
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            { staticClass: "form-check-label", attrs: { for: "inlineRadio1" } },
+            [_vm._v("Десктоп\\планшеты")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-check form-check-inline" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.slideVisibility,
+                expression: "slideVisibility"
+              }
+            ],
+            staticClass: "form-check-input",
+            attrs: { type: "radio", id: "inlineRadio2", value: "mobile" },
+            domProps: { checked: _vm._q(_vm.slideVisibility, "mobile") },
+            on: {
+              change: function($event) {
+                _vm.slideVisibility = "mobile"
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            { staticClass: "form-check-label", attrs: { for: "inlineRadio2" } },
+            [_vm._v("Смартфоны")]
+          )
+        ])
+      ]),
       _vm._v(" "),
       _c(
         "div",
         {
-          staticClass: "mb-3 slideForm",
+          staticClass: "mt-5 mb-3 slideForm",
           class: { unavaliable: _vm.projectSlides.length >= 5 }
         },
         [
@@ -65467,7 +65589,10 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Комментарий к слайду" },
+            attrs: {
+              type: "text",
+              placeholder: "Комментарий к слайду, отображается под слайдом"
+            },
             domProps: { value: _vm.slideComment },
             on: {
               input: function($event) {
@@ -65496,15 +65621,50 @@ var render = function() {
         [_vm._v("\n        Загрузить и сохранить\n    ")]
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "row justify-content-center mt-3" }, [
+      _c("div", { staticClass: "row justify-content-center mt-5" }, [
         _c("div", { staticClass: "col-12" }, [
+          _c("h6", { staticClass: "text-center" }, [_vm._v("Десктоп")]),
+          _vm._v(" "),
           _c(
             "div",
             { staticClass: "row justify-content-center" },
-            _vm._l(_vm.projectSlides, function(slide, index) {
+            _vm._l(_vm.projectSlides.desktop, function(slide, index) {
               return _c(
                 "div",
-                { key: index, staticClass: "col-4 text-center fadeInAnim" },
+                { key: index, staticClass: "col-2 text-center fadeInAnim" },
+                [
+                  _c("img", {
+                    staticClass: "slideImage",
+                    attrs: { src: slide.media_url }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "h6",
+                    {
+                      staticClass: "deleteSlide",
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteSlide(slide.id)
+                        }
+                      }
+                    },
+                    [_c("b", [_vm._v("Удалить")])]
+                  )
+                ]
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c("h6", { staticClass: "text-center" }, [_vm._v("Мобильные")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "row justify-content-center" },
+            _vm._l(_vm.projectSlides.mobile, function(slide, index) {
+              return _c(
+                "div",
+                { key: index, staticClass: "col-2 text-center fadeInAnim" },
                 [
                   _c("img", {
                     staticClass: "slideImage",

@@ -81,12 +81,29 @@ class APIController extends Controller
         if($type == "full")
         {   
             // получаем слайды проекта
-            $projectSlides = ProjectSlide::select('id', 'media_url', 'commentary')->where('project_id', $project->id)->get();
+            $projectSlides = ProjectSlide::select('id', 'media_url', 'commentary', 'visibility')->where('project_id', $project->id)->get();
+     
             foreach($projectSlides as $slide)
             {
                 $slide->media_url = asset($slide->media_url);
             }
-            $project->slides = $projectSlides;
+
+            $slidesDesktop = [];
+            $slidesMobile = [];
+
+            foreach($projectSlides as $slide)
+            {
+                if($slide->visibility == 'desktop')
+                { array_push($slidesDesktop, $slide); }
+                else if ($slide->visibility == 'mobile')
+                { array_push($slidesMobile, $slide); }
+                else {
+                    array_push($slidesDesktop, $slide);
+                    array_push($slidesMobile, $slide);
+                }  
+            }
+
+            $project->slides = ['desktop' => $slidesDesktop, 'mobile' => $slidesMobile];
             return response()->json($project, 200); 
         }
         //мини-превью
@@ -124,12 +141,28 @@ class APIController extends Controller
 
         foreach($homeProjects as $project)
         {
-            $projectSlides = ProjectSlide::select('id', 'media_url', 'commentary')->where('project_id', $project->id)->get();
+            $projectSlides = ProjectSlide::select('id', 'media_url', 'commentary', 'visibility')->where('project_id', $project->id)->get();
             foreach($projectSlides as $slide)
             {
                 $slide->media_url = asset($slide->media_url);
             }
-            $project->slides = $projectSlides;
+
+            $slidesDesktop = [];
+            $slidesMobile = [];
+
+            foreach($projectSlides as $slide)
+            {
+                if($slide->visibility == 'desktop')
+                { array_push($slidesDesktop, $slide); }
+                else if ($slide->visibility == 'mobile')
+                { array_push($slidesMobile, $slide); }
+                else {
+                    array_push($slidesDesktop, $slide);
+                    array_push($slidesMobile, $slide);
+                }  
+            }
+
+            $project->slides = ['desktop' => $slidesDesktop, 'mobile' => $slidesMobile];
         }
 
         //если в БД нет ни одного проекта, то возвращаем false

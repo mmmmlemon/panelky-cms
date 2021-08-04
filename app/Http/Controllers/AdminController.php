@@ -499,6 +499,7 @@ class AdminController extends Controller
             // сохраняем запись в БД
             $slide = new ProjectSlide;
             $slide->media_url = "storage/projectsSlideMedia/".$filename;
+            $slide->visibility = $request->slideVisibility;
             $slide->commentary = $request->slideComment;
             $slide->project_id = $request->projectId;
             $slide->save();
