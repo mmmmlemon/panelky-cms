@@ -103,14 +103,6 @@ hr {
     box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.55);
 }
 
-.projectImageVerticalSlide {
-    width: 30%;
-    border-radius: 15px;
-    -webkit-box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.55);
-    -moz-box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.55);
-    box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.55);
-}
-
 .projectImageHorizontal {
     width: 90%;
     border-radius: 15px;
@@ -119,14 +111,6 @@ hr {
     box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.55);
 }
 
-.projectImageMobile {
-    width: 90%;
-    border-radius: 5px;
-    -webkit-box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.55);
-    -moz-box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.55);
-    box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.55);
-    margin-bottom: 15px;
-}
 
 .projectLogo {
     width:20%;

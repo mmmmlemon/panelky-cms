@@ -5476,12 +5476,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
+//
+//
 //
 //
 //
@@ -5706,35 +5702,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       } else {
         _this.classForImage = 'projectImageVertical';
       }
-    }; //определяем подходящий класс для картинок в слайдах
-
-
-    var _iterator = _createForOfIteratorHelper(this.project.slides),
-        _step;
-
-    try {
-      var _loop = function _loop() {
-        var slide = _step.value;
-        var img = new Image();
-        img.src = slide.media_url;
-
-        img.onload = function () {
-          if (img.width > img.height) {
-            _this.classesForSlides["".concat(slide.id)] = 'projectImageHorizontal';
-          } else {
-            _this.classesForSlides["".concat(slide.id)] = 'projectImageVerticalSlide';
-          }
-        };
-      };
-
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        _loop();
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
+    };
   },
   //данные
   data: function data() {
@@ -5748,7 +5716,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       // текущая позиция слайда
       slidePosition: 0,
       // анимация для слайда
-      slideAnimation: 'goLeftCardAnim'
+      slideAnimation: 'goLeftSlideAnim'
     };
   },
   //данные
@@ -5807,10 +5775,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     // перейти к предыдущему слайду
     prevSlide: function prevSlide() {
       if (this.slidePosition - 1 >= 0) {
-        this.slideAnimation = "goRightCardAnim";
+        this.slideAnimation = "goRightSlideAnim";
         this.slidePosition -= 1;
       } else {
-        this.slideAnimation = "goRightCardAnim";
+        this.slideAnimation = "goRighSlideAnim";
         this.slidePosition = this.numOfSlides;
       }
     },
@@ -67944,6 +67912,21 @@ var render = function() {
       attrs: { id: _vm.project.slug }
     },
     [
+      _vm.project === false
+        ? _c(
+            "div",
+            { staticClass: "col-10" },
+            [
+              _c("Error", {
+                attrs: {
+                  errorMessage: "Не удалось загрузить информацию о проекте"
+                }
+              })
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
       _vm.visible === true
         ? _c("div", { staticClass: " projectCardButtons fadeInAnimSlow" }, [
             _c(
@@ -68453,62 +68436,34 @@ var render = function() {
             class: { invisible: index + 1 !== _vm.slidePosition }
           },
           [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "d-none d-md-block col-12 text-center textVertical",
-                class: _vm.slideAnimation
-              },
-              [
-                _c("img", {
-                  class: _vm.classesForSlides["" + slide.id],
-                  attrs: { src: slide.media_url }
-                }),
-                _vm._v(" "),
-                _c("hr"),
-                _vm._v(" "),
-                _c("h4", [_vm._v(_vm._s(slide.commentary))])
-              ]
-            ),
+            _c("div", {
+              staticClass: "d-none d-md-block col-12 text-center textVertical",
+              class: _vm.slideAnimation
+            }),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "touch",
-                    rawName: "v-touch:swipe.left",
-                    value: _vm.nextSlide,
-                    expression: "nextSlide",
-                    arg: "swipe",
-                    modifiers: { left: true }
-                  },
-                  {
-                    name: "touch",
-                    rawName: "v-touch:swipe.right",
-                    value: _vm.prevSlide,
-                    expression: "prevSlide",
-                    arg: "swipe",
-                    modifiers: { right: true }
-                  }
-                ],
-                staticClass:
-                  "d-block d-md-none col-12 text-center textVertical p-0",
-                class: _vm.slideAnimation
-              },
-              [
-                _c("a", { attrs: { href: slide.media_url } }, [
-                  _c("img", {
-                    attrs: { src: slide.media_url, width: "100%", alt: "" }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("hr"),
-                _vm._v(" "),
-                _c("h5", [_vm._v(_vm._s(slide.commentary))])
-              ]
-            )
+            _c("div", {
+              directives: [
+                {
+                  name: "touch",
+                  rawName: "v-touch:swipe.left",
+                  value: _vm.nextSlide,
+                  expression: "nextSlide",
+                  arg: "swipe",
+                  modifiers: { left: true }
+                },
+                {
+                  name: "touch",
+                  rawName: "v-touch:swipe.right",
+                  value: _vm.prevSlide,
+                  expression: "prevSlide",
+                  arg: "swipe",
+                  modifiers: { right: true }
+                }
+              ],
+              staticClass:
+                "d-block d-md-none col-12 text-center textVertical p-0",
+              class: _vm.slideAnimation
+            })
           ]
         )
       })

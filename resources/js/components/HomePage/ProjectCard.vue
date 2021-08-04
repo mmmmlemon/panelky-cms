@@ -6,9 +6,10 @@
             v-scroll="handleScroll" :id="project.slug">
         
         <!-- ошибка -->
-        <!-- <div class="col-10" v-if="project === false">
+        <div class="col-10" v-if="project === false">
             <Error errorMessage="Не удалось загрузить информацию о проекте"/>
-        </div> -->
+        </div>
+
         <div class=" projectCardButtons fadeInAnimSlow" v-if="visible === true">
             <!-- кнопки переключения слайдов -->
             <b class="d-none d-md-block projectButton left" @click="prevSlide">
@@ -191,19 +192,20 @@
         </div>
 
         <!-- СЛАЙДЫ -->
-        <div class="row justify-content-center" v-for="(slide, index) in project.slides" v-bind:key="index" v-bind:class="{'invisible': (index + 1) !== slidePosition}">
+        <div class="row justify-content-center" 
+             v-for="(slide, index) in project.slides" 
+             v-bind:key="index" v-bind:class="{'invisible': (index + 1) !== slidePosition}">
             <div class="d-none d-md-block col-12 text-center textVertical" v-bind:class="slideAnimation">
-                <img :src="slide.media_url" :class="classesForSlides[`${slide.id}`]">
-                <hr>
-                <h4>{{slide.commentary}}</h4>
+                <!-- TO DO DESKTOP SLIDE -->
             </div>
-            <div class="d-block d-md-none col-12 text-center textVertical p-0" v-bind:class="slideAnimation"
-                v-touch:swipe.left="nextSlide" v-touch:swipe.right="prevSlide">
-                <a :href="slide.media_url"><img :src="slide.media_url" width="100%" alt=""></a>
-                <hr>
-                <h5>{{slide.commentary}}</h5>
-            </div>
-        </div>     
+            <div class="d-block d-md-none col-12 text-center textVertical p-0" 
+                 v-bind:class="slideAnimation"
+                 v-touch:swipe.left="nextSlide" 
+                 v-touch:swipe.right="prevSlide">
+
+                <!-- TO DO MOBILE SLIDE -->
+            </div>  
+        </div>   
     </div>
     
 </template>
@@ -225,20 +227,6 @@ export default {
             }
         };
 
-        //определяем подходящий класс для картинок в слайдах
-        for(let slide of this.project.slides){
-            
-            let img = new Image();
-            img.src = slide.media_url;
-            img.onload = () => {
-                if(img.width > img.height){
-                    this.classesForSlides[`${slide.id}`] = 'projectImageHorizontal';
-                }
-                else{
-                    this.classesForSlides[`${slide.id}`] = 'projectImageVerticalSlide';
-                }
-            };
-        }
     },
 
     //данные
@@ -253,7 +241,7 @@ export default {
             // текущая позиция слайда
             slidePosition: 0,
             // анимация для слайда
-            slideAnimation: 'goLeftCardAnim',
+            slideAnimation: 'goLeftSlideAnim',
         }
     },
 
@@ -310,11 +298,11 @@ export default {
         prevSlide(){
             if(this.slidePosition - 1 >= 0)
             {   
-                this.slideAnimation = "goRightCardAnim";
+                this.slideAnimation = "goRightSlideAnim";
                 this.slidePosition -= 1; 
             }
             else{
-                this.slideAnimation = "goRightCardAnim";
+                this.slideAnimation = "goRighSlideAnim";
                 this.slidePosition = this.numOfSlides;
             }
         },
