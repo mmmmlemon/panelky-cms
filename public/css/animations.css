@@ -96,8 +96,27 @@
         transform: translateX(0px);
     }
 }
+
+@keyframes goRightSlide {
+    0%{
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
 .goLeftSlideAnim{
     animation-name: goLeftSlide;
+    animation-duration: 0.65s;
+}
+
+
+.goRightSlideAnim{
+    animation-name: goRightSlide;
     animation-duration: 0.65s;
 }
 

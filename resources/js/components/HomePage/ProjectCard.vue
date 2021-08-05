@@ -10,7 +10,7 @@
             <Error errorMessage="Не удалось загрузить информацию о проекте"/>
         </div>
 
-        <div class=" projectCardButtons fadeInAnimSlow" v-if="visible === true">
+        <div class="projectCardButtons fadeInAnimSlow" v-if="visible === true">
             <!-- кнопки переключения слайдов -->
             <b class="d-none d-md-block projectButton left" @click="prevSlide">
                 <i class="bi bi-chevron-left" v-if="slidePosition !== 0"></i>
@@ -19,6 +19,7 @@
                 <i class="bi bi-chevron-right" v-if="slidePosition < numOfSlides"></i>
             </b>
         </div>
+
         <!-- "точки" для слайдов -->
         <div class="col-12 sliderMenu fadeInAnimSlow" v-if="numOfSlides !== 0">
             <div class="row justify-content-center">
@@ -192,20 +193,41 @@
         </div>
 
         <!-- СЛАЙДЫ -->
-        <div class="row justify-content-center" 
-             v-for="(slide, index) in project.slides" 
-             v-bind:key="index" v-bind:class="{'invisible': (index + 1) !== slidePosition}">
-            <div class="d-none d-md-block col-12 text-center textVertical" v-bind:class="slideAnimation">
-                <!-- TO DO DESKTOP SLIDE -->
+        <div class="slideHorizontalImage justify-content-center textVertical"
+             v-touch:swipe.left="nextSlide" 
+             v-touch:swipe.right="prevSlide"
+             v-for="(slide, index) in project.slides.desktop" 
+             v-bind:key="slide.id" 
+             v-bind:class="{'invisible': (index + 1) !== slidePosition || screenOrientation !== 'horizontal', 
+                            [''+slideAnimation]: (index + 1) === slidePosition}">
+            <div class="d-block text-center" >
+               <div class="slideImage" v-bind:style="{backgroundImage: 'url(' + slide.media_url + ')'}">
+                   <div class="slideTextHorizontal d-flex align-items-center text-center justify-content-center w-100">
+                        <h4>{{slide.commentary}}</h4>
+                   </div>
+               </div>
             </div>
-            <div class="d-block d-md-none col-12 text-center textVertical p-0" 
-                 v-bind:class="slideAnimation"
-                 v-touch:swipe.left="nextSlide" 
-                 v-touch:swipe.right="prevSlide">
+        </div> 
 
-                <!-- TO DO MOBILE SLIDE -->
-            </div>  
-        </div>   
+        <div class="slideVerticalImage justify-content-center textVertical"
+             v-touch:swipe.left="nextSlide" 
+             v-touch:swipe.right="prevSlide"
+             v-for="(slide, index) in project.slides.mobile" 
+             v-bind:key="slide.id" 
+             v-bind:class="{'invisible': (index + 1) !== slidePosition || screenOrientation !== 'vertical', 
+                            [''+slideAnimation]: (index + 1) === slidePosition}">
+            <div class="slideTextVertical d-flex align-items-center text-center justify-content-center fadeInAnim" v-if="slideCommentaryVisibility === true">
+                        <h4>{{slide.commentary}}</h4>
+            </div>
+            <div class="d-block text-center" >
+               <div class="slideImage" v-bind:style="{backgroundImage: 'url(' + slide.media_url + ')'}">
+               </div>
+               <b class="btn-block slideShowCommentaryButton" @click="toggleSlideCommentaryVisibility">
+                   <span><i class="bi bi-info-circle" v-if="slideCommentaryVisibility === false"></i></span>
+                   <span><i class="bi bi-x" v-if="slideCommentaryVisibility === true"></i></span>
+               </b>
+            </div>
+        </div>     
     </div>
     
 </template>
@@ -242,6 +264,7 @@ export default {
             slidePosition: 0,
             // анимация для слайда
             slideAnimation: 'goLeftSlideAnim',
+            slideCommentaryVisibility: false,
         }
     },
 
@@ -277,8 +300,17 @@ export default {
 
         // кол-во слайдов в проекте
         numOfSlides(){
-            return this.project.slides.length;
+            if(this.$isMobile)
+            { return this.project.slides.mobile.length; }
+            else
+            { return this.project.slides.desktop.length; }
+        },
+
+        //ориентация экрана
+        screenOrientation(){
+            return this.$store.state.GlobalStates.screenOrientation;
         }
+
     },
 
     //методы
@@ -302,7 +334,7 @@ export default {
                 this.slidePosition -= 1; 
             }
             else{
-                this.slideAnimation = "goRighSlideAnim";
+                this.slideAnimation = "goRightSlideAnim";
                 this.slidePosition = this.numOfSlides;
             }
         },
@@ -322,6 +354,10 @@ export default {
         // переключить на выбранный слайд при нажатии на "точку"
         changeCurrentSlidePosition(index){
             this.slidePosition = index;
+        },
+
+        toggleSlideCommentaryVisibility(index){
+            this.slideCommentaryVisibility = !this.slideCommentaryVisibility;
         }
     }
 }

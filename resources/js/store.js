@@ -22,6 +22,8 @@ const GlobalStates = {
         animatedBackground: -1,
         //aboutSiteText
         aboutSiteText: -1,
+        //screenOrientation
+        screenOrientation: 'horizontal',
     },
 
     mutations: {

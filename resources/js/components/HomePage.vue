@@ -22,7 +22,12 @@
 
 <script>
 export default {
-    //данные
+
+    created(){
+        this.setScreenOrientation();
+        window.addEventListener("resize", this.setScreenOrientation);
+    },
+
     computed: {
         //информация о владельце сайта
         siteOwnerInfo: function(){        
@@ -37,6 +42,21 @@ export default {
         //settings.footer
         footer: function(){
             return this.$parent.settings.footer;
+        },
+    },
+
+    //методы
+    methods: {
+        setScreenOrientation(){
+            let width = window.innerWidth;
+            let height = window.innerHeight;
+
+            if(width > height){
+                this.$store.commit('setState', {state: 'screenOrientation', value: 'horizontal'});
+            }
+            else if (height > width){
+                 this.$store.commit('setState', {state: 'screenOrientation', value: 'vertical'});
+            }
         }
     }
 }

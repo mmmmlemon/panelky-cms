@@ -5115,7 +5115,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  //данные
+  created: function created() {
+    this.setScreenOrientation();
+    window.addEventListener("resize", this.setScreenOrientation);
+  },
   computed: {
     //информация о владельце сайта
     siteOwnerInfo: function siteOwnerInfo() {
@@ -5128,6 +5131,25 @@ __webpack_require__.r(__webpack_exports__);
     //settings.footer
     footer: function footer() {
       return this.$parent.settings.footer;
+    }
+  },
+  //методы
+  methods: {
+    setScreenOrientation: function setScreenOrientation() {
+      var width = window.innerWidth;
+      var height = window.innerHeight;
+
+      if (width > height) {
+        this.$store.commit('setState', {
+          state: 'screenOrientation',
+          value: 'horizontal'
+        });
+      } else if (height > width) {
+        this.$store.commit('setState', {
+          state: 'screenOrientation',
+          value: 'vertical'
+        });
+      }
     }
   }
 });
@@ -5722,6 +5744,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     var _this = this;
@@ -5751,7 +5795,8 @@ __webpack_require__.r(__webpack_exports__);
       // текущая позиция слайда
       slidePosition: 0,
       // анимация для слайда
-      slideAnimation: 'goLeftSlideAnim'
+      slideAnimation: 'goLeftSlideAnim',
+      slideCommentaryVisibility: false
     };
   },
   //данные
@@ -5793,7 +5838,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     // кол-во слайдов в проекте
     numOfSlides: function numOfSlides() {
-      return this.project.slides.length;
+      if (this.$isMobile) {
+        return this.project.slides.mobile.length;
+      } else {
+        return this.project.slides.desktop.length;
+      }
+    },
+    //ориентация экрана
+    screenOrientation: function screenOrientation() {
+      return this.$store.state.GlobalStates.screenOrientation;
     }
   },
   //методы
@@ -5813,7 +5866,7 @@ __webpack_require__.r(__webpack_exports__);
         this.slideAnimation = "goRightSlideAnim";
         this.slidePosition -= 1;
       } else {
-        this.slideAnimation = "goRighSlideAnim";
+        this.slideAnimation = "goRightSlideAnim";
         this.slidePosition = this.numOfSlides;
       }
     },
@@ -5830,6 +5883,9 @@ __webpack_require__.r(__webpack_exports__);
     // переключить на выбранный слайд при нажатии на "точку"
     changeCurrentSlidePosition: function changeCurrentSlidePosition(index) {
       this.slidePosition = index;
+    },
+    toggleSlideCommentaryVisibility: function toggleSlideCommentaryVisibility(index) {
+      this.slideCommentaryVisibility = !this.slideCommentaryVisibility;
     }
   }
 });
@@ -6521,7 +6577,9 @@ var GlobalStates = {
     //animatedBackground
     animatedBackground: -1,
     //aboutSiteText
-    aboutSiteText: -1
+    aboutSiteText: -1,
+    //screenOrientation
+    screenOrientation: 'horizontal'
   },
   mutations: {
     //установить стейт
@@ -68088,7 +68146,7 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm.visible === true
-        ? _c("div", { staticClass: " projectCardButtons fadeInAnimSlow" }, [
+        ? _c("div", { staticClass: "projectCardButtons fadeInAnimSlow" }, [
             _c(
               "b",
               {
@@ -68587,43 +68645,139 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _vm._l(_vm.project.slides, function(slide, index) {
+      _vm._l(_vm.project.slides.desktop, function(slide, index) {
+        var _obj
         return _c(
           "div",
           {
-            key: index,
-            staticClass: "row justify-content-center",
-            class: { invisible: index + 1 !== _vm.slidePosition }
+            directives: [
+              {
+                name: "touch",
+                rawName: "v-touch:swipe.left",
+                value: _vm.nextSlide,
+                expression: "nextSlide",
+                arg: "swipe",
+                modifiers: { left: true }
+              },
+              {
+                name: "touch",
+                rawName: "v-touch:swipe.right",
+                value: _vm.prevSlide,
+                expression: "prevSlide",
+                arg: "swipe",
+                modifiers: { right: true }
+              }
+            ],
+            key: slide.id,
+            staticClass:
+              "slideHorizontalImage justify-content-center textVertical",
+            class:
+              ((_obj = {
+                invisible:
+                  index + 1 !== _vm.slidePosition ||
+                  _vm.screenOrientation !== "horizontal"
+              }),
+              (_obj["" + _vm.slideAnimation] = index + 1 === _vm.slidePosition),
+              _obj)
           },
           [
-            _c("div", {
-              staticClass: "d-none d-md-block col-12 text-center textVertical",
-              class: _vm.slideAnimation
-            }),
-            _vm._v(" "),
-            _c("div", {
-              directives: [
+            _c("div", { staticClass: "d-block text-center" }, [
+              _c(
+                "div",
                 {
-                  name: "touch",
-                  rawName: "v-touch:swipe.left",
-                  value: _vm.nextSlide,
-                  expression: "nextSlide",
-                  arg: "swipe",
-                  modifiers: { left: true }
+                  staticClass: "slideImage",
+                  style: { backgroundImage: "url(" + slide.media_url + ")" }
                 },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "slideTextHorizontal d-flex align-items-center text-center justify-content-center w-100"
+                    },
+                    [_c("h4", [_vm._v(_vm._s(slide.commentary))])]
+                  )
+                ]
+              )
+            ])
+          ]
+        )
+      }),
+      _vm._v(" "),
+      _vm._l(_vm.project.slides.mobile, function(slide, index) {
+        var _obj
+        return _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "touch",
+                rawName: "v-touch:swipe.left",
+                value: _vm.nextSlide,
+                expression: "nextSlide",
+                arg: "swipe",
+                modifiers: { left: true }
+              },
+              {
+                name: "touch",
+                rawName: "v-touch:swipe.right",
+                value: _vm.prevSlide,
+                expression: "prevSlide",
+                arg: "swipe",
+                modifiers: { right: true }
+              }
+            ],
+            key: slide.id,
+            staticClass:
+              "slideVerticalImage justify-content-center textVertical",
+            class:
+              ((_obj = {
+                invisible:
+                  index + 1 !== _vm.slidePosition ||
+                  _vm.screenOrientation !== "vertical"
+              }),
+              (_obj["" + _vm.slideAnimation] = index + 1 === _vm.slidePosition),
+              _obj)
+          },
+          [
+            _vm.slideCommentaryVisibility === true
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "slideTextVertical d-flex align-items-center text-center justify-content-center fadeInAnim"
+                  },
+                  [_c("h4", [_vm._v(_vm._s(slide.commentary))])]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "d-block text-center" }, [
+              _c("div", {
+                staticClass: "slideImage",
+                style: { backgroundImage: "url(" + slide.media_url + ")" }
+              }),
+              _vm._v(" "),
+              _c(
+                "b",
                 {
-                  name: "touch",
-                  rawName: "v-touch:swipe.right",
-                  value: _vm.prevSlide,
-                  expression: "prevSlide",
-                  arg: "swipe",
-                  modifiers: { right: true }
-                }
-              ],
-              staticClass:
-                "d-block d-md-none col-12 text-center textVertical p-0",
-              class: _vm.slideAnimation
-            })
+                  staticClass: "btn-block slideShowCommentaryButton",
+                  on: { click: _vm.toggleSlideCommentaryVisibility }
+                },
+                [
+                  _c("span", [
+                    _vm.slideCommentaryVisibility === false
+                      ? _c("i", { staticClass: "bi bi-info-circle" })
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("span", [
+                    _vm.slideCommentaryVisibility === true
+                      ? _c("i", { staticClass: "bi bi-x" })
+                      : _vm._e()
+                  ])
+                ]
+              )
+            ])
           ]
         )
       })
