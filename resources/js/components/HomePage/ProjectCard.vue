@@ -21,7 +21,7 @@
         </div>
 
         <!-- "точки" для слайдов -->
-        <div class="col-12 sliderMenu fadeInAnimSlow" v-if="numOfSlides !== 0">
+        <div class="col-12 sliderMenu fadeInAnimSlow" v-if="numOfSlides !== 0 && visible === true">
             <div class="row justify-content-center">
                 <a class="m-1 slideButton" @click="changeCurrentSlidePosition(0)">
                     <i v-if="slidePosition === 0" class="bi bi-circle-fill"></i>
@@ -29,14 +29,14 @@
                 </a>
                 <!-- "точки" для вертикальных слайдов -->
                 <a class="m-1 slideButton" v-for="index in (numOfSlides.vertical)" 
-                    v-bind:key="index" @click="changeCurrentSlidePosition(index)"
+                    v-bind:key="'verticalDot_'+index" @click="changeCurrentSlidePosition(index)"
                     v-bind:class="{'invisible': screenOrientation !== 'vertical'}">
                     <i v-if="slidePosition === index" class="bi bi-circle-fill"></i>
                     <i v-if="slidePosition !== index" class="bi bi-circle"></i>
                 </a>
                 <!-- "точки" для горизонтальных слайдов -->
                 <a class="m-1 slideButton" v-for="index in (numOfSlides.horizontal)" 
-                    v-bind:key="index" @click="changeCurrentSlidePosition(index)"
+                    v-bind:key="'horizontalDot_'+index" @click="changeCurrentSlidePosition(index)"
                     v-bind:class="{'invisible': screenOrientation !== 'horizontal'}">
                     <i v-if="slidePosition === index && screenOrientation == 'horizontal'" class="bi bi-circle-fill"></i>
                     <i v-if="slidePosition !== index && screenOrientation == 'horizontal'" class="bi bi-circle"></i>
@@ -177,7 +177,7 @@
             <div class="d-block d-md-none col-12 text-center textVertical transparentCard p-4 goUpCardAnim" v-if="visible === true"
                 v-touch:swipe.left="nextSlide" v-touch:swipe.right="prevSlide">
                 <!-- название проекта -->
-                <h1 class="text-center textVertical font3-2rem">
+                <h1 class="text-center textVertical font3-8rem">
                     <b>{{project.project_title}}</b>
                 </h1>
                 <!-- лого -->
@@ -203,29 +203,15 @@
         </div>
 
         <!-- СЛАЙДЫ -->
-        <div class="slideHorizontalImage justify-content-center textVertical"
-             v-touch:swipe.left="nextSlide" 
-             v-touch:swipe.right="prevSlide"
-             v-for="(slide, index) in project.slides.desktop" 
-             v-bind:key="slide.id" 
-             v-bind:class="{'invisible': (index + 1) !== slidePosition || screenOrientation !== 'horizontal', 
-                            [''+slideAnimation]: (index + 1) === slidePosition}">
-            <div class="d-block text-center" >
-               <div class="slideImage" v-bind:style="{backgroundImage: 'url(' + slide.media_url + ')'}">
-                   <div class="slideTextHorizontal d-flex align-items-center text-center justify-content-center w-100">
-                        <h4>{{slide.commentary}}</h4>
-                   </div>
-               </div>
-            </div>
-        </div> 
-
+        <!-- вертикальные слайды -->
         <div class="slideVerticalImage justify-content-center textVertical"
              v-touch:swipe.left="nextSlide" 
              v-touch:swipe.right="prevSlide"
-             v-for="(slide, index) in project.slides.mobile" 
-             v-bind:key="slide.id" 
+             v-for="(slide, index) in project.slides.vertical" 
+             v-bind:key="'vertical_'+slide.id" 
              v-bind:class="{'invisible': (index + 1) !== slidePosition || screenOrientation !== 'vertical', 
                             [''+slideAnimation]: (index + 1) === slidePosition}">
+            <!-- текст комментария к слайду -->
             <transition name="slideCommentary">
                 <div class="slideTextVertical d-flex align-items-center text-center justify-content-center fadeInAnim" 
                     v-if="slideCommentaryVisibility === true">
@@ -234,8 +220,10 @@
             </transition>
 
             <div class="d-block text-center" >
+               <!-- изображение -->
                <div class="slideImage" v-bind:style="{backgroundImage: 'url(' + slide.media_url + ')'}">
                </div>
+               <!-- кнопка показать\скрыть комментарий -->
                <b class="btn-block slideShowCommentaryButton" @click="toggleSlideCommentaryVisibility">
                     <transition name="slideCommentaryButton" mode="out-in">
                         <span key="show" v-if="slideCommentaryVisibility === false">
@@ -247,7 +235,26 @@
                     </transition>
                </b>
             </div>
-        </div>     
+        </div> 
+        <!-- горизонтальные слайды -->
+        <div class="slideHorizontalImage justify-content-center textVertical"
+             v-touch:swipe.left="nextSlide" 
+             v-touch:swipe.right="prevSlide"
+             v-for="(slide, index) in project.slides.horizontal" 
+             v-bind:key="'horizontal_'+slide.id" 
+             v-bind:class="{'invisible': (index + 1) !== slidePosition || screenOrientation !== 'horizontal', 
+                            [''+slideAnimation]: (index + 1) === slidePosition}">
+            <div class="d-block text-center" >
+               <!-- изображение -->
+               <div class="slideImage" v-bind:style="{backgroundImage: 'url(' + slide.media_url + ')'}">
+                   <!-- текст комментария -->
+                   <div class="slideTextHorizontal d-flex align-items-center text-center justify-content-center w-100">
+                        <h4>{{slide.commentary}}</h4>
+                   </div>
+               </div>
+            </div>
+        </div> 
+    
     </div>
     
 </template>
@@ -320,8 +327,8 @@ export default {
 
         // кол-во слайдов в проекте
         numOfSlides(){
-           return {'vertical': this.project.slides.mobile.length,
-                    'horizontal': this.project.slides.desktop.length };
+           return {'vertical': this.project.slides.vertical.length,
+                    'horizontal': this.project.slides.horizontal.length };
         },
 
         //ориентация экрана

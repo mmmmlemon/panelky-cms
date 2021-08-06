@@ -93,9 +93,9 @@ class APIController extends Controller
 
             foreach($projectSlides as $slide)
             {
-                if($slide->visibility == 'desktop')
+                if($slide->visibility == 'horizontal')
                 { array_push($slidesDesktop, $slide); }
-                else if ($slide->visibility == 'mobile')
+                else if ($slide->visibility == 'vertical')
                 { array_push($slidesMobile, $slide); }
                 else {
                     array_push($slidesDesktop, $slide);
@@ -103,7 +103,7 @@ class APIController extends Controller
                 }  
             }
 
-            $project->slides = ['desktop' => $slidesDesktop, 'mobile' => $slidesMobile];
+            $project->slides = ['horizontal' => $slidesDesktop, 'vertical' => $slidesMobile];
             return response()->json($project, 200); 
         }
         //мини-превью
@@ -152,9 +152,9 @@ class APIController extends Controller
 
             foreach($projectSlides as $slide)
             {
-                if($slide->visibility == 'desktop')
+                if($slide->visibility == 'horizontal')
                 { array_push($slidesDesktop, $slide); }
-                else if ($slide->visibility == 'mobile')
+                else if ($slide->visibility == 'vertical')
                 { array_push($slidesMobile, $slide); }
                 else {
                     array_push($slidesDesktop, $slide);
@@ -162,7 +162,7 @@ class APIController extends Controller
                 }  
             }
 
-            $project->slides = ['desktop' => $slidesDesktop, 'mobile' => $slidesMobile];
+            $project->slides = ['horizontal' => $slidesDesktop, 'vertical' => $slidesMobile];
         }
 
         //если в БД нет ни одного проекта, то возвращаем false

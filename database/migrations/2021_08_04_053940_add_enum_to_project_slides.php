@@ -14,7 +14,7 @@ class AddEnumToProjectSlides extends Migration
     public function up()
     {
         Schema::table('project_slides', function (Blueprint $table) {
-            $table->enum('visibility', ['desktop', 'mobile', 'all'])->default('all');
+            $table->enum('visibility', ['horizontal', 'vertical', 'all'])->default('all');
         });
     }
 

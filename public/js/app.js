@@ -5786,6 +5786,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     var _this = this;
@@ -5859,8 +5866,8 @@ __webpack_require__.r(__webpack_exports__);
     // кол-во слайдов в проекте
     numOfSlides: function numOfSlides() {
       return {
-        'vertical': this.project.slides.mobile.length,
-        'horizontal': this.project.slides.desktop.length
+        'vertical': this.project.slides.vertical.length,
+        'horizontal': this.project.slides.horizontal.length
       };
     },
     //ориентация экрана
@@ -68197,7 +68204,7 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _vm.numOfSlides !== 0
+      _vm.numOfSlides !== 0 && _vm.visible === true
         ? _c("div", { staticClass: "col-12 sliderMenu fadeInAnimSlow" }, [
             _c(
               "div",
@@ -68228,7 +68235,7 @@ var render = function() {
                   return _c(
                     "a",
                     {
-                      key: index,
+                      key: "verticalDot_" + index,
                       staticClass: "m-1 slideButton",
                       class: {
                         invisible: _vm.screenOrientation !== "vertical"
@@ -68255,7 +68262,7 @@ var render = function() {
                   return _c(
                     "a",
                     {
-                      key: index,
+                      key: "horizontalDot_" + index,
                       staticClass: "m-1 slideButton",
                       class: {
                         invisible: _vm.screenOrientation !== "horizontal"
@@ -68639,7 +68646,7 @@ var render = function() {
                   [
                     _c(
                       "h1",
-                      { staticClass: "text-center textVertical font3-2rem" },
+                      { staticClass: "text-center textVertical font3-8rem" },
                       [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
                     ),
                     _vm._v(" "),
@@ -68699,7 +68706,7 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _vm._l(_vm.project.slides.desktop, function(slide, index) {
+      _vm._l(_vm.project.slides.vertical, function(slide, index) {
         var _obj
         return _c(
           "div",
@@ -68722,66 +68729,7 @@ var render = function() {
                 modifiers: { right: true }
               }
             ],
-            key: slide.id,
-            staticClass:
-              "slideHorizontalImage justify-content-center textVertical",
-            class:
-              ((_obj = {
-                invisible:
-                  index + 1 !== _vm.slidePosition ||
-                  _vm.screenOrientation !== "horizontal"
-              }),
-              (_obj["" + _vm.slideAnimation] = index + 1 === _vm.slidePosition),
-              _obj)
-          },
-          [
-            _c("div", { staticClass: "d-block text-center" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "slideImage",
-                  style: { backgroundImage: "url(" + slide.media_url + ")" }
-                },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "slideTextHorizontal d-flex align-items-center text-center justify-content-center w-100"
-                    },
-                    [_c("h4", [_vm._v(_vm._s(slide.commentary))])]
-                  )
-                ]
-              )
-            ])
-          ]
-        )
-      }),
-      _vm._v(" "),
-      _vm._l(_vm.project.slides.mobile, function(slide, index) {
-        var _obj
-        return _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "touch",
-                rawName: "v-touch:swipe.left",
-                value: _vm.nextSlide,
-                expression: "nextSlide",
-                arg: "swipe",
-                modifiers: { left: true }
-              },
-              {
-                name: "touch",
-                rawName: "v-touch:swipe.right",
-                value: _vm.prevSlide,
-                expression: "prevSlide",
-                arg: "swipe",
-                modifiers: { right: true }
-              }
-            ],
-            key: slide.id,
+            key: "vertical_" + slide.id,
             staticClass:
               "slideVerticalImage justify-content-center textVertical",
             class:
@@ -68845,6 +68793,65 @@ var render = function() {
             ])
           ],
           1
+        )
+      }),
+      _vm._v(" "),
+      _vm._l(_vm.project.slides.horizontal, function(slide, index) {
+        var _obj
+        return _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "touch",
+                rawName: "v-touch:swipe.left",
+                value: _vm.nextSlide,
+                expression: "nextSlide",
+                arg: "swipe",
+                modifiers: { left: true }
+              },
+              {
+                name: "touch",
+                rawName: "v-touch:swipe.right",
+                value: _vm.prevSlide,
+                expression: "prevSlide",
+                arg: "swipe",
+                modifiers: { right: true }
+              }
+            ],
+            key: "horizontal_" + slide.id,
+            staticClass:
+              "slideHorizontalImage justify-content-center textVertical",
+            class:
+              ((_obj = {
+                invisible:
+                  index + 1 !== _vm.slidePosition ||
+                  _vm.screenOrientation !== "horizontal"
+              }),
+              (_obj["" + _vm.slideAnimation] = index + 1 === _vm.slidePosition),
+              _obj)
+          },
+          [
+            _c("div", { staticClass: "d-block text-center" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "slideImage",
+                  style: { backgroundImage: "url(" + slide.media_url + ")" }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "slideTextHorizontal d-flex align-items-center text-center justify-content-center w-100"
+                    },
+                    [_c("h4", [_vm._v(_vm._s(slide.commentary))])]
+                  )
+                ]
+              )
+            ])
+          ]
         )
       })
     ],
