@@ -76,6 +76,13 @@ hr {
 
 .unclickable {
     pointer-events: none;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
 
 .textVertical {
@@ -219,7 +226,6 @@ hr {
 .transparentCard {
     border-radius: 15px;
     background-color: rgba(255,255,255, 0.1);
-    cursor: pointer;
     transition: all 0.05s ease-in-out;
 }
 
@@ -412,7 +418,20 @@ hr {
     z-index: 1;
 }
 
+.slideEditImage{
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 15px;
+    -webkit-box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.55);
+    -moz-box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.55);
+    box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.55);
+}
 
+.slideEditImageNum{
+    position: absolute;
+    top: 5px;
+    left: 25px;
+}
 
 /* /////////////////////// */
 /* margins, paddings, width, height */
@@ -427,5 +446,3 @@ hr {
 .zIndex3 {
     z-index: 3;
 }
-
-

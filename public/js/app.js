@@ -3803,6 +3803,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   // данные
   data: function data() {
@@ -5533,6 +5540,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -65581,7 +65593,7 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("div", { staticClass: "mt-5" }, [
-        _c("h6", [_vm._v("Видимость")]),
+        _c("h6", [_vm._v("Видимость в положении экрана")]),
         _vm._v(" "),
         _c("div", { staticClass: "form-check form-check-inline" }, [
           _c("input", {
@@ -65606,7 +65618,7 @@ var render = function() {
           _c(
             "label",
             { staticClass: "form-check-label", attrs: { for: "inlineRadio3" } },
-            [_vm._v("Везде")]
+            [_vm._v("Горизонатально и вертикально")]
           )
         ]),
         _vm._v(" "),
@@ -65633,7 +65645,7 @@ var render = function() {
           _c(
             "label",
             { staticClass: "form-check-label", attrs: { for: "inlineRadio1" } },
-            [_vm._v("Десктоп\\планшеты")]
+            [_vm._v("Горизонтально")]
           )
         ]),
         _vm._v(" "),
@@ -65660,7 +65672,7 @@ var render = function() {
           _c(
             "label",
             { staticClass: "form-check-label", attrs: { for: "inlineRadio2" } },
-            [_vm._v("Смартфоны")]
+            [_vm._v("Вертикально")]
           )
         ])
       ]),
@@ -65718,25 +65730,46 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "row justify-content-center mt-5" }, [
         _c("div", { staticClass: "col-12" }, [
-          _c("h6", { staticClass: "text-center" }, [_vm._v("Десктоп")]),
+          _c("h5", { staticClass: "text-center" }, [
+            _vm._v("Горизонтальные слайды")
+          ]),
+          _vm._v(" "),
+          _c("hr"),
           _vm._v(" "),
           _c(
             "div",
             { staticClass: "row justify-content-center" },
-            _vm._l(_vm.projectSlides.desktop, function(slide, index) {
+            _vm._l(_vm.projectSlides.horizontal, function(slide, index) {
               return _c(
                 "div",
                 { key: index, staticClass: "col-2 text-center fadeInAnim" },
                 [
                   _c("img", {
-                    staticClass: "slideImage",
+                    staticClass: "slideEditImage",
                     attrs: { src: slide.media_url }
                   }),
+                  _vm._v(" "),
+                  _c("h3", { staticClass: "slideEditImageNum" }, [
+                    _vm._v(_vm._s(index + 1))
+                  ]),
                   _vm._v(" "),
                   _c(
                     "h6",
                     {
-                      staticClass: "deleteSlide",
+                      staticClass: "deleteSlide m-2",
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteSlide(slide.id)
+                        }
+                      }
+                    },
+                    [_c("b", [_vm._v("Ред. комментарий")])]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "h6",
+                    {
+                      staticClass: "deleteSlide m-2",
                       on: {
                         click: function($event) {
                           return _vm.deleteSlide(slide.id)
@@ -65751,25 +65784,46 @@ var render = function() {
             0
           ),
           _vm._v(" "),
-          _c("h6", { staticClass: "text-center" }, [_vm._v("Мобильные")]),
+          _c("h5", { staticClass: "text-center" }, [
+            _vm._v("Вертикальные слайды")
+          ]),
+          _vm._v(" "),
+          _c("hr"),
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "row justify-content-center" },
-            _vm._l(_vm.projectSlides.mobile, function(slide, index) {
+            { staticClass: "row justify-content-center mt-5" },
+            _vm._l(_vm.projectSlides.vertical, function(slide, index) {
               return _c(
                 "div",
                 { key: index, staticClass: "col-2 text-center fadeInAnim" },
                 [
                   _c("img", {
-                    staticClass: "slideImage",
+                    staticClass: "slideEditImage",
                     attrs: { src: slide.media_url }
                   }),
+                  _vm._v(" "),
+                  _c("h3", { staticClass: "slideEditImageNum" }, [
+                    _vm._v(_vm._s(index + 1))
+                  ]),
                   _vm._v(" "),
                   _c(
                     "h6",
                     {
-                      staticClass: "deleteSlide",
+                      staticClass: "deleteSlide m-2",
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteSlide(slide.id)
+                        }
+                      }
+                    },
+                    [_c("b", [_vm._v("Ред. комментарий")])]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "h6",
+                    {
+                      staticClass: "deleteSlide m-2",
                       on: {
                         click: function($event) {
                           return _vm.deleteSlide(slide.id)
@@ -68298,6 +68352,24 @@ var render = function() {
               ? _c(
                   "div",
                   {
+                    directives: [
+                      {
+                        name: "touch",
+                        rawName: "v-touch:swipe.left",
+                        value: _vm.nextSlide,
+                        expression: "nextSlide",
+                        arg: "swipe",
+                        modifiers: { left: true }
+                      },
+                      {
+                        name: "touch",
+                        rawName: "v-touch:swipe.right",
+                        value: _vm.prevSlide,
+                        expression: "prevSlide",
+                        arg: "swipe",
+                        modifiers: { right: true }
+                      }
+                    ],
                     staticClass:
                       "d-none d-md-block col-12 text-center textVertical p-5 transparentCard goUpCardAnim",
                     class: {
@@ -68310,7 +68382,7 @@ var render = function() {
                       "h1",
                       {
                         staticClass:
-                          "d-md-block d-sm-none text-center textVertical font3-8rem"
+                          "unclickable d-md-block d-sm-none text-center textVertical font3-8rem"
                       },
                       [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
                     ),
@@ -68319,14 +68391,14 @@ var render = function() {
                       "h1",
                       {
                         staticClass:
-                          "d-md-none d-sm-block text-center textVertical font1-2rem"
+                          "unclickable d-md-none d-sm-block text-center textVertical font1-2rem"
                       },
                       [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
                     ),
                     _vm._v(" "),
                     _vm.project.project_icon !== null
                       ? _c("img", {
-                          staticClass: "projectLogo m-2",
+                          staticClass: "unclickable projectLogo m-2",
                           attrs: { src: _vm.project.project_icon, alt: "" }
                         })
                       : _vm._e(),
@@ -68336,7 +68408,10 @@ var render = function() {
                     _vm.project.project_subtitle !== null
                       ? _c(
                           "p",
-                          { staticClass: "text-center textVertical font2rem" },
+                          {
+                            staticClass:
+                              "unclickable text-center textVertical font2rem"
+                          },
                           [
                             _vm._v(
                               "\n                " +
@@ -68350,19 +68425,23 @@ var render = function() {
                     _c("br"),
                     _vm._v(" "),
                     _vm.project.project_desc !== null
-                      ? _c("p", { staticClass: "text-center font1-2rem" }, [
-                          _vm._v(
-                            "\n                " +
-                              _vm._s(_vm.project.project_desc) +
-                              "\n            "
-                          )
-                        ])
+                      ? _c(
+                          "p",
+                          { staticClass: "unclickable text-center font1-2rem" },
+                          [
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(_vm.project.project_desc) +
+                                "\n            "
+                            )
+                          ]
+                        )
                       : _vm._e(),
                     _vm._v(" "),
                     _c("hr"),
                     _vm._v(" "),
                     _vm.project.project_bottomText !== null
-                      ? _c("h6", { staticClass: "text-center" }, [
+                      ? _c("h6", { staticClass: "unclickable text-center" }, [
                           _c("b", [
                             _vm._v(_vm._s(_vm.project.project_bottomText))
                           ])
@@ -68537,13 +68616,25 @@ var render = function() {
                   [
                     _c(
                       "h1",
-                      { staticClass: "text-center textVertical font3-8rem" },
+                      {
+                        staticClass:
+                          "unclickable text-center textVertical font3-8rem"
+                      },
+                      [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "h1",
+                      {
+                        staticClass:
+                          "unclickable d-md-none d-sm-block text-center textVertical font1-2rem"
+                      },
                       [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
                     ),
                     _vm._v(" "),
                     _vm.project.project_icon !== null
                       ? _c("img", {
-                          staticClass: "projectLogo",
+                          staticClass: "unclickable projectLogo m-2",
                           attrs: { src: _vm.project.project_icon, alt: "" }
                         })
                       : _vm._e(),
@@ -68553,7 +68644,10 @@ var render = function() {
                     _vm.project.project_subtitle !== null
                       ? _c(
                           "p",
-                          { staticClass: "text-center textVertical font2rem" },
+                          {
+                            staticClass:
+                              "unclickable text-center textVertical font2rem"
+                          },
                           [
                             _vm._v(
                               "\n                " +
@@ -68567,19 +68661,23 @@ var render = function() {
                     _c("br"),
                     _vm._v(" "),
                     _vm.project.project_desc !== null
-                      ? _c("p", { staticClass: "text-center font1-2rem" }, [
-                          _vm._v(
-                            "\n                " +
-                              _vm._s(_vm.project.project_desc) +
-                              "\n            "
-                          )
-                        ])
+                      ? _c(
+                          "p",
+                          { staticClass: "unclickable text-center font1-2rem" },
+                          [
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(_vm.project.project_desc) +
+                                "\n            "
+                            )
+                          ]
+                        )
                       : _vm._e(),
                     _vm._v(" "),
                     _c("hr"),
                     _vm._v(" "),
                     _vm.project.project_bottomText !== null
-                      ? _c("h6", { staticClass: "text-center" }, [
+                      ? _c("h6", { staticClass: "unclickable text-center" }, [
                           _c("b", [
                             _vm._v(_vm._s(_vm.project.project_bottomText))
                           ])
@@ -68748,7 +68846,7 @@ var render = function() {
                     "div",
                     {
                       staticClass:
-                        "slideTextVertical d-flex align-items-center text-center justify-content-center fadeInAnim"
+                        "slideTextVertical unclickable d-flex align-items-center text-center justify-content-center fadeInAnim"
                     },
                     [_c("h4", [_vm._v(_vm._s(slide.commentary))])]
                   )
@@ -68844,7 +68942,7 @@ var render = function() {
                     "div",
                     {
                       staticClass:
-                        "slideTextHorizontal d-flex align-items-center text-center justify-content-center w-100"
+                        "slideTextHorizontal unclickable d-flex align-items-center text-center justify-content-center w-100"
                     },
                     [_c("h4", [_vm._v(_vm._s(slide.commentary))])]
                   )

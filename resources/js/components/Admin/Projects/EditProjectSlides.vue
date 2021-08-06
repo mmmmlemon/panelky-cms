@@ -14,18 +14,18 @@
 
         <!-- видимость -->
         <div class="mt-5">
-            <h6>Видимость</h6>
+            <h6>Видимость в положении экрана</h6>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="inlineRadio3" value="all" v-model="slideVisibility">
-                <label class="form-check-label" for="inlineRadio3">Везде</label>
+                <label class="form-check-label" for="inlineRadio3">Горизонатально и вертикально</label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="inlineRadio1" value="desktop" v-model="slideVisibility">
-                <label class="form-check-label" for="inlineRadio1">Десктоп\планшеты</label>
+                <label class="form-check-label" for="inlineRadio1">Горизонтально</label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" id="inlineRadio2" value="mobile" v-model="slideVisibility">
-                <label class="form-check-label" for="inlineRadio2">Смартфоны</label>
+                <label class="form-check-label" for="inlineRadio2">Вертикально</label>
             </div>
  
         </div>
@@ -42,20 +42,27 @@
             Загрузить и сохранить
         </button>
 
+        <!-- превью слайдов -->
         <div class="row justify-content-center mt-5">
             <div class="col-12">
-                <h6 class="text-center">Десктоп</h6>
+                <h5 class="text-center">Горизонтальные слайды</h5>
+                <hr>
                 <div class="row justify-content-center">
-                    <div v-for="(slide, index) in projectSlides.desktop" v-bind:key="index" class="col-2 text-center fadeInAnim">
-                        <img :src="slide.media_url" class="slideImage">
-                    <h6 @click="deleteSlide(slide.id)" class="deleteSlide"><b>Удалить</b></h6>
+                    <div v-for="(slide, index) in projectSlides.horizontal" v-bind:key="index" class="col-2 text-center fadeInAnim">
+                        <img :src="slide.media_url" class="slideEditImage">
+                        <h3 class="slideEditImageNum">{{index+1}}</h3>
+                        <h6 @click="deleteSlide(slide.id)" class="deleteSlide m-2"><b>Ред. комментарий</b></h6>
+                        <h6 @click="deleteSlide(slide.id)" class="deleteSlide m-2"><b>Удалить</b></h6>
                     </div>
                 </div>
-                <h6 class="text-center">Мобильные</h6>
-                <div class="row justify-content-center">
-                    <div v-for="(slide, index) in projectSlides.mobile" v-bind:key="index" class="col-2 text-center fadeInAnim">
-                        <img :src="slide.media_url" class="slideImage">
-                    <h6 @click="deleteSlide(slide.id)" class="deleteSlide"><b>Удалить</b></h6>
+                <h5 class="text-center">Вертикальные слайды</h5>
+                <hr>
+                <div class="row justify-content-center mt-5">
+                    <div v-for="(slide, index) in projectSlides.vertical" v-bind:key="index" class="col-2 text-center fadeInAnim">
+                        <img :src="slide.media_url" class="slideEditImage">
+                        <h3 class="slideEditImageNum">{{index+1}}</h3>
+                        <h6 @click="deleteSlide(slide.id)" class="deleteSlide m-2"><b>Ред. комментарий</b></h6>
+                        <h6 @click="deleteSlide(slide.id)" class="deleteSlide m-2"><b>Удалить</b></h6>
                     </div>
                 </div>
                

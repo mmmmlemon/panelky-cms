@@ -48,35 +48,37 @@
         <div v-if="type =='left' && project !== undefined && slidePosition === 0" class="row justify-content-center">
             <!-- для десктопа -->
             <div class="d-none d-md-block col-12 text-center textVertical p-5 transparentCard goUpCardAnim" 
+                        v-touch:swipe.left="nextSlide" 
+                        v-touch:swipe.right="prevSlide"
                         v-bind:class="{'col-md-12': project.project_image === null, 
                                         'col-md-5': project.project_image !== null}"
                         v-if="visible === true">
                 <!-- название проекта -->
-                <h1 class="d-md-block d-sm-none text-center textVertical font3-8rem">
+                <h1 class="unclickable d-md-block d-sm-none text-center textVertical font3-8rem">
                     <b>{{project.project_title}}</b>
                 </h1>
-                <h1 class="d-md-none d-sm-block text-center textVertical font1-2rem">
+                <h1 class="unclickable d-md-none d-sm-block text-center textVertical font1-2rem">
                     <b>{{project.project_title}}</b>
                 </h1>
                 <!-- лого -->
                 <img v-if="project.project_icon !== null" 
-                    :src="project.project_icon" class="projectLogo m-2" alt="">
+                    :src="project.project_icon" class="unclickable projectLogo m-2" alt="">
                 <br>
                 <!-- краткое описание -->
                 <p v-if="project.project_subtitle !== null" 
-                    class="text-center textVertical font2rem">
+                    class="unclickable text-center textVertical font2rem">
                     {{project.project_subtitle}}
                 </p>
                 <br>
                 <!-- подробное описание -->
                 <p v-if="project.project_desc !== null"
-                    class="text-center font1-2rem">
+                    class="unclickable text-center font1-2rem">
                     {{project.project_desc}}
                 </p>
                 <hr>
                 <!-- футер -->
                 <h6 v-if="project.project_bottomText !== null"
-                    class="text-center">
+                    class="unclickable text-center">
                     <b>{{project.project_bottomText}}</b>
                 </h6>
                 <br>
@@ -139,28 +141,31 @@
                  v-if="visible === true"
                  class="d-none d-md-block col-12 text-center textVertical p-5 transparentCard goUpCardAnim">
                 <!-- название проекта -->
-                <h1 class="text-center textVertical font3-8rem">
+                <h1 class="unclickable text-center textVertical font3-8rem">
+                    <b>{{project.project_title}}</b>
+                </h1>
+                <h1 class="unclickable d-md-none d-sm-block text-center textVertical font1-2rem">
                     <b>{{project.project_title}}</b>
                 </h1>
                 <!-- лого -->
                 <img v-if="project.project_icon !== null" 
-                    :src="project.project_icon" class="projectLogo" alt="">
+                    :src="project.project_icon" class="unclickable projectLogo m-2" alt="">
                 <br>
                 <!-- краткое описание -->
                 <p v-if="project.project_subtitle !== null"
-                    class="text-center textVertical font2rem">
+                    class="unclickable text-center textVertical font2rem">
                     {{project.project_subtitle}}
                 </p>
                 <br>
                 <!-- подробное описание -->
                 <p v-if="project.project_desc !== null"
-                    class="text-center font1-2rem">
+                    class="unclickable text-center font1-2rem">
                     {{project.project_desc}}
                 </p>
                 <hr>
                 <!-- футер -->
                 <h6 v-if="project.project_bottomText !== null"
-                    class="text-center">
+                    class="unclickable text-center">
                     <b>{{project.project_bottomText}}</b>
                 </h6>
                 <br>
@@ -213,13 +218,13 @@
                             [''+slideAnimation]: (index + 1) === slidePosition}">
             <!-- текст комментария к слайду -->
             <transition name="slideCommentary">
-                <div class="slideTextVertical d-flex align-items-center text-center justify-content-center fadeInAnim" 
+                <div class="slideTextVertical unclickable d-flex align-items-center text-center justify-content-center fadeInAnim" 
                     v-if="slideCommentaryVisibility === true">
                     <h4>{{slide.commentary}}</h4>
                 </div>
             </transition>
 
-            <div class="d-block text-center" >
+            <div class="d-block text-center">
                <!-- изображение -->
                <div class="slideImage" v-bind:style="{backgroundImage: 'url(' + slide.media_url + ')'}">
                </div>
@@ -248,7 +253,7 @@
                <!-- изображение -->
                <div class="slideImage" v-bind:style="{backgroundImage: 'url(' + slide.media_url + ')'}">
                    <!-- текст комментария -->
-                   <div class="slideTextHorizontal d-flex align-items-center text-center justify-content-center w-100">
+                   <div class="slideTextHorizontal unclickable d-flex align-items-center text-center justify-content-center w-100">
                         <h4>{{slide.commentary}}</h4>
                    </div>
                </div>
