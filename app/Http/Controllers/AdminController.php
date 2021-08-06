@@ -502,6 +502,7 @@ class AdminController extends Controller
             $slide->visibility = $request->slideVisibility;
             $slide->commentary = $request->slideComment;
             $slide->project_id = $request->projectId;
+            $slide->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->max('order') + 1;
             $slide->save();
         }
 
