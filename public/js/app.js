@@ -5766,6 +5766,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     var _this = this;
@@ -68740,16 +68750,18 @@ var render = function() {
               _obj)
           },
           [
-            _vm.slideCommentaryVisibility === true
-              ? _c(
-                  "div",
-                  {
-                    staticClass:
-                      "slideTextVertical d-flex align-items-center text-center justify-content-center fadeInAnim"
-                  },
-                  [_c("h4", [_vm._v(_vm._s(slide.commentary))])]
-                )
-              : _vm._e(),
+            _c("transition", { attrs: { name: "slideCommentary" } }, [
+              _vm.slideCommentaryVisibility === true
+                ? _c(
+                    "div",
+                    {
+                      staticClass:
+                        "slideTextVertical d-flex align-items-center text-center justify-content-center fadeInAnim"
+                    },
+                    [_c("h4", [_vm._v(_vm._s(slide.commentary))])]
+                  )
+                : _vm._e()
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "d-block text-center" }, [
               _c("div", {
@@ -68764,21 +68776,31 @@ var render = function() {
                   on: { click: _vm.toggleSlideCommentaryVisibility }
                 },
                 [
-                  _c("span", [
-                    _vm.slideCommentaryVisibility === false
-                      ? _c("i", { staticClass: "bi bi-info-circle" })
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _c("span", [
-                    _vm.slideCommentaryVisibility === true
-                      ? _c("i", { staticClass: "bi bi-x" })
-                      : _vm._e()
-                  ])
-                ]
+                  _c(
+                    "transition",
+                    {
+                      attrs: { name: "slideCommentaryButton", mode: "out-in" }
+                    },
+                    [
+                      _vm.slideCommentaryVisibility === false
+                        ? _c("span", { key: "show" }, [
+                            _c("i", { staticClass: "bi bi-info-circle" })
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.slideCommentaryVisibility === true
+                        ? _c("span", { key: "hide" }, [
+                            _c("i", { staticClass: "bi bi-x" })
+                          ])
+                        : _vm._e()
+                    ]
+                  )
+                ],
+                1
               )
             ])
-          ]
+          ],
+          1
         )
       })
     ],

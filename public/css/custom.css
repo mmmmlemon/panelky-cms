@@ -407,8 +407,8 @@ hr {
 
 .slideShowCommentaryButton{
     position: absolute;
-    bottom: -4rem;
-    font-size: 2.3rem;
+    bottom: -5rem;
+    font-size: 2.5rem;
     z-index: 1;
 }
 

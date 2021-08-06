@@ -216,15 +216,25 @@
              v-bind:key="slide.id" 
              v-bind:class="{'invisible': (index + 1) !== slidePosition || screenOrientation !== 'vertical', 
                             [''+slideAnimation]: (index + 1) === slidePosition}">
-            <div class="slideTextVertical d-flex align-items-center text-center justify-content-center fadeInAnim" v-if="slideCommentaryVisibility === true">
-                        <h4>{{slide.commentary}}</h4>
-            </div>
+            <transition name="slideCommentary">
+                <div class="slideTextVertical d-flex align-items-center text-center justify-content-center fadeInAnim" 
+                    v-if="slideCommentaryVisibility === true">
+                    <h4>{{slide.commentary}}</h4>
+                </div>
+            </transition>
+
             <div class="d-block text-center" >
                <div class="slideImage" v-bind:style="{backgroundImage: 'url(' + slide.media_url + ')'}">
                </div>
                <b class="btn-block slideShowCommentaryButton" @click="toggleSlideCommentaryVisibility">
-                   <span><i class="bi bi-info-circle" v-if="slideCommentaryVisibility === false"></i></span>
-                   <span><i class="bi bi-x" v-if="slideCommentaryVisibility === true"></i></span>
+                    <transition name="slideCommentaryButton" mode="out-in">
+                        <span key="show" v-if="slideCommentaryVisibility === false">
+                            <i class="bi bi-info-circle"></i>
+                        </span>
+                        <span key="hide" v-if="slideCommentaryVisibility === true">
+                            <i class="bi bi-x"></i>
+                        </span>
+                    </transition>
                </b>
             </div>
         </div>     

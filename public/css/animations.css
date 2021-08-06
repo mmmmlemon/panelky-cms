@@ -301,4 +301,31 @@
     /* filter: blur(0px); */
 }
 
+
+.slideCommentary-enter, .slideCommentary-leave-to{
+    opacity: 0;
+}
+
+.slideCommentary-enter-to, .slideCommentary-leave{
+    opacity: 1;
+}
+
+.slideCommentary-enter-active, .slideCommentary-leave-active{
+    transition: all 0.15s ease-in-out;
+}
+
+
+.slideCommentaryButton-enter, .slideCommentaryButton-leave-to{
+    opacity: 0;
+    font-size: 1.5rem;
+}
+
+.slideCommentaryButton-enter-to, .slideCommentaryButton-leave{
+    opacity: 1;
+    font-size: 2.7rem;
+}
+
+.slideCommentaryButton-enter-active, .slideCommentaryButton-leave-active{
+    transition: all 0.15s ease-in-out;
+}
 /* //////////////////// */
