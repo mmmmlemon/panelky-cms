@@ -13,10 +13,10 @@
         <div class="projectCardButtons fadeInAnimSlow" v-if="visible === true">
             <!-- кнопки переключения слайдов -->
             <b class="d-none d-md-block projectButton left" @click="prevSlide">
-                <i class="bi bi-chevron-left" v-if="slidePosition !== 0"></i>
+                <i class="bi bi-chevron-left"></i>
             </b>
             <b class="d-none d-md-block projectButton right" @click="nextSlide">
-                <i class="bi bi-chevron-right" v-if="slidePosition < numOfSlides"></i>
+                <i class="bi bi-chevron-right"></i>
             </b>
         </div>
 
@@ -27,9 +27,19 @@
                     <i v-if="slidePosition === 0" class="bi bi-circle-fill"></i>
                     <i v-if="slidePosition !== 0" class="bi bi-circle"></i>
                 </a>
-                <a class="m-1 slideButton" v-for="index in (numOfSlides)" v-bind:key="index" @click="changeCurrentSlidePosition(index)">
+                <!-- "точки" для вертикальных слайдов -->
+                <a class="m-1 slideButton" v-for="index in (numOfSlides.vertical)" 
+                    v-bind:key="index" @click="changeCurrentSlidePosition(index)"
+                    v-bind:class="{'invisible': screenOrientation !== 'vertical'}">
                     <i v-if="slidePosition === index" class="bi bi-circle-fill"></i>
                     <i v-if="slidePosition !== index" class="bi bi-circle"></i>
+                </a>
+                <!-- "точки" для горизонтальных слайдов -->
+                <a class="m-1 slideButton" v-for="index in (numOfSlides.horizontal)" 
+                    v-bind:key="index" @click="changeCurrentSlidePosition(index)"
+                    v-bind:class="{'invisible': screenOrientation !== 'horizontal'}">
+                    <i v-if="slidePosition === index && screenOrientation == 'horizontal'" class="bi bi-circle-fill"></i>
+                    <i v-if="slidePosition !== index && screenOrientation == 'horizontal'" class="bi bi-circle"></i>
                 </a>
             </div>
         </div>
@@ -310,10 +320,8 @@ export default {
 
         // кол-во слайдов в проекте
         numOfSlides(){
-            if(this.$isMobile)
-            { return this.project.slides.mobile.length; }
-            else
-            { return this.project.slides.desktop.length; }
+           return {'vertical': this.project.slides.mobile.length,
+                    'horizontal': this.project.slides.desktop.length };
         },
 
         //ориентация экрана
@@ -338,20 +346,29 @@ export default {
         
         // перейти к предыдущему слайду
         prevSlide(){
-            if(this.slidePosition - 1 >= 0)
+            let conditionVertical = this.screenOrientation === 'vertical' && (this.slidePosition - 1 >= 0);
+            let conditionHorizontal = this.screenOrientation === 'horizontal' && (this.slidePosition - 1 >= 0);
+
+            if(conditionVertical || conditionHorizontal)
             {   
                 this.slideAnimation = "goRightSlideAnim";
                 this.slidePosition -= 1; 
             }
             else{
                 this.slideAnimation = "goRightSlideAnim";
-                this.slidePosition = this.numOfSlides;
+                if(this.screenOrientation === 'vertical')
+                { this.slidePosition = this.numOfSlides.vertical; }
+                else if (this.screenOrientation === 'horizontal')
+                { this.slidePosition = this.numOfSlides.horizontal; }
             }
         },
 
         // перейти к следующему слайду
         nextSlide(){
-            if(this.slidePosition + 1 <= this.numOfSlides)
+            let conditionVertical = this.screenOrientation === 'vertical' && (this.slidePosition + 1 <= this.numOfSlides.vertical);
+            let conditionHorizontal = this.screenOrientation === 'horizontal' && (this.slidePosition + 1 <= this.numOfSlides.horizontal);
+
+            if(conditionVertical || conditionHorizontal)
             { 
                 this.slideAnimation = "goLeftSlideAnim";
                 this.slidePosition += 1; 

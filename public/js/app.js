@@ -5776,6 +5776,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     var _this = this;
@@ -5848,11 +5858,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     // кол-во слайдов в проекте
     numOfSlides: function numOfSlides() {
-      if (this.$isMobile) {
-        return this.project.slides.mobile.length;
-      } else {
-        return this.project.slides.desktop.length;
-      }
+      return {
+        'vertical': this.project.slides.mobile.length,
+        'horizontal': this.project.slides.desktop.length
+      };
     },
     //ориентация экрана
     screenOrientation: function screenOrientation() {
@@ -5872,17 +5881,28 @@ __webpack_require__.r(__webpack_exports__);
     },
     // перейти к предыдущему слайду
     prevSlide: function prevSlide() {
-      if (this.slidePosition - 1 >= 0) {
+      var conditionVertical = this.screenOrientation === 'vertical' && this.slidePosition - 1 >= 0;
+      var conditionHorizontal = this.screenOrientation === 'horizontal' && this.slidePosition - 1 >= 0;
+
+      if (conditionVertical || conditionHorizontal) {
         this.slideAnimation = "goRightSlideAnim";
         this.slidePosition -= 1;
       } else {
         this.slideAnimation = "goRightSlideAnim";
-        this.slidePosition = this.numOfSlides;
+
+        if (this.screenOrientation === 'vertical') {
+          this.slidePosition = this.numOfSlides.vertical;
+        } else if (this.screenOrientation === 'horizontal') {
+          this.slidePosition = this.numOfSlides.horizontal;
+        }
       }
     },
     // перейти к следующему слайду
     nextSlide: function nextSlide() {
-      if (this.slidePosition + 1 <= this.numOfSlides) {
+      var conditionVertical = this.screenOrientation === 'vertical' && this.slidePosition + 1 <= this.numOfSlides.vertical;
+      var conditionHorizontal = this.screenOrientation === 'horizontal' && this.slidePosition + 1 <= this.numOfSlides.horizontal;
+
+      if (conditionVertical || conditionHorizontal) {
         this.slideAnimation = "goLeftSlideAnim";
         this.slidePosition += 1;
       } else {
@@ -68163,11 +68183,7 @@ var render = function() {
                 staticClass: "d-none d-md-block projectButton left",
                 on: { click: _vm.prevSlide }
               },
-              [
-                _vm.slidePosition !== 0
-                  ? _c("i", { staticClass: "bi bi-chevron-left" })
-                  : _vm._e()
-              ]
+              [_c("i", { staticClass: "bi bi-chevron-left" })]
             ),
             _vm._v(" "),
             _c(
@@ -68176,11 +68192,7 @@ var render = function() {
                 staticClass: "d-none d-md-block projectButton right",
                 on: { click: _vm.nextSlide }
               },
-              [
-                _vm.slidePosition < _vm.numOfSlides
-                  ? _c("i", { staticClass: "bi bi-chevron-right" })
-                  : _vm._e()
-              ]
+              [_c("i", { staticClass: "bi bi-chevron-right" })]
             )
           ])
         : _vm._e(),
@@ -68212,12 +68224,15 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _vm._l(_vm.numOfSlides, function(index) {
+                _vm._l(_vm.numOfSlides.vertical, function(index) {
                   return _c(
                     "a",
                     {
                       key: index,
                       staticClass: "m-1 slideButton",
+                      class: {
+                        invisible: _vm.screenOrientation !== "vertical"
+                      },
                       on: {
                         click: function($event) {
                           return _vm.changeCurrentSlidePosition(index)
@@ -68230,6 +68245,35 @@ var render = function() {
                         : _vm._e(),
                       _vm._v(" "),
                       _vm.slidePosition !== index
+                        ? _c("i", { staticClass: "bi bi-circle" })
+                        : _vm._e()
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _vm._l(_vm.numOfSlides.horizontal, function(index) {
+                  return _c(
+                    "a",
+                    {
+                      key: index,
+                      staticClass: "m-1 slideButton",
+                      class: {
+                        invisible: _vm.screenOrientation !== "horizontal"
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.changeCurrentSlidePosition(index)
+                        }
+                      }
+                    },
+                    [
+                      _vm.slidePosition === index &&
+                      _vm.screenOrientation == "horizontal"
+                        ? _c("i", { staticClass: "bi bi-circle-fill" })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.slidePosition !== index &&
+                      _vm.screenOrientation == "horizontal"
                         ? _c("i", { staticClass: "bi bi-circle" })
                         : _vm._e()
                     ]
