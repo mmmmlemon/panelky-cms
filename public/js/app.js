@@ -3816,6 +3816,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   // данные
   data: function data() {
@@ -3846,12 +3876,21 @@ __webpack_require__.r(__webpack_exports__);
 
         var formData = new FormData();
         formData.append('newOrder', JSON.stringify(value));
-        formData.append('type', 'horizontal');
+        formData.append('type', 'horizontal'); //обновляем стейт currentProject чтобы не было мерцания при перемещении слайда
+
+        var currentProject = this.$parent.currentProject;
+        currentProject.slides.horizontal = value;
+        this.$store.commit('setState', {
+          state: 'currentProject',
+          value: currentProject
+        });
         axios.post('/admin/setNewOrderForSlides', formData).then(function (response) {
           _this.$store.dispatch('getProject', {
             value: _this.projectSlug,
             type: 'full'
           });
+
+          _this.slidePreviewClass = '';
         })["catch"](function (error) {
           _this.$store.dispatch('setErrors', error.response.data.message);
         });
@@ -3866,7 +3905,14 @@ __webpack_require__.r(__webpack_exports__);
 
         var formData = new FormData();
         formData.append('newOrder', JSON.stringify(value));
-        formData.append('type', 'vertical');
+        formData.append('type', 'vertical'); //обновляем стейт currentProject чтобы не было мерцания при перемещении слайда
+
+        var currentProject = this.$parent.currentProject;
+        currentProject.slides.vertical = value;
+        this.$store.commit('setState', {
+          state: 'currentProject',
+          value: currentProject
+        });
         axios.post('/admin/setNewOrderForSlides', formData).then(function (response) {
           _this2.$store.dispatch('getProject', {
             value: _this2.projectSlug,
@@ -5589,6 +5635,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -63333,7 +63381,7 @@ var render = function() {
             _vm._v(" "),
             _c("hr"),
             _vm._v(" "),
-            _c("h5", [_vm._v("Но их всегда можно добавить!")])
+            _c("h5", [_vm._v("Но их никогда не поздно добавить!")])
           ]
         )
       : _vm._e(),
@@ -65765,11 +65813,13 @@ var render = function() {
           "div",
           { staticClass: "col-12" },
           [
-            _c("h5", { staticClass: "text-center" }, [
-              _vm._v("Горизонтальные слайды")
-            ]),
+            _vm.projectSlidesHorizontal != 0
+              ? _c("h5", { staticClass: "text-center mt-5" }, [
+                  _vm._v("Горизонтальные слайды")
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("hr"),
+            _vm.projectSlidesHorizontal != 0 ? _c("hr") : _vm._e(),
             _vm._v(" "),
             _c(
               "draggable",
@@ -65807,43 +65857,59 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c(
-                      "h6",
-                      {
-                        staticClass: "deleteSlide m-2",
-                        on: {
-                          click: function($event) {
-                            return _vm.deleteSlide(slide.id)
-                          }
-                        }
-                      },
-                      [_c("b", [_vm._v("Ред. комментарий")])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "h6",
-                      {
-                        staticClass: "deleteSlide m-2",
-                        on: {
-                          click: function($event) {
-                            return _vm.deleteSlide(slide.id)
-                          }
-                        }
-                      },
-                      [_c("b", [_vm._v("Удалить")])]
-                    ),
-                    _vm._v(" "),
-                    _c("h6", { staticClass: "handle" }, [_vm._v("перемесить")])
+                      "div",
+                      { staticClass: "row justify-content-center mt-2" },
+                      [
+                        _c("div", { staticClass: "col-4 text-center" }, [
+                          _c(
+                            "h4",
+                            {
+                              staticClass: "deleteSlide m-2",
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteSlide(slide.id)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "bi bi-pencil" })]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4 text-center" }, [
+                          _c(
+                            "h4",
+                            {
+                              staticClass: "deleteSlide m-2",
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteSlide(slide.id)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "bi bi-trash" })]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4 text-center" }, [
+                          _c("h4", { staticClass: "handle m-2" }, [
+                            _c("i", { staticClass: "bi bi-arrows-move" })
+                          ])
+                        ])
+                      ]
+                    )
                   ]
                 )
               }),
               0
             ),
             _vm._v(" "),
-            _c("h5", { staticClass: "text-center" }, [
-              _vm._v("Вертикальные слайды")
-            ]),
+            _vm.projectSlidesVertical != 0
+              ? _c("h5", { staticClass: "text-center mt-5" }, [
+                  _vm._v("Вертикальные слайды")
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("hr"),
+            _vm.projectSlidesVertical != 0 ? _c("hr") : _vm._e(),
             _vm._v(" "),
             _c(
               "draggable",
@@ -65881,32 +65947,46 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c(
-                      "h6",
-                      {
-                        staticClass: "deleteSlide m-2",
-                        on: {
-                          click: function($event) {
-                            return _vm.deleteSlide(slide.id)
-                          }
-                        }
-                      },
-                      [_c("b", [_vm._v("Ред. комментарий")])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "h6",
-                      {
-                        staticClass: "deleteSlide m-2",
-                        on: {
-                          click: function($event) {
-                            return _vm.deleteSlide(slide.id)
-                          }
-                        }
-                      },
-                      [_c("b", [_vm._v("Удалить")])]
-                    ),
-                    _vm._v(" "),
-                    _c("h6", { staticClass: "handle" }, [_vm._v("перемесить")])
+                      "div",
+                      { staticClass: "row justify-content-center mt-2" },
+                      [
+                        _c("div", { staticClass: "col-4 text-center" }, [
+                          _c(
+                            "h4",
+                            {
+                              staticClass: "deleteSlide m-2",
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteSlide(slide.id)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "bi bi-pencil" })]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4 text-center" }, [
+                          _c(
+                            "h4",
+                            {
+                              staticClass: "deleteSlide m-2",
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteSlide(slide.id)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "bi bi-trash" })]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-4 text-center" }, [
+                          _c("h4", { staticClass: "handle m-2" }, [
+                            _c("i", { staticClass: "bi bi-arrows-move" })
+                          ])
+                        ])
+                      ]
+                    )
                   ]
                 )
               }),
@@ -68313,7 +68393,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.visible === true
+      _vm.visible === true && _vm.project.slides.horizontal.length > 0
         ? _c("div", { staticClass: "projectCardButtons fadeInAnimSlow" }, [
             _c(
               "b",
@@ -68341,26 +68421,31 @@ var render = function() {
               "div",
               { staticClass: "row justify-content-center" },
               [
-                _c(
-                  "a",
-                  {
-                    staticClass: "m-1 slideButton",
-                    on: {
-                      click: function($event) {
-                        return _vm.changeCurrentSlidePosition(0)
-                      }
-                    }
-                  },
-                  [
-                    _vm.slidePosition === 0
-                      ? _c("i", { staticClass: "bi bi-circle-fill" })
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.slidePosition !== 0
-                      ? _c("i", { staticClass: "bi bi-circle" })
-                      : _vm._e()
-                  ]
-                ),
+                (_vm.project.slides.horizontal.length > 0 &&
+                  _vm.screenOrientation === "horizontal") ||
+                (_vm.project.slides.vertical.length > 0 &&
+                  _vm.screenOrientation === "vertical")
+                  ? _c(
+                      "a",
+                      {
+                        staticClass: "m-1 slideButton",
+                        on: {
+                          click: function($event) {
+                            return _vm.changeCurrentSlidePosition(0)
+                          }
+                        }
+                      },
+                      [
+                        _vm.slidePosition === 0
+                          ? _c("i", { staticClass: "bi bi-circle-fill" })
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.slidePosition !== 0
+                          ? _c("i", { staticClass: "bi bi-circle" })
+                          : _vm._e()
+                      ]
+                    )
+                  : _vm._e(),
                 _vm._v(" "),
                 _vm._l(_vm.numOfSlides.vertical, function(index) {
                   return _c(
@@ -68712,7 +68797,7 @@ var render = function() {
                     _vm.project.project_icon !== null
                       ? _c("img", {
                           staticClass: "unclickable projectLogo m-2",
-                          attrs: { src: _vm.project.project_icon, alt: "" }
+                          attrs: { src: _vm.project.project_icon }
                         })
                       : _vm._e(),
                     _vm._v(" "),
@@ -68918,7 +69003,8 @@ var render = function() {
           },
           [
             _c("transition", { attrs: { name: "slideCommentary" } }, [
-              _vm.slideCommentaryVisibility === true
+              _vm.slideCommentaryVisibility === true &&
+              slide.commentary !== null
                 ? _c(
                     "div",
                     {
@@ -68936,35 +69022,40 @@ var render = function() {
                 style: { backgroundImage: "url(" + slide.media_url + ")" }
               }),
               _vm._v(" "),
-              _c(
-                "b",
-                {
-                  staticClass: "btn-block slideShowCommentaryButton",
-                  on: { click: _vm.toggleSlideCommentaryVisibility }
-                },
-                [
-                  _c(
-                    "transition",
+              slide.commentary !== null
+                ? _c(
+                    "b",
                     {
-                      attrs: { name: "slideCommentaryButton", mode: "out-in" }
+                      staticClass: "btn-block slideShowCommentaryButton",
+                      on: { click: _vm.toggleSlideCommentaryVisibility }
                     },
                     [
-                      _vm.slideCommentaryVisibility === false
-                        ? _c("span", { key: "show" }, [
-                            _c("i", { staticClass: "bi bi-info-circle" })
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.slideCommentaryVisibility === true
-                        ? _c("span", { key: "hide" }, [
-                            _c("i", { staticClass: "bi bi-x" })
-                          ])
-                        : _vm._e()
-                    ]
+                      _c(
+                        "transition",
+                        {
+                          attrs: {
+                            name: "slideCommentaryButton",
+                            mode: "out-in"
+                          }
+                        },
+                        [
+                          _vm.slideCommentaryVisibility === false
+                            ? _c("span", { key: "show" }, [
+                                _c("i", { staticClass: "bi bi-info-circle" })
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.slideCommentaryVisibility === true
+                            ? _c("span", { key: "hide" }, [
+                                _c("i", { staticClass: "bi bi-x" })
+                              ])
+                            : _vm._e()
+                        ]
+                      )
+                    ],
+                    1
                   )
-                ],
-                1
-              )
+                : _vm._e()
             ])
           ],
           1
@@ -69015,14 +69106,16 @@ var render = function() {
                   style: { backgroundImage: "url(" + slide.media_url + ")" }
                 },
                 [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "slideTextHorizontal unclickable d-flex align-items-center text-center justify-content-center w-100"
-                    },
-                    [_c("h4", [_vm._v(_vm._s(slide.commentary))])]
-                  )
+                  slide.commentary !== null
+                    ? _c(
+                        "div",
+                        {
+                          staticClass:
+                            "slideTextHorizontal unclickable d-flex align-items-center text-center justify-content-center w-100"
+                        },
+                        [_c("h4", [_vm._v(_vm._s(slide.commentary))])]
+                      )
+                    : _vm._e()
                 ]
               )
             ])
@@ -69322,7 +69415,10 @@ var render = function() {
                     _vm._v(" "),
                     _vm.links !== false && _vm.links != -1
                       ? _c("div", { staticClass: "col-12" }, [
-                          _c("hr"),
+                          _vm.fullProjectList != -1 &&
+                          _vm.fullProjectList.home !== false
+                            ? _c("hr")
+                            : _vm._e(),
                           _vm._v(" "),
                           _c("h6", { staticClass: "text-center" }, [
                             _c(

@@ -40,7 +40,7 @@
                 </div>
                 <!-- ссылки -->
                 <div class="col-12" v-if="links !== false && links != -1">
-                    <hr>
+                    <hr v-if="fullProjectList != -1 && fullProjectList.home !== false">
                     <h6 class="text-center">
                         <a href="#links" v-on:click="closeNavMenu()">
                             <b>Ссылки</b>

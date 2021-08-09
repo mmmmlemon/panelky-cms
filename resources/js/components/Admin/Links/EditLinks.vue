@@ -48,7 +48,7 @@
             <h3>Нет ссылок</h3>
             <i class="bi bi-link font1-8rem"></i>
             <hr>
-            <h5>Но их всегда можно добавить!</h5>
+            <h5>Но их никогда не поздно добавить!</h5>
         </div>
         <div class="col-12 col-md-10 mt-5 goUpAnim" v-if="links !== -1" v-bind:class="{ 'invisible': addNewLink === true }" >
             <!-- форма редактирования имеющихся ссылок -->

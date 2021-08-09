@@ -45,30 +45,60 @@
         <!-- превью слайдов -->
         <div class="row justify-content-center mt-5">
             <div class="col-12">
-
-
-                <h5 class="text-center">Горизонтальные слайды</h5>
-                <hr>
+                <h5 class="text-center mt-5" v-if="projectSlidesHorizontal != 0">Горизонтальные слайды</h5>
+                <hr v-if="projectSlidesHorizontal != 0">
                 <draggable v-model="projectSlidesHorizontal" handle=".handle" v-bind="dragOptions" class="row justify-content-center">
-                    <div v-for="(slide, index) in projectSlidesHorizontal" v-bind:key="'horizontalSlide_'+index" class="col-2 text-center fadeInAnim">
+                    <div v-for="(slide, index) in projectSlidesHorizontal" 
+                         v-bind:key="'horizontalSlide_'+index" 
+                         class="col-2 text-center fadeInAnim">
                         <img :src="slide.media_url" class="slideEditImage">
                         <h3 class="slideEditImageNum">{{index+1}}</h3>
-                        <h6 @click="deleteSlide(slide.id)" class="deleteSlide m-2"><b>Ред. комментарий</b></h6>
-                        <h6 @click="deleteSlide(slide.id)" class="deleteSlide m-2"><b>Удалить</b></h6>
-                        <h6 class="handle">перемесить</h6>
+                        <!-- кнопки под слайдами -->
+                        <div class="row justify-content-center mt-2">
+                            <div class="col-4 text-center">
+                                <h4 @click="deleteSlide(slide.id)" class="deleteSlide m-2">
+                                    <i class="bi bi-pencil"></i>
+                                </h4>
+                            </div>
+                            <div class="col-4 text-center">
+                                <h4 @click="deleteSlide(slide.id)" class="deleteSlide m-2">
+                                    <i class="bi bi-trash"></i>
+                                </h4>
+                            </div>
+                            <div class="col-4 text-center">
+                                <h4 class="handle m-2">
+                                    <i class="bi bi-arrows-move"></i>
+                                </h4>
+                            </div>
+                        </div>   
                     </div>
                 </draggable>
 
 
-                <h5 class="text-center">Вертикальные слайды</h5>
-                <hr>
+                <h5 class="text-center mt-5" v-if="projectSlidesVertical != 0">Вертикальные слайды</h5>
+                <hr v-if="projectSlidesVertical != 0">
                 <draggable v-model="projectSlidesVertical" handle=".handle" v-bind="dragOptions" class="row justify-content-center mt-5">
                     <div v-for="(slide, index) in projectSlidesVertical" v-bind:key="'verticalSlide_'+index" class="col-2 text-center fadeInAnim">
                         <img :src="slide.media_url" class="slideEditImage">
                         <h3 class="slideEditImageNum">{{index+1}}</h3>
-                        <h6 @click="deleteSlide(slide.id)" class="deleteSlide m-2"><b>Ред. комментарий</b></h6>
-                        <h6 @click="deleteSlide(slide.id)" class="deleteSlide m-2"><b>Удалить</b></h6>
-                        <h6 class="handle">перемесить</h6>
+                        <!-- кнопки под слайдами -->
+                        <div class="row justify-content-center mt-2">
+                            <div class="col-4 text-center">
+                                <h4 @click="deleteSlide(slide.id)" class="deleteSlide m-2">
+                                    <i class="bi bi-pencil"></i>
+                                </h4>
+                            </div>
+                            <div class="col-4 text-center">
+                                <h4 @click="deleteSlide(slide.id)" class="deleteSlide m-2">
+                                    <i class="bi bi-trash"></i>
+                                </h4>
+                            </div>
+                            <div class="col-4 text-center">
+                                <h4 class="handle m-2">
+                                    <i class="bi bi-arrows-move"></i>
+                                </h4>
+                            </div>
+                        </div>
                     </div>
                 </draggable>
                
@@ -106,8 +136,15 @@ export default {
                 let formData = new FormData();
                 formData.append('newOrder', JSON.stringify(value));
                 formData.append('type', 'horizontal');
+
+                //обновляем стейт currentProject чтобы не было мерцания при перемещении слайда
+                let currentProject = this.$parent.currentProject;
+                currentProject.slides.horizontal = value;
+                this.$store.commit('setState', {state: 'currentProject', value: currentProject});
+
                 axios.post('/admin/setNewOrderForSlides', formData).then(response => {
                     this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
+                    this.slidePreviewClass = '';
                 }).catch(error => {
                     this.$store.dispatch('setErrors', error.response.data.message);
                 });
@@ -123,6 +160,12 @@ export default {
                 let formData = new FormData();
                 formData.append('newOrder', JSON.stringify(value));
                 formData.append('type', 'vertical');
+
+                //обновляем стейт currentProject чтобы не было мерцания при перемещении слайда
+                let currentProject = this.$parent.currentProject;
+                currentProject.slides.vertical = value;
+                this.$store.commit('setState', {state: 'currentProject', value: currentProject});
+
                 axios.post('/admin/setNewOrderForSlides', formData).then(response => {
                     this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
                 }).catch(error => {

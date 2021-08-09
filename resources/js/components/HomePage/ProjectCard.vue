@@ -10,7 +10,7 @@
             <Error errorMessage="Не удалось загрузить информацию о проекте"/>
         </div>
 
-        <div class="projectCardButtons fadeInAnimSlow" v-if="visible === true">
+        <div class="projectCardButtons fadeInAnimSlow" v-if="visible === true && project.slides.horizontal.length > 0">
             <!-- кнопки переключения слайдов -->
             <b class="d-none d-md-block projectButton left" @click="prevSlide">
                 <i class="bi bi-chevron-left"></i>
@@ -23,7 +23,9 @@
         <!-- "точки" для слайдов -->
         <div class="col-12 sliderMenu fadeInAnimSlow" v-if="numOfSlides !== 0 && visible === true">
             <div class="row justify-content-center">
-                <a class="m-1 slideButton" @click="changeCurrentSlidePosition(0)">
+                <a class="m-1 slideButton" @click="changeCurrentSlidePosition(0)" 
+                    v-if="(project.slides.horizontal.length > 0 && screenOrientation === 'horizontal') ||
+                            project.slides.vertical.length > 0 && screenOrientation === 'vertical'">
                     <i v-if="slidePosition === 0" class="bi bi-circle-fill"></i>
                     <i v-if="slidePosition !== 0" class="bi bi-circle"></i>
                 </a>
@@ -149,7 +151,7 @@
                 </h1>
                 <!-- лого -->
                 <img v-if="project.project_icon !== null" 
-                    :src="project.project_icon" class="unclickable projectLogo m-2" alt="">
+                    :src="project.project_icon" class="unclickable projectLogo m-2">
                 <br>
                 <!-- краткое описание -->
                 <p v-if="project.project_subtitle !== null"
@@ -219,7 +221,7 @@
             <!-- текст комментария к слайду -->
             <transition name="slideCommentary">
                 <div class="slideTextVertical unclickable d-flex align-items-center text-center justify-content-center fadeInAnim" 
-                    v-if="slideCommentaryVisibility === true">
+                    v-if="slideCommentaryVisibility === true && slide.commentary !== null">
                     <h4>{{slide.commentary}}</h4>
                 </div>
             </transition>
@@ -229,7 +231,7 @@
                <div class="slideImage" v-bind:style="{backgroundImage: 'url(' + slide.media_url + ')'}">
                </div>
                <!-- кнопка показать\скрыть комментарий -->
-               <b class="btn-block slideShowCommentaryButton" @click="toggleSlideCommentaryVisibility">
+               <b class="btn-block slideShowCommentaryButton" v-if="slide.commentary !== null" @click="toggleSlideCommentaryVisibility">
                     <transition name="slideCommentaryButton" mode="out-in">
                         <span key="show" v-if="slideCommentaryVisibility === false">
                             <i class="bi bi-info-circle"></i>
@@ -253,7 +255,7 @@
                <!-- изображение -->
                <div class="slideImage" v-bind:style="{backgroundImage: 'url(' + slide.media_url + ')'}">
                    <!-- текст комментария -->
-                   <div class="slideTextHorizontal unclickable d-flex align-items-center text-center justify-content-center w-100">
+                   <div v-if="slide.commentary !== null" class="slideTextHorizontal unclickable d-flex align-items-center text-center justify-content-center w-100">
                         <h4>{{slide.commentary}}</h4>
                    </div>
                </div>
