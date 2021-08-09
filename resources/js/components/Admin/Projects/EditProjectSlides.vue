@@ -4,7 +4,7 @@
     <!-- форма для картинок -->
     <form @submit.prevent="submitSlide" class="fadeInAnim " method="POST">
         <!-- изображение -->
-        <div class="mb-3 slideForm" v-bind:class="{'unavaliable': projectSlides.length >= 5 }">
+        <div class="mb-3 slideForm" v>
             <h6>Скриншот, gif или короткое видео проекта</h6>
             <input type="file" class="form-control-file" ref="media" @change="handleMedia"
                     accept="image/jpeg, image/png, image/gif, video/mp4,video/x-m4v,video/*">
@@ -20,11 +20,11 @@
                 <label class="form-check-label" for="inlineRadio3">Горизонатально и вертикально</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio1" value="desktop" v-model="slideVisibility">
+                <input class="form-check-input" type="radio" id="inlineRadio1" value="horizontal" v-model="slideVisibility">
                 <label class="form-check-label" for="inlineRadio1">Горизонтально</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio2" value="mobile" v-model="slideVisibility">
+                <input class="form-check-input" type="radio" id="inlineRadio2" value="vertical" v-model="slideVisibility">
                 <label class="form-check-label" for="inlineRadio2">Вертикально</label>
             </div>
  
@@ -33,38 +33,44 @@
     
 
         <!-- комментарий -->
-        <div class="mt-5 mb-3 slideForm" v-bind:class="{'unavaliable': projectSlides.length >= 5 }">
+        <div class="mt-5 mb-3 slideForm">
             <h6>Комментарий</h6>
             <input type="text" v-model="slideComment" placeholder="Комментарий к слайду, отображается под слайдом" class="form-control">
             <div v-if="errors && errors.slideComment" class="text-danger goUpAnim">{{ errors.slideComment[0] }}</div>
         </div>
-        <button class="btn btn-lg btn-block btn-outline-light slideForm" v-bind:class="{'unavaliable': projectSlides.length >= 5 }">
+        <button class="btn btn-lg btn-block btn-outline-light slideForm">
             Загрузить и сохранить
         </button>
 
         <!-- превью слайдов -->
         <div class="row justify-content-center mt-5">
             <div class="col-12">
+
+
                 <h5 class="text-center">Горизонтальные слайды</h5>
                 <hr>
-                <div class="row justify-content-center">
-                    <div v-for="(slide, index) in projectSlides.horizontal" v-bind:key="index" class="col-2 text-center fadeInAnim">
+                <draggable v-model="projectSlidesHorizontal" handle=".handle" v-bind="dragOptions" class="row justify-content-center">
+                    <div v-for="(slide, index) in projectSlidesHorizontal" v-bind:key="'horizontalSlide_'+index" class="col-2 text-center fadeInAnim">
                         <img :src="slide.media_url" class="slideEditImage">
                         <h3 class="slideEditImageNum">{{index+1}}</h3>
                         <h6 @click="deleteSlide(slide.id)" class="deleteSlide m-2"><b>Ред. комментарий</b></h6>
                         <h6 @click="deleteSlide(slide.id)" class="deleteSlide m-2"><b>Удалить</b></h6>
+                        <h6 class="handle">перемесить</h6>
                     </div>
-                </div>
+                </draggable>
+
+
                 <h5 class="text-center">Вертикальные слайды</h5>
                 <hr>
-                <div class="row justify-content-center mt-5">
-                    <div v-for="(slide, index) in projectSlides.vertical" v-bind:key="index" class="col-2 text-center fadeInAnim">
+                <draggable v-model="projectSlidesVertical" handle=".handle" v-bind="dragOptions" class="row justify-content-center mt-5">
+                    <div v-for="(slide, index) in projectSlidesVertical" v-bind:key="'verticalSlide_'+index" class="col-2 text-center fadeInAnim">
                         <img :src="slide.media_url" class="slideEditImage">
                         <h3 class="slideEditImageNum">{{index+1}}</h3>
                         <h6 @click="deleteSlide(slide.id)" class="deleteSlide m-2"><b>Ред. комментарий</b></h6>
                         <h6 @click="deleteSlide(slide.id)" class="deleteSlide m-2"><b>Удалить</b></h6>
+                        <h6 class="handle">перемесить</h6>
                     </div>
-                </div>
+                </draggable>
                
             </div>
         </div>
@@ -91,9 +97,46 @@ export default {
     },
 
     computed: {
-        projectSlides: function(){
-            return this.$store.state.AdminStates.currentProject.slides;
-        }
+        // горизонтальные слайды
+        projectSlidesHorizontal:{
+            get(){
+                return this.$store.state.AdminStates.currentProject.slides.horizontal;
+            },
+            set(value){
+                let formData = new FormData();
+                formData.append('newOrder', JSON.stringify(value));
+                formData.append('type', 'horizontal');
+                axios.post('/admin/setNewOrderForSlides', formData).then(response => {
+                    this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
+                }).catch(error => {
+                    this.$store.dispatch('setErrors', error.response.data.message);
+                });
+            }   
+        },
+
+        projectSlidesVertical:{
+
+            get(){
+                return this.$store.state.AdminStates.currentProject.slides.vertical;
+            },
+            set(value){
+                let formData = new FormData();
+                formData.append('newOrder', JSON.stringify(value));
+                formData.append('type', 'vertical');
+                axios.post('/admin/setNewOrderForSlides', formData).then(response => {
+                    this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
+                }).catch(error => {
+                    this.$store.dispatch('setErrors', error.response.data.message);
+                });
+            }  
+            
+        },
+
+        dragOptions() {
+            return {
+                ghostClass: "dragGhost"
+            }
+        },
     },
 
     // методы

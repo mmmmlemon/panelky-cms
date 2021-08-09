@@ -497,13 +497,35 @@ class AdminController extends Controller
             Storage::put($path, file_get_contents($mediaFile));
 
             // сохраняем запись в БД
-            $slide = new ProjectSlide;
-            $slide->media_url = "storage/projectsSlideMedia/".$filename;
-            $slide->visibility = $request->slideVisibility;
-            $slide->commentary = $request->slideComment;
-            $slide->project_id = $request->projectId;
-            $slide->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->max('order') + 1;
-            $slide->save();
+            // если слайд вертикальный или горизонтальный
+            if($request->slideVisibility != 'all')
+            {
+                $slide = new ProjectSlide;
+                $slide->media_url = "storage/projectsSlideMedia/".$filename;
+                $slide->visibility = $request->slideVisibility;
+                $slide->commentary = $request->slideComment;
+                $slide->project_id = $request->projectId;
+                $slide->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->max('order') - 1;
+                $slide->save();
+            } 
+            // если слайд горизонтальный\вертикальный, то сохраняем две записи
+            else {
+                $slideHorizontal = new ProjectSlide;
+                $slideHorizontal->media_url = "storage/projectsSlideMedia/".$filename;
+                $slideHorizontal->visibility = 'horizontal';
+                $slideHorizontal->commentary = $request->slideComment;
+                $slideHorizontal->project_id = $request->projectId;
+                $slideHorizontal->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->max('order') - 1;
+                $slideHorizontal->save();
+
+                $slideVertical = new ProjectSlide;
+                $slideVertical->media_url = "storage/projectsSlideMedia/".$filename;
+                $slideVertical->visibility = 'vertical';
+                $slideVertical->commentary = $request->slideComment;
+                $slideVertical->project_id = $request->projectId;
+                $slideVertical->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->max('order') - 1;
+                $slideVertical->save();
+            }
         }
 
         return response()->json(true, 200);
@@ -513,9 +535,41 @@ class AdminController extends Controller
     //удалить слайд из проекта
     public function deleteProjectSlide(Request $request)
     {
-        $projectSlide = ProjectSlide::find($request->slideId)->delete();
+        $projectSlide = ProjectSlide::find($request->slideId);
 
+        $mediaUrl = $projectSlide->media_url;
+
+        $countSlides = count(ProjectSlide::where('media_url', $mediaUrl)->get());
+        
+        if($countSlides == 1)
+        {
+            Storage::disk('public')->delete(str_replace('storage/', '', $mediaUrl));
+        }
+
+        $projectSlide->delete();
+
+        //удаление медиа
         return response()->json(true, 200);
+    }
+
+    //setNewOrderForHorizontalSlides
+    // изменить порядок для горизонтальных слайдов
+    public function setNewOrderForSlides(Request $request)
+    {   
+    
+        $newOrder = json_decode($request->newOrder);
+
+        $count = count($newOrder) - 1;
+
+        foreach($newOrder as $item)
+        {
+            $project = ProjectSlide::where('id', $item->id)->get()[0];
+            $project->order = $count;
+            $project->save();
+            $count--;
+        }
+
+        return response()->json($newOrder, 200);
     }
 
 }

@@ -3810,6 +3810,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   // данные
   data: function data() {
@@ -3830,15 +3836,58 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    projectSlides: function projectSlides() {
-      return this.$store.state.AdminStates.currentProject.slides;
+    // горизонтальные слайды
+    projectSlidesHorizontal: {
+      get: function get() {
+        return this.$store.state.AdminStates.currentProject.slides.horizontal;
+      },
+      set: function set(value) {
+        var _this = this;
+
+        var formData = new FormData();
+        formData.append('newOrder', JSON.stringify(value));
+        formData.append('type', 'horizontal');
+        axios.post('/admin/setNewOrderForSlides', formData).then(function (response) {
+          _this.$store.dispatch('getProject', {
+            value: _this.projectSlug,
+            type: 'full'
+          });
+        })["catch"](function (error) {
+          _this.$store.dispatch('setErrors', error.response.data.message);
+        });
+      }
+    },
+    projectSlidesVertical: {
+      get: function get() {
+        return this.$store.state.AdminStates.currentProject.slides.vertical;
+      },
+      set: function set(value) {
+        var _this2 = this;
+
+        var formData = new FormData();
+        formData.append('newOrder', JSON.stringify(value));
+        formData.append('type', 'vertical');
+        axios.post('/admin/setNewOrderForSlides', formData).then(function (response) {
+          _this2.$store.dispatch('getProject', {
+            value: _this2.projectSlug,
+            type: 'full'
+          });
+        })["catch"](function (error) {
+          _this2.$store.dispatch('setErrors', error.response.data.message);
+        });
+      }
+    },
+    dragOptions: function dragOptions() {
+      return {
+        ghostClass: "dragGhost"
+      };
     }
   },
   // методы
   methods: {
     // сохранить слайд
     submitSlide: function submitSlide() {
-      var _this = this;
+      var _this3 = this;
 
       this.saved = false;
       var formData = new FormData();
@@ -3864,34 +3913,34 @@ __webpack_require__.r(__webpack_exports__);
           'Content-Type': 'multipart/form-data'
         }
       }).then(function (response) {
-        _this.saved = true;
-        _this.projectIcon = undefined;
-        _this.projectImage = undefined;
-        _this.slideMedia = undefined;
-        _this.slideComment = undefined;
-        _this.$refs.media.value = null;
+        _this3.saved = true;
+        _this3.projectIcon = undefined;
+        _this3.projectImage = undefined;
+        _this3.slideMedia = undefined;
+        _this3.slideComment = undefined;
+        _this3.$refs.media.value = null;
 
-        _this.$store.dispatch('getProject', {
-          value: _this.projectSlug,
+        _this3.$store.dispatch('getProject', {
+          value: _this3.projectSlug,
           type: 'full'
         });
       })["catch"](function (error) {
         if (error.response.status === 422) {
-          _this.errors = error.response.data.errors || {};
-          console.log(_this.errors);
+          _this3.errors = error.response.data.errors || {};
+          console.log(_this3.errors);
         }
       });
     },
     //удалить слайд
     deleteSlide: function deleteSlide(slideId) {
-      var _this2 = this;
+      var _this4 = this;
 
       var formData = new FormData();
       formData.append('slideId', slideId);
       axios.post('/admin/deleteProjectSlide', formData).then(function (response) {
         if (response.data === true) {
-          _this2.$store.dispatch('getProject', {
-            value: _this2.projectSlug,
+          _this4.$store.dispatch('getProject', {
+            value: _this4.projectSlug,
             type: 'full'
           });
         }
@@ -65558,39 +65607,32 @@ var render = function() {
       }
     },
     [
-      _c(
-        "div",
-        {
-          staticClass: "mb-3 slideForm",
-          class: { unavaliable: _vm.projectSlides.length >= 5 }
-        },
-        [
-          _c("h6", [_vm._v("Скриншот, gif или короткое видео проекта")]),
-          _vm._v(" "),
-          _c("input", {
-            ref: "media",
-            staticClass: "form-control-file",
-            attrs: {
-              type: "file",
-              accept:
-                "image/jpeg, image/png, image/gif, video/mp4,video/x-m4v,video/*"
-            },
-            on: { change: _vm.handleMedia }
-          }),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.slideMedia
-            ? _c("div", { staticClass: "text-danger" }, [
-                _vm._v(_vm._s(_vm.errors.slideMedia[0]))
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.slideMedia !== undefined
-            ? _c("a", { staticClass: "btn btn-sm btn-light mt-3" }, [
-                _vm._v("Удалить медиа")
-              ])
-            : _vm._e()
-        ]
-      ),
+      _c("div", { staticClass: "mb-3 slideForm", attrs: { v: "" } }, [
+        _c("h6", [_vm._v("Скриншот, gif или короткое видео проекта")]),
+        _vm._v(" "),
+        _c("input", {
+          ref: "media",
+          staticClass: "form-control-file",
+          attrs: {
+            type: "file",
+            accept:
+              "image/jpeg, image/png, image/gif, video/mp4,video/x-m4v,video/*"
+          },
+          on: { change: _vm.handleMedia }
+        }),
+        _vm._v(" "),
+        _vm.errors && _vm.errors.slideMedia
+          ? _c("div", { staticClass: "text-danger" }, [
+              _vm._v(_vm._s(_vm.errors.slideMedia[0]))
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.slideMedia !== undefined
+          ? _c("a", { staticClass: "btn btn-sm btn-light mt-3" }, [
+              _vm._v("Удалить медиа")
+            ])
+          : _vm._e()
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "mt-5" }, [
         _c("h6", [_vm._v("Видимость в положении экрана")]),
@@ -65633,11 +65675,11 @@ var render = function() {
               }
             ],
             staticClass: "form-check-input",
-            attrs: { type: "radio", id: "inlineRadio1", value: "desktop" },
-            domProps: { checked: _vm._q(_vm.slideVisibility, "desktop") },
+            attrs: { type: "radio", id: "inlineRadio1", value: "horizontal" },
+            domProps: { checked: _vm._q(_vm.slideVisibility, "horizontal") },
             on: {
               change: function($event) {
-                _vm.slideVisibility = "desktop"
+                _vm.slideVisibility = "horizontal"
               }
             }
           }),
@@ -65660,11 +65702,11 @@ var render = function() {
               }
             ],
             staticClass: "form-check-input",
-            attrs: { type: "radio", id: "inlineRadio2", value: "mobile" },
-            domProps: { checked: _vm._q(_vm.slideVisibility, "mobile") },
+            attrs: { type: "radio", id: "inlineRadio2", value: "vertical" },
+            domProps: { checked: _vm._q(_vm.slideVisibility, "vertical") },
             on: {
               change: function($event) {
-                _vm.slideVisibility = "mobile"
+                _vm.slideVisibility = "vertical"
               }
             }
           }),
@@ -65677,167 +65719,202 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "mt-5 mb-3 slideForm",
-          class: { unavaliable: _vm.projectSlides.length >= 5 }
-        },
-        [
-          _c("h6", [_vm._v("Комментарий")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.slideComment,
-                expression: "slideComment"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              placeholder: "Комментарий к слайду, отображается под слайдом"
-            },
-            domProps: { value: _vm.slideComment },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.slideComment = $event.target.value
-              }
+      _c("div", { staticClass: "mt-5 mb-3 slideForm" }, [
+        _c("h6", [_vm._v("Комментарий")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.slideComment,
+              expression: "slideComment"
             }
-          }),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.slideComment
-            ? _c("div", { staticClass: "text-danger goUpAnim" }, [
-                _vm._v(_vm._s(_vm.errors.slideComment[0]))
-              ])
-            : _vm._e()
-        ]
-      ),
+          ],
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            placeholder: "Комментарий к слайду, отображается под слайдом"
+          },
+          domProps: { value: _vm.slideComment },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.slideComment = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm.errors && _vm.errors.slideComment
+          ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+              _vm._v(_vm._s(_vm.errors.slideComment[0]))
+            ])
+          : _vm._e()
+      ]),
       _vm._v(" "),
       _c(
         "button",
-        {
-          staticClass: "btn btn-lg btn-block btn-outline-light slideForm",
-          class: { unavaliable: _vm.projectSlides.length >= 5 }
-        },
+        { staticClass: "btn btn-lg btn-block btn-outline-light slideForm" },
         [_vm._v("\n        Загрузить и сохранить\n    ")]
       ),
       _vm._v(" "),
       _c("div", { staticClass: "row justify-content-center mt-5" }, [
-        _c("div", { staticClass: "col-12" }, [
-          _c("h5", { staticClass: "text-center" }, [
-            _vm._v("Горизонтальные слайды")
-          ]),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "row justify-content-center" },
-            _vm._l(_vm.projectSlides.horizontal, function(slide, index) {
-              return _c(
-                "div",
-                { key: index, staticClass: "col-2 text-center fadeInAnim" },
-                [
-                  _c("img", {
-                    staticClass: "slideEditImage",
-                    attrs: { src: slide.media_url }
-                  }),
-                  _vm._v(" "),
-                  _c("h3", { staticClass: "slideEditImageNum" }, [
-                    _vm._v(_vm._s(index + 1))
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "h6",
-                    {
-                      staticClass: "deleteSlide m-2",
-                      on: {
-                        click: function($event) {
-                          return _vm.deleteSlide(slide.id)
-                        }
-                      }
+        _c(
+          "div",
+          { staticClass: "col-12" },
+          [
+            _c("h5", { staticClass: "text-center" }, [
+              _vm._v("Горизонтальные слайды")
+            ]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c(
+              "draggable",
+              _vm._b(
+                {
+                  staticClass: "row justify-content-center",
+                  attrs: { handle: ".handle" },
+                  model: {
+                    value: _vm.projectSlidesHorizontal,
+                    callback: function($$v) {
+                      _vm.projectSlidesHorizontal = $$v
                     },
-                    [_c("b", [_vm._v("Ред. комментарий")])]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "h6",
-                    {
-                      staticClass: "deleteSlide m-2",
-                      on: {
-                        click: function($event) {
-                          return _vm.deleteSlide(slide.id)
+                    expression: "projectSlidesHorizontal"
+                  }
+                },
+                "draggable",
+                _vm.dragOptions,
+                false
+              ),
+              _vm._l(_vm.projectSlidesHorizontal, function(slide, index) {
+                return _c(
+                  "div",
+                  {
+                    key: "horizontalSlide_" + index,
+                    staticClass: "col-2 text-center fadeInAnim"
+                  },
+                  [
+                    _c("img", {
+                      staticClass: "slideEditImage",
+                      attrs: { src: slide.media_url }
+                    }),
+                    _vm._v(" "),
+                    _c("h3", { staticClass: "slideEditImageNum" }, [
+                      _vm._v(_vm._s(index + 1))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "h6",
+                      {
+                        staticClass: "deleteSlide m-2",
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteSlide(slide.id)
+                          }
                         }
-                      }
-                    },
-                    [_c("b", [_vm._v("Удалить")])]
-                  )
-                ]
-              )
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _c("h5", { staticClass: "text-center" }, [
-            _vm._v("Вертикальные слайды")
-          ]),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "row justify-content-center mt-5" },
-            _vm._l(_vm.projectSlides.vertical, function(slide, index) {
-              return _c(
-                "div",
-                { key: index, staticClass: "col-2 text-center fadeInAnim" },
-                [
-                  _c("img", {
-                    staticClass: "slideEditImage",
-                    attrs: { src: slide.media_url }
-                  }),
-                  _vm._v(" "),
-                  _c("h3", { staticClass: "slideEditImageNum" }, [
-                    _vm._v(_vm._s(index + 1))
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "h6",
-                    {
-                      staticClass: "deleteSlide m-2",
-                      on: {
-                        click: function($event) {
-                          return _vm.deleteSlide(slide.id)
+                      },
+                      [_c("b", [_vm._v("Ред. комментарий")])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "h6",
+                      {
+                        staticClass: "deleteSlide m-2",
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteSlide(slide.id)
+                          }
                         }
-                      }
+                      },
+                      [_c("b", [_vm._v("Удалить")])]
+                    ),
+                    _vm._v(" "),
+                    _c("h6", { staticClass: "handle" }, [_vm._v("перемесить")])
+                  ]
+                )
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("h5", { staticClass: "text-center" }, [
+              _vm._v("Вертикальные слайды")
+            ]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c(
+              "draggable",
+              _vm._b(
+                {
+                  staticClass: "row justify-content-center mt-5",
+                  attrs: { handle: ".handle" },
+                  model: {
+                    value: _vm.projectSlidesVertical,
+                    callback: function($$v) {
+                      _vm.projectSlidesVertical = $$v
                     },
-                    [_c("b", [_vm._v("Ред. комментарий")])]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "h6",
-                    {
-                      staticClass: "deleteSlide m-2",
-                      on: {
-                        click: function($event) {
-                          return _vm.deleteSlide(slide.id)
+                    expression: "projectSlidesVertical"
+                  }
+                },
+                "draggable",
+                _vm.dragOptions,
+                false
+              ),
+              _vm._l(_vm.projectSlidesVertical, function(slide, index) {
+                return _c(
+                  "div",
+                  {
+                    key: "verticalSlide_" + index,
+                    staticClass: "col-2 text-center fadeInAnim"
+                  },
+                  [
+                    _c("img", {
+                      staticClass: "slideEditImage",
+                      attrs: { src: slide.media_url }
+                    }),
+                    _vm._v(" "),
+                    _c("h3", { staticClass: "slideEditImageNum" }, [
+                      _vm._v(_vm._s(index + 1))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "h6",
+                      {
+                        staticClass: "deleteSlide m-2",
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteSlide(slide.id)
+                          }
                         }
-                      }
-                    },
-                    [_c("b", [_vm._v("Удалить")])]
-                  )
-                ]
-              )
-            }),
-            0
-          )
-        ])
+                      },
+                      [_c("b", [_vm._v("Ред. комментарий")])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "h6",
+                      {
+                        staticClass: "deleteSlide m-2",
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteSlide(slide.id)
+                          }
+                        }
+                      },
+                      [_c("b", [_vm._v("Удалить")])]
+                    ),
+                    _vm._v(" "),
+                    _c("h6", { staticClass: "handle" }, [_vm._v("перемесить")])
+                  ]
+                )
+              }),
+              0
+            )
+          ],
+          1
+        )
       ])
     ]
   )

@@ -81,7 +81,7 @@ class APIController extends Controller
         if($type == "full")
         {   
             // получаем слайды проекта
-            $projectSlides = ProjectSlide::select('id', 'media_url', 'commentary', 'visibility')->where('project_id', $project->id)->get();
+            $projectSlides = ProjectSlide::select('id', 'media_url', 'commentary', 'visibility')->where('project_id', $project->id)->orderBy('order','desc')->get();
      
             foreach($projectSlides as $slide)
             {
@@ -141,7 +141,7 @@ class APIController extends Controller
 
         foreach($homeProjects as $project)
         {
-            $projectSlides = ProjectSlide::select('id', 'media_url', 'commentary', 'visibility')->where('project_id', $project->id)->get();
+            $projectSlides = ProjectSlide::select('id', 'media_url', 'commentary', 'visibility')->where('project_id', $project->id)->orderBy('order','desc')->get();
             foreach($projectSlides as $slide)
             {
                 $slide->media_url = asset($slide->media_url);
