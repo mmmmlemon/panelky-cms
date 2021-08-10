@@ -572,4 +572,17 @@ class AdminController extends Controller
         return response()->json($newOrder, 200);
     }
 
+    //saveSlideChanges
+    // сохранить изенения для слайда
+    public function saveSlideChanges(Request $request)
+    {
+        $projectSlide = ProjectSlide::find($request->slideId);
+
+        $projectSlide->commentary = $request->slideCommentary;
+
+        $projectSlide->save();
+
+        return response()->json(true, 200);
+    }
+
 }

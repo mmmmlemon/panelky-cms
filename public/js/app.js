@@ -2357,6 +2357,40 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    slideIndex: {
+      "default": undefined,
+      type: Number
+    }
+  },
+  computed: {
+    slideCommentary: function slideCommentary() {
+      if (slideIndex !== undefined) {
+        return this.$parent.projectSlidesHorizontal[slideIndex];
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/LinkItem.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/LinkItem.vue?vue&type=script&lang=js& ***!
@@ -3846,6 +3880,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   // данные
   data: function data() {
@@ -3854,7 +3913,10 @@ __webpack_require__.r(__webpack_exports__);
       saved: false,
       slideMedia: undefined,
       slideVisibility: 'all',
-      slideComment: undefined
+      slideComment: undefined,
+      slideEditId: undefined,
+      slideEditComment: undefined,
+      slideEditMode: undefined
     };
   },
   props: {
@@ -3989,6 +4051,39 @@ __webpack_require__.r(__webpack_exports__);
             value: _this4.projectSlug,
             type: 'full'
           });
+        }
+      })["catch"](function (error) {
+        console.log(error.errors);
+      });
+    },
+    //редактировать слайд
+    editSlide: function editSlide(slideIndex, editMode) {
+      this.slideEditMode = editMode;
+
+      if (editMode === 'horizontal') {
+        this.slideEditId = this.projectSlidesHorizontal[slideIndex].id;
+        this.slideEditComment = this.projectSlidesHorizontal[slideIndex].commentary;
+      } else if (editMode === 'vertical') {
+        this.slideEditId = this.projectSlidesVertical[slideIndex].id;
+        this.slideEditComment = this.projectSlidesVertical[slideIndex].commentary;
+      }
+    },
+    //сохранить изменения в слайде
+    saveSlideChanges: function saveSlideChanges() {
+      var _this5 = this;
+
+      var formData = new FormData();
+      formData.append('slideId', this.slideEditId);
+      formData.append('slideCommentary', this.slideEditComment);
+      axios.post('/admin/saveSlideChanges', formData).then(function (response) {
+        if (response.data === true) {
+          _this5.$store.dispatch('getProject', {
+            value: _this5.projectSlug,
+            type: 'full'
+          });
+
+          _this5.slideEditId = undefined;
+          _this5.slideEditComment = undefined;
         }
       })["catch"](function (error) {
         console.log(error.errors);
@@ -6386,10 +6481,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Admin_Misc_DeleteModal_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/Admin/Misc/DeleteModal.vue */ "./resources/js/components/Admin/Misc/DeleteModal.vue");
 /* harmony import */ var _components_Admin_Misc_LinkItem_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/Admin/Misc/LinkItem.vue */ "./resources/js/components/Admin/Misc/LinkItem.vue");
 /* harmony import */ var _components_Admin_Projects_EditProjectSlides_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/Admin/Projects/EditProjectSlides.vue */ "./resources/js/components/Admin/Projects/EditProjectSlides.vue");
-/* harmony import */ var _components_Misc_Error_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/Misc/Error.vue */ "./resources/js/components/Misc/Error.vue");
-/* harmony import */ var _components_Navigation_Nav_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/Navigation/Nav.vue */ "./resources/js/components/Navigation/Nav.vue");
-/* harmony import */ var _components_Navigation_NavButton__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/Navigation/NavButton */ "./resources/js/components/Navigation/NavButton.vue");
-/* harmony import */ var _components_Navigation_NavScroll__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/Navigation/NavScroll */ "./resources/js/components/Navigation/NavScroll.vue");
+/* harmony import */ var _components_Admin_Misc_EditSlideCommentary_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/Admin/Misc/EditSlideCommentary.vue */ "./resources/js/components/Admin/Misc/EditSlideCommentary.vue");
+/* harmony import */ var _components_Misc_Error_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/Misc/Error.vue */ "./resources/js/components/Misc/Error.vue");
+/* harmony import */ var _components_Navigation_Nav_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/Navigation/Nav.vue */ "./resources/js/components/Navigation/Nav.vue");
+/* harmony import */ var _components_Navigation_NavButton__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/Navigation/NavButton */ "./resources/js/components/Navigation/NavButton.vue");
+/* harmony import */ var _components_Navigation_NavScroll__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/Navigation/NavScroll */ "./resources/js/components/Navigation/NavScroll.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -6440,17 +6536,19 @@ vue__WEBPACK_IMPORTED_MODULE_3__.default.component('DeleteModal', _components_Ad
 
 vue__WEBPACK_IMPORTED_MODULE_3__.default.component('LinkItem', _components_Admin_Misc_LinkItem_vue__WEBPACK_IMPORTED_MODULE_17__.default);
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('EditProjectSlides', _components_Admin_Projects_EditProjectSlides_vue__WEBPACK_IMPORTED_MODULE_18__.default); //Misc
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('EditProjectSlides', _components_Admin_Projects_EditProjectSlides_vue__WEBPACK_IMPORTED_MODULE_18__.default);
+
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('EditSlideCommentary', _components_Admin_Misc_EditSlideCommentary_vue__WEBPACK_IMPORTED_MODULE_19__.default); //Misc
 
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Error', _components_Misc_Error_vue__WEBPACK_IMPORTED_MODULE_19__.default); //Navigation 
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Error', _components_Misc_Error_vue__WEBPACK_IMPORTED_MODULE_20__.default); //Navigation 
 
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Nav', _components_Navigation_Nav_vue__WEBPACK_IMPORTED_MODULE_20__.default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Nav', _components_Navigation_Nav_vue__WEBPACK_IMPORTED_MODULE_21__.default);
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('NavButton', _components_Navigation_NavButton__WEBPACK_IMPORTED_MODULE_21__.default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('NavButton', _components_Navigation_NavButton__WEBPACK_IMPORTED_MODULE_22__.default);
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('NavScroll', _components_Navigation_NavScroll__WEBPACK_IMPORTED_MODULE_22__.default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('NavScroll', _components_Navigation_NavScroll__WEBPACK_IMPORTED_MODULE_23__.default);
 vue__WEBPACK_IMPORTED_MODULE_3__.default.directive('scroll', {
   inserted: function inserted(el, binding) {
     var f = function f(evt) {
@@ -60533,6 +60631,45 @@ component.options.__file = "resources/js/components/Admin/Misc/DeleteModal.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/Admin/Misc/EditSlideCommentary.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/Admin/Misc/EditSlideCommentary.vue ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _EditSlideCommentary_vue_vue_type_template_id_162eac98___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditSlideCommentary.vue?vue&type=template&id=162eac98& */ "./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=template&id=162eac98&");
+/* harmony import */ var _EditSlideCommentary_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditSlideCommentary.vue?vue&type=script&lang=js& */ "./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _EditSlideCommentary_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _EditSlideCommentary_vue_vue_type_template_id_162eac98___WEBPACK_IMPORTED_MODULE_0__.render,
+  _EditSlideCommentary_vue_vue_type_template_id_162eac98___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Admin/Misc/EditSlideCommentary.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Admin/Misc/LinkItem.vue":
 /*!*********************************************************!*\
   !*** ./resources/js/components/Admin/Misc/LinkItem.vue ***!
@@ -61822,6 +61959,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditSlideCommentary_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./EditSlideCommentary.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditSlideCommentary_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Admin/Misc/LinkItem.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/Admin/Misc/LinkItem.vue?vue&type=script&lang=js& ***!
@@ -62399,6 +62552,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteModal_vue_vue_type_template_id_68e06aec___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteModal_vue_vue_type_template_id_68e06aec___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DeleteModal.vue?vue&type=template&id=68e06aec& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/DeleteModal.vue?vue&type=template&id=68e06aec&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=template&id=162eac98&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=template&id=162eac98& ***!
+  \***************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditSlideCommentary_vue_vue_type_template_id_162eac98___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditSlideCommentary_vue_vue_type_template_id_162eac98___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditSlideCommentary_vue_vue_type_template_id_162eac98___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./EditSlideCommentary.vue?vue&type=template&id=162eac98& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=template&id=162eac98&");
 
 
 /***/ }),
@@ -63622,6 +63792,31 @@ var staticRenderFns = [
     return _c("span", [_c("i", { staticClass: "bi bi-trash-fill" })])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=template&id=162eac98&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=template&id=162eac98& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div")
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -65770,7 +65965,7 @@ var render = function() {
       _c("div", { staticClass: "mt-5 mb-3 slideForm" }, [
         _c("h6", [_vm._v("Комментарий")]),
         _vm._v(" "),
-        _c("input", {
+        _c("textarea", {
           directives: [
             {
               name: "model",
@@ -65860,26 +66055,52 @@ var render = function() {
                       "div",
                       { staticClass: "row justify-content-center mt-2" },
                       [
-                        _c("div", { staticClass: "col-4 text-center" }, [
-                          _c(
-                            "h4",
-                            {
-                              staticClass: "deleteSlide m-2",
-                              on: {
-                                click: function($event) {
-                                  return _vm.deleteSlide(slide.id)
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "bi bi-pencil" })]
-                          )
-                        ]),
+                        _vm.slideEditId !== slide.id
+                          ? _c("div", { staticClass: "col-4 text-center" }, [
+                              _c(
+                                "h5",
+                                {
+                                  staticClass: "deleteSlide m-2 goUpAnim",
+                                  attrs: {
+                                    title: "Редактировать комментарий к слайду"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editSlide(index, "horizontal")
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "bi bi-pencil" })]
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.slideEditId === slide.id
+                          ? _c(
+                              "div",
+                              {
+                                staticClass: "col-4 text-center goUpAnim",
+                                attrs: { title: "Сохранить изменения" }
+                              },
+                              [
+                                _c(
+                                  "h5",
+                                  {
+                                    staticClass: "deleteSlide m-2",
+                                    on: { click: _vm.saveSlideChanges }
+                                  },
+                                  [_c("i", { staticClass: "bi bi-save" })]
+                                )
+                              ]
+                            )
+                          : _vm._e(),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-4 text-center" }, [
                           _c(
-                            "h4",
+                            "h5",
                             {
                               staticClass: "deleteSlide m-2",
+                              attrs: { title: "Удалить слайд" },
                               on: {
                                 click: function($event) {
                                   return _vm.deleteSlide(slide.id)
@@ -65890,11 +66111,20 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-4 text-center" }, [
-                          _c("h4", { staticClass: "handle m-2" }, [
-                            _c("i", { staticClass: "bi bi-arrows-move" })
-                          ])
-                        ])
+                        _c(
+                          "div",
+                          {
+                            staticClass: "col-4 text-center",
+                            attrs: { title: "Переместить слайд" }
+                          },
+                          [
+                            _c("h5", { staticClass: "handle m-2" }, [
+                              _c("i", {
+                                staticClass: "bi bi-arrows-move deleteSlide"
+                              })
+                            ])
+                          ]
+                        )
                       ]
                     )
                   ]
@@ -65902,6 +66132,42 @@ var render = function() {
               }),
               0
             ),
+            _vm._v(" "),
+            _vm.slideEditId !== undefined && _vm.slideEditMode === "horizontal"
+              ? _c(
+                  "div",
+                  { staticClass: "row justify-content-center mt-5 goUpAnim" },
+                  [
+                    _c("div", { staticClass: "col-6 text-center" }, [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.slideEditComment,
+                            expression: "slideEditComment"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          placeholder:
+                            "Комментарий к слайду, отображается под слайдом"
+                        },
+                        domProps: { value: _vm.slideEditComment },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.slideEditComment = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]
+                )
+              : _vm._e(),
             _vm._v(" "),
             _vm.projectSlidesVertical != 0
               ? _c("h5", { staticClass: "text-center mt-5" }, [
@@ -65950,26 +66216,52 @@ var render = function() {
                       "div",
                       { staticClass: "row justify-content-center mt-2" },
                       [
-                        _c("div", { staticClass: "col-4 text-center" }, [
-                          _c(
-                            "h4",
-                            {
-                              staticClass: "deleteSlide m-2",
-                              on: {
-                                click: function($event) {
-                                  return _vm.deleteSlide(slide.id)
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "bi bi-pencil" })]
-                          )
-                        ]),
+                        _vm.slideEditId !== slide.id
+                          ? _c("div", { staticClass: "col-4 text-center" }, [
+                              _c(
+                                "h5",
+                                {
+                                  staticClass: "deleteSlide m-2 goUpAnim",
+                                  attrs: {
+                                    title: "Редактировать комментарий к слайду"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editSlide(index, "vertical")
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "bi bi-pencil" })]
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.slideEditId === slide.id
+                          ? _c(
+                              "div",
+                              {
+                                staticClass: "col-4 text-center goUpAnim",
+                                attrs: { title: "Сохранить изменения" }
+                              },
+                              [
+                                _c(
+                                  "h5",
+                                  {
+                                    staticClass: "deleteSlide m-2",
+                                    on: { click: _vm.saveSlideChanges }
+                                  },
+                                  [_c("i", { staticClass: "bi bi-save" })]
+                                )
+                              ]
+                            )
+                          : _vm._e(),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-4 text-center" }, [
                           _c(
-                            "h4",
+                            "h5",
                             {
                               staticClass: "deleteSlide m-2",
+                              attrs: { title: "Удалить слайд" },
                               on: {
                                 click: function($event) {
                                   return _vm.deleteSlide(slide.id)
@@ -65981,9 +66273,19 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-4 text-center" }, [
-                          _c("h4", { staticClass: "handle m-2" }, [
-                            _c("i", { staticClass: "bi bi-arrows-move" })
-                          ])
+                          _c(
+                            "h5",
+                            {
+                              staticClass: "handle m-2 deleteSlide",
+                              attrs: { title: "Переместить слайд" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteSlide(slide.id)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "bi bi-arrows-move" })]
+                          )
                         ])
                       ]
                     )
@@ -65991,7 +66293,43 @@ var render = function() {
                 )
               }),
               0
-            )
+            ),
+            _vm._v(" "),
+            _vm.slideEditId !== undefined && _vm.slideEditMode === "vertical"
+              ? _c(
+                  "div",
+                  { staticClass: "row justify-content-center mt-5 goUpAnim" },
+                  [
+                    _c("div", { staticClass: "col-6 text-center" }, [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.slideEditComment,
+                            expression: "slideEditComment"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          placeholder:
+                            "Комментарий к слайду, отображается под слайдом"
+                        },
+                        domProps: { value: _vm.slideEditComment },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.slideEditComment = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]
+                )
+              : _vm._e()
           ],
           1
         )

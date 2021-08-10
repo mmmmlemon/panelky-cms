@@ -64,6 +64,8 @@ Vue.component('LinkItem', LinkItem);
 import EditProjectSlides from './components/Admin/Projects/EditProjectSlides.vue';
 Vue.component('EditProjectSlides', EditProjectSlides);
 
+import EditSlideCommentary from './components/Admin/Misc/EditSlideCommentary.vue';
+Vue.component('EditSlideCommentary', EditSlideCommentary);
 
 //Misc
 import Error from './components/Misc/Error.vue';
