@@ -575,10 +575,15 @@ class AdminController extends Controller
     //saveSlideChanges
     // сохранить изенения для слайда
     public function saveSlideChanges(Request $request)
-    {
+    {   
         $projectSlide = ProjectSlide::find($request->slideId);
 
-        $projectSlide->commentary = $request->slideCommentary;
+        if($request->slideCommentary === 'null'){
+            $projectSlide->commentary = null;
+        } else{
+            $projectSlide->commentary = $request->slideCommentary;
+        }
+        
 
         $projectSlide->save();
 

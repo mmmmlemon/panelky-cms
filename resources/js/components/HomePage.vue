@@ -45,9 +45,14 @@ export default {
         },
     },
 
+    beforeDestroy() {
+        window.removeEventListener("resize", this.setScreenOrientation);
+    },
+
     //методы
     methods: {
         setScreenOrientation(){
+            
             let width = window.innerWidth;
             let height = window.innerHeight;
 

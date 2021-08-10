@@ -5330,6 +5330,9 @@ __webpack_require__.r(__webpack_exports__);
       return this.$parent.settings.footer;
     }
   },
+  beforeDestroy: function beforeDestroy() {
+    window.removeEventListener("resize", this.setScreenOrientation);
+  },
   //методы
   methods: {
     setScreenOrientation: function setScreenOrientation() {
@@ -5730,6 +5733,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -5998,6 +6003,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  created: function created() {
+    window.addEventListener("resize", this.setSlidePositionOnWindowResize);
+  },
   mounted: function mounted() {
     var _this = this;
 
@@ -6014,9 +6022,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
+  beforeDestroy: function beforeDestroy() {
+    window.removeEventListener("resize", this.setSlidePositionOnWindowResize);
+  },
   //данные
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       //видимость карточки
       visible: false,
       // класс для скриншота проекта
@@ -6024,11 +6037,8 @@ __webpack_require__.r(__webpack_exports__);
       // классы для слайдов
       classesForSlides: {},
       // текущая позиция слайда
-      slidePosition: 0,
-      // анимация для слайда
-      slideAnimation: 'goLeftSlideAnim',
-      slideCommentaryVisibility: false
-    };
+      slidePosition: 0
+    }, _defineProperty(_ref, "slidePosition", 0), _defineProperty(_ref, "slideAnimation", 'goLeftSlideAnim'), _defineProperty(_ref, "slideCommentaryVisibility", false), _ref;
   },
   //данные
   props: {
@@ -6127,6 +6137,21 @@ __webpack_require__.r(__webpack_exports__);
     },
     toggleSlideCommentaryVisibility: function toggleSlideCommentaryVisibility(index) {
       this.slideCommentaryVisibility = !this.slideCommentaryVisibility;
+    },
+    // изменить позицию слайда при смене ориентации экрана, если это нужно
+    setSlidePositionOnWindowResize: function setSlidePositionOnWindowResize() {
+      var width = window.innerWidth;
+      var height = window.innerHeight;
+
+      if (width > height) {
+        if (this.project.slides.horizontal.length < this.slidePosition) {
+          this.slidePosition = this.project.slides.horizontal.length;
+        }
+      } else if (height > width) {
+        if (this.project.slides.vertical.length < this.slidePosition) {
+          this.slidePosition = this.project.slides.vertical.length;
+        }
+      }
     }
   }
 });

@@ -268,7 +268,11 @@
 <script>
 export default {
 
-     mounted(){
+    created(){
+        window.addEventListener("resize", this.setSlidePositionOnWindowResize);
+    },
+
+    mounted(){
         this.setVisible = this.isVisible;
 
         // определяем подходящий класс для скриншота проекта
@@ -285,6 +289,10 @@ export default {
 
     },
 
+    beforeDestroy() {
+        window.removeEventListener("resize", this.setSlidePositionOnWindowResize);
+    },
+
     //данные
     data: () => {
         return {
@@ -295,6 +303,7 @@ export default {
             // классы для слайдов
             classesForSlides: {},
             // текущая позиция слайда
+            slidePosition: 0,
             slidePosition: 0,
             // анимация для слайда
             slideAnimation: 'goLeftSlideAnim',
@@ -399,6 +408,21 @@ export default {
 
         toggleSlideCommentaryVisibility(index){
             this.slideCommentaryVisibility = !this.slideCommentaryVisibility;
+        },
+
+        // изменить позицию слайда при смене ориентации экрана, если это нужно
+        setSlidePositionOnWindowResize(){
+            let width = window.innerWidth;
+            let height = window.innerHeight;
+
+            if(width > height){
+                if(this.project.slides.horizontal.length < this.slidePosition)
+                { this.slidePosition = this.project.slides.horizontal.length; }
+            }
+            else if (height > width){
+               if(this.project.slides.vertical.length < this.slidePosition)
+                { this.slidePosition = this.project.slides.vertical.length; }
+            }
         }
     }
 }
