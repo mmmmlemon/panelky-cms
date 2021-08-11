@@ -12,10 +12,10 @@
 
         <div class="projectCardButtons fadeInAnimSlow" v-if="visible === true && project.slides.horizontal.length > 0">
             <!-- кнопки переключения слайдов -->
-            <b class="d-none d-md-block projectButton left" @click="prevSlide">
+            <b class="d-none d-md-block projectButton left pointer" @click="prevSlide">
                 <i class="bi bi-chevron-left"></i>
             </b>
-            <b class="d-none d-md-block projectButton right" @click="nextSlide">
+            <b class="d-none d-md-block projectButton right pointer" @click="nextSlide">
                 <i class="bi bi-chevron-right"></i>
             </b>
         </div>
@@ -23,21 +23,21 @@
         <!-- "точки" для слайдов -->
         <div class="col-12 sliderMenu fadeInAnimSlow" v-if="numOfSlides !== 0 && visible === true">
             <div class="row justify-content-center">
-                <a class="m-1 slideButton" @click="changeCurrentSlidePosition(0)" 
+                <a class="m-1 slideButton pointer" @click="changeCurrentSlidePosition(0)" 
                     v-if="(project.slides.horizontal.length > 0 && screenOrientation === 'horizontal') ||
                             project.slides.vertical.length > 0 && screenOrientation === 'vertical'">
                     <i v-if="slidePosition === 0" class="bi bi-circle-fill"></i>
                     <i v-if="slidePosition !== 0" class="bi bi-circle"></i>
                 </a>
                 <!-- "точки" для вертикальных слайдов -->
-                <a class="m-1 slideButton" v-for="index in (numOfSlides.vertical)" 
+                <a class="m-1 slideButton pointer" v-for="index in (numOfSlides.vertical)" 
                     v-bind:key="'verticalDot_'+index" @click="changeCurrentSlidePosition(index)"
                     v-bind:class="{'invisible': screenOrientation !== 'vertical'}">
                     <i v-if="slidePosition === index" class="bi bi-circle-fill"></i>
                     <i v-if="slidePosition !== index" class="bi bi-circle"></i>
                 </a>
                 <!-- "точки" для горизонтальных слайдов -->
-                <a class="m-1 slideButton" v-for="index in (numOfSlides.horizontal)" 
+                <a class="m-1 slideButton pointer" v-for="index in (numOfSlides.horizontal)" 
                     v-bind:key="'horizontalDot_'+index" @click="changeCurrentSlidePosition(index)"
                     v-bind:class="{'invisible': screenOrientation !== 'horizontal'}">
                     <i v-if="slidePosition === index && screenOrientation == 'horizontal'" class="bi bi-circle-fill"></i>

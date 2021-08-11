@@ -7,7 +7,7 @@
             <!-- ссылки -->
             <div class="col-12 fadeInAnim" v-bind:class="{'zeroOpacity':links == null && links == -1}">
                 <h1 class="text-center textVertical">
-                    <p class="text-center textVertical font14pt">Ссылки</p>
+                    <p class="text-center textVertical font14pt pointerNone">Ссылки</p>
                     <hr class="mb-0">
                     <div class="row font21pt" v-if="links !== undefined && links !== -1">
                         <div v-for="link in links" :key="link.slug" class="col-12 col-md-12 mt-3">

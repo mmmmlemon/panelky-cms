@@ -12,7 +12,7 @@
 
             <!-- имя автора -->
             <transition name="name">
-                <h1 v-if="startTransition === true && info.name != undefined" class="text-center  textVertical font5rem">
+                <h1 v-if="startTransition === true && info.name != undefined" class="text-center textVertical font5rem pointerNone">
                     <b>{{info['name']}}</b>
                 </h1>
             </transition>
@@ -23,7 +23,7 @@
         
             <!-- род занятий -->
             <transition name="occupation">
-                <p v-if="startTransition === true && info.occupation != undefined" class="text-center textVertical font2-5rem">
+                <p v-if="startTransition === true && info.occupation != undefined" class="text-center textVertical font2-5rem pointerNone">
                     {{info['occupation']}}
                 </p>
             </transition>
@@ -34,14 +34,14 @@
 
             <!-- о себе -->
             <transition name="aboutMe">
-                <p v-if="startTransition === true && info.aboutMe != undefined" class="text-center font1-8rem">
+                <p v-if="startTransition === true && info.aboutMe != undefined" class="text-center font1-8rem pointerNone">
                     {{info['aboutMe']}}
                 </p>
          
             </transition>
             <!-- нижний текст -->
             <transition name="bottomText">
-                <h6 v-if="startTransition === true && info.bottomText != undefined" class="text-center font1-8rem">
+                <h6 v-if="startTransition === true && info.bottomText != undefined" class="text-center font1-8rem pointerNone">
                     <b>{{info['bottomText']}}</b>
                 </h6>
             </transition>

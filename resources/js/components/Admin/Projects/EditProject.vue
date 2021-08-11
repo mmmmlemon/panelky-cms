@@ -5,7 +5,8 @@
         <div class="col-12 fadeInAnim" v-if="currentProject !== -1 && currentProject !== false">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-9">
-                    <h5>Редактирование проекта</h5>
+                    <h4>{{currentProject.project_title}}</h4>
+                    <h5>Редактирование проекта </h5>
                     <hr>
                     <!-- вкладки -->
                     <div class="col-12 mb-4">

@@ -85,7 +85,7 @@
                         </div>
                     
                         <button class="btn btn-lg btn-block btn-outline-light" :disabled="saved === true">
-                            Сохранить проект
+                            Добавить новый проект
                         </button>
                     </form> 
                 </div>
@@ -136,6 +136,7 @@ export default {
                 project_icon: undefined,
                 project_image: undefined,
                 project_url: undefined,
+                slides: {vertical: [], horizontal: []},
             }),
             projectIconName: undefined,
             projectImageName: undefined,

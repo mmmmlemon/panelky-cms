@@ -103,7 +103,7 @@ hr {
 }
 
 .projectImageVertical {
-    width: 65%;
+    width: 57%;
     border-radius: 15px;
     -webkit-box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.55);
     -moz-box-shadow: 4px 4px 28px 1px rgba(0, 0, 0, 0.55);
@@ -285,7 +285,6 @@ hr {
 }
 
 .deleteSlide{
-    cursor: pointer;
     transition: color 0.5s ease-in-out;
 }
 
@@ -314,7 +313,6 @@ hr {
     z-index: 1;
     font-size: 3rem;
     border-style: none;
-    cursor: pointer;
     transition: color 0.15s ease-in-out;
 }
 
@@ -341,10 +339,6 @@ hr {
     top: 3%;
     position: absolute;
     z-index: 2;
-}
-
-.slideButton{
-    cursor: pointer;
 }
 
 .slideHorizontalImage{
@@ -431,6 +425,14 @@ hr {
     position: absolute;
     top: 5px;
     left: 25px;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.pointerNone{
+    cursor: default;
 }
 
 /* /////////////////////// */

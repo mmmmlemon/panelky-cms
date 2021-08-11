@@ -22,7 +22,7 @@
                             </div>
                         </div> 
                         <!-- превью -->
-                        <div class="row justify-content-center goUpAnim" v-if="bg_first_color != -1 && bg_second_color != -1">
+                        <div class="row justify-content-center goUpAnim pointerNone" v-if="bg_first_color != -1 && bg_second_color != -1">
                             <div class="col-12 col-md-5 text-center" v-bind:style="previewStyle">
                                 <br><br>
                                 <h3>Превью</h3>

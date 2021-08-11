@@ -3265,7 +3265,11 @@ __webpack_require__.r(__webpack_exports__);
         project_bottomText: undefined,
         project_icon: undefined,
         project_image: undefined,
-        project_url: undefined
+        project_url: undefined,
+        slides: {
+          vertical: [],
+          horizontal: []
+        }
       }),
       projectIconName: undefined,
       projectImageName: undefined,
@@ -3708,6 +3712,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   beforeMount: function beforeMount() {
@@ -3865,7 +3870,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
 //
 //
 //
@@ -65267,7 +65271,7 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                        Сохранить проект\n                    "
+                        "\n                        Добавить новый проект\n                    "
                       )
                     ]
                   )
@@ -65570,7 +65574,9 @@ var render = function() {
       ? _c("div", { staticClass: "col-12 fadeInAnim" }, [
           _c("div", { staticClass: "row justify-content-center" }, [
             _c("div", { staticClass: "col-12 col-md-9" }, [
-              _c("h5", [_vm._v("Редактирование проекта")]),
+              _c("h4", [_vm._v(_vm._s(_vm.currentProject.project_title))]),
+              _vm._v(" "),
+              _c("h5", [_vm._v("Редактирование проекта ")]),
               _vm._v(" "),
               _c("hr"),
               _vm._v(" "),
@@ -66358,7 +66364,8 @@ var render = function() {
                               _c(
                                 "h5",
                                 {
-                                  staticClass: "deleteSlide m-2 goUpAnim",
+                                  staticClass:
+                                    "deleteSlide m-2 goUpAnim pointer",
                                   attrs: {
                                     title: "Редактировать комментарий к слайду"
                                   },
@@ -66377,7 +66384,8 @@ var render = function() {
                           ? _c(
                               "div",
                               {
-                                staticClass: "col-4 text-center goUpAnim",
+                                staticClass:
+                                  "col-4 text-center goUpAnim pointer",
                                 attrs: { title: "Сохранить изменения" }
                               },
                               [
@@ -66397,7 +66405,7 @@ var render = function() {
                           _c(
                             "h5",
                             {
-                              staticClass: "deleteSlide m-2",
+                              staticClass: "deleteSlide m-2 pointer",
                               attrs: { title: "Удалить слайд" },
                               on: {
                                 click: function($event) {
@@ -66412,7 +66420,7 @@ var render = function() {
                         _c(
                           "div",
                           {
-                            staticClass: "col-4 text-center",
+                            staticClass: "col-4 text-center pointer",
                             attrs: { title: "Переместить слайд" }
                           },
                           [
@@ -66515,30 +66523,36 @@ var render = function() {
                       { staticClass: "row justify-content-center mt-2" },
                       [
                         _vm.slideEditId !== slide.id
-                          ? _c("div", { staticClass: "col-4 text-center" }, [
-                              _c(
-                                "h5",
-                                {
-                                  staticClass: "deleteSlide m-2 goUpAnim",
-                                  attrs: {
-                                    title: "Редактировать комментарий к слайду"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editSlide(index, "vertical")
+                          ? _c(
+                              "div",
+                              { staticClass: "col-4 text-center pointer" },
+                              [
+                                _c(
+                                  "h5",
+                                  {
+                                    staticClass: "deleteSlide m-2 goUpAnim",
+                                    attrs: {
+                                      title:
+                                        "Редактировать комментарий к слайду"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.editSlide(index, "vertical")
+                                      }
                                     }
-                                  }
-                                },
-                                [_c("i", { staticClass: "bi bi-pencil" })]
-                              )
-                            ])
+                                  },
+                                  [_c("i", { staticClass: "bi bi-pencil" })]
+                                )
+                              ]
+                            )
                           : _vm._e(),
                         _vm._v(" "),
                         _vm.slideEditId === slide.id
                           ? _c(
                               "div",
                               {
-                                staticClass: "col-4 text-center goUpAnim",
+                                staticClass:
+                                  "col-4 text-center goUpAnim pointer",
                                 attrs: { title: "Сохранить изменения" }
                               },
                               [
@@ -66558,7 +66572,7 @@ var render = function() {
                           _c(
                             "h5",
                             {
-                              staticClass: "deleteSlide m-2",
+                              staticClass: "deleteSlide m-2 pointer",
                               attrs: { title: "Удалить слайд" },
                               on: {
                                 click: function($event) {
@@ -66574,7 +66588,7 @@ var render = function() {
                           _c(
                             "h5",
                             {
-                              staticClass: "handle m-2 deleteSlide",
+                              staticClass: "handle m-2 deleteSlide pointer",
                               attrs: { title: "Переместить слайд" },
                               on: {
                                 click: function($event) {
@@ -67224,7 +67238,10 @@ var render = function() {
               _vm.bg_first_color != -1 && _vm.bg_second_color != -1
                 ? _c(
                     "div",
-                    { staticClass: "row justify-content-center goUpAnim" },
+                    {
+                      staticClass:
+                        "row justify-content-center goUpAnim pointerNone"
+                    },
                     [
                       _c(
                         "div",
@@ -68570,7 +68587,10 @@ var render = function() {
                 _c("h1", { staticClass: "text-center textVertical" }, [
                   _c(
                     "p",
-                    { staticClass: "text-center textVertical font14pt" },
+                    {
+                      staticClass:
+                        "text-center textVertical font14pt pointerNone"
+                    },
                     [_vm._v("Ссылки")]
                   ),
                   _vm._v(" "),
@@ -68720,7 +68740,9 @@ var render = function() {
             _vm.startTransition === true && _vm.info.name != undefined
               ? _c(
                   "h1",
-                  { staticClass: "text-center  textVertical font5rem" },
+                  {
+                    staticClass: "text-center textVertical font5rem pointerNone"
+                  },
                   [_c("b", [_vm._v(_vm._s(_vm.info["name"]))])]
                 )
               : _vm._e()
@@ -68736,7 +68758,10 @@ var render = function() {
             _vm.startTransition === true && _vm.info.occupation != undefined
               ? _c(
                   "p",
-                  { staticClass: "text-center textVertical font2-5rem" },
+                  {
+                    staticClass:
+                      "text-center textVertical font2-5rem pointerNone"
+                  },
                   [
                     _vm._v(
                       "\n                " +
@@ -68756,7 +68781,7 @@ var render = function() {
           _vm._v(" "),
           _c("transition", { attrs: { name: "aboutMe" } }, [
             _vm.startTransition === true && _vm.info.aboutMe != undefined
-              ? _c("p", { staticClass: "text-center font1-8rem" }, [
+              ? _c("p", { staticClass: "text-center font1-8rem pointerNone" }, [
                   _vm._v(
                     "\n                " +
                       _vm._s(_vm.info["aboutMe"]) +
@@ -68768,9 +68793,11 @@ var render = function() {
           _vm._v(" "),
           _c("transition", { attrs: { name: "bottomText" } }, [
             _vm.startTransition === true && _vm.info.bottomText != undefined
-              ? _c("h6", { staticClass: "text-center font1-8rem" }, [
-                  _c("b", [_vm._v(_vm._s(_vm.info["bottomText"]))])
-                ])
+              ? _c(
+                  "h6",
+                  { staticClass: "text-center font1-8rem pointerNone" },
+                  [_c("b", [_vm._v(_vm._s(_vm.info["bottomText"]))])]
+                )
               : _vm._e()
           ])
         ],
@@ -68894,7 +68921,7 @@ var render = function() {
             "d-block d-md-block col-12 textVertical fadeInAnim m-5 goUpCardAnim"
         },
         [
-          _c("h3", { staticClass: "text-center mb-5" }, [
+          _c("h3", { staticClass: "text-center mb-5 pointerNone" }, [
             _vm._v("Другие проекты")
           ]),
           _vm._v(" "),
@@ -69034,7 +69061,7 @@ var render = function() {
             _c(
               "b",
               {
-                staticClass: "d-none d-md-block projectButton left",
+                staticClass: "d-none d-md-block projectButton left pointer",
                 on: { click: _vm.prevSlide }
               },
               [_c("i", { staticClass: "bi bi-chevron-left" })]
@@ -69043,7 +69070,7 @@ var render = function() {
             _c(
               "b",
               {
-                staticClass: "d-none d-md-block projectButton right",
+                staticClass: "d-none d-md-block projectButton right pointer",
                 on: { click: _vm.nextSlide }
               },
               [_c("i", { staticClass: "bi bi-chevron-right" })]
@@ -69064,7 +69091,7 @@ var render = function() {
                   ? _c(
                       "a",
                       {
-                        staticClass: "m-1 slideButton",
+                        staticClass: "m-1 slideButton pointer",
                         on: {
                           click: function($event) {
                             return _vm.changeCurrentSlidePosition(0)
@@ -69088,7 +69115,7 @@ var render = function() {
                     "a",
                     {
                       key: "verticalDot_" + index,
-                      staticClass: "m-1 slideButton",
+                      staticClass: "m-1 slideButton pointer",
                       class: {
                         invisible: _vm.screenOrientation !== "vertical"
                       },
@@ -69115,7 +69142,7 @@ var render = function() {
                     "a",
                     {
                       key: "horizontalDot_" + index,
-                      staticClass: "m-1 slideButton",
+                      staticClass: "m-1 slideButton pointer",
                       class: {
                         invisible: _vm.screenOrientation !== "horizontal"
                       },

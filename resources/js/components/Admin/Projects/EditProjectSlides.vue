@@ -55,23 +55,22 @@
                         <h3 class="slideEditImageNum">{{index+1}}</h3>
                         <!-- кнопки под слайдами -->
                         <div class="row justify-content-center mt-2">
-                            <div v-if="slideEditId !== slide.id" class="col-4 text-center"
-                                >
-                                <h5 @click="editSlide(index, 'horizontal')" class="deleteSlide m-2 goUpAnim" title="Редактировать комментарий к слайду">
+                            <div v-if="slideEditId !== slide.id" class="col-4 text-center">
+                                <h5 @click="editSlide(index, 'horizontal')" class="deleteSlide m-2 goUpAnim pointer" title="Редактировать комментарий к слайду">
                                     <i class="bi bi-pencil"></i>
                                 </h5>
                             </div>
-                            <div v-if="slideEditId === slide.id" class="col-4 text-center goUpAnim" title="Сохранить изменения">
+                            <div v-if="slideEditId === slide.id" class="col-4 text-center goUpAnim pointer" title="Сохранить изменения">
                                 <h5 @click="saveSlideChanges" class="deleteSlide m-2">
                                     <i class="bi bi-save"></i>
                                 </h5>
                             </div>
                             <div class="col-4 text-center">
-                                <h5 @click="deleteSlide(slide.id)" class="deleteSlide m-2" title="Удалить слайд">
+                                <h5 @click="deleteSlide(slide.id)" class="deleteSlide m-2 pointer" title="Удалить слайд">
                                     <i class="bi bi-trash"></i>
                                 </h5>
                             </div>
-                            <div class="col-4 text-center" title="Переместить слайд">
+                            <div class="col-4 text-center pointer" title="Переместить слайд">
                                 <h5 class="handle m-2">
                                     <i class="bi bi-arrows-move deleteSlide"></i>
                                 </h5>
@@ -96,23 +95,23 @@
                         <h3 class="slideEditImageNum">{{index+1}}</h3>
                         <!-- кнопки под слайдами -->
                         <div class="row justify-content-center mt-2">
-                            <div v-if="slideEditId !== slide.id" class="col-4 text-center">
+                            <div v-if="slideEditId !== slide.id" class="col-4 text-center pointer">
                                 <h5 @click="editSlide(index, 'vertical')" class="deleteSlide m-2 goUpAnim" title="Редактировать комментарий к слайду">
                                     <i class="bi bi-pencil"></i>
                                 </h5>
                             </div>
-                            <div v-if="slideEditId === slide.id" class="col-4 text-center goUpAnim" title="Сохранить изменения">
+                            <div v-if="slideEditId === slide.id" class="col-4 text-center goUpAnim pointer" title="Сохранить изменения">
                                 <h5 @click="saveSlideChanges" class="deleteSlide m-2">
                                     <i class="bi bi-save"></i>
                                 </h5>
                             </div>
                             <div class="col-4 text-center">
-                                <h5 @click="deleteSlide(slide.id)" class="deleteSlide m-2" title="Удалить слайд">
+                                <h5 @click="deleteSlide(slide.id)" class="deleteSlide m-2 pointer" title="Удалить слайд">
                                     <i class="bi bi-trash"></i>
                                 </h5>
                             </div>
                             <div class="col-4 text-center">
-                                <h5 @click="deleteSlide(slide.id)" class="handle m-2 deleteSlide" title="Переместить слайд">
+                                <h5 @click="deleteSlide(slide.id)" class="handle m-2 deleteSlide pointer" title="Переместить слайд">
                                     <i class="bi bi-arrows-move"></i>
                                 </h5>
                             </div>
