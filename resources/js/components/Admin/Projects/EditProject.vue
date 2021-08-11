@@ -111,15 +111,13 @@
                     <!-- форма для слайдов -->
                     <EditProjectSlides v-if="slideFormActive === true" :projectId="currentProject.id" :projectSlug="currentProject.slug"/>
 
-
-                
                 </div>
 
                 <!-- превью -->
                 <div class="col-12"  v-if="currentProject !== -1 && currentProject !== false && previewMode === true">
                     <div class="row justify-content-center">
                         <div class="col-10">
-                            <PreviewProject type="full" :currentProject="currentProject"/>
+                            <PreviewProjectFullscreen type="full" :currentProject="currentProject"/>
                         </div> 
                     </div>
                 </div>
@@ -194,9 +192,6 @@ export default {
 
         //показать превью
         showPreview: function(){
-            this.basicFormActive = false;
-            this.imageFormActive = false;
-            this.slideFormActive = false;
             this.previewMode = true;
         },
 
