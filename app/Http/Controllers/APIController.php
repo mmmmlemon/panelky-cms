@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Settings;
 use App\Models\Project;
 use App\Models\ProjectSlide;
+use App\Models\Contact;
 use App\Models\Link;
 
 //APIController
@@ -243,6 +244,15 @@ class APIController extends Controller
         { $email = null; }
 
         return response()->json(['email'=>$email], 200);
+    }
+
+    //getContacts
+    //получить контакты
+    public function getContacts()
+    {
+        $contacts = Contact::all();
+
+        return response()->json($contacts);
     }
 
     //getBasicSettings

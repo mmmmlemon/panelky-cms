@@ -16,7 +16,7 @@
             </button>
         </div>
         <div class="col-12 col-md-10 mt-5 goUpAnim" v-bind:class="{ 'invisible': addNewLink === false }">
-            <!-- форма редактирования имеющихся ссылок -->
+            <!-- форма добавить новую ссылку -->
             <form method="POST" @submit.prevent="submit()">
                 <div class="row justify-content-center">
                     <div class="col-12 col-md-2 text-center">

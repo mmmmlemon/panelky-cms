@@ -16,6 +16,8 @@ const GlobalStates = {
         fullProjectList: -1,
         //ссылки
         links: -1,
+        //контакты
+        contacts: -1,
         //email
         email: -1,
         //animatedBackground
@@ -70,6 +72,17 @@ const GlobalStates = {
                 { context.commit('setState', { state: 'links', value: response.data}); }
                 else
                 { context.commit('setState', { state: 'links', value: false}); }
+            });
+        },
+
+        //getContacts
+        //получить ссылки
+        getContacts(context){
+            axios.get('/api/getContacts').then(response => {
+                if(response.data !== false)
+                { context.commit('setState', { state: 'contacts', value: response.data}); }
+                else
+                { context.commit('setState', { state: 'contacts', value: false}); }
             });
         },
 

@@ -9,6 +9,8 @@ use File;
 use App\Models\Settings;
 use App\Models\Project;
 use App\Models\ProjectSlide;
+use App\Models\Contact;
+use App\Models\SocialMediaLibrary;
 use App\Models\Link;
 use Image;
 
@@ -584,8 +586,31 @@ class AdminController extends Controller
             $projectSlide->commentary = $request->slideCommentary;
         }
         
-
         $projectSlide->save();
+
+        return response()->json(true, 200);
+    }
+
+    //getSocialMediaLibrary
+    // получить список соц.сетей для контактов
+    public function getSocialMediaLibrary(Request $request)
+    {
+        $socialMediaLibrary = SocialMediaLibrary::all();
+
+        return response()->json($socialMediaLibrary, 200);
+    }
+
+    // addContact
+    // добавит контакт
+    public function addContact(Request $request)
+    {
+        $contact = new Contact;
+
+        $contact->contact_type = $request->contact_type;
+        $contact->contact_tooltip = $request->contact_tooltip;
+        $contact->contact_url = $request->contact_url;
+
+        $contact->save();
 
         return response()->json(true, 200);
     }

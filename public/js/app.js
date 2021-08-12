@@ -2001,15 +2001,55 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
     var _this = this;
 
-    axios.get('/api/getEmail').then(function (response) {
-      _this.email = response.data.email;
+    // получаем список контактов
+    this.$store.dispatch('getContacts'); //получаем библиотеку соц.сетей (для добавленя новой ссылки)
+
+    axios.get('/admin/getSocialMediaLibrary').then(function (response) {
+      _this.socialMediaLibrary = response.data;
     })["catch"](function (error) {
-      _this.email = false;
+      _this.socialMediaLibrary = false;
     });
   },
   mounted: function mounted() {
@@ -2019,39 +2059,99 @@ __webpack_require__.r(__webpack_exports__);
   //данные
   data: function data() {
     return {
-      email: -1,
+      addNewContact: false,
+      newContact: {
+        type: Object,
+        "default": function _default() {
+          return {
+            contact_type: undefined,
+            contact_tooltip: undefined,
+            contact_url: undefined
+          };
+        }
+      },
+      socialMediaLibrary: undefined,
+      pickedSocialMedia: undefined,
+      iconClass: undefined,
+      urlInput: undefined,
       edit: false,
       backup: null,
       errors: null
     };
   },
-  //методы
-  methods: {
-    //вкл\выкл режим редактирования
-    toggleEdit: function toggleEdit(value) {
-      if (value === true) {
-        if (this.edit === false) {
-          this.backup = this.email;
+  computed: {
+    contacts: function contacts() {
+      return this.$store.state.GlobalStates.contacts;
+    },
+    // надпись над полем ввода юзернейма\телефона\email'а
+    tooltipTitle: function tooltipTitle() {
+      if (this.pickedSocialMedia !== undefined && this.pickedSocialMedia !== false) {
+        if (this.pickedSocialMedia.insert_type === 'phone_number') {
+          return "\u041D\u043E\u043C\u0435\u0440 \u0442\u0435\u043B\u0435\u0444\u043E\u043D\u0430 ".concat(this.pickedSocialMedia.tooltip);
         }
 
-        this.edit = true;
-      }
+        if (this.pickedSocialMedia.insert_type === 'username') {
+          return "\u0418\u043C\u044F \u0438\u043B\u0438 ID \u043F\u0440\u043E\u0444\u0438\u043B\u044F ".concat(this.pickedSocialMedia.tooltip);
+        }
 
-      if (value === false) {
-        this.edit = value;
-        this.errors = null;
-        this.email = this.backup;
+        if (this.pickedSocialMedia.insert_type === 'email') {
+          return "\u0410\u0434\u0440\u0435\u0441 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043D\u043D\u043E\u0439 \u043F\u043E\u0447\u0442\u044B";
+        }
+      } else {
+        return "&nbsp";
       }
     },
-    //сохранить email
-    submit: function submit() {
+    //сгенерированная ссылка на соц.сеть или email
+    socialMediaGeneratedLink: function socialMediaGeneratedLink() {
+      if (this.pickedSocialMedia !== undefined && this.pickedSocialMedia !== false && this.newContact.contact_url !== '' && this.pickedSocialMedia.type !== 'email') {
+        return this.pickedSocialMedia.url_template.replace('{insert}', this.newContact.contact_url);
+      }
+    }
+  },
+  //методы
+  methods: {
+    //переключиться между ссылками и добавлением
+    toggleAddNewContact: function toggleAddNewContact(value) {
+      if (value === "back") {
+        this.newContact = {
+          contact_type: undefined,
+          contact_tooltip: undefined,
+          contact_url: undefined
+        };
+      }
+
+      if (this.addNewContact === false) this.addNewContact = true;else this.addNewContact = false;
+    },
+    //выбрать соц.сеть
+    pickSocialMedia: function pickSocialMedia(indexOfSocialMedia) {
+      this.pickedSocialMedia = this.socialMediaLibrary[indexOfSocialMedia];
+      this.newContact.contact_type = this.pickedSocialMedia.type;
+      this.newContact.contact_tooltip = this.pickedSocialMedia.tooltip;
+
+      if (this.pickedSocialMedia.type == 'email') {
+        this.iconClass = "<h6>&nbsp;</h6><i class=\"fas fa-at font2rem\"></i>";
+      } else {
+        this.iconClass = "<h6>&nbsp;</h6><i class='fab fa-".concat(this.pickedSocialMedia.type, " font2rem'></i>");
+      }
+    },
+    //сохранить новый контакт
+    submit: function submit(link) {
       var _this2 = this;
 
       var formData = new FormData();
-      formData.append('email', this.email);
-      axios.post('/admin/editEmail', formData).then(function (response) {
-        _this2.edit = false;
-        _this2.errors = null;
+      formData.append('contact_type', this.newContact.contact_type);
+      formData.append('contact_tooltip', this.newContact.contact_tooltip);
+      formData.append('contact_url', this.socialMediaGeneratedLink);
+      axios.post('/admin/addContact', formData).then(function (response) {
+        _this2.$store.dispatch('getContacts');
+
+        _this2.toggleAddNewContact();
+
+        _this2.newContact = {
+          contact_type: undefined,
+          contact_tooltip: undefined,
+          contact_url: undefined
+        };
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this2.errors = error.response.data.errors || {};
@@ -6942,6 +7042,8 @@ var GlobalStates = {
     fullProjectList: -1,
     //ссылки
     links: -1,
+    //контакты
+    contacts: -1,
     //email
     email: -1,
     //animatedBackground
@@ -7012,6 +7114,23 @@ var GlobalStates = {
         } else {
           context.commit('setState', {
             state: 'links',
+            value: false
+          });
+        }
+      });
+    },
+    //getContacts
+    //получить ссылки
+    getContacts: function getContacts(context) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getContacts').then(function (response) {
+        if (response.data !== false) {
+          context.commit('setState', {
+            state: 'contacts',
+            value: response.data
+          });
+        } else {
+          context.commit('setState', {
+            state: 'contacts',
             value: false
           });
         }
@@ -63449,134 +63568,211 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row justify-content-center" }, [
-    _c("div", { staticClass: "col-12 col-md-8" }, [
+  return _c("div", { staticClass: "row justify-content-center mb-5" }, [
+    _c("div", { staticClass: "col-12 col-md-10 mt-2" }, [
       _c(
-        "div",
-        { staticClass: "row justify-content-center" },
+        "button",
+        {
+          staticClass: "btn btn-light fadeInAnim",
+          class: { invisible: _vm.addNewContact === true },
+          attrs: { title: "Добавить ссылку" },
+          on: { click: _vm.toggleAddNewContact }
+        },
         [
-          _vm.email === false
-            ? _c("Error", {
-                attrs: {
-                  errorMessage: "Произошла ошибка при получении контактов"
-                }
-              })
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.email !== -1 && _vm.email !== false
-            ? _c("div", { staticClass: "col-12 goUpAnim" }, [
-                _c(
-                  "form",
-                  {
-                    attrs: { method: "POST" },
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.submit($event)
+          _c("i", { staticClass: "bi bi-plus" }),
+          _vm._v("\n            Добавить контакт\n        ")
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-light",
+          class: { invisible: _vm.addNewContact === false },
+          attrs: { title: "Добавить ссылку" },
+          on: {
+            click: function($event) {
+              return _vm.toggleAddNewContact("back")
+            }
+          }
+        },
+        [
+          _c("i", { staticClass: "bi bi-arrow-left" }),
+          _vm._v("\n            Назад\n        ")
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "col-12 col-md-10 mt-5 goUpAnim",
+        class: { invisible: _vm.addNewContact === false }
+      },
+      [
+        _c(
+          "form",
+          {
+            attrs: { method: "POST" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.submit()
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "row justify-content-center" }, [
+              _c("div", {
+                staticClass: "col-12 col-md-2 text-center",
+                domProps: { innerHTML: _vm._s(_vm.iconClass) }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3 text-center" }, [
+                _c("div", { staticClass: "dropdown" }, [
+                  _c("h6", [_vm._v(" ")]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-light btn-block dropdown-toggle",
+                      attrs: {
+                        type: "button",
+                        id: "dropdownMenuButton",
+                        "data-toggle": "dropdown",
+                        "aria-haspopup": "true",
+                        "aria-expanded": "false"
                       }
+                    },
+                    [
+                      _vm.pickedSocialMedia != undefined
+                        ? _c("b", [
+                            _vm._v(_vm._s(_vm.pickedSocialMedia.tooltip))
+                          ])
+                        : _c("b", [_vm._v("Сервис")])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "dropdown-menu w-100",
+                      attrs: { "aria-labelledby": "dropdownMenuButton" }
+                    },
+                    _vm._l(_vm.socialMediaLibrary, function(
+                      socialMedia,
+                      index
+                    ) {
+                      return _c(
+                        "a",
+                        {
+                          key: index,
+                          staticClass: "dropdown-item pointer",
+                          on: {
+                            click: function($event) {
+                              return _vm.pickSocialMedia(index)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(socialMedia.tooltip) +
+                              "\n                            "
+                          )
+                        ]
+                      )
+                    }),
+                    0
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-12 col-md-4 mb-3" }, [
+                _c("h6", { domProps: { innerHTML: _vm._s(_vm.tooltipTitle) } }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.newContact.contact_url,
+                      expression: "newContact.contact_url"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", required: "" },
+                  domProps: { value: _vm.newContact.contact_url },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.newContact,
+                        "contact_url",
+                        $event.target.value
+                      )
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.contact_url
+                  ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                      _vm._v(_vm._s(_vm.errors.contact_url[0]))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.socialMediaGeneratedLink !== undefined &&
+                _vm.newContact.contact_url !== undefined
+                  ? _c(
+                      "a",
+                      {
+                        staticClass: "goUpAnim",
+                        attrs: {
+                          href: _vm.socialMediaGeneratedLink,
+                          target: "_blank"
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Проверить ссылку\n                    "
+                        )
+                      ]
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-12 col-md-3 mb-3" }, [
+                _c("h6", [_vm._v(" ")]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-light ml-2",
+                    attrs: {
+                      title: "Добавить ссылку",
+                      disabled:
+                        _vm.newContact.contact_url === undefined ||
+                        _vm.newContact.contact_url === ""
                     }
                   },
                   [
-                    _c("div", { staticClass: "row justify-content-center" }, [
-                      _c("div", { staticClass: "col-12 col-md-8 mb-3" }, [
-                        _c("h6", [_vm._v("E-Mail")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.email,
-                              expression: "email"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "username@mail.ru"
-                          },
-                          domProps: { value: _vm.email },
-                          on: {
-                            keydown: function($event) {
-                              return _vm.toggleEdit(true)
-                            },
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.email = $event.target.value
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors && _vm.errors.email
-                          ? _c("div", { staticClass: "text-danger goUpAnim" }, [
-                              _vm._v(_vm._s(_vm.errors.email[0]))
-                            ])
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _vm.edit === true
-                      ? _c(
-                          "div",
-                          {
-                            staticClass: "row justify-content-center goUpAnim"
-                          },
-                          [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-light",
-                                attrs: { title: "Отмена" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.toggleEdit(false)
-                                  }
-                                }
-                              },
-                              [
-                                _c("i", { staticClass: "bi bi-x" }),
-                                _vm._v(
-                                  "\n                            Отмена\n                        "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _vm._m(0)
-                          ]
-                        )
-                      : _vm._e()
+                    _c("i", { staticClass: "bi bi-arrow-right" }),
+                    _vm._v(
+                      "\n                        Добавить\n                    "
+                    )
                   ]
                 )
               ])
-            : _vm._e()
-        ],
-        1
-      )
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-light ml-2",
-        attrs: { title: "Сохранить изменения" }
-      },
-      [
-        _c("i", { staticClass: "bi bi-save" }),
-        _vm._v(
-          "\n                            Сохранить\n                        "
+            ])
+          ]
         )
       ]
     )
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 

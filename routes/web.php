@@ -49,6 +49,8 @@ Route::post('/admin/saveProjectSlide', [AdminController::class, 'saveProjectSlid
 Route::post('/admin/deleteProjectSlide', [AdminController::class, 'deleteProjectSlide']);
 Route::post('/admin/setNewOrderForSlides', [AdminController::class, 'setNewOrderForSlides']);
 Route::post('/admin/saveSlideChanges', [AdminController::class, 'saveSlideChanges']);
+Route::get('/admin/getSocialMediaLibrary', [AdminController::class, 'getSocialMediaLibrary']);
+Route::post('/admin/addContact', [AdminController::class, 'addContact']);
 
 
 Route::get('/admin', [AdminController::class, 'index']);
