@@ -64,6 +64,9 @@ Vue.component('DeleteModal', DeleteModal);
 import LinkItem from './components/Admin/Misc/LinkItem.vue';
 Vue.component('LinkItem', LinkItem);
 
+import ContactItem from './components/Admin/Misc/ContactItem.vue';
+Vue.component('ContactItem', ContactItem);
+
 import EditProjectSlides from './components/Admin/Projects/EditProjectSlides.vue';
 Vue.component('EditProjectSlides', EditProjectSlides);
 

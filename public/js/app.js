@@ -2038,6 +2038,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
@@ -2059,7 +2068,9 @@ __webpack_require__.r(__webpack_exports__);
   //данные
   data: function data() {
     return {
+      // переключение в режим добавления контакта
       addNewContact: false,
+      // новый контакт
       newContact: {
         type: Object,
         "default": function _default() {
@@ -2070,47 +2081,77 @@ __webpack_require__.r(__webpack_exports__);
           };
         }
       },
+      // библиотека соц.сетей
       socialMediaLibrary: undefined,
+      // выбранная соц.сеть
       pickedSocialMedia: undefined,
-      iconClass: undefined,
-      urlInput: undefined,
-      edit: false,
-      backup: null,
       errors: null
     };
   },
   computed: {
-    contacts: function contacts() {
-      return this.$store.state.GlobalStates.contacts;
+    // все контакты
+    contacts: {
+      get: function get() {
+        return this.$store.state.GlobalStates.contacts;
+      },
+      set: function set(value) {
+        alert();
+      }
     },
+    dragOptions: function dragOptions() {
+      return {
+        ghostClass: "dragGhost"
+      };
+    },
+    // ДОБАВЛЕНИЕ 
     // надпись над полем ввода юзернейма\телефона\email'а
     tooltipTitle: function tooltipTitle() {
       if (this.pickedSocialMedia !== undefined && this.pickedSocialMedia !== false) {
-        if (this.pickedSocialMedia.insert_type === 'phone_number') {
-          return "\u041D\u043E\u043C\u0435\u0440 \u0442\u0435\u043B\u0435\u0444\u043E\u043D\u0430 ".concat(this.pickedSocialMedia.tooltip);
-        }
+        switch (this.pickedSocialMedia.insert_type) {
+          case 'phone_number':
+            return "\u041D\u043E\u043C\u0435\u0440 \u0442\u0435\u043B\u0435\u0444\u043E\u043D\u0430 ".concat(this.pickedSocialMedia.tooltip);
+            break;
 
-        if (this.pickedSocialMedia.insert_type === 'username') {
-          return "\u0418\u043C\u044F \u0438\u043B\u0438 ID \u043F\u0440\u043E\u0444\u0438\u043B\u044F ".concat(this.pickedSocialMedia.tooltip);
-        }
+          case 'username':
+            return "\u0418\u043C\u044F \u0438\u043B\u0438 ID \u043F\u0440\u043E\u0444\u0438\u043B\u044F ".concat(this.pickedSocialMedia.tooltip);
+            break;
 
-        if (this.pickedSocialMedia.insert_type === 'email') {
-          return "\u0410\u0434\u0440\u0435\u0441 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043D\u043D\u043E\u0439 \u043F\u043E\u0447\u0442\u044B";
+          case 'email':
+            return "\u0410\u0434\u0440\u0435\u0441 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043D\u043D\u043E\u0439 \u043F\u043E\u0447\u0442\u044B";
+
+          default:
+            return '&nbsp';
         }
       } else {
-        return "&nbsp";
+        return '&nbsp';
       }
     },
     //сгенерированная ссылка на соц.сеть или email
     socialMediaGeneratedLink: function socialMediaGeneratedLink() {
-      if (this.pickedSocialMedia !== undefined && this.pickedSocialMedia !== false && this.newContact.contact_url !== '' && this.pickedSocialMedia.type !== 'email') {
+      if (this.pickedSocialMedia !== undefined && this.pickedSocialMedia !== false && this.newContact.contact_url !== '') {
         return this.pickedSocialMedia.url_template.replace('{insert}', this.newContact.contact_url);
       }
+    },
+    iconClass: function iconClass() {
+      var icon = "";
+
+      if (this.pickedSocialMedia !== undefined) {
+        switch (this.pickedSocialMedia.type) {
+          case 'email':
+            icon = "<h6>&nbsp;</h6><i class=\"goUpAnim fas fa-at font2rem\"></i>";
+            break;
+
+          default:
+            icon = "<h6>&nbsp;</h6><i class='goUpAnim fab fa-".concat(this.pickedSocialMedia.type, " font2rem'></i>");
+        }
+      }
+
+      return icon;
     }
   },
   //методы
   methods: {
-    //переключиться между ссылками и добавлением
+    //переключиться между редактированием контактов и добавлением нового
     toggleAddNewContact: function toggleAddNewContact(value) {
       if (value === "back") {
         this.newContact = {
@@ -2120,19 +2161,21 @@ __webpack_require__.r(__webpack_exports__);
         };
       }
 
-      if (this.addNewContact === false) this.addNewContact = true;else this.addNewContact = false;
+      if (this.addNewContact === false) {
+        this.addNewContact = true;
+        this.pickedSocialMedia = undefined;
+      } else {
+        this.addNewContact = false;
+      }
     },
     //выбрать соц.сеть
     pickSocialMedia: function pickSocialMedia(indexOfSocialMedia) {
       this.pickedSocialMedia = this.socialMediaLibrary[indexOfSocialMedia];
       this.newContact.contact_type = this.pickedSocialMedia.type;
-      this.newContact.contact_tooltip = this.pickedSocialMedia.tooltip;
-
-      if (this.pickedSocialMedia.type == 'email') {
-        this.iconClass = "<h6>&nbsp;</h6><i class=\"fas fa-at font2rem\"></i>";
-      } else {
-        this.iconClass = "<h6>&nbsp;</h6><i class='fab fa-".concat(this.pickedSocialMedia.type, " font2rem'></i>");
-      }
+      this.newContact.contact_tooltip = this.pickedSocialMedia.tooltip; // if(this.pickedSocialMedia.type == 'email')
+      // { this.iconClass = `<h6>&nbsp;</h6><i class="goUpAnim fas fa-at font2rem"></i>`; }
+      // else
+      // { this.iconClass = `<h6>&nbsp;</h6><i class='goUpAnim fab fa-${this.pickedSocialMedia.type} font2rem'></i>`; }
     },
     //сохранить новый контакт
     submit: function submit(link) {
@@ -2142,6 +2185,7 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('contact_type', this.newContact.contact_type);
       formData.append('contact_tooltip', this.newContact.contact_tooltip);
       formData.append('contact_url', this.socialMediaGeneratedLink);
+      formData.append('contact_insertion', this.newContact.contact_url);
       axios.post('/admin/addContact', formData).then(function (response) {
         _this2.$store.dispatch('getContacts');
 
@@ -2317,6 +2361,285 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this2.errors = error.response.data.errors || {};
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/ContactItem.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/ContactItem.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  created: function created() {// for(let i = 0; i <= this.socialMediaLibrary.length; i++)
+    // {
+    //     console.log(this.socialMediaLibrary[i])
+    // }
+  },
+  //данные
+  data: function data() {
+    return {
+      errors: null,
+      edit: false,
+      backup: undefined,
+      pickedSocialMedia: undefined
+    };
+  },
+  props: {
+    contact: {
+      type: Object,
+      "default": function _default() {
+        return {
+          contact_type: undefined,
+          contact_tooltip: undefined,
+          contact_url: undefined,
+          contact_insertion: undefined
+        };
+      }
+    }
+  },
+  computed: {
+    // библиотека соц. сетей
+    socialMediaLibrary: function socialMediaLibrary() {
+      return this.$parent.$parent.socialMediaLibrary;
+    },
+    // класс для иконки
+    iconClass: function iconClass() {
+      if (this.contact.contact_type === 'email') {
+        return "<h6>&nbsp;</h6><i class=\"goUpAnim fas fa-at font2rem\"></i>";
+      } else {
+        return "<h6>&nbsp;</h6><i class=\"goUpAnim fab fa-".concat(this.contact.contact_type, " font2rem\"></i>");
+      }
+    },
+    //сгенерированная ссылка на соц.сеть или email
+    socialMediaGeneratedLink: function socialMediaGeneratedLink() {
+      if (this.pickedSocialMedia !== undefined && this.pickedSocialMedia !== false && this.contact.contact_url !== '') {
+        return this.pickedSocialMedia.url_template.replace('{insert}', this.contact.contact_insertion);
+      } else {
+        if (this.socialMediaLibrary !== undefined) {
+          var urlTemplate = '';
+
+          var _iterator = _createForOfIteratorHelper(this.socialMediaLibrary),
+              _step;
+
+          try {
+            for (_iterator.s(); !(_step = _iterator.n()).done;) {
+              var item = _step.value;
+
+              if (item.type === this.contact.contact_type) {
+                urlTemplate = item.url_template.replace('{insert}', this.contact.contact_insertion);
+                ;
+              }
+            }
+          } catch (err) {
+            _iterator.e(err);
+          } finally {
+            _iterator.f();
+          }
+        }
+
+        return urlTemplate;
+      }
+    },
+    // надпись над полем ввода юзернейма\телефона\email'а
+    tooltipTitle: function tooltipTitle() {
+      if (this.pickedSocialMedia !== undefined && this.pickedSocialMedia !== false) {
+        switch (this.pickedSocialMedia.insert_type) {
+          case 'phone_number':
+            return "\u041D\u043E\u043C\u0435\u0440 \u0442\u0435\u043B\u0435\u0444\u043E\u043D\u0430 ".concat(this.pickedSocialMedia.tooltip);
+            break;
+
+          case 'username':
+            return "\u0418\u043C\u044F \u0438\u043B\u0438 ID \u043F\u0440\u043E\u0444\u0438\u043B\u044F ".concat(this.pickedSocialMedia.tooltip);
+            break;
+
+          case 'email':
+            return "\u0410\u0434\u0440\u0435\u0441 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043D\u043D\u043E\u0439 \u043F\u043E\u0447\u0442\u044B";
+
+          default:
+            return '&nbsp';
+        }
+      } else {
+        return '&nbsp';
+      }
+    }
+  },
+  methods: {
+    //выбрать соц.сеть
+    pickSocialMedia: function pickSocialMedia(indexOfSocialMedia) {
+      this.pickedSocialMedia = this.socialMediaLibrary[indexOfSocialMedia];
+      this.contact.contact_type = this.pickedSocialMedia.type;
+      this.contact.contact_tooltip = this.pickedSocialMedia.tooltip;
+    },
+    //скрыть\показать ссылки (при ред. и сохранении)
+    toggleItems: function toggleItems(value) {
+      if (value == 'hide') {
+        var contactItems = document.getElementsByClassName('contactItem');
+
+        var _iterator2 = _createForOfIteratorHelper(contactItems),
+            _step2;
+
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var item = _step2.value;
+
+            if (parseInt(item.id) !== this.contact.id) {
+              item.classList.add("halfOpacity");
+              item.classList.add("unclickable");
+            }
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+      } else if (value == 'show') {
+        var _contactItems = document.getElementsByClassName('contactItem');
+
+        var _iterator3 = _createForOfIteratorHelper(_contactItems),
+            _step3;
+
+        try {
+          for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+            var _item = _step3.value;
+
+            if (parseInt(_item.id) !== this.contact.id) {
+              _item.classList.remove("halfOpacity");
+
+              _item.classList.remove("unclickable");
+            }
+          }
+        } catch (err) {
+          _iterator3.e(err);
+        } finally {
+          _iterator3.f();
+        }
+      }
+    },
+    //вкл\выкл режим редактирования
+    toggleEdit: function toggleEdit(value) {
+      if (value === true) {
+        if (this.edit === false) {
+          this.backup = {
+            'contact_type': this.contact.contact_type,
+            'contact_tooltip': this.contact.contact_tooltip,
+            'contact_url': this.contact.contact_url,
+            'contact_insertion': this.contact.contact_insertion
+          };
+          this.toggleItems('hide');
+        }
+
+        this.edit = true;
+      }
+
+      if (value === false) {
+        this.toggleItems('show');
+        this.edit = value;
+        this.errors = null;
+        this.pickedSocialMedia = undefined;
+        this.contact.contact_type = this.backup.contact_type;
+        this.contact.contact_tooltip = this.backup.contact_tooltip;
+        this.contact.contact_url = this.backup.contact_url;
+        this.contact.contact_insertion = this.backup.contact_insertion;
+      }
+    },
+    // сохранить изменения
+    submit: function submit() {
+      var _this = this;
+
+      var formData = new FormData();
+      formData.append('contact_id', this.contact.id);
+      formData.append('contact_type', this.contact.contact_type);
+      formData.append('contact_tooltip', this.contact.contact_tooltip);
+      formData.append('contact_url', this.socialMediaGeneratedLink);
+      formData.append('contact_insertion', this.contact.contact_insertion);
+      axios.post('/admin/editContact', formData).then(function (response) {
+        _this.edit = false;
+
+        _this.toggleItems('show');
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          _this.errors = error.response.data.errors || {};
         }
       });
     }
@@ -6704,12 +7027,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Admin_Misc_PreviewProjectFullscreen_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/Admin/Misc/PreviewProjectFullscreen.vue */ "./resources/js/components/Admin/Misc/PreviewProjectFullscreen.vue");
 /* harmony import */ var _components_Admin_Misc_DeleteModal_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/Admin/Misc/DeleteModal.vue */ "./resources/js/components/Admin/Misc/DeleteModal.vue");
 /* harmony import */ var _components_Admin_Misc_LinkItem_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/Admin/Misc/LinkItem.vue */ "./resources/js/components/Admin/Misc/LinkItem.vue");
-/* harmony import */ var _components_Admin_Projects_EditProjectSlides_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/Admin/Projects/EditProjectSlides.vue */ "./resources/js/components/Admin/Projects/EditProjectSlides.vue");
-/* harmony import */ var _components_Admin_Misc_EditSlideCommentary_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/Admin/Misc/EditSlideCommentary.vue */ "./resources/js/components/Admin/Misc/EditSlideCommentary.vue");
-/* harmony import */ var _components_Misc_Error_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/Misc/Error.vue */ "./resources/js/components/Misc/Error.vue");
-/* harmony import */ var _components_Navigation_Nav_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/Navigation/Nav.vue */ "./resources/js/components/Navigation/Nav.vue");
-/* harmony import */ var _components_Navigation_NavButton__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/Navigation/NavButton */ "./resources/js/components/Navigation/NavButton.vue");
-/* harmony import */ var _components_Navigation_NavScroll__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/Navigation/NavScroll */ "./resources/js/components/Navigation/NavScroll.vue");
+/* harmony import */ var _components_Admin_Misc_ContactItem_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/Admin/Misc/ContactItem.vue */ "./resources/js/components/Admin/Misc/ContactItem.vue");
+/* harmony import */ var _components_Admin_Projects_EditProjectSlides_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/Admin/Projects/EditProjectSlides.vue */ "./resources/js/components/Admin/Projects/EditProjectSlides.vue");
+/* harmony import */ var _components_Admin_Misc_EditSlideCommentary_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/Admin/Misc/EditSlideCommentary.vue */ "./resources/js/components/Admin/Misc/EditSlideCommentary.vue");
+/* harmony import */ var _components_Misc_Error_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/Misc/Error.vue */ "./resources/js/components/Misc/Error.vue");
+/* harmony import */ var _components_Navigation_Nav_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/Navigation/Nav.vue */ "./resources/js/components/Navigation/Nav.vue");
+/* harmony import */ var _components_Navigation_NavButton__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/Navigation/NavButton */ "./resources/js/components/Navigation/NavButton.vue");
+/* harmony import */ var _components_Navigation_NavScroll__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/Navigation/NavScroll */ "./resources/js/components/Navigation/NavScroll.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -6762,19 +7086,21 @@ vue__WEBPACK_IMPORTED_MODULE_3__.default.component('DeleteModal', _components_Ad
 
 vue__WEBPACK_IMPORTED_MODULE_3__.default.component('LinkItem', _components_Admin_Misc_LinkItem_vue__WEBPACK_IMPORTED_MODULE_18__.default);
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('EditProjectSlides', _components_Admin_Projects_EditProjectSlides_vue__WEBPACK_IMPORTED_MODULE_19__.default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('ContactItem', _components_Admin_Misc_ContactItem_vue__WEBPACK_IMPORTED_MODULE_19__.default);
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('EditSlideCommentary', _components_Admin_Misc_EditSlideCommentary_vue__WEBPACK_IMPORTED_MODULE_20__.default); //Misc
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('EditProjectSlides', _components_Admin_Projects_EditProjectSlides_vue__WEBPACK_IMPORTED_MODULE_20__.default);
+
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('EditSlideCommentary', _components_Admin_Misc_EditSlideCommentary_vue__WEBPACK_IMPORTED_MODULE_21__.default); //Misc
 
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Error', _components_Misc_Error_vue__WEBPACK_IMPORTED_MODULE_21__.default); //Navigation 
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Error', _components_Misc_Error_vue__WEBPACK_IMPORTED_MODULE_22__.default); //Navigation 
 
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Nav', _components_Navigation_Nav_vue__WEBPACK_IMPORTED_MODULE_22__.default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Nav', _components_Navigation_Nav_vue__WEBPACK_IMPORTED_MODULE_23__.default);
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('NavButton', _components_Navigation_NavButton__WEBPACK_IMPORTED_MODULE_23__.default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('NavButton', _components_Navigation_NavButton__WEBPACK_IMPORTED_MODULE_24__.default);
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('NavScroll', _components_Navigation_NavScroll__WEBPACK_IMPORTED_MODULE_24__.default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('NavScroll', _components_Navigation_NavScroll__WEBPACK_IMPORTED_MODULE_25__.default);
 vue__WEBPACK_IMPORTED_MODULE_3__.default.directive('scroll', {
   inserted: function inserted(el, binding) {
     var f = function f(evt) {
@@ -60837,6 +61163,45 @@ component.options.__file = "resources/js/components/Admin/Links/EditLinks.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/Admin/Misc/ContactItem.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/Admin/Misc/ContactItem.vue ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ContactItem_vue_vue_type_template_id_1f86459b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ContactItem.vue?vue&type=template&id=1f86459b& */ "./resources/js/components/Admin/Misc/ContactItem.vue?vue&type=template&id=1f86459b&");
+/* harmony import */ var _ContactItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ContactItem.vue?vue&type=script&lang=js& */ "./resources/js/components/Admin/Misc/ContactItem.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _ContactItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _ContactItem_vue_vue_type_template_id_1f86459b___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ContactItem_vue_vue_type_template_id_1f86459b___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Admin/Misc/ContactItem.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Admin/Misc/DeleteModal.vue":
 /*!************************************************************!*\
   !*** ./resources/js/components/Admin/Misc/DeleteModal.vue ***!
@@ -62227,6 +62592,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Admin/Misc/ContactItem.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/Admin/Misc/ContactItem.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ContactItem.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/ContactItem.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Admin/Misc/DeleteModal.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************!*\
   !*** ./resources/js/components/Admin/Misc/DeleteModal.vue?vue&type=script&lang=js& ***!
@@ -62835,6 +63216,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditLinks_vue_vue_type_template_id_741adc1e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditLinks_vue_vue_type_template_id_741adc1e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./EditLinks.vue?vue&type=template&id=741adc1e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Links/EditLinks.vue?vue&type=template&id=741adc1e&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Admin/Misc/ContactItem.vue?vue&type=template&id=1f86459b&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/Admin/Misc/ContactItem.vue?vue&type=template&id=1f86459b& ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactItem_vue_vue_type_template_id_1f86459b___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactItem_vue_vue_type_template_id_1f86459b___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactItem_vue_vue_type_template_id_1f86459b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ContactItem.vue?vue&type=template&id=1f86459b& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/ContactItem.vue?vue&type=template&id=1f86459b&");
 
 
 /***/ }),
@@ -63752,9 +64150,7 @@ var render = function() {
                     staticClass: "btn btn-light ml-2",
                     attrs: {
                       title: "Добавить ссылку",
-                      disabled:
-                        _vm.newContact.contact_url === undefined ||
-                        _vm.newContact.contact_url === ""
+                      disabled: _vm.pickedSocialMedia === undefined
                     }
                   },
                   [
@@ -63769,7 +64165,48 @@ var render = function() {
           ]
         )
       ]
-    )
+    ),
+    _vm._v(" "),
+    _vm.contacts !== -1
+      ? _c(
+          "div",
+          {
+            staticClass: "col-12 col-md-10 mt-5 goUpAnim",
+            class: { invisible: _vm.addNewContact === true }
+          },
+          [
+            _c(
+              "draggable",
+              _vm._b(
+                {
+                  staticClass: "col-12",
+                  attrs: { handle: ".handle" },
+                  model: {
+                    value: _vm.contacts,
+                    callback: function($$v) {
+                      _vm.contacts = $$v
+                    },
+                    expression: "contacts"
+                  }
+                },
+                "draggable",
+                _vm.dragOptions,
+                false
+              ),
+              _vm._l(_vm.contacts, function(item) {
+                return _c(
+                  "div",
+                  { key: item.id },
+                  [_c("ContactItem", { attrs: { contact: item } })],
+                  1
+                )
+              }),
+              0
+            )
+          ],
+          1
+        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -64014,6 +64451,221 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/ContactItem.vue?vue&type=template&id=1f86459b&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/ContactItem.vue?vue&type=template&id=1f86459b& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "form",
+    {
+      attrs: { method: "POST" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.submit()
+        }
+      }
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "row justify-content-center contactItem",
+          attrs: { id: _vm.contact.id }
+        },
+        [
+          _c("div", {
+            staticClass: "col-12 col-md-2 text-center",
+            domProps: { innerHTML: _vm._s(_vm.iconClass) }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3 text-center" }, [
+            _c("div", { staticClass: "dropdown" }, [
+              _c("h6", [_vm._v(" ")]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-light btn-block dropdown-toggle",
+                  attrs: {
+                    type: "button",
+                    id: "dropdownMenuButton",
+                    "data-toggle": "dropdown",
+                    "aria-haspopup": "true",
+                    "aria-expanded": "false"
+                  }
+                },
+                [_c("b", [_vm._v(_vm._s(_vm.contact.contact_tooltip))])]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "dropdown-menu w-100",
+                  attrs: { "aria-labelledby": "dropdownMenuButton" }
+                },
+                _vm._l(_vm.socialMediaLibrary, function(socialMedia, index) {
+                  return _c(
+                    "a",
+                    {
+                      key: index,
+                      staticClass: "dropdown-item pointer",
+                      on: {
+                        click: function($event) {
+                          _vm.toggleEdit(true)
+                          _vm.pickSocialMedia(index)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(socialMedia.tooltip) +
+                          "\n                    "
+                      )
+                    ]
+                  )
+                }),
+                0
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12 col-md-4 mb-3" }, [
+            _c("h6", { domProps: { innerHTML: _vm._s(_vm.tooltipTitle) } }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.contact.contact_insertion,
+                  expression: "contact.contact_insertion"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", required: "" },
+              domProps: { value: _vm.contact.contact_insertion },
+              on: {
+                keydown: function($event) {
+                  return _vm.toggleEdit(true)
+                },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.contact,
+                    "contact_insertion",
+                    $event.target.value
+                  )
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.contact_url
+              ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                  _vm._v(_vm._s(_vm.errors.contact_url[0]))
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.contact.contact_url !== undefined
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "goUpAnim",
+                    attrs: {
+                      href: _vm.socialMediaGeneratedLink,
+                      target: "_blank"
+                    }
+                  },
+                  [_vm._v("\n                Проверить ссылку\n            ")]
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12 col-md-3 mb-5 mb-md-3" }, [
+            _c("h6", [_vm._v(" ")]),
+            _vm._v(" "),
+            _vm.edit === false
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "btn btn-light fadeInAnim handle",
+                    attrs: { title: "Переместить" }
+                  },
+                  [_c("i", { staticClass: "bi bi-arrows-move" })]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.edit === false
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "btn btn-light ml-2 fadeInAnim",
+                    attrs: { title: "Удалить ссылку" }
+                  },
+                  [_c("i", { staticClass: "bi bi-trash-fill" })]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.edit !== false
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "btn btn-light ml-2 mb-1 goUpAnim",
+                    attrs: { title: "Отменить изменения" },
+                    on: {
+                      click: function($event) {
+                        return _vm.toggleEdit(false)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "bi bi-x" }),
+                    _vm._v("\n                Отмена\n            ")
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.edit !== false
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-light ml-2 goUpAnim",
+                    attrs: { title: "Сохранить изменения" }
+                  },
+                  [
+                    _c("i", { staticClass: "bi bi-save" }),
+                    _vm._v("\n                Сохранить\n            ")
+                  ]
+                )
+              : _vm._e()
+          ])
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 

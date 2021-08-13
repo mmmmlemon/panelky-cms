@@ -56,7 +56,7 @@
                     <div class="col-12 col-md-3 mb-3">
                         <h6>&nbsp;</h6>
                         <button class="btn btn-light ml-2" title="Добавить ссылку" 
-                                :disabled="newContact.contact_url === undefined || newContact.contact_url === ''">
+                                :disabled="pickedSocialMedia === undefined" >
                             <i class="bi bi-arrow-right"></i>
                             Добавить
                         </button>
@@ -64,7 +64,16 @@
                 </div> 
             </form>
         </div>
-        
+
+        <!-- ФОРМА редактирования имеющихся контактов -->
+        <div class="col-12 col-md-10 mt-5 goUpAnim" v-if="contacts !== -1" v-bind:class="{ 'invisible': addNewContact === true }" >
+            
+            <draggable v-model="contacts" handle=".handle" v-bind="dragOptions" class="col-12">
+                <div v-for="item in contacts" :key="item.id">
+                    <ContactItem :contact="item"/>
+                </div>
+            </draggable>
+        </div>
     </div>
     
 </template>
@@ -74,7 +83,6 @@ export default {
     created(){
         // получаем список контактов
         this.$store.dispatch('getContacts');
-
 
         //получаем библиотеку соц.сетей (для добавленя новой ссылки)
         axios.get('/admin/getSocialMediaLibrary').then(response => {
@@ -92,7 +100,9 @@ export default {
     //данные
     data: () => {
         return{
+            // переключение в режим добавления контакта
             addNewContact: false,
+            // новый контакт
             newContact: {type: Object, default: function(){
                 return {
                     contact_type: undefined,
@@ -100,59 +110,95 @@ export default {
                     contact_url: undefined,
                 }
             }},
+            // библиотека соц.сетей
             socialMediaLibrary: undefined,
+
+            // выбранная соц.сеть
             pickedSocialMedia: undefined,
-            iconClass: undefined,
-            urlInput: undefined,
-            edit: false,
-            backup: null,
             errors: null,
         }
     },
 
     computed: {
-
-        contacts(){
-            return this.$store.state.GlobalStates.contacts;
+        
+        // все контакты
+        contacts:{
+            get(){
+                 return this.$store.state.GlobalStates.contacts;
+            },
+            set(value)
+            {
+                alert()
+            }  
         },
 
+        dragOptions() {
+            return {
+                ghostClass: "dragGhost"
+            }
+        },
+
+        // ДОБАВЛЕНИЕ 
         // надпись над полем ввода юзернейма\телефона\email'а
         tooltipTitle(){
-            if(this.pickedSocialMedia !== undefined && this.pickedSocialMedia !== false)
-            {
-                if(this.pickedSocialMedia.insert_type === 'phone_number')
-                { return `Номер телефона ${this.pickedSocialMedia.tooltip}`; }
-                if(this.pickedSocialMedia.insert_type === 'username')
-                { return `Имя или ID профиля ${this.pickedSocialMedia.tooltip}`; }
-                if(this.pickedSocialMedia.insert_type === 'email')
-                { return `Адрес электронной почты`; }
+            if(this.pickedSocialMedia !== undefined && this.pickedSocialMedia !== false){   
+                switch (this.pickedSocialMedia.insert_type){
+                    case 'phone_number':
+                        return `Номер телефона ${this.pickedSocialMedia.tooltip}`; 
+                        break;
+                    case 'username':
+                        return `Имя или ID профиля ${this.pickedSocialMedia.tooltip}`;
+                        break;
+                    case 'email':
+                        return `Адрес электронной почты`;
+                    default:
+                        return '&nbsp';
+                }
             }
-            else
-            { return "&nbsp"; }
+            else { return '&nbsp';}
         },
 
         //сгенерированная ссылка на соц.сеть или email
         socialMediaGeneratedLink(){
             if(this.pickedSocialMedia !== undefined && this.pickedSocialMedia !== false 
-                && this.newContact.contact_url !== '' && this.pickedSocialMedia.type !== 'email')
+                && this.newContact.contact_url !== '')
             { return this.pickedSocialMedia.url_template.replace('{insert}', this.newContact.contact_url); }
+        },
+
+        iconClass(){
+            let icon = "";
+            if(this.pickedSocialMedia !== undefined)
+            {
+                switch(this.pickedSocialMedia.type){
+                    case 'email':
+                       icon = `<h6>&nbsp;</h6><i class="goUpAnim fas fa-at font2rem"></i>`;
+                       break;
+                    default:
+                       icon = `<h6>&nbsp;</h6><i class='goUpAnim fab fa-${this.pickedSocialMedia.type} font2rem'></i>`;
+                }
+            }
+
+            return icon;
         }
     },
 
     //методы
     methods: {
-        //переключиться между ссылками и добавлением
+        //переключиться между редактированием контактов и добавлением нового
         toggleAddNewContact: function(value){
-            if(value === "back")
-            { this.newContact = { contact_type: undefined,
-                    contact_tooltip: undefined,
-                    contact_url: undefined}; }
+            if(value === "back"){ 
+                this.newContact = { contact_type: undefined,
+                contact_tooltip: undefined,
+                contact_url: undefined}; 
+            }
 
-            if(this.addNewContact === false)
-            this.addNewContact = true;
-
-            else
-            this.addNewContact = false; 
+            if(this.addNewContact === false){
+                this.addNewContact = true;
+                this.pickedSocialMedia = undefined;
+            }
+            else{
+                this.addNewContact = false; 
+            }
         },
 
         //выбрать соц.сеть
@@ -160,10 +206,10 @@ export default {
             this.pickedSocialMedia = this.socialMediaLibrary[indexOfSocialMedia];
             this.newContact.contact_type = this.pickedSocialMedia.type;
             this.newContact.contact_tooltip = this.pickedSocialMedia.tooltip;
-            if(this.pickedSocialMedia.type == 'email')
-            { this.iconClass = `<h6>&nbsp;</h6><i class="fas fa-at font2rem"></i>`; }
-            else
-            { this.iconClass = `<h6>&nbsp;</h6><i class='fab fa-${this.pickedSocialMedia.type} font2rem'></i>`; }
+            // if(this.pickedSocialMedia.type == 'email')
+            // { this.iconClass = `<h6>&nbsp;</h6><i class="goUpAnim fas fa-at font2rem"></i>`; }
+            // else
+            // { this.iconClass = `<h6>&nbsp;</h6><i class='goUpAnim fab fa-${this.pickedSocialMedia.type} font2rem'></i>`; }
 
         },
 
@@ -174,6 +220,7 @@ export default {
             formData.append('contact_type', this.newContact.contact_type);
             formData.append('contact_tooltip', this.newContact.contact_tooltip);
             formData.append('contact_url', this.socialMediaGeneratedLink);
+            formData.append('contact_insertion', this.newContact.contact_url);
 
             axios.post('/admin/addContact', formData).then(response => {
                 this.$store.dispatch('getContacts');

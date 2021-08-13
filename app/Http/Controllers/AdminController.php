@@ -609,10 +609,26 @@ class AdminController extends Controller
         $contact->contact_type = $request->contact_type;
         $contact->contact_tooltip = $request->contact_tooltip;
         $contact->contact_url = $request->contact_url;
+        $contact->contact_insertion = $request->contact_insertion;
+        $contact->order = Contact::orderBy('order', 'desc')->min('order') - 1;
 
         $contact->save();
 
         return response()->json(true, 200);
+    }
+
+    // editContact
+    // редактировать контакт
+    public function editContact(Request $request)
+    {
+        $contact = Contact::find($request->contact_id);
+        
+        $contact->contact_type = $request->contact_type;
+        $contact->contact_tooltip = $request->contact_tooltip;
+        $contact->contact_url = $request->contact_url;
+        $contact->contact_insertion = $request->contact_insertion;
+
+        $contact->save();
     }
 
 }
