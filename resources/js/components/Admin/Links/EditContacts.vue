@@ -125,11 +125,17 @@ export default {
         contacts:{
             get(){
                  return this.$store.state.GlobalStates.contacts;
-            },
-            set(value)
-            {
-                alert()
-            }  
+            }, 
+            set(value){
+                let formData = new FormData();
+                formData.append('newOrder', JSON.stringify(value));
+                this.$store.commit('setState', {state: 'contacts', value: value});
+                axios.post('/admin/setNewOrderForContacts', formData).then(response => {
+                    // this.$store.commit('setState', {state: 'links', value: response.data});
+                }).catch(error => {
+                    this.$store.dispatch('setErrors', error.response.data.message);
+                });
+            } 
         },
 
         dragOptions() {

@@ -52,6 +52,8 @@ Route::post('/admin/saveSlideChanges', [AdminController::class, 'saveSlideChange
 Route::get('/admin/getSocialMediaLibrary', [AdminController::class, 'getSocialMediaLibrary']);
 Route::post('/admin/addContact', [AdminController::class, 'addContact']);
 Route::post('/admin/editContact', [AdminController::class, 'editContact']);
+Route::post('/admin/deleteContact', [AdminController::class, 'deleteContact']);
+Route::post('/admin/setNewOrderForContacts', [AdminController::class, 'setNewOrderForContacts']);
 
 
 Route::get('/admin', [AdminController::class, 'index']);

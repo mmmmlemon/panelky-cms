@@ -2095,7 +2095,18 @@ __webpack_require__.r(__webpack_exports__);
         return this.$store.state.GlobalStates.contacts;
       },
       set: function set(value) {
-        alert();
+        var _this2 = this;
+
+        var formData = new FormData();
+        formData.append('newOrder', JSON.stringify(value));
+        this.$store.commit('setState', {
+          state: 'contacts',
+          value: value
+        });
+        axios.post('/admin/setNewOrderForContacts', formData).then(function (response) {// this.$store.commit('setState', {state: 'links', value: response.data});
+        })["catch"](function (error) {
+          _this2.$store.dispatch('setErrors', error.response.data.message);
+        });
       }
     },
     dragOptions: function dragOptions() {
@@ -2179,7 +2190,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     //сохранить новый контакт
     submit: function submit(link) {
-      var _this2 = this;
+      var _this3 = this;
 
       var formData = new FormData();
       formData.append('contact_type', this.newContact.contact_type);
@@ -2187,18 +2198,18 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('contact_url', this.socialMediaGeneratedLink);
       formData.append('contact_insertion', this.newContact.contact_url);
       axios.post('/admin/addContact', formData).then(function (response) {
-        _this2.$store.dispatch('getContacts');
+        _this3.$store.dispatch('getContacts');
 
-        _this2.toggleAddNewContact();
+        _this3.toggleAddNewContact();
 
-        _this2.newContact = {
+        _this3.newContact = {
           contact_type: undefined,
           contact_tooltip: undefined,
           contact_url: undefined
         };
       })["catch"](function (error) {
         if (error.response.status === 422) {
-          _this2.errors = error.response.data.errors || {};
+          _this3.errors = error.response.data.errors || {};
         }
       });
     }
@@ -2642,6 +2653,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           _this.errors = error.response.data.errors || {};
         }
       });
+    },
+    //удалить контакт
+    deleteContact: function deleteContact() {
+      this.$store.dispatch('setDeleteModalInfo', {
+        type: 'contact',
+        contact_tooltip: this.contact.contact_tooltip,
+        id: this.contact.id
+      });
     }
   }
 });
@@ -2659,6 +2678,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2772,6 +2813,25 @@ __webpack_require__.r(__webpack_exports__);
           var errors = error.response.data;
 
           _this2.$store.dispatch('setErrors', error.response.data.message);
+        }
+      });
+    },
+    //удалить контакт
+    deleteContact: function deleteContact() {
+      var _this3 = this;
+
+      var id = this.deleteModalInfo.id;
+      var formData = new FormData();
+      formData.append('contact_id', id);
+      axios.post('/admin/deleteContact', formData).then(function (response) {
+        _this3.$store.dispatch('getContacts');
+
+        _this3.$store.dispatch('setDeleteModalInfo', undefined);
+      })["catch"](function (error) {
+        if (error.response.status === 422 || error.response.status === 500) {
+          var errors = error.response.data;
+
+          _this3.$store.dispatch('setErrors', error.response.data.message);
         }
       });
     }
@@ -64621,7 +64681,8 @@ var render = function() {
                   "div",
                   {
                     staticClass: "btn btn-light ml-2 fadeInAnim",
-                    attrs: { title: "Удалить ссылку" }
+                    attrs: { title: "Удалить ссылку" },
+                    on: { click: _vm.deleteContact }
                   },
                   [_c("i", { staticClass: "bi bi-trash-fill" })]
                 )
@@ -64700,7 +64761,7 @@ var render = function() {
                 },
                 [
                   _c("div", { staticClass: "card-body" }, [
-                    _c("h2", { staticClass: "card-title" }, [
+                    _c("h4", { staticClass: "card-title" }, [
                       _vm._v("Удаление проекта")
                     ]),
                     _vm._v(" "),
@@ -64761,7 +64822,7 @@ var render = function() {
                 },
                 [
                   _c("div", { staticClass: "card-body" }, [
-                    _c("h2", { staticClass: "card-title" }, [
+                    _c("h4", { staticClass: "card-title" }, [
                       _vm._v("Удаление ссылки")
                     ]),
                     _vm._v(" "),
@@ -64807,12 +64868,83 @@ var render = function() {
                   ])
                 ]
               )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.deleteModalInfo.type === "contact"
+            ? _c(
+                "div",
+                {
+                  staticClass:
+                    "col-11 col-md-4 transparentCard deleteModalCard m-1"
+                },
+                [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("h4", { staticClass: "card-title" }, [
+                      _vm._v("Удаление контакта")
+                    ]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("h5", { staticClass: "card-text" }, [
+                      _vm._v("Вы действительно хотите удалить контакт "),
+                      _c("b", [
+                        _vm._v(_vm._s(_vm.deleteModalInfo.contact_tooltip))
+                      ]),
+                      _vm._v("? Это действие нельзя будет отменить.")
+                    ]),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "d-grid gap-2 d-md-block" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          attrs: { type: "button" },
+                          on: { click: _vm.cancel }
+                        },
+                        [
+                          _vm._m(4),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Нет, не хочу")])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger",
+                          attrs: { type: "button" },
+                          on: { click: _vm.deleteContact }
+                        },
+                        [
+                          _vm._m(5),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Да, удалить")])
+                        ]
+                      )
+                    ])
+                  ])
+                ]
+              )
             : _vm._e()
         ])
       ])
     : _vm._e()
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "bi bi-x" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "bi bi-trash-fill" })])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

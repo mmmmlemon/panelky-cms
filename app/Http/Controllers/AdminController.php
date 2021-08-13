@@ -631,4 +631,32 @@ class AdminController extends Controller
         $contact->save();
     }
 
+    // deleteContact
+    // удалить контакт
+    public function deleteContact(Request $request)
+    {
+        $contact = Contact::find($request->contact_id)->delete();
+
+        return response()->json(true, 200);
+    }
+
+    //setNewOrderForContacts
+    //установить новый порядок для контактов
+    public function setNewOrderForContacts(Request $request){
+        
+        $newOrder = json_decode($request->newOrder);
+
+        $count = count($newOrder) - 1;
+
+        foreach($newOrder as $item)
+        {
+            $contact = Contact::where('id', $item->id)->get()[0];
+            $contact->order = $count;
+            $contact->save();
+            $count--;
+        }
+
+        return response()->json($newOrder, 200);
+    }
+
 }

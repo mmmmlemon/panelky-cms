@@ -45,7 +45,7 @@
                     <i class="bi bi-arrows-move"></i>
                 </div>
                 <!-- кнопка удалить ссылку -->
-                <div class="btn btn-light ml-2 fadeInAnim" title="Удалить ссылку" v-if="edit === false">
+                <div class="btn btn-light ml-2 fadeInAnim" title="Удалить ссылку" v-if="edit === false" @click="deleteContact">
                     <i class="bi bi-trash-fill"></i>
                 </div>
                 <!-- кнопка удалить ссылку -->
@@ -221,6 +221,11 @@ export default {
                     this.errors = error.response.data.errors || {};
                 }
             });
+        },
+
+        //удалить контакт
+        deleteContact(){
+            this.$store.dispatch('setDeleteModalInfo', {type: 'contact', contact_tooltip: this.contact.contact_tooltip, id: this.contact.id});
         }
     }
 

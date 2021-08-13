@@ -250,7 +250,7 @@ class APIController extends Controller
     //получить контакты
     public function getContacts()
     {
-        $contacts = Contact::all();
+        $contacts = Contact::orderBy('order', 'desc')->get();
 
         return response()->json($contacts);
     }
