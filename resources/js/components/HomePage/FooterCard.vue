@@ -19,21 +19,33 @@
                 </h1>
             </div>  
             <hr>
-            <!-- контактная почта -->
-            <div class="col-12 text-center mt-5 fadeInAnim" v-bind:class="{'zeroOpacity':email.email == null && email == -1}" id="contacts">
-                <button type="button" class="btn btn-lg btn-outline-light" v-on:click="showEmail">
+            <!-- контактная кнопка -->
+            <div class="col-12 text-center mt-5 fadeInAnim" id="contacts" @click="showContacts">
+                <button type="button" class="btn btn-lg btn-outline-light">
                     <span>Связаться со мной</span>
-                    <span aria-hidden="true">
-                        <i class="bi bi-at"></i>
-                    </span>
                 </button>
                 <br><br>
-                <a class="font18pt mb-5" :href="'mailto:'+email.email" v-bind:class="{'zeroOpacity unclickable': email.emailVisible === false, 'goUpAnim': email.emailVisible === true}">
+            </div>
+            <div class="row justify-content-center text-center mt-2 mb-5" 
+                        >
+                <div v-for="(contact, index) in contacts" v-bind:key="index" class="col-6 col-md-3 m-0 p-0 mt-3 contactIcon"
+                        :style="`transition: all 0.8s  ease-out; transition-delay: ${index/5}s; font-size: 2.5rem;`"
+                        v-bind:class="{'zeroOpacity unclickable': contactsVisible === false}">
+                    <a v-if="contact.contact_type === 'email'"  :href="'mailto:'+contact.contact_type">
+                        <i class="goUpAnim fas fa-at" :style="`animation-duration: ${index/5}s;`"></i>
+                    </a>
+                    <a v-else :href="contact.contact_url" target="_blank">
+                        <i :class="`goUpAnim fab fa-${contact.contact_type}`"></i>
+                    </a>
+                </div>
+            </div>
+                <!-- <a class="font18pt mb-5" :href="'mailto:'+email.email" v-bind:class="{'zeroOpacity unclickable': 
+                    email.emailVisible === false, 'goUpAnim': email.emailVisible === true}">
                     <b>{{email.email}}</b>
-                </a>
+                </a> -->
             </div> 
+        
         </div>  
-    </div>
 
 </template>
 <script>
@@ -44,8 +56,8 @@ export default {
         if(this.links === -1)
         {
             this.$store.dispatch('getLinks');
-            if(this.email === -1)
-            { this.$store.dispatch('getEmail'); }
+            if(this.contacts === -1)
+            { this.$store.dispatch('getContacts'); }
 
             this.isVisible = true;
         }
@@ -64,6 +76,8 @@ export default {
         return {
             //видимость почты
             // emailVisible: false,
+            //видимость контактов
+            contactsVisible: false,
         }
     },
 
@@ -73,18 +87,15 @@ export default {
             return this.$store.state.GlobalStates.links;
         },
         //email
-        email: {
+        contacts: {
             get(){
-                return this.$store.state.GlobalStates.email;
+                return this.$store.state.GlobalStates.contacts;
             },
-            set: function(email){
-                this.$store.commit('setState', {state: 'email', value: { email: email, emailVisible: true }});
-            } 
         },
 
         isVisible: {
             get(){  
-                if(this.email !== -1 && this.links !== -1)
+                if(this.contacts !== -1 && this.links !== -1)
                 { return true; }
                 else
                 { return false; }
@@ -108,12 +119,17 @@ export default {
             return joinArray; 
         },
 
-        //показать почту по нажатию кнопки
-        showEmail(){
-            if(this.email.emailVisible !== true){
-                this.email = this.reverseString(this.email.email);
-            }
+        //показать контакты
+        showContacts(){
+            this.contactsVisible = true;
         }
+
+        //показать почту по нажатию кнопки
+        // showEmail(){
+        //     if(this.email.emailVisible !== true){
+        //         this.email = this.reverseString(this.email.email);
+        //     }
+        // }
     }
 }
 </script>

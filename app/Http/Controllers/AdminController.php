@@ -507,7 +507,7 @@ class AdminController extends Controller
                 $slide->visibility = $request->slideVisibility;
                 $slide->commentary = $request->slideComment;
                 $slide->project_id = $request->projectId;
-                $slide->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->max('order') - 1;
+                $slide->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->min('order') - 1;
                 $slide->save();
             } 
             // если слайд горизонтальный\вертикальный, то сохраняем две записи
@@ -517,7 +517,7 @@ class AdminController extends Controller
                 $slideHorizontal->visibility = 'horizontal';
                 $slideHorizontal->commentary = $request->slideComment;
                 $slideHorizontal->project_id = $request->projectId;
-                $slideHorizontal->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->max('order') - 1;
+                $slideHorizontal->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->min('order') - 1;
                 $slideHorizontal->save();
 
                 $slideVertical = new ProjectSlide;
@@ -525,7 +525,7 @@ class AdminController extends Controller
                 $slideVertical->visibility = 'vertical';
                 $slideVertical->commentary = $request->slideComment;
                 $slideVertical->project_id = $request->projectId;
-                $slideVertical->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->max('order') - 1;
+                $slideVertical->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->min('order') - 1;
                 $slideVertical->save();
             }
         }
@@ -604,6 +604,10 @@ class AdminController extends Controller
     // добавит контакт
     public function addContact(Request $request)
     {
+        $this->validate($request, [
+            'contact_url' => 'required|string|max:200'
+        ]);
+
         $contact = new Contact;
 
         $contact->contact_type = $request->contact_type;
@@ -621,6 +625,10 @@ class AdminController extends Controller
     // редактировать контакт
     public function editContact(Request $request)
     {
+        $this->validate($request, [
+            'contact_url' => 'required|string|max:200'
+        ]);
+        
         $contact = Contact::find($request->contact_id);
         
         $contact->contact_type = $request->contact_type;

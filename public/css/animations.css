@@ -301,6 +301,15 @@
     /* filter: blur(0px); */
 }
 
+.contactIcon{
+    transform: translateY(0px);
+    /* filter: blur(0px); */
+}
+
+.contactIcon.zeroOpacity{
+    transform: translateY(35px);
+    /* filter: blur(5px); */
+}
 
 .slideCommentary-enter, .slideCommentary-leave-to{
     opacity: 0;

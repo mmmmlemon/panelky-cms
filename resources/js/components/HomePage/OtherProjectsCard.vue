@@ -48,7 +48,6 @@ export default {
         return {
             //видимость карточки
             visible: false,
-            translateY: '1135px',
         }
     },
 
@@ -58,11 +57,9 @@ export default {
         setVisible: {
            get() {
                this.visible = false;
-               this.translateY = '1135px';
            },
            set(value){
                this.visible = value;
-               this.translateY = '0px';
            }
         },
         isMobile: function(){

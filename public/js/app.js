@@ -5986,14 +5986,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
     if (this.links === -1) {
       this.$store.dispatch('getLinks');
 
-      if (this.email === -1) {
-        this.$store.dispatch('getEmail');
+      if (this.contacts === -1) {
+        this.$store.dispatch('getContacts');
       }
 
       this.isVisible = true;
@@ -6007,8 +6019,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   //данные
   data: function data() {
-    return {//видимость почты
+    return {
+      //видимость почты
       // emailVisible: false,
+      //видимость контактов
+      contactsVisible: false
     };
   },
   computed: {
@@ -6017,23 +6032,14 @@ __webpack_require__.r(__webpack_exports__);
       return this.$store.state.GlobalStates.links;
     },
     //email
-    email: {
+    contacts: {
       get: function get() {
-        return this.$store.state.GlobalStates.email;
-      },
-      set: function set(email) {
-        this.$store.commit('setState', {
-          state: 'email',
-          value: {
-            email: email,
-            emailVisible: true
-          }
-        });
+        return this.$store.state.GlobalStates.contacts;
       }
     },
     isVisible: {
       get: function get() {
-        if (this.email !== -1 && this.links !== -1) {
+        if (this.contacts !== -1 && this.links !== -1) {
           return true;
         } else {
           return false;
@@ -6053,12 +6059,16 @@ __webpack_require__.r(__webpack_exports__);
       var joinArray = reverseArray.join("");
       return joinArray;
     },
-    //показать почту по нажатию кнопки
-    showEmail: function showEmail() {
-      if (this.email.emailVisible !== true) {
-        this.email = this.reverseString(this.email.email);
-      }
-    }
+    //показать контакты
+    showContacts: function showContacts() {
+      this.contactsVisible = true;
+    } //показать почту по нажатию кнопки
+    // showEmail(){
+    //     if(this.email.emailVisible !== true){
+    //         this.email = this.reverseString(this.email.email);
+    //     }
+    // }
+
   }
 });
 
@@ -6267,8 +6277,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       //видимость карточки
-      visible: false,
-      translateY: '1135px'
+      visible: false
     };
   },
   computed: {
@@ -6276,11 +6285,9 @@ __webpack_require__.r(__webpack_exports__);
     setVisible: {
       get: function get() {
         this.visible = false;
-        this.translateY = '1135px';
       },
       set: function set(value) {
         this.visible = value;
-        this.translateY = '0px';
       }
     },
     isMobile: function isMobile() {
@@ -69614,43 +69621,61 @@ var render = function() {
               "div",
               {
                 staticClass: "col-12 text-center mt-5 fadeInAnim",
-                class: {
-                  zeroOpacity: _vm.email.email == null && _vm.email == -1
-                },
-                attrs: { id: "contacts" }
+                attrs: { id: "contacts" },
+                on: { click: _vm.showContacts }
               },
-              [
-                _c(
-                  "button",
+              [_vm._m(0), _vm._v(" "), _c("br"), _c("br")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "row justify-content-center text-center mt-2 mb-5"
+              },
+              _vm._l(_vm.contacts, function(contact, index) {
+                return _c(
+                  "div",
                   {
-                    staticClass: "btn btn-lg btn-outline-light",
-                    attrs: { type: "button" },
-                    on: { click: _vm.showEmail }
+                    key: index,
+                    staticClass: "col-6 col-md-3 m-0 p-0 mt-3 contactIcon",
+                    class: {
+                      "zeroOpacity unclickable": _vm.contactsVisible === false
+                    },
+                    style:
+                      "transition: all 0.8s  ease-out; transition-delay: " +
+                      index / 5 +
+                      "s; font-size: 2.5rem;"
                   },
                   [
-                    _c("span", [_vm._v("Связаться со мной")]),
-                    _vm._v(" "),
-                    _vm._m(0)
+                    contact.contact_type === "email"
+                      ? _c(
+                          "a",
+                          { attrs: { href: "mailto:" + contact.contact_type } },
+                          [
+                            _c("i", {
+                              staticClass: "goUpAnim fas fa-at",
+                              style: "animation-duration: " + index / 5 + "s;"
+                            })
+                          ]
+                        )
+                      : _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: contact.contact_url,
+                              target: "_blank"
+                            }
+                          },
+                          [
+                            _c("i", {
+                              class: "goUpAnim fab fa-" + contact.contact_type
+                            })
+                          ]
+                        )
                   ]
-                ),
-                _vm._v(" "),
-                _c("br"),
-                _c("br"),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "font18pt mb-5",
-                    class: {
-                      "zeroOpacity unclickable":
-                        _vm.email.emailVisible === false,
-                      goUpAnim: _vm.email.emailVisible === true
-                    },
-                    attrs: { href: "mailto:" + _vm.email.email }
-                  },
-                  [_c("b", [_vm._v(_vm._s(_vm.email.email))])]
                 )
-              ]
+              }),
+              0
             )
           ])
         ]
@@ -69662,9 +69687,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { attrs: { "aria-hidden": "true" } }, [
-      _c("i", { staticClass: "bi bi-at" })
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-lg btn-outline-light",
+        attrs: { type: "button" }
+      },
+      [_c("span", [_vm._v("Связаться со мной")])]
+    )
   }
 ]
 render._withStripped = true
