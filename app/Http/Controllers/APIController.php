@@ -301,6 +301,8 @@ class APIController extends Controller
             'site_owner' => $settings->site_owner,
             'projects' => $settings->projects,
             'footer' => $settings->footer,
+            'cookies' => $settings->cookies,
+            'cookies_message' => ($settings->cookies === 1) ? $settings->cookies_message : null,
         ];
 
         return response()->json($homeSettings, 200);

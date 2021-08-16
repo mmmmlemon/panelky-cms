@@ -452,3 +452,9 @@ hr {
 .zIndex3 {
     z-index: 3;
 }
+
+.cookiesCard{
+    position: fixed;
+    bottom: 0;
+    left: 2rem;
+}

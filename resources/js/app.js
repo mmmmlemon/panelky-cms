@@ -77,6 +77,9 @@ Vue.component('EditSlideCommentary', EditSlideCommentary);
 import Error from './components/Misc/Error.vue';
 Vue.component('Error', Error);
 
+import Cookies from './components/Misc/Cookies.vue';
+Vue.component('Cookies', Cookies);
+
 //Navigation 
 import Nav from './components/Navigation/Nav.vue';
 Vue.component('Nav', Nav);

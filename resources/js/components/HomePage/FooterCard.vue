@@ -5,7 +5,7 @@
     <div class="row h-75 w-75 bigCard d-flex justify-content-center goUpAnim" v-if="isVisible" id="links">
         <div class="div-12 textVertical">
             <!-- ссылки -->
-            <div class="col-12 fadeInAnim" v-bind:class="{'zeroOpacity':links == null && links == -1}">
+            <div class="col-12 mt-5 fadeInAnim" v-bind:class="{'zeroOpacity':links == null && links == -1}">
                 <h1 class="text-center textVertical">
                     <p class="text-center textVertical font14pt pointerNone">Ссылки</p>
                     <hr class="mb-0">

@@ -10,6 +10,8 @@
         <!-- кнопка "Наверх" -->
         <NavScroll v-if="public_access == 1" :navScrollStyle="navScrollStyle"/>
 
+        <Cookies v-if="settings.cookies === 1" :cookiesMessage="settings.cookies_message"/>
+
         <!-- пока не загрузился список проектов, не показывать router-view -->
         <router-view v-if="public_access == 1">
         </router-view>
@@ -48,7 +50,6 @@ export default {
                 //получаем настройки главной страницы
                 axios.get('/api/getHomeSettings').then(response => {
                     this.settings = response.data;
-
                     //если нужно показать карточку о владельце сайта, то получаем информацию о владельце
                     if(this.settings.site_owner === 1){
                         //получить информацию о владельце сайта

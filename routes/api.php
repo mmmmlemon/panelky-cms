@@ -36,3 +36,4 @@ Route::get('/getHomeSettings', [APIController::class, 'getHomeSettings']);
 Route::get('/getBgColors', [APIController::class, 'getBgColors']);
 Route::get('/getAboutSiteText', [APIController::class, 'getAboutSiteText']);
 Route::get('/getContacts', [APIController::class, 'getContacts']);
+Route::get('/getCookiesMessage', [APIController::class, 'getCookiesMessage']);
