@@ -145,8 +145,6 @@
     }
 }
 
-
-
 @keyframes backgroundGradient {
 	0% {
 		background-position: 0% 50%;
@@ -174,7 +172,6 @@
     background-attachment: fixed;
     animation: backgroundGradient 30s ease-in-out infinite;
 }
-
 
 @keyframes blink{
     0% {
@@ -337,4 +334,24 @@
 .slideCommentaryButton-enter-active, .slideCommentaryButton-leave-active{
     transition: all 0.15s ease-in-out;
 }
+
+.cookies-enter, .cookies-leave-to{
+    transform: translateY(70px);
+    opacity: 0;
+}
+
+.cookies-enter-to, .cookies-leave{
+    transform: translateY(0px); 
+    opacity: 1;
+}
+
+.cookies-enter-active{
+    transition: all 1s ease-in-out;
+    transition-delay: 3s !important;
+}
+
+.cookies-leave-active{
+    transition: all 0.35s ease-in-out;
+}
+
 /* //////////////////// */

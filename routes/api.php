@@ -37,3 +37,5 @@ Route::get('/getBgColors', [APIController::class, 'getBgColors']);
 Route::get('/getAboutSiteText', [APIController::class, 'getAboutSiteText']);
 Route::get('/getContacts', [APIController::class, 'getContacts']);
 Route::get('/getCookiesMessage', [APIController::class, 'getCookiesMessage']);
+Route::get('/checkCookies', [APIController::class, 'checkCookies']);
+Route::post('/setCookiesAccepted', [APIController::class, 'setCookiesAccepted']);

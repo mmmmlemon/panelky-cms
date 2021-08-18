@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Cookie;
 use App\Models\Settings;
 use App\Models\Project;
 use App\Models\ProjectSlide;
@@ -289,9 +291,30 @@ class APIController extends Controller
         return response()->json($settings->public_access_message, 200);
     }
 
+    // checkCookies
+    // проверка cookies
+    public function checkCookies(Request $request)
+    {
+        $checkCookie = $request->cookie('cookiesAccepted');
+
+        if($checkCookie != null){
+            return response()->json(true, 200);
+        } else {
+            return response()->json(false, 200);
+        }
+    }
+
+    // setCookiesAccepted
+    // подтвердить использование cookies
+    public function setCookiesAccepted()
+    {   $response = new Response(true);
+        $response->withCookie(cookie()->forever('cookiesAccepted', true));
+        return $response;
+    }
+
     //getHomeSettings
     //настройки главной страницы
-    public function getHomeSettings()
+    public function getHomeSettings(Request $request)
     {
         $settings = Settings::get()[0];
 

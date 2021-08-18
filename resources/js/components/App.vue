@@ -50,6 +50,11 @@ export default {
                 //получаем настройки главной страницы
                 axios.get('/api/getHomeSettings').then(response => {
                     this.settings = response.data;
+                    axios.get('/api/checkCookies').then(response => {  
+                        if(response.data === true){
+                            this.settings.cookies = 0;
+                        }
+                    });
                     //если нужно показать карточку о владельце сайта, то получаем информацию о владельце
                     if(this.settings.site_owner === 1){
                         //получить информацию о владельце сайта

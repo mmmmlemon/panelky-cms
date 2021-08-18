@@ -5224,6 +5224,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
@@ -5236,6 +5254,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.site_owner = response.data.site_owner;
       _this.projects = response.data.projects;
       _this.footer = response.data.footer;
+      _this.cookies = response.data.cookies;
     });
   },
   mounted: function mounted() {
@@ -5254,6 +5273,8 @@ __webpack_require__.r(__webpack_exports__);
       projects: 1,
       //ссылки и контакты, вкл\выкл
       footer: 1,
+      // cookies
+      cookies: 1,
       saved: false
     };
   },
@@ -5261,24 +5282,33 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     //переключить настройку
     toggleValue: function toggleValue(data, value) {
-      if (data == 'side_nav') {
-        this.side_nav = value;
-      }
+      switch (data) {
+        case 'side_nav':
+          this.side_nav = value;
+          break;
 
-      if (data == 'about') {
-        this.about = value;
-      }
+        case 'about':
+          this.about = value;
+          break;
 
-      if (data == 'site_owner') {
-        this.site_owner = value;
-      }
+        case 'site_owner':
+          this.site_owner = value;
+          break;
 
-      if (data == 'projects') {
-        this.projects = value;
-      }
+        case 'projects':
+          this.project = value;
+          break;
 
-      if (data == 'footer') {
-        this.footer = value;
+        case 'footer':
+          this.footer = value;
+          break;
+
+        case 'cookies':
+          this.cookies = value;
+          break;
+
+        default: //do nothing
+
       }
     },
     //сохранить изменения
@@ -5292,6 +5322,7 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('site_owner', this.site_owner);
       formData.append('projects', this.projects);
       formData.append('footer', this.footer);
+      formData.append('cookiesSetting', this.cookies);
       axios.post('/admin/saveHomeSettings', formData).then(function (response) {
         _this2.saved = true;
         _this2.errors = null;
@@ -5629,7 +5660,12 @@ __webpack_require__.r(__webpack_exports__);
       else if (_this.public_access == 1) {
           //получаем настройки главной страницы
           axios.get('/api/getHomeSettings').then(function (response) {
-            _this.settings = response.data; //если нужно показать карточку о владельце сайта, то получаем информацию о владельце
+            _this.settings = response.data;
+            axios.get('/api/checkCookies').then(function (response) {
+              if (response.data === true) {
+                _this.settings.cookies = 0;
+              }
+            }); //если нужно показать карточку о владельце сайта, то получаем информацию о владельце
 
             if (_this.settings.site_owner === 1) {
               //получить информацию о владельце сайта
@@ -6770,16 +6806,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mounted: function mounted() {
+    this.cookiesVisible = true;
+  },
+  data: function data() {
+    return {
+      cookiesVisible: false
+    };
+  },
   props: {
     cookiesMessage: {
-      "default": 'Default cookies message',
+      "default": null,
       type: String
     }
   },
   methods: {
-    acceptCookies: function acceptCookies() {
-      alert('Cookies accepted');
+    setCookiesAccepted: function setCookiesAccepted() {
+      //отправляем запрос на подтверждение кукисов
+      this.cookiesVisible = false;
+      axios.post('/api/setCookiesAccepted');
     }
   }
 });
@@ -68833,6 +68907,81 @@ var render = function() {
                             ]
                           )
                         ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "col-12 col-md-8 text-center font14pt form-check mt-3"
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "btn-group col-12 col-md-10",
+                              attrs: {
+                                role: "group",
+                                "aria-label": "Basic example"
+                              }
+                            },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
+                                    "btn-light": _vm.cookies === 1,
+                                    "btn-outline-light": _vm.cookies === 0
+                                  },
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.toggleValue("cookies", 1)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm.cookies === 1
+                                    ? _c("i", {
+                                        staticClass: "bi bi-check2 fadeInAnim"
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(
+                                    "\n                                    Предупреждение о Cookies\n                                "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
+                                    "btn-light": _vm.cookies === 0,
+                                    "btn-outline-light": _vm.cookies === 1
+                                  },
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.toggleValue("cookies", 0)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm.cookies === 0
+                                    ? _c("i", {
+                                        staticClass: "bi bi-check2 fadeInAnim"
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(
+                                    "\n                                    Без предупреждения\n                                "
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ]
                       )
                     ]
                   )
@@ -70945,46 +71094,94 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      staticClass:
-        "cookiesCard transparentCard p-3 m-3 text-center goUpCardAnim"
-    },
+    { staticClass: "row justify-content-left" },
     [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("i", {
-        staticClass: "fas fa-cookie",
-        staticStyle: { "font-size": "1.5rem" }
-      }),
-      _vm._v(" "),
-      _c("hr"),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-center" }, [
-        _vm._v(_vm._s(_vm.cookiesMessage))
+      _c("transition", { attrs: { name: "cookies" } }, [
+        _vm.cookiesVisible === true && _vm.cookiesMessage !== null
+          ? _c(
+              "div",
+              {
+                staticClass:
+                  "d-none d-md-block pointerNone col-3 cookiesCard p-3 m-3 text-center"
+              },
+              [
+                _c("h5", [_vm._v("Этот сайт использует Cookies")]),
+                _vm._v(" "),
+                _c("hr", {
+                  staticClass: "m-1",
+                  staticStyle: { "background-color": "black" }
+                }),
+                _vm._v(" "),
+                _vm.cookiesMessage !== null
+                  ? _c("p", { staticClass: "text-center" }, [
+                      _vm._v(_vm._s(_vm.cookiesMessage))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-dark",
+                    on: { click: _vm.setCookiesAccepted }
+                  },
+                  [
+                    _c("span", [
+                      _vm._v("\n                    OK\n                ")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", [_c("i", { staticClass: "bi bi-check2" })])
+                  ]
+                )
+              ]
+            )
+          : _vm._e()
       ]),
       _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-sm btn-outline-light",
-          on: { click: _vm.acceptCookies }
-        },
-        [_vm._v("Понятно")]
-      )
-    ]
+      _c("transition", { attrs: { name: "cookies" } }, [
+        _vm.cookiesVisible === true && _vm.cookiesMessage !== null
+          ? _c(
+              "div",
+              {
+                staticClass:
+                  "d-block d-md-none pointerNone col-12 cookiesCard mobile p-3 text-center"
+              },
+              [
+                _c("h5", [_vm._v("Этот сайт использует Cookies")]),
+                _vm._v(" "),
+                _c("hr", {
+                  staticClass: "m-1",
+                  staticStyle: { "background-color": "black" }
+                }),
+                _vm._v(" "),
+                _vm.cookiesMessage !== null
+                  ? _c("p", { staticClass: "text-center" }, [
+                      _vm._v(_vm._s(_vm.cookiesMessage))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-dark",
+                    on: { click: _vm.setCookiesAccepted }
+                  },
+                  [
+                    _c("span", [
+                      _vm._v("\n                    OK\n                ")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", [_c("i", { staticClass: "bi bi-check2" })])
+                  ]
+                )
+              ]
+            )
+          : _vm._e()
+      ])
+    ],
+    1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h4", [
-      _vm._v("Этот сайт использует "),
-      _c("b", [_vm._v("Cookies")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

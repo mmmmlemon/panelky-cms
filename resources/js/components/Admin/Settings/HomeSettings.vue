@@ -98,6 +98,24 @@
                                     </button>
                                 </div>
                             </div>
+                            
+                            <!-- cookies -->
+                            <div class="col-12 col-md-8 text-center font14pt form-check mt-3">
+                                <div class="btn-group col-12 col-md-10" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn" 
+                                            v-bind:class="{'btn-light': cookies === 1, 'btn-outline-light': cookies === 0}"
+                                            v-on:click="toggleValue('cookies', 1)">
+                                        <i class="bi bi-check2 fadeInAnim" v-if="cookies === 1"></i>
+                                        Предупреждение о Cookies
+                                    </button>
+                                    <button type="button" class="btn"
+                                            v-bind:class="{'btn-light': cookies === 0, 'btn-outline-light': cookies === 1}"
+                                            v-on:click="toggleValue('cookies', 0)">
+                                        <i class="bi bi-check2 fadeInAnim" v-if="cookies === 0"></i>
+                                        Без предупреждения
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <!-- Сохранить -->
                         <div class="row justify-content-center goUpAnim m-5" v-if="side_nav != -1">
@@ -128,6 +146,7 @@ export default {
             this.site_owner = response.data.site_owner;
             this.projects = response.data.projects;
             this.footer = response.data.footer;
+            this.cookies = response.data.cookies;
         })
     },
 
@@ -148,6 +167,8 @@ export default {
             projects: 1,
             //ссылки и контакты, вкл\выкл
             footer: 1,
+            // cookies
+            cookies: 1,
             saved: false,
         }
     },
@@ -156,20 +177,29 @@ export default {
     methods: {
         //переключить настройку
         toggleValue(data, value){
-            if(data == 'side_nav')
-            { this.side_nav = value; }
 
-            if(data == 'about')
-            { this.about = value; }
-
-            if(data == 'site_owner')
-            { this.site_owner = value; }
-
-            if(data == 'projects')
-            { this.projects = value; }
-
-            if(data == 'footer')
-            { this.footer = value; }
+            switch(data){
+                case 'side_nav':
+                    this.side_nav = value;
+                    break;
+                case 'about':
+                    this.about = value;
+                    break;
+                case 'site_owner':
+                    this.site_owner = value;
+                    break;
+                case 'projects':
+                    this.project = value;
+                    break;
+                case 'footer':
+                    this.footer = value;
+                    break;
+                case 'cookies':
+                    this.cookies = value;
+                    break;
+                default: 
+                    //do nothing
+            }
         },
 
         //сохранить изменения
@@ -181,6 +211,7 @@ export default {
             formData.append('site_owner', this.site_owner);
             formData.append('projects', this.projects);
             formData.append('footer', this.footer);
+            formData.append('cookiesSetting', this.cookies);
             axios.post('/admin/saveHomeSettings', formData).then(response => {
                 this.saved = true;
                 this.errors = null;

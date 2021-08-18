@@ -1,24 +1,66 @@
 // Cookies
 // окно предпупреждения о Cookies
 <template>
-    <div class="cookiesCard transparentCard p-3 m-3 text-center goUpCardAnim">
-        <h4>Этот сайт использует <b>Cookies</b></h4>
-        <i class="fas fa-cookie" style="font-size: 1.5rem;"></i>
-        <hr>
-        <p class="text-center">{{cookiesMessage}}</p>
-        <button class="btn btn-sm btn-outline-light" @click="acceptCookies">Понятно</button>
+    <div class="row justify-content-left">
+        <transition name="cookies">
+            <div v-if="cookiesVisible === true && cookiesMessage !== null" class="d-none d-md-block pointerNone col-3 cookiesCard p-3 m-3 text-center">
+                <h5>Этот сайт использует Cookies</h5>
+                <hr class="m-1" style="background-color: black;">
+                <p class="text-center" v-if="cookiesMessage !== null">{{cookiesMessage}}</p>
+                <button class="btn btn-dark" @click="setCookiesAccepted">
+                    <span>
+                        OK
+                    </span>
+                    <span>
+                        <i class="bi bi-check2"></i>
+                    </span>
+                </button>
+            </div>
+        </transition>
+        <transition name="cookies">
+            <div v-if="cookiesVisible === true && cookiesMessage !== null" class="d-block d-md-none pointerNone col-12 cookiesCard mobile p-3 text-center">
+                <h5>Этот сайт использует Cookies</h5>
+                <hr class="m-1" style="background-color: black;">
+                <p class="text-center" v-if="cookiesMessage !== null">{{cookiesMessage}}</p>
+                <button class="btn btn-dark" @click="setCookiesAccepted">
+                    <span>
+                        OK
+                    </span>
+                    <span>
+                        <i class="bi bi-check2"></i>
+                    </span>
+                </button>
+            </div>
+        </transition>
     </div>
+
+
+   
 </template>
 <script>
     export default {
+        mounted(){
+            this.cookiesVisible = true;
+            
+        },
+
+        data: () => {
+            return {
+                cookiesVisible: false,
+            }
+        },
+
         props: {
-            cookiesMessage: { default: 'Default cookies message', type: String }
+            cookiesMessage: { default: null, type: String },
         },
 
         methods: {
-            acceptCookies(){
-                alert('Cookies accepted');
-            }
+           setCookiesAccepted(){
+               //отправляем запрос на подтверждение кукисов
+               this.cookiesVisible = false;
+
+               axios.post('/api/setCookiesAccepted');
+           }
         }
     }
 </script>
