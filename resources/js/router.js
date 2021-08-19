@@ -23,6 +23,7 @@ import EditContacts from './components/Admin/Links/EditContacts';
 import BasicSettings from './components/Admin/Settings/BasicSettings.vue';
 import HomeSettings from './components/Admin/Settings/HomeSettings.vue';
 import DesignSettings from './components/Admin/Settings/DesignSettings.vue';
+import CookiesSettings from './components/Admin/Settings/CookiesSettings.vue';
 
 import test from './components/test.vue';
 
@@ -127,6 +128,10 @@ const routes = [
                         path: '/admin/settings/design',
                         component: DesignSettings,
                     },
+                    {
+                        path: '/admin/settings/cookies',
+                        component: CookiesSettings,
+                    }
                 ]
             },
             {

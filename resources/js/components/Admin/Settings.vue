@@ -22,6 +22,15 @@
                         Главная
                     </router-link>
                 </li>
+                <!-- Cookies -->
+                <li class="nav-item mr-2">
+                    <router-link to="/admin/settings/cookies" class="btn btn-sm btn-block"
+                                    v-bind:class="{'btn-light': currentTab === 'cookies', 
+                                                    'btn-outline-light': currentTab !== 'cookies'}">
+                       <i class="fas fa-cookie"></i>
+                        Cookies
+                    </router-link>
+                </li>
                 <!-- Дизайн -->
                 <li class="nav-item mr-2">
                     <router-link to="/admin/settings/design" class="btn btn-sm btn-block"

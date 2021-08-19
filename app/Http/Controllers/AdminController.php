@@ -668,4 +668,22 @@ class AdminController extends Controller
         return response()->json($newOrder, 200);
     }
 
+    // getCookiesMessage
+    // получить текст сообщения о Cookies
+    public function getCookiesMessage(){
+        $cookiesMessage = Settings::get()[0]->cookies_message;
+
+        return response()->json($cookiesMessage, 200);
+    }
+
+    // saveCookiesMessage
+    // сохранить изменения в сообщении о Cookies
+    public function saveCookiesMessage(Request $request)
+    {
+        $settings = Settings::get()[0];
+        $settings->cookies_message = $request->cookiesMessage;
+        $settings->save();
+        return response()->json(true, 200);
+    }
+
 }

@@ -13,7 +13,6 @@
             <div class="col-12 col-md-10 mt-2 fadeInAnim" v-if="aboutSiteText !== false">
                 <h5>О сайте</h5>
                 <hr>
-
                 <!-- о себе -->
                 <div class="mb-3">
                     <vue-editor style="background-color: white; color: black;" v-model="aboutSiteText"/>
@@ -23,18 +22,13 @@
                     Сохранить
                 </button>
 
-                
                 <!-- сообщение о сохранении настроек -->
                 <div class="col-12 p-3 text-center unclickable zeroOpacity" v-bind:class="{ blinkAnim: saved }">
                     <h5>Изменения сохранены</h5>
                 </div>
-
             </div>
-
             </div>
-    
         </div>
-  
     </div>
 </template>
 <script>

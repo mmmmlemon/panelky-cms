@@ -6,7 +6,7 @@
             <div v-if="cookiesVisible === true && cookiesMessage !== null" class="d-none d-md-block pointerNone col-3 cookiesCard p-3 m-3 text-center">
                 <h5>Этот сайт использует Cookies</h5>
                 <hr class="m-1" style="background-color: black;">
-                <p class="text-center" v-if="cookiesMessage !== null">{{cookiesMessage}}</p>
+                <div v-html="cookiesMessage"></div>
                 <button class="btn btn-dark" @click="setCookiesAccepted">
                     <span>
                         OK
@@ -21,7 +21,7 @@
             <div v-if="cookiesVisible === true && cookiesMessage !== null" class="d-block d-md-none pointerNone col-12 cookiesCard mobile p-3 text-center">
                 <h5>Этот сайт использует Cookies</h5>
                 <hr class="m-1" style="background-color: black;">
-                <p class="text-center" v-if="cookiesMessage !== null">{{cookiesMessage}}</p>
+                <div v-html="cookiesMessage"></div>
                 <button class="btn btn-dark" @click="setCookiesAccepted">
                     <span>
                         OK
