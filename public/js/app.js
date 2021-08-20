@@ -5014,12 +5014,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     var _this = this;
 
-    this.$parent.currentTab = 'cookies';
+    this.$parent.currentTab = 'cookies'; // получение текста предупреждения о Cookies
+
     axios.get('/admin/getCookiesMessage').then(function (response) {
       _this.cookiesMessage = response.data;
     });
@@ -5032,12 +5032,8 @@ __webpack_require__.r(__webpack_exports__);
       cookiesMessage: undefined
     };
   },
-  computed: {
-    settings: function settings() {
-      return this.$store.state.GlobalStates.settings;
-    }
-  },
   methods: {
+    // сохранить изменения
     submit: function submit() {
       var _this2 = this;
 
@@ -5848,6 +5844,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -66017,7 +66014,7 @@ var render = function() {
     ? _c(
         "div",
         {
-          staticClass: "col-12 col-md-11 m-1 fadeInAnim pl-2 pr-2",
+          staticClass: "col-12 col-md-11 m-1 pointer fadeInAnim pl-2 pr-2",
           on: {
             mousedown: function($event) {
               return _vm.getProject(_vm.slug)

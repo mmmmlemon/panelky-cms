@@ -1,7 +1,7 @@
 //ProjectListItem
 //проект в списке проектов
 <template>
-    <div class="col-12 col-md-11 m-1 fadeInAnim pl-2 pr-2" v-on:mousedown="getProject(slug)"
+    <div class="col-12 col-md-11 m-1 pointer fadeInAnim pl-2 pr-2" v-on:mousedown="getProject(slug)"
                                        v-if="currentProjectSlug !== undefined">
         <div class="col-12 transparentCard m-1 p-0"  v-bind:class="{ active: slug === currentProjectSlug }" >
             <div class="card-body p-3">

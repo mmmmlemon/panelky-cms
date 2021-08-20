@@ -1,6 +1,5 @@
 // CookiesSettings
 // настройки кукисов
-
 <template>
     <div class="row justify-content-center fadeInAnim">
         <div class="col-10 p-0">
@@ -31,6 +30,7 @@ export default {
     mounted(){
         this.$parent.currentTab = 'cookies';
 
+        // получение текста предупреждения о Cookies
         axios.get('/admin/getCookiesMessage').then(response => {
             this.cookiesMessage = response.data;
         });
@@ -46,13 +46,8 @@ export default {
         }  
     },
 
-    computed: {
-        settings(){
-            return this.$store.state.GlobalStates.settings;
-        },
-    },
-
     methods: {
+        // сохранить изменения
         submit(){
             let formData = new FormData();
             formData.append('cookiesMessage', this.cookiesMessage);

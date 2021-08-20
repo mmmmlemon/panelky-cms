@@ -76,6 +76,7 @@
                     </li>
                 </ul>
             </div>
+
             <div class="col-12">
                 <router-view></router-view>
             </div>
