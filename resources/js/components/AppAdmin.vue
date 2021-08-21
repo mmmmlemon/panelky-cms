@@ -19,7 +19,7 @@
             <hr>
         </div>
         
-        <div class="row justify-content-center mb-5">
+        <div class="row justify-content-center mb-5 fadeInAnim">
             <!-- ссылка на главную страницу -->
             <div class="col-12 col-md-4 mb-3">
                 <h6 class="text-center">

@@ -12,28 +12,28 @@
                     <div class="col-12 mb-4">
                         <ul class="nav nav-fill">
                             <!-- общее -->
-                            <li class="nav-item mr-2">
+                            <li class="nav-item mr-2 mt-1">
                                 <button class="btn btn-block btn-sm" v-on:click="showBasicForm" 
                                         v-bind:class="{'btn-light': basicFormActive === true, 'btn-outline-light': basicFormActive === false}">
                                     Общее
                                 </button>
                             </li>
                             <!-- изображения -->
-                            <li class="nav-item mr-2">
+                            <li class="nav-item mr-2 mt-1">
                                 <button class="btn btn-block btn-sm" v-on:click="showImageForm"
                                         v-bind:class="{'btn-light': imageFormActive === true, 'btn-outline-light': imageFormActive === false}">
                                     Изображения
                                 </button>
                             </li>
                             <!-- карточки -->
-                            <li class="nav-item mr-2">
+                            <li class="nav-item mr-2 mt-1">
                                 <button class="btn btn-block btn-sm" v-on:click="showCardForm"
                                         v-bind:class="{'btn-light': slideFormActive === true, 'btn-outline-light': slideFormActive === false}">
                                     Слайды
                                 </button>
                             </li>
                             <!-- изображения -->
-                            <li class="nav-item mr-2">
+                            <li class="nav-item mr-2 mt-1">
                                 <button class="btn btn-block btn-sm" v-on:click="showPreview"
                                         v-bind:class="{'btn-light': previewMode === true, 'btn-outline-light': previewMode === false}">
                                     Превью

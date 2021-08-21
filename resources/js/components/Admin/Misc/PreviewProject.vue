@@ -11,7 +11,7 @@
                 </h1>  
             </div>
             <!-- лого -->
-            <div class="col-12">
+            <div class="col-12 m-1">
                 <img :src="currentProject.project_icon" width="10%">
             </div>
             <!-- подзаголовок -->

@@ -64497,7 +64497,10 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-12 col-md-4 mb-3" }, [
-                _c("h6", { domProps: { innerHTML: _vm._s(_vm.tooltipTitle) } }),
+                _c("h6", {
+                  staticClass: "mt-3",
+                  domProps: { innerHTML: _vm._s(_vm.tooltipTitle) }
+                }),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -64532,7 +64535,8 @@ var render = function() {
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.socialMediaGeneratedLink !== undefined &&
-                _vm.newContact.contact_url !== undefined
+                _vm.newContact.contact_url !== undefined &&
+                _vm.newContact.contact_type !== "email"
                   ? _c(
                       "a",
                       {
@@ -64960,7 +64964,10 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-12 col-md-4 mb-3" }, [
-            _c("h6", { domProps: { innerHTML: _vm._s(_vm.tooltipTitle) } }),
+            _c("h6", {
+              staticClass: "mt-3",
+              domProps: { innerHTML: _vm._s(_vm.tooltipTitle) }
+            }),
             _vm._v(" "),
             _c("input", {
               directives: [
@@ -64997,7 +65004,8 @@ var render = function() {
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _vm.contact.contact_url !== undefined
+            _vm.contact.contact_url !== undefined &&
+            _vm.contact.contact_type !== "email"
               ? _c(
                   "a",
                   {
@@ -65728,7 +65736,7 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-12" }, [
+                _c("div", { staticClass: "col-12 m-1" }, [
                   _c("img", {
                     attrs: {
                       src: _vm.currentProject.project_icon,
@@ -66912,7 +66920,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-12 mb-4" }, [
                 _c("ul", { staticClass: "nav nav-fill" }, [
-                  _c("li", { staticClass: "nav-item mr-2" }, [
+                  _c("li", { staticClass: "nav-item mr-2 mt-1" }, [
                     _c(
                       "button",
                       {
@@ -66931,7 +66939,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("li", { staticClass: "nav-item mr-2" }, [
+                  _c("li", { staticClass: "nav-item mr-2 mt-1" }, [
                     _c(
                       "button",
                       {
@@ -66950,7 +66958,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("li", { staticClass: "nav-item mr-2" }, [
+                  _c("li", { staticClass: "nav-item mr-2 mt-1" }, [
                     _c(
                       "button",
                       {
@@ -66969,7 +66977,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("li", { staticClass: "nav-item mr-2" }, [
+                  _c("li", { staticClass: "nav-item mr-2 mt-1" }, [
                     _c(
                       "button",
                       {
@@ -67673,7 +67681,7 @@ var render = function() {
                   "div",
                   {
                     key: "horizontalSlide_" + index,
-                    staticClass: "col-2 text-center fadeInAnim"
+                    staticClass: "col-8 col-md-2 text-center m-2 fadeInAnim"
                   },
                   [
                     _c("img", {
@@ -67836,7 +67844,7 @@ var render = function() {
                   "div",
                   {
                     key: "verticalSlide_" + index,
-                    staticClass: "col-2 text-center fadeInAnim"
+                    staticClass: "col-5 col-md-2 m-2 text-center fadeInAnim"
                   },
                   [
                     _c("img", {
@@ -67942,7 +67950,7 @@ var render = function() {
                   "div",
                   { staticClass: "row justify-content-center mt-5 goUpAnim" },
                   [
-                    _c("div", { staticClass: "col-6 text-center" }, [
+                    _c("div", { staticClass: "col-md-6 text-center" }, [
                       _c("textarea", {
                         directives: [
                           {
@@ -69768,9 +69776,7 @@ var render = function() {
                     ? _c("p", { staticClass: "font1-2rem fadeInAnim" }, [
                         _vm._v(_vm._s(_vm.public_access_message))
                       ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm._m(0)
+                    : _vm._e()
                 ]
               )
             ]
@@ -69780,14 +69786,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h4", [_c("a", { attrs: { href: "/" } }, [_vm._v("🐍")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -69841,7 +69840,7 @@ var render = function() {
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "row justify-content-center mb-5" }, [
+      _c("div", { staticClass: "row justify-content-center mb-5 fadeInAnim" }, [
         _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "col-12 col-md-4" }, [
@@ -71355,7 +71354,7 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "d-none d-md-block pointerNone col-3 cookiesCard p-3 m-3 text-center"
+                  "d-none d-md-block pointerNone col-5 cookiesCard p-3 m-3 text-center"
               },
               [
                 _c("h5", [_vm._v("Этот сайт использует Cookies")]),
@@ -71693,28 +71692,22 @@ var render = function() {
                     _vm._v(" "),
                     _vm.fullProjectList !== -1 &&
                     _vm.fullProjectList.other.length > 0
-                      ? _c(
-                          "div",
-                          {
-                            staticClass: "d-none d-md-block col-12 text-center"
-                          },
-                          [
-                            _c("h6", [
-                              _c(
-                                "a",
-                                {
-                                  attrs: { href: "#other" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.closeNavMenu()
-                                    }
+                      ? _c("div", { staticClass: "col-12 text-center" }, [
+                          _c("h6", [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#other" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.closeNavMenu()
                                   }
-                                },
-                                [_vm._v("Другие проекты")]
-                              )
-                            ])
-                          ]
-                        )
+                                }
+                              },
+                              [_vm._v("Другие проекты")]
+                            )
+                          ])
+                        ])
                       : _vm._e(),
                     _vm._v(" "),
                     _vm.links !== false && _vm.links != -1

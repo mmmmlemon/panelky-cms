@@ -454,6 +454,7 @@ hr {
 }
 
 .cookiesCard{
+    z-index: 5;
     color: black;
     background-color: rgba(255,255,255, 0.8);
     border-radius: 15px;
@@ -465,7 +466,7 @@ hr {
 }
 
 .cookiesCard.mobile{
-    background-color: rgba(255,255,255, 0.9);
+    background-color: rgba(255,255,255, 0.95);
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     border-bottom-left-radius: 0px !important;

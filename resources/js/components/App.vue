@@ -24,7 +24,7 @@
                 <i class="bi bi-lock font2-5rem"></i>
                 <p v-if="public_access_message !== -1" class="font1-2rem fadeInAnim">{{public_access_message}}</p>
                 
-                <h4><a href="/">🐍</a></h4>
+                <!-- <h4><a href="/">🐍</a></h4> -->
             </div>
         </div>
     </div>

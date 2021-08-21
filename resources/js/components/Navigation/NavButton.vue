@@ -32,7 +32,7 @@
                     </h6>
                     <br>
                 </div>
-                <div class="d-none d-md-block col-12 text-center" v-if="fullProjectList !== -1 && fullProjectList.other.length > 0">
+                <div class="col-12 text-center" v-if="fullProjectList !== -1 && fullProjectList.other.length > 0">
                     <h6>
                         <a v-on:click="closeNavMenu()" :href="`#other`">Другие проекты</a>
                     </h6>
