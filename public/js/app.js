@@ -1855,6 +1855,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  created: function created() {
+    this.$parent.currentTab = 'about';
+  },
   beforeMount: function beforeMount() {
     var _this = this;
 
@@ -2752,12 +2755,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   computed: {
     //информация об удаляемом проекте
     deleteModalInfo: function deleteModalInfo() {
       return this.$store.state.AdminStates.deleteModalInfo;
+    },
+    screenOrientation: function screenOrientation() {
+      return this.$store.state.GlobalStates.screenOrientation;
     }
   },
   //методы
@@ -3284,6 +3291,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   data: function data() {
@@ -3316,6 +3325,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     animatedBackground: function animatedBackground() {
       return this.$store.state.AdminStates.animatedBackground;
+    },
+    screenOrientation: function screenOrientation() {
+      return this.$store.state.GlobalStates.screenOrientation;
     }
   },
   //методы
@@ -3397,6 +3409,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   data: function data() {
@@ -3438,6 +3453,12 @@ __webpack_require__.r(__webpack_exports__);
         backgroundRepeat: this.animatedBackground.backgroundRepeat
       };
       return style;
+    },
+    screenOrientation: function screenOrientation() {
+      return this.$store.state.GlobalStates.screenOrientation;
+    },
+    currentSlide: function currentSlide() {
+      return this.$children[0]['data'];
     }
   },
   //методы
@@ -5633,6 +5654,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   beforeCreate: function beforeCreate() {
@@ -5653,6 +5676,9 @@ __webpack_require__.r(__webpack_exports__);
     //инф-ция о владельце сайта
     siteOwnerInfo: function siteOwnerInfo() {
       return this.$store.state.GlobalStates.siteOwnerInfo;
+    },
+    screenOrientation: function screenOrientation() {
+      return this.$store.state.GlobalStates.screenOrientation;
     }
   },
   //методы
@@ -5775,7 +5801,8 @@ __webpack_require__.r(__webpack_exports__);
       //сообщение если сайт недоступен
       public_access_message: -1,
       //настройки главной страницы
-      settings: -1
+      settings: -1,
+      currentTab: null
     };
   },
   computed: {
@@ -5934,6 +5961,11 @@ __webpack_require__.r(__webpack_exports__);
   //хуки
   created: function created() {
     this.$store.dispatch('getAnimatedBackground');
+    this.setScreenOrientation();
+    window.addEventListener("resize", this.setScreenOrientation);
+  },
+  beforeDestroy: function beforeDestroy() {
+    window.removeEventListener("resize", this.setScreenOrientation);
   },
   //данные
   data: function data() {
@@ -5968,6 +6000,22 @@ __webpack_require__.r(__webpack_exports__);
           console.error("Couldn't log out!");
         }
       })["catch"](function (error) {});
+    },
+    setScreenOrientation: function setScreenOrientation() {
+      var width = window.innerWidth;
+      var height = window.innerHeight;
+
+      if (width > height) {
+        this.$store.commit('setState', {
+          state: 'screenOrientation',
+          value: 'horizontal'
+        });
+      } else if (height > width) {
+        this.$store.commit('setState', {
+          state: 'screenOrientation',
+          value: 'vertical'
+        });
+      }
     }
   }
 });
@@ -6011,6 +6059,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.setScreenOrientation();
     window.addEventListener("resize", this.setScreenOrientation);
+    this.$parent.currentTab = 'home';
   },
   computed: {
     //информация о владельце сайта
@@ -6325,6 +6374,9 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         return true;
       }
+    },
+    screenOrientation: function screenOrientation() {
+      return this.$store.state.GlobalStates.screenOrientation;
     }
   }
 });
@@ -6342,6 +6394,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -6407,6 +6460,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     isMobile: function isMobile() {
       return this.$isMobile;
+    },
+    screenOrientation: function screenOrientation() {
+      return this.$store.state.GlobalStates.screenOrientation;
     }
   },
   //методы
@@ -7046,7 +7102,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      z: -9999
+    };
+  },
   //данные
   computed: {
     //стиль бокового меню
@@ -7060,6 +7137,23 @@ __webpack_require__.r(__webpack_exports__);
     //ссылки
     links: function links() {
       return this.$store.state.GlobalStates.links;
+    },
+    screenOrientation: function screenOrientation() {
+      return this.$store.state.GlobalStates.screenOrientation;
+    },
+    about: function about() {
+      return this.$parent.settings.about;
+    },
+    visible: function visible() {
+      var currentTab = this.$parent.currentTab;
+
+      switch (currentTab) {
+        case 'home':
+          return true;
+
+        case 'about':
+          return false;
+      }
     }
   },
   //методы
@@ -7069,7 +7163,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.dispatch('setNavMenuStyle', {
         'right': '0px',
         'opacity': '1'
-      }); // если сайт открыт на телефоне, то отключаем скролл страницы
+      });
+      this.z = 5; // если сайт открыт на телефоне, то отключаем скролл страницы
       //пока открыто меню
 
       if (this.$isMobile) {
@@ -7081,7 +7176,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.dispatch('setNavMenuStyle', {
         'right': '-500px',
         'opacity': '0'
-      }); //если сайт открыт на телефоне, возвращаем скролл
+      });
+      this.z = -9999; //если сайт открыт на телефоне, возвращаем скролл
 
       if (this.$isMobile) {
         document.body.style.overflow = 'visible';
@@ -64420,10 +64516,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-12 col-md-4 mb-3" }, [
-                _c("h6", {
-                  staticClass: "mt-3",
-                  domProps: { innerHTML: _vm._s(_vm.tooltipTitle) }
-                }),
+                _c("h6", { domProps: { innerHTML: _vm._s(_vm.tooltipTitle) } }),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -64631,7 +64724,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-12 col-md-3 mb-3" }, [
-                _c("h6", [_vm._v("Название ресурса")]),
+                _c("h6", [_vm._v("Ресурс")]),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -64887,10 +64980,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-12 col-md-4 mb-3" }, [
-            _c("h6", {
-              staticClass: "mt-3",
-              domProps: { innerHTML: _vm._s(_vm.tooltipTitle) }
-            }),
+            _c("h6", { domProps: { innerHTML: _vm._s(_vm.tooltipTitle) } }),
             _vm._v(" "),
             _c("input", {
               directives: [
@@ -65037,8 +65127,11 @@ var render = function() {
             ? _c(
                 "div",
                 {
-                  staticClass:
-                    "col-11 col-md-4 transparentCard deleteModalCard m-1"
+                  staticClass: "transparentCard deleteModalCard m-1",
+                  class: {
+                    "col-11": _vm.screenOrientation === "vertical",
+                    "col-4": _vm.screenOrientation === "horizontal"
+                  }
                 },
                 [
                   _c("div", { staticClass: "card-body" }, [
@@ -65324,7 +65417,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-12 col-md-3 mb-3" }, [
-            _c("h6", [_vm._v("Название ресурса")]),
+            _c("h6", [_vm._v("Ресурс")]),
             _vm._v(" "),
             _c("input", {
               directives: [
@@ -65650,7 +65743,7 @@ var render = function() {
                 _c("div", { staticClass: "col-12" }, [
                   _c(
                     "h1",
-                    { staticClass: "text-center textVertical font3-8rem" },
+                    { staticClass: "text-center textVertical font3vw" },
                     [
                       _c("b", [
                         _vm._v(_vm._s(_vm.currentProject.project_title))
@@ -65671,7 +65764,7 @@ var render = function() {
                 _c("div", { staticClass: "col-12" }, [
                   _c(
                     "p",
-                    { staticClass: "text-center textVertical font2rem" },
+                    { staticClass: "text-center textVertical font2-2vw" },
                     [
                       _vm._v(
                         "\n               " +
@@ -65761,7 +65854,8 @@ var render = function() {
                       { staticClass: "nav-item d-none d-md-block m-1" },
                       [
                         _vm.currentProject.project_image !== null &&
-                        _vm.currentProject.project_image !== undefined
+                        _vm.currentProject.project_image !== undefined &&
+                        _vm.screenOrientation == "horizontal"
                           ? _c(
                               "button",
                               {
@@ -65854,7 +65948,7 @@ var render = function() {
               style: _vm.fullscreenStyle
             },
             [
-              _c("div", { staticClass: "fullscreenButtons zIndex3" }, [
+              _c("div", { staticClass: "fullscreenButtons zIndex5" }, [
                 _c(
                   "ul",
                   { staticClass: "nav nav-pills justify-content-right" },
@@ -65864,7 +65958,8 @@ var render = function() {
                       { staticClass: "nav-item d-none d-md-block m-1" },
                       [
                         _vm.currentProject.project_image !== null &&
-                        _vm.currentProject.project_image !== undefined
+                        _vm.currentProject.project_image !== undefined &&
+                        _vm.screenOrientation === "horizontal"
                           ? _c(
                               "button",
                               {
@@ -65945,7 +66040,8 @@ var render = function() {
     ? _c(
         "div",
         {
-          staticClass: "col-12 col-md-11 m-1 pointer fadeInAnim pl-2 pr-2",
+          staticClass:
+            "col-12 col-md-11 m-1 pointer fadeInAnim pl-2 pr-2 wordBreak",
           on: {
             mousedown: function($event) {
               return _vm.getProject(_vm.slug)
@@ -69421,8 +69517,12 @@ var render = function() {
             _c(
               "div",
               {
-                staticClass: "col-12 col-md-4 mt-2 fadeInAnim",
-                class: { zeroOpacity: _vm.siteOwnerInfo === -1 }
+                staticClass: "mt-2 fadeInAnim",
+                class: {
+                  zeroOpacity: _vm.siteOwnerInfo === -1,
+                  "col-12": _vm.screenOrientation === "vertical",
+                  "col-4": _vm.screenOrientation === "horizontal"
+                }
               },
               [
                 _c("h5", [_vm._v("Информация о владельце")]),
@@ -69612,7 +69712,13 @@ var render = function() {
             _vm.siteOwnerInfo !== -1
               ? _c(
                   "div",
-                  { staticClass: "col-12 col-md-6 mt-2 mb-2" },
+                  {
+                    staticClass: "mt-2 mb-2",
+                    class: {
+                      "col-12": _vm.screenOrientation === "vertical",
+                      "col-6": _vm.screenOrientation === "horizontal"
+                    }
+                  },
                   [
                     _c("h5", [_vm._v("Превью")]),
                     _vm._v(" "),
@@ -70171,160 +70277,169 @@ var render = function() {
         "row h-100 width90pc bigCard d-flex justify-content-center borderUnderline"
     },
     [
-      _c(
-        "div",
-        { staticClass: "d-none d-md-block textVertical fadeInAnim" },
-        [
-          _vm.info === false
-            ? _c(
-                "div",
-                { staticClass: "col-12" },
-                [
-                  _c("Error", {
-                    attrs: {
-                      errorMessage:
-                        "Не удалось загрузить информацию о владельце сайта"
-                    }
-                  })
-                ],
-                1
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _c("transition", { attrs: { name: "name" } }, [
-            _vm.startTransition === true && _vm.info.name != undefined
-              ? _c(
-                  "h1",
-                  {
-                    staticClass: "text-center textVertical font5rem pointerNone"
-                  },
-                  [_c("b", [_vm._v(_vm._s(_vm.info["name"]))])]
-                )
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("transition", { attrs: { name: "occupation" } }, [
-            _vm.startTransition === true && _vm.info.occupation != undefined
-              ? _c("hr")
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("transition", { attrs: { name: "occupation" } }, [
-            _vm.startTransition === true && _vm.info.occupation != undefined
-              ? _c(
-                  "p",
-                  {
-                    staticClass:
-                      "text-center textVertical font2-5rem pointerNone"
-                  },
-                  [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(_vm.info["occupation"]) +
-                        "\n            "
-                    )
-                  ]
-                )
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("transition", { attrs: { name: "occupation" } }, [
-            _vm.startTransition === true && _vm.info.occupation != undefined
-              ? _c("hr")
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("transition", { attrs: { name: "aboutMe" } }, [
-            _vm.startTransition === true && _vm.info.aboutMe != undefined
-              ? _c("p", { staticClass: "text-center font1-8rem pointerNone" }, [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.info["aboutMe"]) +
-                      "\n            "
+      _vm.screenOrientation === "horizontal"
+        ? _c(
+            "div",
+            { staticClass: "textVertical fadeInAnim" },
+            [
+              _vm.info === false
+                ? _c(
+                    "div",
+                    { staticClass: "col-12" },
+                    [
+                      _c("Error", {
+                        attrs: {
+                          errorMessage:
+                            "Не удалось загрузить информацию о владельце сайта"
+                        }
+                      })
+                    ],
+                    1
                   )
-                ])
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("transition", { attrs: { name: "bottomText" } }, [
-            _vm.startTransition === true && _vm.info.bottomText != undefined
-              ? _c(
-                  "h6",
-                  { staticClass: "text-center font1-8rem pointerNone" },
-                  [_c("b", [_vm._v(_vm._s(_vm.info["bottomText"]))])]
-                )
-              : _vm._e()
-          ])
-        ],
-        1
-      ),
+                : _vm._e(),
+              _vm._v(" "),
+              _c("transition", { attrs: { name: "name" } }, [
+                _vm.startTransition === true && _vm.info.name != undefined
+                  ? _c(
+                      "h1",
+                      {
+                        staticClass:
+                          "text-center textVertical font5vw pointerNone"
+                      },
+                      [_c("b", [_vm._v(_vm._s(_vm.info["name"]))])]
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("transition", { attrs: { name: "occupation" } }, [
+                _vm.startTransition === true && _vm.info.occupation != undefined
+                  ? _c("hr")
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("transition", { attrs: { name: "occupation" } }, [
+                _vm.startTransition === true && _vm.info.occupation != undefined
+                  ? _c(
+                      "p",
+                      {
+                        staticClass:
+                          "text-center textVertical font2-5vw pointerNone"
+                      },
+                      [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(_vm.info["occupation"]) +
+                            "\n            "
+                        )
+                      ]
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("transition", { attrs: { name: "occupation" } }, [
+                _vm.startTransition === true && _vm.info.occupation != undefined
+                  ? _c("hr")
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("transition", { attrs: { name: "aboutMe" } }, [
+                _vm.startTransition === true && _vm.info.aboutMe != undefined
+                  ? _c(
+                      "p",
+                      { staticClass: "text-center font2vw pointerNone" },
+                      [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(_vm.info["aboutMe"]) +
+                            "\n            "
+                        )
+                      ]
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("transition", { attrs: { name: "bottomText" } }, [
+                _vm.startTransition === true && _vm.info.bottomText != undefined
+                  ? _c(
+                      "h6",
+                      { staticClass: "text-center font2vw pointerNone" },
+                      [_c("b", [_vm._v(_vm._s(_vm.info["bottomText"]))])]
+                    )
+                  : _vm._e()
+              ])
+            ],
+            1
+          )
+        : _vm._e(),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "d-block d-md-none div-12 textVertical fadeInAnim" },
-        [
-          _c("transition", { attrs: { name: "name" } }, [
-            _vm.startTransition === true && _vm.info.name != undefined
-              ? _c(
-                  "h1",
-                  { staticClass: "text-center textVertical font3-8rem" },
-                  [_c("b", [_vm._v(_vm._s(_vm.info["name"]))])]
-                )
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("transition", { attrs: { name: "occupation" } }, [
-            _vm.startTransition === true && _vm.info.occupation != undefined
-              ? _c("hr")
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("transition", { attrs: { name: "occupation" } }, [
-            _vm.startTransition === true && _vm.info.occupation != undefined
-              ? _c(
-                  "p",
-                  { staticClass: "text-center textVertical font1-8rem" },
-                  [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(_vm.info["occupation"]) +
-                        "\n            "
+      _vm.screenOrientation === "vertical"
+        ? _c(
+            "div",
+            { staticClass: "div-12 textVertical fadeInAnim" },
+            [
+              _c("transition", { attrs: { name: "name" } }, [
+                _vm.startTransition === true && _vm.info.name != undefined
+                  ? _c(
+                      "h1",
+                      { staticClass: "text-center textVertical font11vw" },
+                      [_c("b", [_vm._v(_vm._s(_vm.info["name"]))])]
                     )
-                  ]
-                )
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("transition", { attrs: { name: "occupation" } }, [
-            _vm.startTransition === true && _vm.info.occupation != undefined
-              ? _c("hr")
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("transition", { attrs: { name: "aboutMe" } }, [
-            _vm.startTransition === true && _vm.info.aboutMe != undefined
-              ? _c("p", { staticClass: "text-center font1-2rem" }, [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.info["aboutMe"]) +
-                      "\n            "
-                  )
-                ])
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("transition", { attrs: { name: "bottomText" } }, [
-            _vm.startTransition === true && _vm.info.bottomText != undefined
-              ? _c("h6", { staticClass: "text-center font1-2rem" }, [
-                  _c("b", [_vm._v(_vm._s(_vm.info["bottomText"]))])
-                ])
-              : _vm._e()
-          ])
-        ],
-        1
-      )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("transition", { attrs: { name: "occupation" } }, [
+                _vm.startTransition === true && _vm.info.occupation != undefined
+                  ? _c("hr")
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("transition", { attrs: { name: "occupation" } }, [
+                _vm.startTransition === true && _vm.info.occupation != undefined
+                  ? _c(
+                      "p",
+                      { staticClass: "text-center textVertical font6vw" },
+                      [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(_vm.info["occupation"]) +
+                            "\n            "
+                        )
+                      ]
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("transition", { attrs: { name: "occupation" } }, [
+                _vm.startTransition === true && _vm.info.occupation != undefined
+                  ? _c("hr")
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("transition", { attrs: { name: "aboutMe" } }, [
+                _vm.startTransition === true && _vm.info.aboutMe != undefined
+                  ? _c("p", { staticClass: "text-center font5vw" }, [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.info["aboutMe"]) +
+                          "\n            "
+                      )
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("transition", { attrs: { name: "bottomText" } }, [
+                _vm.startTransition === true && _vm.info.bottomText != undefined
+                  ? _c("h6", { staticClass: "text-center font4vw" }, [
+                      _c("b", [_vm._v(_vm._s(_vm.info["bottomText"]))])
+                    ])
+                  : _vm._e()
+              ])
+            ],
+            1
+          )
+        : _vm._e()
     ]
   )
 }
@@ -70388,11 +70503,12 @@ var render = function() {
                 "div",
                 {
                   key: project.slug,
-                  staticClass:
-                    "col-12 col-md-2 transparentCard m-1 otherProject",
+                  staticClass: "transparentCard m-1 otherProject",
                   class: {
                     "zeroOpacity unclickable": _vm.visible == false,
-                    invisible: _vm.isMobile === true && index > 4
+                    invisible: _vm.isMobile === true && index > 4,
+                    "col-2": _vm.screenOrientation === "horizontal",
+                    "col-12": _vm.screenOrientation === "vertical"
                   },
                   style:
                     "transition: all 0.8s  ease-out; transition-delay: " +
@@ -70491,7 +70607,7 @@ var render = function() {
         }
       ],
       staticClass:
-        "row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1 projectCard",
+        "row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1 projectCard zIndex5",
       class: { zeroOpacity: _vm.visible === false },
       attrs: { id: _vm.project.slug }
     },
@@ -70847,7 +70963,7 @@ var render = function() {
                       : _vm._e(),
                     _vm._v(" "),
                     _vm.project.project_bottomText !== null
-                      ? _c("h6", { staticClass: "text-center font2vw" }, [
+                      ? _c("h6", { staticClass: "text-center font2-5vw" }, [
                           _c("b", [
                             _vm._v(_vm._s(_vm.project.project_bottomText))
                           ])
@@ -71326,226 +71442,281 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return (_vm.links != -1 && _vm.links != false) ||
-    (_vm.fullProjectList != -1 && _vm.fullProjectList != false)
-    ? _c("div", [
-        _c(
-          "button",
-          {
-            staticClass: "d-block navButton zIndex3 fadeInAnim",
-            on: {
-              click: function($event) {
-                return _vm.showNavMenu()
+  return _c("transition", { attrs: { name: "navMenu" } }, [
+    _vm.visible === true &&
+    ((_vm.links != -1 && _vm.links != false) ||
+      (_vm.fullProjectList != -1 && _vm.fullProjectList != false))
+      ? _c("div", [
+          _c(
+            "button",
+            {
+              staticClass: "d-block navButton zIndex3 fadeInAnim",
+              on: {
+                click: function($event) {
+                  return _vm.showNavMenu()
+                }
               }
-            }
-          },
-          [
-            _c("i", {
-              staticClass: "d-none d-md-block bi bi-three-dots-vertical"
-            }),
-            _vm._v(" "),
-            _c("i", { staticClass: "d-block d-md-none bi bi-three-dots" })
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "col-12 col-md-2 navMenu",
-            style: {
-              right: _vm.navMenuStyle["right"],
-              opacity: _vm.navMenuStyle["opacity"],
-              zIndex: 5
-            }
-          },
-          [
-            _vm.fullProjectList !== undefined
-              ? _c(
-                  "div",
-                  { staticClass: "row justify-content-end" },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "navButtonClose",
-                        on: {
-                          click: function($event) {
-                            return _vm.closeNavMenu()
-                          }
-                        }
-                      },
-                      [_c("i", { staticClass: "bi bi-x" })]
-                    ),
-                    _vm._v(" "),
-                    _vm.fullProjectList != -1 &&
-                    _vm.fullProjectList.home !== false
-                      ? _c("div", { staticClass: "col-12" }, [
-                          _vm._m(0),
-                          _vm._v(" "),
-                          _c("hr")
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm._l(_vm.fullProjectList.home, function(project) {
-                      return _c(
-                        "div",
+            },
+            [
+              _c("i", {
+                staticClass: "d-none d-md-block bi bi-three-dots-vertical"
+              }),
+              _vm._v(" "),
+              _c("i", { staticClass: "d-block d-md-none bi bi-three-dots" })
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "navMenu",
+              class: {
+                "col-12": _vm.screenOrientation === "vertical",
+                "col-2": _vm.screenOrientation === "horizontal"
+              },
+              style: {
+                right: _vm.navMenuStyle["right"],
+                opacity: _vm.navMenuStyle["opacity"],
+                zIndex: _vm.z
+              }
+            },
+            [
+              _vm.fullProjectList !== undefined
+                ? _c(
+                    "div",
+                    { staticClass: "row justify-content-end" },
+                    [
+                      _c(
+                        "button",
                         {
-                          key: project.slug,
-                          staticClass: "col-12 text-center"
+                          staticClass: "navButtonClose",
+                          on: {
+                            click: function($event) {
+                              return _vm.closeNavMenu()
+                            }
+                          }
                         },
-                        [
-                          _c("h6", [
+                        [_c("i", { staticClass: "bi bi-x" })]
+                      ),
+                      _vm._v(" "),
+                      _vm.about === 1
+                        ? _c("div", { staticClass: "col-12" }, [
                             _c(
-                              "a",
-                              {
-                                attrs: { href: "#" + project.slug },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.closeNavMenu()
-                                  }
-                                }
-                              },
-                              [_vm._v(_vm._s(project.project_title))]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("br")
-                        ]
-                      )
-                    }),
-                    _vm._v(" "),
-                    _vm.fullProjectList !== -1 &&
-                    _vm.fullProjectList.other.length > 0
-                      ? _c("div", { staticClass: "col-12 text-center" }, [
-                          _c("h6", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#other" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.closeNavMenu()
-                                  }
-                                }
-                              },
-                              [_vm._v("Другие проекты")]
-                            )
-                          ])
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.links !== false && _vm.links != -1
-                      ? _c("div", { staticClass: "col-12" }, [
-                          _vm.fullProjectList != -1 &&
-                          _vm.fullProjectList.home !== false
-                            ? _c("hr")
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c("h6", { staticClass: "text-center" }, [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#links" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.closeNavMenu()
-                                  }
-                                }
-                              },
-                              [_c("b", [_vm._v("Ссылки")])]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("hr")
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.links !== false && _vm.links !== -1
-                      ? _c(
-                          "div",
-                          {
-                            staticClass: "d-none d-md-block col-12 text-center"
-                          },
-                          [
-                            _vm._l(_vm.links, function(link, index) {
-                              return _c(
-                                "h6",
-                                {
-                                  key: link.slug,
-                                  staticClass: "mb-3",
-                                  class: { invisible: index > 2 }
-                                },
-                                [
+                              "h6",
+                              { staticClass: "text-center" },
+                              [
+                                _c("router-link", { attrs: { to: "/" } }, [
                                   _c(
-                                    "a",
+                                    "b",
                                     {
-                                      attrs: {
-                                        target: "_blank",
-                                        href: link.link_url
-                                      },
                                       on: {
                                         click: function($event) {
                                           return _vm.closeNavMenu()
                                         }
                                       }
                                     },
-                                    [
-                                      _vm._v(
-                                        "\n                        " +
-                                          _vm._s(link.link_title) +
-                                          "\n                    "
-                                      )
-                                    ]
+                                    [_vm._v("Главная")]
                                   )
-                                ]
-                              )
-                            }),
+                                ])
+                              ],
+                              1
+                            ),
                             _vm._v(" "),
                             _c("hr")
-                          ],
-                          2
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.links !== false && _vm.links != -1
-                      ? _c("div", { staticClass: "col-12" }, [
-                          _c("h6", { staticClass: "text-center" }, [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#contacts" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.closeNavMenu()
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.fullProjectList != -1 &&
+                      _vm.fullProjectList.home !== false
+                        ? _c("div", { staticClass: "col-12" }, [
+                            _c("h6", { staticClass: "text-center" }, [
+                              _c("b", [_vm._v("Проекты")])
+                            ]),
+                            _vm._v(" "),
+                            _c("hr")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm._l(_vm.fullProjectList.home, function(project) {
+                        return _c(
+                          "div",
+                          {
+                            key: project.slug,
+                            staticClass: "col-12 text-center"
+                          },
+                          [
+                            _c("h6", [
+                              _c(
+                                "a",
+                                {
+                                  attrs: { href: "#" + project.slug },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.closeNavMenu()
+                                    }
                                   }
-                                }
-                              },
-                              [_c("b", [_vm._v("Контакты")])]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("hr")
-                        ])
-                      : _vm._e()
-                  ],
-                  2
-                )
-              : _vm._e()
-          ]
-        )
-      ])
-    : _vm._e()
+                                },
+                                [_vm._v(_vm._s(project.project_title))]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("br")
+                          ]
+                        )
+                      }),
+                      _vm._v(" "),
+                      _vm.fullProjectList !== -1 &&
+                      _vm.fullProjectList.other.length > 0
+                        ? _c("div", { staticClass: "col-12" }, [
+                            _c("h6", { staticClass: "text-center" }, [
+                              _c(
+                                "a",
+                                {
+                                  attrs: { href: "#other" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.closeNavMenu()
+                                    }
+                                  }
+                                },
+                                [_vm._v("Другие проекты")]
+                              )
+                            ])
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.links !== false && _vm.links != -1
+                        ? _c("div", { staticClass: "col-12" }, [
+                            _vm.fullProjectList != -1 &&
+                            _vm.fullProjectList.home !== false
+                              ? _c("hr")
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("h6", { staticClass: "text-center" }, [
+                              _c(
+                                "a",
+                                {
+                                  attrs: { href: "/#links" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.closeNavMenu()
+                                    }
+                                  }
+                                },
+                                [_c("b", [_vm._v("Ссылки")])]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("hr")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.links !== false && _vm.links !== -1
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "d-none d-md-block col-12 text-center"
+                            },
+                            [
+                              _vm._l(_vm.links, function(link, index) {
+                                return _c(
+                                  "h6",
+                                  {
+                                    key: link.slug,
+                                    staticClass: "mb-3",
+                                    class: { invisible: index > 2 }
+                                  },
+                                  [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          target: "_blank",
+                                          href: link.link_url
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.closeNavMenu()
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                            " +
+                                            _vm._s(link.link_title) +
+                                            "\n                        "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              }),
+                              _vm._v(" "),
+                              _c("hr")
+                            ],
+                            2
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.links !== false && _vm.links != -1
+                        ? _c("div", { staticClass: "col-12" }, [
+                            _c("h6", { staticClass: "text-center" }, [
+                              _c(
+                                "a",
+                                {
+                                  attrs: { href: "#contacts" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.closeNavMenu()
+                                    }
+                                  }
+                                },
+                                [_c("b", [_vm._v("Контакты")])]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("hr")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.about === 1
+                        ? _c("div", { staticClass: "col-12" }, [
+                            _c(
+                              "h6",
+                              { staticClass: "text-center" },
+                              [
+                                _c("router-link", { attrs: { to: "/about" } }, [
+                                  _c(
+                                    "b",
+                                    {
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.closeNavMenu()
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("О сайте")]
+                                  )
+                                ])
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("hr")
+                          ])
+                        : _vm._e()
+                    ],
+                    2
+                  )
+                : _vm._e()
+            ]
+          )
+        ])
+      : _vm._e()
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h6", { staticClass: "text-center" }, [
-      _c("b", [_vm._v("Проекты")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

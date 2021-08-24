@@ -354,4 +354,17 @@
     transition: all 0.35s ease-in-out;
 }
 
+.navMenu-enter, .navMenu-leave-to{
+    opacity: 0;
+}
+
+.navMenu-enter-to, .navMenu-leave{
+    opacity: 1;
+}
+
+.navMenu-enter-active, .navMenu-leave-active{
+    transition: opacity 0.65s ease-in-out;
+}
+
+
 /* //////////////////// */

@@ -6,7 +6,7 @@
         <div v-if="type === 'mini'" class="row text-center textVertical">
             <!-- название -->
             <div class="col-12">
-                <h1 class="text-center textVertical font3-8rem">
+                <h1 class="text-center textVertical font3vw">
                     <b>{{currentProject.project_title}}</b>    
                 </h1>  
             </div>
@@ -16,7 +16,7 @@
             </div>
             <!-- подзаголовок -->
             <div class="col-12">
-                <p class="text-center textVertical font2rem">
+                <p class="text-center textVertical font2-2vw">
                    {{currentProject.project_subtitle}}
                 </p>
             </div>
@@ -52,7 +52,9 @@
                 <ul class="nav nav-pills justify-content-right">
                     <!-- кнопка ориентации -->
                     <li class="nav-item d-none d-md-block m-1">
-                        <button class="btn btn-light btn-lg" title="Изменить ориентацию" v-on:click="changeOrientation" v-if="currentProject.project_image !== null && currentProject.project_image !== undefined">
+                        <button class="btn btn-light btn-lg" title="Изменить ориентацию" v-on:click="changeOrientation" 
+                        v-if="currentProject.project_image !== null && currentProject.project_image !== undefined &&
+                        screenOrientation == 'horizontal'">
                                 <i class="bi bi-arrow-left-right"></i>
                         </button>
                     </li>
@@ -101,6 +103,10 @@ export default {
         animatedBackground: function(){
             return this.$store.state.AdminStates.animatedBackground;
         },
+
+        screenOrientation: function(){
+            return this.$store.state.GlobalStates.screenOrientation;
+        }
     },
     
     //методы

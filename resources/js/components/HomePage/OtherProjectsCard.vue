@@ -8,9 +8,10 @@
             <h3 class="text-center mb-5 pointerNone">Другие проекты</h3>
             <!-- список проектов -->
             <div class="row justify-content-center">
-                <div v-for="(project, index) in projects" :key="project.slug" class="col-12 col-md-2 transparentCard m-1 otherProject" 
+                <div v-for="(project, index) in projects" :key="project.slug" class="transparentCard m-1 otherProject" 
                     :style="`transition: all 0.8s  ease-out; transition-delay: ${index/5}s;`"
-                    v-bind:class="{'zeroOpacity unclickable' : visible == false, 'invisible': isMobile === true && index > 4}">
+                    v-bind:class="{'zeroOpacity unclickable' : visible == false, 'invisible': isMobile === true && index > 4,
+                    'col-2': screenOrientation === 'horizontal', 'col-12': screenOrientation === 'vertical'}">
                     <!-- если у прое,кта есть лого -->
                     <div class="card-body text-center" v-if="project.project_icon !== null">
                         <!-- заголовок -->
@@ -64,6 +65,9 @@ export default {
         },
         isMobile: function(){
             return this.$isMobile;
+        },
+        screenOrientation: function(){
+             return this.$store.state.GlobalStates.screenOrientation;
         }
     },
 

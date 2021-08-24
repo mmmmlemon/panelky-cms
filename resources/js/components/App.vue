@@ -92,6 +92,7 @@ export default {
             public_access_message: -1,
             //настройки главной страницы
             settings: -1,
+            currentTab: null,
         }
     },
 

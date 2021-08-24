@@ -9,12 +9,13 @@
 </template>
 <script>
 export default {
+    created(){
+        this.$parent.currentTab = 'about';
+    },
 
     beforeMount(){
         if(this.about !== 1)
         { 
-            
-
             axios.get('/api/getHomeSettings').then(response => {
                 if(response.data.about !== 1){
                     window.location.href="/"; 

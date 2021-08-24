@@ -4,7 +4,7 @@
     <div class="row h-100 width90pc bigCard d-flex justify-content-center borderUnderline">
          
         <!-- для десктопа -->
-        <div class="d-none d-md-block textVertical fadeInAnim">
+        <div class="textVertical fadeInAnim" v-if="screenOrientation === 'horizontal'">
             <!-- Ошибка -->
             <div class="col-12" v-if="info === false">
                 <Error errorMessage="Не удалось загрузить информацию о владельце сайта"/>
@@ -12,7 +12,7 @@
 
             <!-- имя автора -->
             <transition name="name">
-                <h1 v-if="startTransition === true && info.name != undefined" class="text-center textVertical font5rem pointerNone">
+                <h1 v-if="startTransition === true && info.name != undefined" class="text-center textVertical font5vw pointerNone">
                     <b>{{info['name']}}</b>
                 </h1>
             </transition>
@@ -23,7 +23,7 @@
         
             <!-- род занятий -->
             <transition name="occupation">
-                <p v-if="startTransition === true && info.occupation != undefined" class="text-center textVertical font2-5rem pointerNone">
+                <p v-if="startTransition === true && info.occupation != undefined" class="text-center textVertical font2-5vw pointerNone">
                     {{info['occupation']}}
                 </p>
             </transition>
@@ -34,25 +34,25 @@
 
             <!-- о себе -->
             <transition name="aboutMe">
-                <p v-if="startTransition === true && info.aboutMe != undefined" class="text-center font1-8rem pointerNone">
+                <p v-if="startTransition === true && info.aboutMe != undefined" class="text-center font2vw pointerNone">
                     {{info['aboutMe']}}
                 </p>
          
             </transition>
             <!-- нижний текст -->
             <transition name="bottomText">
-                <h6 v-if="startTransition === true && info.bottomText != undefined" class="text-center font1-8rem pointerNone">
+                <h6 v-if="startTransition === true && info.bottomText != undefined" class="text-center font2vw pointerNone">
                     <b>{{info['bottomText']}}</b>
                 </h6>
             </transition>
  
         </div>
         <!-- для мобилок -->
-        <div class="d-block d-md-none div-12 textVertical fadeInAnim">
+        <div class="div-12 textVertical fadeInAnim" v-if="screenOrientation === 'vertical'">
 
             <!-- имя автора -->
             <transition name="name">
-                <h1 v-if="startTransition === true && info.name != undefined" class="text-center textVertical font3-8rem">
+                <h1 v-if="startTransition === true && info.name != undefined" class="text-center textVertical font11vw">
                     <b>{{info['name']}}</b>
                 </h1>
             </transition>
@@ -63,7 +63,7 @@
 
             <!-- род занятий -->
             <transition name="occupation">
-                <p v-if="startTransition === true && info.occupation != undefined" class="text-center textVertical font1-8rem">
+                <p v-if="startTransition === true && info.occupation != undefined" class="text-center textVertical font6vw">
                     {{info['occupation']}}
                 </p>
             </transition>
@@ -74,7 +74,7 @@
 
             <!-- о себе -->
             <transition name="aboutMe">
-                <p v-if="startTransition === true && info.aboutMe != undefined" class="text-center font1-2rem">
+                <p v-if="startTransition === true && info.aboutMe != undefined" class="text-center font5vw">
                     {{info['aboutMe']}}
                 </p>
             </transition>
@@ -83,7 +83,7 @@
 
             <transition name="bottomText">
             <!-- нижний текст -->
-                <h6 v-if="startTransition === true && info.bottomText != undefined" class="text-center font1-2rem">
+                <h6 v-if="startTransition === true && info.bottomText != undefined" class="text-center font4vw">
                     <b>{{info['bottomText']}}</b>
                 </h6>
             </transition>
@@ -123,6 +123,10 @@ export default {
             { return this.$parent.$parent.startHeaderCardTransition;}
             else
             { return true; }
+        },
+
+        screenOrientation: function(){
+            return this.$store.state.GlobalStates.screenOrientation;
         }
     }
     

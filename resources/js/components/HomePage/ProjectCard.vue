@@ -1,7 +1,7 @@
 //ProjectCard
 //Карточка для проектов
 <template>
-    <div class="row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1 projectCard" 
+    <div class="row h-100 p-2 w-75 d-flex justify-content-center borderUnderline zIndex-1 projectCard zIndex5" 
             v-bind:class="{'zeroOpacity': visible === false}" 
             v-scroll="handleScroll" :id="project.slug">
         
@@ -119,7 +119,7 @@
                 <hr v-if="project.project_bottomText !== null">
                 <!-- футер -->
                 <h6 v-if="project.project_bottomText !== null"
-                    class="text-center font2vw">
+                    class="text-center font2-5vw">
                     <b>{{project.project_bottomText}}</b>
                 </h6>
                 <br>

@@ -89,6 +89,13 @@ export default {
     //хуки
     created(){
         this.$store.dispatch('getAnimatedBackground');
+
+        this.setScreenOrientation();
+        window.addEventListener("resize", this.setScreenOrientation);
+    },
+
+    beforeDestroy() {
+        window.removeEventListener("resize", this.setScreenOrientation);
     },
 
     //данные
@@ -116,6 +123,7 @@ export default {
         //очистить ошибки
         clearError()
         { this.$store.dispatch('setErrors', -1); },
+
         //логаут
         logout: function(){
             //отправить POST-запрос на выход из профиля и перенаправить на главную страницу
@@ -130,6 +138,18 @@ export default {
 
             });
         },
+
+        setScreenOrientation(){
+            let width = window.innerWidth;
+            let height = window.innerHeight;
+
+            if(width > height){
+                this.$store.commit('setState', {state: 'screenOrientation', value: 'horizontal'});
+            }
+            else if (height > width){
+                 this.$store.commit('setState', {state: 'screenOrientation', value: 'vertical'});
+            }
+        }
     },
    
 }

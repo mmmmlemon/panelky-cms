@@ -27,7 +27,7 @@
 
             <!-- поле для email/юзернейма в соц.сети или номера телефона -->
             <div class="col-12 col-md-4 mb-3">
-                <h6 v-html="tooltipTitle" class="mt-3"></h6>
+                <h6 v-html="tooltipTitle"></h6>
                 <input type="text" class="form-control" v-model="contact.contact_insertion" required v-on:keydown="toggleEdit(true)">
                 <div v-if="errors && errors.contact_url" class="text-danger goUpAnim">{{ errors.contact_url[0]}}</div>
                 <a v-if="contact.contact_url !== undefined && contact.contact_type !== 'email'" 

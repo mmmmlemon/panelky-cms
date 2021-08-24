@@ -4,7 +4,8 @@
     <div class="deleteModalBody fadeInAnim" v-if="deleteModalInfo !== -1 && deleteModalInfo !== undefined">
         <div class="row justify-content-center">
             <!-- удаление проектов -->
-            <div class="col-11 col-md-4 transparentCard deleteModalCard m-1" v-if="deleteModalInfo.type === 'project'">
+            <div class="transparentCard deleteModalCard m-1" v-if="deleteModalInfo.type === 'project'"
+                v-bind:class="{'col-11': screenOrientation === 'vertical', 'col-4': screenOrientation === 'horizontal'}">
                 <div class="card-body">
                     <h4 class="card-title">Удаление проекта</h4>
                     <hr>
@@ -79,6 +80,10 @@ export default {
         //информация об удаляемом проекте
         deleteModalInfo: function(){
             return this.$store.state.AdminStates.deleteModalInfo;
+        },
+
+        screenOrientation: function(){
+            return this.$store.state.GlobalStates.screenOrientation;
         }
     },
     //методы

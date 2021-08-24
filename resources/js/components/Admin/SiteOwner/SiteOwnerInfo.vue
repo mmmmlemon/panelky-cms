@@ -5,7 +5,8 @@
         <div class="col-10 p-0">
             <div class="row justify-content-center">
                         <!-- форма редактирования -->
-            <div class="col-12 col-md-4 mt-2 fadeInAnim" v-bind:class="{'zeroOpacity': siteOwnerInfo === -1}">
+            <div class="mt-2 fadeInAnim" v-bind:class="{'zeroOpacity': siteOwnerInfo === -1,
+            'col-12': screenOrientation === 'vertical', 'col-4': screenOrientation === 'horizontal'}">
                 <h5>Информация о владельце</h5>
                 <hr>
                 <form @submit.prevent="submit" method="POST">
@@ -46,7 +47,8 @@
 
             </div>
             <!-- превью -->
-            <div class="col-12 col-md-6 mt-2 mb-2" v-if="siteOwnerInfo !== -1">
+            <div class="mt-2 mb-2" v-if="siteOwnerInfo !== -1"
+            v-bind:class="{'col-12': screenOrientation === 'vertical', 'col-6': screenOrientation === 'horizontal'}">
                 <h5>Превью</h5>
                 <hr>
                 <PreviewOwner :siteOwnerInfo="siteOwnerInfo"/>
@@ -83,6 +85,10 @@ export default {
         //инф-ция о владельце сайта
         siteOwnerInfo: function(){
             return this.$store.state.GlobalStates.siteOwnerInfo;
+        },
+
+        screenOrientation: function(){
+            return this.$store.state.GlobalStates.screenOrientation;
         }
     },
 

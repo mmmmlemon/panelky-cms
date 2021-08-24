@@ -5,11 +5,14 @@
         <!-- превью на весь экран -->
         <div class="container col-12 vh-100 animatedBackground fullscreenCard " :style="fullscreenStyle">
 
-            <div class="fullscreenButtons zIndex3">
+            <div class="fullscreenButtons zIndex5">
                 <ul class="nav nav-pills justify-content-right">
                     <!-- кнопка ориентации -->
                     <li class="nav-item d-none d-md-block m-1">
-                        <button class="btn btn-light btn-lg" title="Изменить ориентацию" v-on:click="changeOrientation" v-if="currentProject.project_image !== null && currentProject.project_image !== undefined">
+                        <button class="btn btn-light btn-lg" title="Изменить ориентацию" 
+                        v-on:click="changeOrientation" 
+                        v-if="currentProject.project_image !== null 
+                        && currentProject.project_image !== undefined && screenOrientation === 'horizontal'">
                                 <i class="bi bi-arrow-left-right"></i>
                         </button>
                     </li>
@@ -66,6 +69,14 @@ export default {
                         backgroundRepeat: this.animatedBackground.backgroundRepeat};
 
             return style;
+        },
+
+        screenOrientation: function(){
+            return this.$store.state.GlobalStates.screenOrientation;
+        },
+
+        currentSlide: function(){
+            return this.$children[0]['data'];
         }
     },
     

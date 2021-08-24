@@ -64,6 +64,10 @@ h1, h4, h6, input {
 
 /* vw */
 
+.font0-9vw{
+    font-size: 0.9vw;
+}
+
 .font1vw{
     font-size:1vw;
 }
@@ -92,8 +96,20 @@ h1, h4, h6, input {
     font-size: 4vw;
 }
 
+.font5vw{
+    font-size: 5vw;
+}
+
+.font6vw{
+    font-size: 6vw;
+}
+
 .font8vw{
     font-size: 8vw;
+}
+
+.font11vw{
+    font-size: 11vw;
 }
 
 

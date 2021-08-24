@@ -43,7 +43,7 @@
                     </div>
                     <!-- поле для email/юзернейма в соц.сети или номера телефона -->
                     <div class="col-12 col-md-4 mb-3">
-                        <h6 v-html="tooltipTitle" class="mt-3"></h6>
+                        <h6 v-html="tooltipTitle"></h6>
                         <input type="text" class="form-control" v-model="newContact.contact_url" required>
                         <div v-if="errors && errors.contact_url" class="text-danger goUpAnim">{{ errors.contact_url[0]}}</div>
                         <a v-if="socialMediaGeneratedLink !== undefined && newContact.contact_url !== undefined && newContact.contact_type !== 'email'" 

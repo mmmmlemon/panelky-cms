@@ -26,6 +26,7 @@ export default {
     created(){
         this.setScreenOrientation();
         window.addEventListener("resize", this.setScreenOrientation);
+        this.$parent.currentTab = 'home';
     },
 
     computed: {
