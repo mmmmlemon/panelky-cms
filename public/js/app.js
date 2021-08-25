@@ -4507,6 +4507,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   // данные
   data: function data() {
@@ -67799,7 +67817,48 @@ var render = function() {
                           ]
                         )
                       ]
-                    )
+                    ),
+                    _vm._v(" "),
+                    _vm.slideEditId !== undefined &&
+                    _vm.slideEditMode === "horizontal" &&
+                    _vm.slideEditId === slide.id
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "d-block d-md-none row justify-content-center mt-5 goUpAnim"
+                          },
+                          [
+                            _c("div", { staticClass: "col-12 text-center" }, [
+                              _c("textarea", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.slideEditComment,
+                                    expression: "slideEditComment"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  placeholder:
+                                    "Комментарий к слайду, отображается под слайдом"
+                                },
+                                domProps: { value: _vm.slideEditComment },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.slideEditComment = $event.target.value
+                                  }
+                                }
+                              })
+                            ])
+                          ]
+                        )
+                      : _vm._e()
                   ]
                 )
               }),
@@ -67809,7 +67868,10 @@ var render = function() {
             _vm.slideEditId !== undefined && _vm.slideEditMode === "horizontal"
               ? _c(
                   "div",
-                  { staticClass: "row justify-content-center mt-5 goUpAnim" },
+                  {
+                    staticClass:
+                      "d-none d-md-block  row justify-content-center mt-5 goUpAnim"
+                  },
                   [
                     _c("div", { staticClass: "col-6 text-center" }, [
                       _c("textarea", {
@@ -67873,7 +67935,7 @@ var render = function() {
                   "div",
                   {
                     key: "verticalSlide_" + index,
-                    staticClass: "col-5 col-md-2 m-2 text-center fadeInAnim"
+                    staticClass: "col-6 col-md-2 m-2 text-center fadeInAnim"
                   },
                   [
                     _c("img", {
@@ -67967,7 +68029,48 @@ var render = function() {
                           )
                         ])
                       ]
-                    )
+                    ),
+                    _vm._v(" "),
+                    _vm.slideEditId !== undefined &&
+                    _vm.slideEditMode === "vertical" &&
+                    _vm.slideEditId === slide.id
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "d-block d-md-none row justify-content-center mt-5 goUpAnim"
+                          },
+                          [
+                            _c("div", { staticClass: "col-12 text-center" }, [
+                              _c("textarea", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.slideEditComment,
+                                    expression: "slideEditComment"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  placeholder:
+                                    "Комментарий к слайду, отображается под слайдом"
+                                },
+                                domProps: { value: _vm.slideEditComment },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.slideEditComment = $event.target.value
+                                  }
+                                }
+                              })
+                            ])
+                          ]
+                        )
+                      : _vm._e()
                   ]
                 )
               }),
@@ -67977,7 +68080,10 @@ var render = function() {
             _vm.slideEditId !== undefined && _vm.slideEditMode === "vertical"
               ? _c(
                   "div",
-                  { staticClass: "row justify-content-center mt-5 goUpAnim" },
+                  {
+                    staticClass:
+                      "d-none d-md-block row justify-content-center mt-5 goUpAnim"
+                  },
                   [
                     _c("div", { staticClass: "col-md-6 text-center" }, [
                       _c("textarea", {

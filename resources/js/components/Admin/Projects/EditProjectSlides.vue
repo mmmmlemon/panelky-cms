@@ -75,12 +75,21 @@
                                     <i class="bi bi-arrows-move deleteSlide"></i>
                                 </h5>
                             </div>
-                        </div>   
+                        </div> 
+                        <!-- редактировать слайд - горизонтальные -->
+                        <div class="d-block d-md-none row justify-content-center mt-5 goUpAnim" v-if="slideEditId !== undefined && slideEditMode === 'horizontal' &&
+                        slideEditId === slide.id">
+                            <div class="col-12 text-center">
+                                <textarea type="text" v-model="slideEditComment" placeholder="Комментарий к слайду, отображается под слайдом" class="form-control">
+                                </textarea>
+                            </div>                    
+                        </div>
+  
                     </div>
                 </draggable>
                 
                 <!-- редактировать слайд - горизонтальные -->
-                <div class="row justify-content-center mt-5 goUpAnim" v-if="slideEditId !== undefined && slideEditMode === 'horizontal'">
+                <div class="d-none d-md-block  row justify-content-center mt-5 goUpAnim" v-if="slideEditId !== undefined && slideEditMode === 'horizontal'">
                     <div class="col-6 text-center">
                         <textarea type="text" v-model="slideEditComment" placeholder="Комментарий к слайду, отображается под слайдом" class="form-control">
                         </textarea>
@@ -90,7 +99,7 @@
                 <h5 class="text-center mt-5" v-if="projectSlidesVertical != 0">Вертикальные слайды</h5>
                 <hr v-if="projectSlidesVertical != 0">
                 <draggable v-model="projectSlidesVertical" handle=".handle" v-bind="dragOptions" class="row justify-content-center mt-5">
-                    <div v-for="(slide, index) in projectSlidesVertical" v-bind:key="'verticalSlide_'+index" class="col-5 col-md-2 m-2 text-center fadeInAnim">
+                    <div v-for="(slide, index) in projectSlidesVertical" v-bind:key="'verticalSlide_'+index" class="col-6 col-md-2 m-2 text-center fadeInAnim">
                         <img :src="slide.media_url" class="slideEditImage">
                         <h3 class="slideEditImageNum">{{index+1}}</h3>
                         <!-- кнопки под слайдами -->
@@ -116,11 +125,20 @@
                                 </h5>
                             </div>
                         </div>
+                    <!-- редактировать слайд - вертикальные -->
+                    <div class="d-block d-md-none row justify-content-center mt-5 goUpAnim" v-if="slideEditId !== undefined && slideEditMode === 'vertical' &&
+                    slideEditId === slide.id">
+                        <div class="col-12 text-center">
+                            <textarea type="text" v-model="slideEditComment" placeholder="Комментарий к слайду, отображается под слайдом" class="form-control">
+                            </textarea>
+                        </div>                    
                     </div>
+                    </div>
+              
                 </draggable>
 
                 <!-- редактировать слайд - вертикальные -->
-                <div class="row justify-content-center mt-5 goUpAnim" v-if="slideEditId !== undefined && slideEditMode === 'vertical'">
+                <div class="d-none d-md-block row justify-content-center mt-5 goUpAnim" v-if="slideEditId !== undefined && slideEditMode === 'vertical'">
                     <div class="col-md-6 text-center">
                         <textarea type="text" v-model="slideEditComment" placeholder="Комментарий к слайду, отображается под слайдом" class="form-control">
                         </textarea>
