@@ -5,7 +5,7 @@
         <!-- превью на весь экран -->
         <div class="container col-12 vh-100 animatedBackground fullscreenCard " :style="fullscreenStyle">
 
-            <div class="fullscreenButtons zIndex5">
+            <div class="fullscreenButtons zIndex7">
                 <ul class="nav nav-pills justify-content-right">
                     <!-- кнопка ориентации -->
                     <li class="nav-item d-none d-md-block m-1">

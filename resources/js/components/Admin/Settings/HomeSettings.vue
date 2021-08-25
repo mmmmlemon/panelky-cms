@@ -189,7 +189,7 @@ export default {
                     this.site_owner = value;
                     break;
                 case 'projects':
-                    this.project = value;
+                    this.projects = value;
                     break;
                 case 'footer':
                     this.footer = value;

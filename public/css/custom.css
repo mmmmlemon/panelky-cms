@@ -456,6 +456,11 @@ hr {
     z-index: 5;
 }
 
+.zIndex7 {
+    z-index: 7 !important;
+
+}
+
 
 .cookiesCard{
     z-index: 5;

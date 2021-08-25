@@ -48,7 +48,7 @@
         <!-- превью на весь экран -->
         <div class="container col-12 vh-100 animatedBackground fullscreenCard zIndex3" :style="fullscreenStyle">
 
-            <div class="fullscreenButtons">
+            <div class="fullscreenButtons zIndex7">
                 <ul class="nav nav-pills justify-content-right">
                     <!-- кнопка ориентации -->
                     <li class="nav-item d-none d-md-block m-1">
@@ -58,7 +58,7 @@
                                 <i class="bi bi-arrow-left-right"></i>
                         </button>
                     </li>
-                        <!-- кнопка свернуть -->
+                    <!-- кнопка свернуть -->
                     <li class="nav-item m-1">
                         <button class="btn btn-light btn-lg" title="Свернуть" v-on:click="closeFullscreenPreview">
                             <i class="bi bi-fullscreen-exit"></i>

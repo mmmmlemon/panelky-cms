@@ -44,6 +44,10 @@ export default {
         footer: function(){
             return this.$parent.settings.footer;
         },
+
+        settings: function(){
+            return this.$parent.settings;
+        }
     },
 
     beforeDestroy() {

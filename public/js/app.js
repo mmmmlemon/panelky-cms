@@ -5399,7 +5399,7 @@ __webpack_require__.r(__webpack_exports__);
           break;
 
         case 'projects':
-          this.project = value;
+          this.projects = value;
           break;
 
         case 'footer':
@@ -6073,6 +6073,9 @@ __webpack_require__.r(__webpack_exports__);
     //settings.footer
     footer: function footer() {
       return this.$parent.settings.footer;
+    },
+    settings: function settings() {
+      return this.$parent.settings;
     }
   },
   beforeDestroy: function beforeDestroy() {
@@ -6703,6 +6706,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.classForImage = 'projectImageVertical';
       }
     };
+
+    var headerCardVisiblity = this.$parent.settings.site_owner;
+
+    if (headerCardVisiblity === 0) {
+      if (this.project.id === this.$parent.fullProjectList.home[0].id) {
+        this.setVisible = true;
+      }
+    }
   },
   beforeDestroy: function beforeDestroy() {
     window.removeEventListener("resize", this.setSlidePositionOnWindowResize);
@@ -7117,7 +7128,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -7164,7 +7174,7 @@ __webpack_require__.r(__webpack_exports__);
         'right': '0px',
         'opacity': '1'
       });
-      this.z = 5; // если сайт открыт на телефоне, то отключаем скролл страницы
+      this.z = 7; // если сайт открыт на телефоне, то отключаем скролл страницы
       //пока открыто меню
 
       if (this.$isMobile) {
@@ -65844,7 +65854,7 @@ var render = function() {
               style: _vm.fullscreenStyle
             },
             [
-              _c("div", { staticClass: "fullscreenButtons" }, [
+              _c("div", { staticClass: "fullscreenButtons zIndex7" }, [
                 _c(
                   "ul",
                   { staticClass: "nav nav-pills justify-content-right" },
@@ -65948,7 +65958,7 @@ var render = function() {
               style: _vm.fullscreenStyle
             },
             [
-              _c("div", { staticClass: "fullscreenButtons zIndex5" }, [
+              _c("div", { staticClass: "fullscreenButtons zIndex7" }, [
                 _c(
                   "ul",
                   { staticClass: "nav nav-pills justify-content-right" },
@@ -70244,7 +70254,7 @@ var staticRenderFns = [
         staticClass: "btn btn-lg btn-outline-light",
         attrs: { type: "button" }
       },
-      [_c("span", [_vm._v("Связаться со мной")])]
+      [_c("span", [_vm._v("Контакты")])]
     )
   }
 ]
@@ -70800,7 +70810,7 @@ var render = function() {
                       "h1",
                       {
                         staticClass:
-                          "unclickable d-md-block d-sm-none text-center textVertical font3vw"
+                          "unclickable d-md-block text-center textVertical font3vw"
                       },
                       [_c("b", [_vm._v(_vm._s(_vm.project.project_title))])]
                     ),
@@ -70963,7 +70973,7 @@ var render = function() {
                       : _vm._e(),
                     _vm._v(" "),
                     _vm.project.project_bottomText !== null
-                      ? _c("h6", { staticClass: "text-center font2-5vw" }, [
+                      ? _c("h6", { staticClass: "text-center font3vw" }, [
                           _c("b", [
                             _vm._v(_vm._s(_vm.project.project_bottomText))
                           ])
@@ -70975,7 +70985,7 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-lg btn-outline-light font2-5vw",
+                        staticClass: "btn btn-lg btn-outline-light font4vw",
                         attrs: { type: "button" }
                       },
                       [
@@ -71046,7 +71056,11 @@ var render = function() {
                       staticClass:
                         "slideTextVertical unclickable d-flex align-items-center text-center justify-content-center fadeInAnim"
                     },
-                    [_c("h4", [_vm._v(_vm._s(slide.commentary))])]
+                    [
+                      _c("h4", { staticClass: "font5vw" }, [
+                        _vm._v(_vm._s(slide.commentary))
+                      ])
+                    ]
                   )
                 : _vm._e()
             ]),
@@ -71661,7 +71675,7 @@ var render = function() {
                       _vm._v(" "),
                       _vm.links !== false && _vm.links != -1
                         ? _c("div", { staticClass: "col-12" }, [
-                            _c("h6", { staticClass: "text-center" }, [
+                            _c("h6", { staticClass: "text-center mb-3" }, [
                               _c(
                                 "a",
                                 {
@@ -71701,9 +71715,7 @@ var render = function() {
                                 ])
                               ],
                               1
-                            ),
-                            _vm._v(" "),
-                            _c("hr")
+                            )
                           ])
                         : _vm._e()
                     ],

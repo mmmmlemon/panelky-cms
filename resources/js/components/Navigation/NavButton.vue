@@ -65,9 +65,9 @@
                         </h6>
                         <hr>
                     </div>
-                    <!-- ссылки -->
+                    <!-- контакты -->
                     <div class="col-12" v-if="links !== false && links != -1">
-                        <h6 class="text-center">
+                        <h6 class="text-center mb-3">
                             <a v-on:click="closeNavMenu()" href="#contacts"><b>Контакты</b></a>
                         </h6>
                         <hr>
@@ -77,7 +77,6 @@
                         <h6 class="text-center">
                             <router-link to="/about"><b @click="closeNavMenu()">О сайте</b></router-link>
                         </h6>
-                        <hr>
                     </div>
                 </div>
             </div>
@@ -128,7 +127,7 @@
             //показать боковое меню
             showNavMenu: function() {
                 this.$store.dispatch('setNavMenuStyle', {'right':'0px', 'opacity':'1'});
-                this.z = 5;
+                this.z = 7;
                 // если сайт открыт на телефоне, то отключаем скролл страницы
                 //пока открыто меню
                 if(this.$isMobile)

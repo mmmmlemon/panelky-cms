@@ -22,7 +22,7 @@
             <!-- контактная кнопка -->
             <div class="col-12 text-center mt-5 fadeInAnim" id="contacts" @click="showContacts">
                 <button type="button" class="btn btn-lg btn-outline-light">
-                    <span>Связаться со мной</span>
+                    <span>Контакты</span>
                 </button>
                 <br><br>
             </div>

@@ -60,7 +60,7 @@
                 v-if="visible === true">
                 
                 <!-- название проекта -->
-                <h1 class="unclickable d-md-block d-sm-none text-center textVertical font3vw">
+                <h1 class="unclickable d-md-block text-center textVertical font3vw">
                     <b>{{project.project_title}}</b>
                 </h1>
                 <!-- лого -->
@@ -119,12 +119,12 @@
                 <hr v-if="project.project_bottomText !== null">
                 <!-- футер -->
                 <h6 v-if="project.project_bottomText !== null"
-                    class="text-center font2-5vw">
+                    class="text-center font3vw">
                     <b>{{project.project_bottomText}}</b>
                 </h6>
                 <br>
                 <!-- кнопка "Посетить" -->
-                <button type="button" class="btn btn-lg btn-outline-light font2-5vw">
+                <button type="button" class="btn btn-lg btn-outline-light font4vw">
                     <a :href="project.project_url" target="_blank">
                         Перейти к проекту
                     </a>
@@ -145,7 +145,7 @@
             <transition name="slideCommentary">
                 <div class="slideTextVertical unclickable d-flex align-items-center text-center justify-content-center fadeInAnim" 
                     v-if="slideCommentaryVisibility === true && slide.commentary !== null">
-                    <h4>{{slide.commentary}}</h4>
+                    <h4 class="font5vw">{{slide.commentary}}</h4>
                 </div>
             </transition>
 
@@ -210,6 +210,12 @@ export default {
             }
         };
 
+        let headerCardVisiblity = this.$parent.settings.site_owner;
+        if(headerCardVisiblity === 0){
+            if(this.project.id === this.$parent.fullProjectList.home[0].id)
+            { this.setVisible = true; }
+        }
+
     },
 
     beforeDestroy() {
@@ -273,8 +279,7 @@ export default {
         //ориентация экрана
         screenOrientation(){
             return this.$store.state.GlobalStates.screenOrientation;
-        }
-
+        },
     },
 
     //методы
