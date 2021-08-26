@@ -1,10 +1,13 @@
 // EditProjectSlides.vue
 // редактирование слайдов проекта
 <template>
+    <div class="col-12">
     <!-- форма для картинок -->
-    <form @submit.prevent="submitSlide" class="fadeInAnim " method="POST">
+    <form @submit.prevent="submitSlide" class="fadeInAnim" method="POST"
+        v-bind:class="{'halfOpacity fadeInHalfAnim' : projectSlidesHorizontal.length >= slots && projectSlidesVertical.length >= slots,
+        'fadeInAnim': projectSlidesHorizontal.length < slots || projectSlidesVertical.length < slots}">
         <!-- изображение -->
-        <div class="mb-3 slideForm" v>
+        <div class="mb-3 slideForm" >
             <h6>Скриншот, gif или короткое видео проекта</h6>
             <input type="file" class="form-control-file" ref="media" @change="handleMedia"
                     accept="image/jpeg, image/png, image/gif, video/mp4,video/x-m4v,video/*">
@@ -16,36 +19,38 @@
         <div class="mt-5">
             <h6>Видимость в положении экрана</h6>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio3" value="all" v-model="slideVisibility">
+                <input class="form-check-input" type="radio" id="inlineRadio3" value="all" v-model="slideVisibility" 
+                    :disabled="projectSlidesHorizontal.length >= slots || projectSlidesVertical.length >= slots">
                 <label class="form-check-label" for="inlineRadio3">Горизонатально и вертикально</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio1" value="horizontal" v-model="slideVisibility">
+                <input class="form-check-input" type="radio" id="inlineRadio1" value="horizontal" v-model="slideVisibility"
+                    :disabled="projectSlidesHorizontal.length >= slots">
                 <label class="form-check-label" for="inlineRadio1">Горизонтально</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineRadio2" value="vertical" v-model="slideVisibility">
+                <input class="form-check-input" type="radio" id="inlineRadio2" value="vertical" v-model="slideVisibility"
+                    :disabled="projectSlidesVertical.length >= slots">
                 <label class="form-check-label" for="inlineRadio2">Вертикально</label>
             </div>
  
         </div>
         
-    
-
         <!-- комментарий -->
         <div class="mt-5 mb-3 slideForm">
             <h6>Комментарий</h6>
             <textarea type="text" v-model="slideComment" placeholder="Комментарий к слайду, отображается под слайдом" class="form-control"></textarea>
             <div v-if="errors && errors.slideComment" class="text-danger goUpAnim">{{ errors.slideComment[0] }}</div>
         </div>
-        <button class="btn btn-lg btn-block btn-outline-light slideForm">
+        <button class="btn btn-lg btn-block btn-outline-light slideForm" :disabled="slideMedia === undefined">
             Загрузить и сохранить
         </button>
-
-        <!-- превью слайдов -->
-        <div class="row justify-content-center mt-5">
+    </form>
+    <!-- превью слайдов -->
+    <div class="row justify-content-center mt-5">
             <div class="col-12">
                 <h5 class="text-center mt-5" v-if="projectSlidesHorizontal != 0">Горизонтальные слайды</h5>
+                <h6 class="text-center mt-1">{{projectSlidesHorizontal.length}} / {{this.slots}}</h6>
                 <hr v-if="projectSlidesHorizontal != 0">
                 <draggable v-model="projectSlidesHorizontal" handle=".handle" v-bind="dragOptions" class="row justify-content-center">
                     <div v-for="(slide, index) in projectSlidesHorizontal" 
@@ -66,7 +71,7 @@
                                 </h5>
                             </div>
                             <div class="col-4 text-center">
-                                <h5 @click="deleteSlide(slide.id)" class="deleteSlide m-2 pointer" title="Удалить слайд">
+                                <h5 @click="deleteSlide(slide.id, slide.visibility)" class="deleteSlide m-2 pointer" title="Удалить слайд">
                                     <i class="bi bi-trash"></i>
                                 </h5>
                             </div>
@@ -97,6 +102,7 @@
                 </div>
 
                 <h5 class="text-center mt-5" v-if="projectSlidesVertical != 0">Вертикальные слайды</h5>
+                <h6 class="text-center mt-1">{{projectSlidesVertical.length}} / {{this.slots}}</h6>
                 <hr v-if="projectSlidesVertical != 0">
                 <draggable v-model="projectSlidesVertical" handle=".handle" v-bind="dragOptions" class="row justify-content-center mt-5">
                     <div v-for="(slide, index) in projectSlidesVertical" v-bind:key="'verticalSlide_'+index" class="col-6 col-md-2 m-2 text-center fadeInAnim">
@@ -115,7 +121,7 @@
                                 </h5>
                             </div>
                             <div class="col-4 text-center">
-                                <h5 @click="deleteSlide(slide.id)" class="deleteSlide m-2 pointer" title="Удалить слайд">
+                                <h5 @click="deleteSlide(slide.id, slide.visibility)" class="deleteSlide m-2 pointer" title="Удалить слайд">
                                     <i class="bi bi-trash"></i>
                                 </h5>
                             </div>
@@ -145,12 +151,23 @@
                     </div>                    
                 </div>
             </div>
-        </div>
-
-    </form>
+    </div>
+    </div>
 </template>
 <script>
 export default {
+
+    mounted(){
+        if(this.projectSlidesVertical.length < this.slots && this.projectSlidesHorizontal.length < this.slots){
+            this.slideVisibility = 'all';
+        } else if (this.projectSlidesVertical.length >= this.slots){
+            this.slideVisibility = 'horizontal';
+        } else if (this.projectSlidesHorizontal.length >= this.slots){
+            this.slideVisibility = 'vertical';
+        } else {
+            this.slideVisibility = null;
+        }
+    },
 
     // данные
     data: () => {
@@ -163,6 +180,7 @@ export default {
             slideEditId: undefined,
             slideEditComment: undefined,
             slideEditMode: undefined,
+            slots: 7,
         }
     },
 
@@ -253,6 +271,27 @@ export default {
                 this.slideComment = undefined;
                 this.$refs.media.value = null;
                 this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
+                
+                // выбираем ориентацию слайда в форме в зависимости от того
+                // сколько осталось свободных слотов
+                if(this.slideVisibility === 'horizontal'){
+                    if(this.projectSlidesHorizontal.length + 1 >= this.slots){
+                        this.slideVisibility = 'vertical';
+                    }
+                } else if (this.slideVisibility === 'vertical'){
+                    if(this.projectSlidesVertical.length + 1 >= this.slots){
+                        this.slideVisibility = 'horizontal';
+                    }
+                } else if (this.slideVisibility === 'all'){
+                    if(this.projectSlidesVertical.length + 1 >= this.slots && this.projectSlidesHorizontal.length + 1 >= this.slots){
+                        this.slideVisibility = null;
+                    } else if (this.projectSlidesVertical.length + 1 >= this.slots && this.projectSlidesHorizontal.length + 1 <= this.slots){
+                        this.slideVisibility = 'horizontal';
+                    } else if (this.projectSlidesVertical.length + 1 <= this.slots && this.projectSlidesHorizontal.length + 1 >= this.slots){
+                        this.slideVisibility = 'vertical';
+                    }
+                }
+
             }).catch(error => {
                 if(error.response.status === 422){ 
                     this.errors = error.response.data.errors || {};
@@ -262,14 +301,28 @@ export default {
         },
 
         //удалить слайд
-        deleteSlide(slideId){
-
+        deleteSlide(slideId, slideOrientation){
             let formData = new FormData();
             formData.append('slideId', slideId);
 
             axios.post('/admin/deleteProjectSlide', formData).then(response => {
                 if(response.data === true){
                     this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
+
+                           
+                    // выбираем ориентацию слайда в форме в зависимости от того
+                    // сколько осталось свободных слотов
+                    if(slideOrientation === 'horizontal'){
+                        if(this.projectSlidesHorizontal.length - 1 < this.slots &&
+                            this.projectSlidesVertical.length >= this.slots){
+                            this.slideVisibility = 'horizontal';
+                        } 
+                    } else if(slideOrientation === 'vertical'){
+                        if(this.projectSlidesHorizontal.length >= this.slots &&
+                            this.projectSlidesVertical.length -1 < this.slots){
+                            this.slideVisibility = 'vertical';
+                        }
+                    }
                 }
             }).catch(error => {
                 console.log(error.errors);

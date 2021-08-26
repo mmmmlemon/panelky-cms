@@ -72,6 +72,10 @@ h1, h4, h6, input {
     font-size:1vw;
 }
 
+.font2vh{
+    font-size:2vh;
+}
+
 .font1-5vw{
     font-size:1.5vw;
 }
@@ -90,6 +94,10 @@ h1, h4, h6, input {
 
 .font3vw{
     font-size:3vw;
+}
+
+.font3-5vw{
+    font-size:3.5vw;
 }
 
 .font4vw{

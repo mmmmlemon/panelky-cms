@@ -10,7 +10,7 @@
             <Error errorMessage="Не удалось загрузить информацию о проекте"/>
         </div>
 
-        <!-- кнопки переключения слайдов горизонтальные -->
+        <!-- кнопки переключения слайдов -->
         <div class="projectCardButtons fadeInAnimSlow" v-if="visible === true && project.slides.horizontal.length > 0 && screenOrientation === 'horizontal'">
             <b class="d-flex projectButton left pointer" @click="prevSlide">
                 <i class="bi bi-chevron-left"></i>
@@ -22,7 +22,8 @@
 
 
         <!-- "точки" для слайдов -->
-        <div class="col-12 sliderMenu fadeInAnimSlow" v-if="numOfSlides !== 0 && visible === true">
+        <div class="col-12 sliderMenu fadeInAnimSlow" v-if="numOfSlides !== 0 && visible === true"
+        v-bind:class="{'font1vw': screenOrientation === 'horizontal', 'font2vh': screenOrientation === 'vertical'}">
             <div class="row justify-content-center">
                 <a class="m-1 slideButton pointer" @click="changeCurrentSlidePosition(0)" 
                     v-if="(project.slides.horizontal.length > 0 && screenOrientation === 'horizontal') ||
