@@ -5,7 +5,7 @@
     <div class="row width90pc bigCard d-flex justify-content-center borderUnderline" style="transition: all 1s;" id="other" 
             v-scroll="handleScroll" v-bind:class="{'zeroOpacity unclickable': visible == false}">
         <div class="d-block d-md-block col-12 textVertical fadeInAnim m-5 goUpCardAnim">
-            <h3 class="text-center mb-5 pointerNone">Другие проекты</h3>
+            <h3 class="text-center mb-5 pointerNone">Другие мои проекты</h3>
             <!-- список проектов -->
             <div class="row justify-content-center">
                 <div v-for="(project, index) in projects" :key="project.slug" class="transparentCard m-1 otherProject" 
@@ -22,6 +22,7 @@
                         </h4>
                         <!-- лого -->
                         <img :src="project.project_icon" class="projectLogo" alt="">
+                        <h6 class="mt-2">{{project.project_bottomText}}</h6>
                      </div>
                      <!-- если у пректа нет лого -->
                      <div v-else class="card-body text-center textVertical">

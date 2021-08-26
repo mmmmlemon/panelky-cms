@@ -10,15 +10,16 @@
             <Error errorMessage="Не удалось загрузить информацию о проекте"/>
         </div>
 
+        <!-- кнопки переключения слайдов горизонтальные -->
         <div class="projectCardButtons fadeInAnimSlow" v-if="visible === true && project.slides.horizontal.length > 0 && screenOrientation === 'horizontal'">
-            <!-- кнопки переключения слайдов -->
-            <b class="d-none d-md-block projectButton left pointer" @click="prevSlide">
+            <b class="d-flex projectButton left pointer" @click="prevSlide">
                 <i class="bi bi-chevron-left"></i>
             </b>
-            <b class="d-none d-md-block projectButton right pointer" @click="nextSlide">
+            <b class="d-flex projectButton right pointer" @click="nextSlide">
                 <i class="bi bi-chevron-right"></i>
             </b>
         </div>
+
 
         <!-- "точки" для слайдов -->
         <div class="col-12 sliderMenu fadeInAnimSlow" v-if="numOfSlides !== 0 && visible === true">

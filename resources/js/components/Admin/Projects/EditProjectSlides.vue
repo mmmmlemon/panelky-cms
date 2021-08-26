@@ -77,7 +77,7 @@
                             </div>
                         </div> 
                         <!-- редактировать слайд - горизонтальные -->
-                        <div class="d-block d-md-none row justify-content-center mt-5 goUpAnim" v-if="slideEditId !== undefined && slideEditMode === 'horizontal' &&
+                        <div class="d-block d-md-none row justify-content-center mt-3 goUpAnim" v-if="slideEditId !== undefined && slideEditMode === 'horizontal' &&
                         slideEditId === slide.id">
                             <div class="col-12 text-center">
                                 <textarea type="text" v-model="slideEditComment" placeholder="Комментарий к слайду, отображается под слайдом" class="form-control">
@@ -89,7 +89,7 @@
                 </draggable>
                 
                 <!-- редактировать слайд - горизонтальные -->
-                <div class="d-none d-md-block  row justify-content-center mt-5 goUpAnim" v-if="slideEditId !== undefined && slideEditMode === 'horizontal'">
+                <div class="d-none d-md-flex row justify-content-center mt-5 goUpAnim" v-if="slideEditId !== undefined && slideEditMode === 'horizontal'">
                     <div class="col-6 text-center">
                         <textarea type="text" v-model="slideEditComment" placeholder="Комментарий к слайду, отображается под слайдом" class="form-control">
                         </textarea>
@@ -126,7 +126,7 @@
                             </div>
                         </div>
                     <!-- редактировать слайд - вертикальные -->
-                    <div class="d-block d-md-none row justify-content-center mt-5 goUpAnim" v-if="slideEditId !== undefined && slideEditMode === 'vertical' &&
+                    <div class="d-block d-md-none row justify-content-center mt-3 goUpAnim" v-if="slideEditId !== undefined && slideEditMode === 'vertical' &&
                     slideEditId === slide.id">
                         <div class="col-12 text-center">
                             <textarea type="text" v-model="slideEditComment" placeholder="Комментарий к слайду, отображается под слайдом" class="form-control">
@@ -138,7 +138,7 @@
                 </draggable>
 
                 <!-- редактировать слайд - вертикальные -->
-                <div class="d-none d-md-block row justify-content-center mt-5 goUpAnim" v-if="slideEditId !== undefined && slideEditMode === 'vertical'">
+                <div class="d-none d-md-flex row justify-content-center mt-5 goUpAnim" v-if="slideEditId !== undefined && slideEditMode === 'vertical'">
                     <div class="col-md-6 text-center">
                         <textarea type="text" v-model="slideEditComment" placeholder="Комментарий к слайду, отображается под слайдом" class="form-control">
                         </textarea>

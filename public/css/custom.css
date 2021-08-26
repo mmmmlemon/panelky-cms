@@ -307,6 +307,8 @@ hr {
     height: 100%;
 }
 
+
+
 .projectButton{
     height: 0 !important;
     width: 0 !important;
@@ -328,11 +330,9 @@ hr {
     left: -5% !important;
 }
 
-
 .projectButton:hover{
     color:rgb(182, 225, 250);
 }
-
 
 .projectButton:active{
     color: rgba(126, 39, 39, 0.1);

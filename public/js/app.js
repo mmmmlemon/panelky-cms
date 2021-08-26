@@ -3293,6 +3293,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   data: function data() {
@@ -6453,6 +6459,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   props: {
@@ -6515,6 +6522,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -65771,7 +65779,23 @@ var render = function() {
                 _c("div", { staticClass: "col-12" }, [
                   _c(
                     "h1",
-                    { staticClass: "text-center textVertical font3vw" },
+                    {
+                      staticClass:
+                        "d-none d-md-block text-center textVertical font3vw"
+                    },
+                    [
+                      _c("b", [
+                        _vm._v(_vm._s(_vm.currentProject.project_title))
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "h1",
+                    {
+                      staticClass:
+                        "d-block d-md-none text-center textVertical font6vw"
+                    },
                     [
                       _c("b", [
                         _vm._v(_vm._s(_vm.currentProject.project_title))
@@ -65792,7 +65816,25 @@ var render = function() {
                 _c("div", { staticClass: "col-12" }, [
                   _c(
                     "p",
-                    { staticClass: "text-center textVertical font2-2vw" },
+                    {
+                      staticClass:
+                        "d-none d-md-block text-center textVertical font2-2vw"
+                    },
+                    [
+                      _vm._v(
+                        "\n               " +
+                          _vm._s(_vm.currentProject.project_subtitle) +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "p",
+                    {
+                      staticClass:
+                        "d-block d-md-none text-center textVertical font4vw"
+                    },
                     [
                       _vm._v(
                         "\n               " +
@@ -67826,7 +67868,7 @@ var render = function() {
                           "div",
                           {
                             staticClass:
-                              "d-block d-md-none row justify-content-center mt-5 goUpAnim"
+                              "d-block d-md-none row justify-content-center mt-3 goUpAnim"
                           },
                           [
                             _c("div", { staticClass: "col-12 text-center" }, [
@@ -67870,7 +67912,7 @@ var render = function() {
                   "div",
                   {
                     staticClass:
-                      "d-none d-md-block  row justify-content-center mt-5 goUpAnim"
+                      "d-none d-md-flex row justify-content-center mt-5 goUpAnim"
                   },
                   [
                     _c("div", { staticClass: "col-6 text-center" }, [
@@ -68038,7 +68080,7 @@ var render = function() {
                           "div",
                           {
                             staticClass:
-                              "d-block d-md-none row justify-content-center mt-5 goUpAnim"
+                              "d-block d-md-none row justify-content-center mt-3 goUpAnim"
                           },
                           [
                             _c("div", { staticClass: "col-12 text-center" }, [
@@ -68082,7 +68124,7 @@ var render = function() {
                   "div",
                   {
                     staticClass:
-                      "d-none d-md-block row justify-content-center mt-5 goUpAnim"
+                      "d-none d-md-flex row justify-content-center mt-5 goUpAnim"
                   },
                   [
                     _c("div", { staticClass: "col-md-6 text-center" }, [
@@ -70608,7 +70650,7 @@ var render = function() {
         },
         [
           _c("h3", { staticClass: "text-center mb-5 pointerNone" }, [
-            _vm._v("Другие проекты")
+            _vm._v("Другие мои проекты")
           ]),
           _vm._v(" "),
           _c(
@@ -70650,7 +70692,11 @@ var render = function() {
                         _c("img", {
                           staticClass: "projectLogo",
                           attrs: { src: project.project_icon, alt: "" }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _c("h6", { staticClass: "mt-2" }, [
+                          _vm._v(_vm._s(project.project_bottomText))
+                        ])
                       ])
                     : _c(
                         "div",
@@ -70750,7 +70796,7 @@ var render = function() {
             _c(
               "b",
               {
-                staticClass: "d-none d-md-block projectButton left pointer",
+                staticClass: "d-flex projectButton left pointer",
                 on: { click: _vm.prevSlide }
               },
               [_c("i", { staticClass: "bi bi-chevron-left" })]
@@ -70759,7 +70805,7 @@ var render = function() {
             _c(
               "b",
               {
-                staticClass: "d-none d-md-block projectButton right pointer",
+                staticClass: "d-flex projectButton right pointer",
                 on: { click: _vm.nextSlide }
               },
               [_c("i", { staticClass: "bi bi-chevron-right" })]

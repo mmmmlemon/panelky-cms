@@ -6,9 +6,12 @@
         <div v-if="type === 'mini'" class="row text-center textVertical">
             <!-- название -->
             <div class="col-12">
-                <h1 class="text-center textVertical font3vw">
+                <h1 class="d-none d-md-block text-center textVertical font3vw">
                     <b>{{currentProject.project_title}}</b>    
-                </h1>  
+                </h1> 
+                <h1 class="d-block d-md-none text-center textVertical font6vw">
+                    <b>{{currentProject.project_title}}</b>    
+                </h1>   
             </div>
             <!-- лого -->
             <div class="col-12 m-1">
@@ -16,7 +19,10 @@
             </div>
             <!-- подзаголовок -->
             <div class="col-12">
-                <p class="text-center textVertical font2-2vw">
+                <p class="d-none d-md-block text-center textVertical font2-2vw">
+                   {{currentProject.project_subtitle}}
+                </p>
+                <p class="d-block d-md-none text-center textVertical font4vw">
                    {{currentProject.project_subtitle}}
                 </p>
             </div>
