@@ -20,6 +20,9 @@ Vue.use(InputColorPicker);
 //isMobile
 import { isMobile } from 'mobile-device-detect';
 Vue.prototype.$isMobile = isMobile;
+//isMobileOnly
+import { isMobileOnly } from 'mobile-device-detect';
+Vue.prototype.$isMobileOnly = isMobileOnly;
 //vue2-touch-events
 import Vue2TouchEvents from 'vue2-touch-events'
 Vue.use(Vue2TouchEvents, {swipeTolerance: 100,});

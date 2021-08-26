@@ -24,8 +24,6 @@
 export default {
 
     created(){
-        this.setScreenOrientation();
-        window.addEventListener("resize", this.setScreenOrientation);
         this.$parent.currentTab = 'home';
     },
 
@@ -47,27 +45,12 @@ export default {
 
         settings: function(){
             return this.$parent.settings;
-        }
+        },
     },
 
     beforeDestroy() {
         window.removeEventListener("resize", this.setScreenOrientation);
     },
 
-    //методы
-    methods: {
-        setScreenOrientation(){
-            
-            let width = window.innerWidth;
-            let height = window.innerHeight;
-
-            if(width > height){
-                this.$store.commit('setState', {state: 'screenOrientation', value: 'horizontal'});
-            }
-            else if (height > width){
-                 this.$store.commit('setState', {state: 'screenOrientation', value: 'vertical'});
-            }
-        }
-    }
 }
 </script>

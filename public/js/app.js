@@ -5818,12 +5818,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
     var _this = this;
 
-    //проверяем статус сайта
+    this.setScreenOrientation();
+    window.addEventListener("resize", this.setScreenOrientation); //проверяем статус сайта
+
     axios.get('/api/getAccessStatus').then(function (response) {
       _this.public_access = response.data; //если сайт закрыт для посетителей
 
@@ -5882,6 +5897,12 @@ __webpack_require__.r(__webpack_exports__);
     //полный список проектов
     fullProjectList: function fullProjectList() {
       return this.$store.state.GlobalStates.fullProjectList;
+    },
+    screenOrientation: function screenOrientation() {
+      return this.$store.state.GlobalStates.screenOrientation;
+    },
+    isMobile: function isMobile() {
+      return this.$isMobileOnly;
     }
   },
   //методы
@@ -5926,6 +5947,22 @@ __webpack_require__.r(__webpack_exports__);
         }); //если сайт открыт на телефоне, возвращаем скролл
 
         document.body.style.overflow = 'visible';
+      }
+    },
+    setScreenOrientation: function setScreenOrientation() {
+      var width = window.innerWidth;
+      var height = window.innerHeight;
+
+      if (width > height) {
+        this.$store.commit('setState', {
+          state: 'screenOrientation',
+          value: 'horizontal'
+        });
+      } else if (height > width) {
+        this.$store.commit('setState', {
+          state: 'screenOrientation',
+          value: 'vertical'
+        });
       }
     }
   }
@@ -6130,8 +6167,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   created: function created() {
-    this.setScreenOrientation();
-    window.addEventListener("resize", this.setScreenOrientation);
     this.$parent.currentTab = 'home';
   },
   computed: {
@@ -6153,25 +6188,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   beforeDestroy: function beforeDestroy() {
     window.removeEventListener("resize", this.setScreenOrientation);
-  },
-  //методы
-  methods: {
-    setScreenOrientation: function setScreenOrientation() {
-      var width = window.innerWidth;
-      var height = window.innerHeight;
-
-      if (width > height) {
-        this.$store.commit('setState', {
-          state: 'screenOrientation',
-          value: 'horizontal'
-        });
-      } else if (height > width) {
-        this.$store.commit('setState', {
-          state: 'screenOrientation',
-          value: 'vertical'
-        });
-      }
-    }
   }
 });
 
@@ -7416,7 +7432,10 @@ vue__WEBPACK_IMPORTED_MODULE_3__.default.use((vue_native_color_picker__WEBPACK_I
 //isMobile
 
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.prototype.$isMobile = mobile_device_detect__WEBPACK_IMPORTED_MODULE_5__.isMobile; //vue2-touch-events
+vue__WEBPACK_IMPORTED_MODULE_3__.default.prototype.$isMobile = mobile_device_detect__WEBPACK_IMPORTED_MODULE_5__.isMobile; //isMobileOnly
+
+
+vue__WEBPACK_IMPORTED_MODULE_3__.default.prototype.$isMobileOnly = mobile_device_detect__WEBPACK_IMPORTED_MODULE_5__.isMobileOnly; //vue2-touch-events
 
 
 vue__WEBPACK_IMPORTED_MODULE_3__.default.use((vue2_touch_events__WEBPACK_IMPORTED_MODULE_6___default()), {
@@ -70028,9 +70047,15 @@ var render = function() {
     "div",
     { staticClass: "container col-12 vh-100" },
     [
-      _vm.public_access == 1 && _vm.settings.about === 1 ? _c("Nav") : _vm._e(),
+      _vm.public_access == 1 &&
+      _vm.settings.about === 1 &&
+      (_vm.isMobile && _vm.screenOrientation === "horizontal") === false
+        ? _c("Nav")
+        : _vm._e(),
       _vm._v(" "),
-      _vm.public_access == 1 && _vm.settings.side_nav === 1
+      _vm.public_access == 1 &&
+      _vm.settings.side_nav === 1 &&
+      (_vm.isMobile && _vm.screenOrientation === "horizontal") === false
         ? _c("NavButton")
         : _vm._e(),
       _vm._v(" "),
@@ -70044,7 +70069,39 @@ var render = function() {
           })
         : _vm._e(),
       _vm._v(" "),
-      _vm.public_access == 1 ? _c("router-view") : _vm._e(),
+      _vm.public_access == 1 &&
+      (_vm.isMobile && _vm.screenOrientation === "horizontal") === false
+        ? _c("router-view")
+        : _vm.isMobile && _vm.screenOrientation === "horizontal"
+        ? _c(
+            "div",
+            {
+              staticClass:
+                "row h-100 d-flex text-center justify-content-center goUpAnim m-1"
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "textVertical text-center fadeInAnim" },
+                [
+                  _c("h1", { staticClass: "font2-5rem" }, [
+                    _vm._v("Внимание!")
+                  ]),
+                  _vm._v(" "),
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "bi bi-phone font2-5rem" }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "font1-2rem fadeInAnim" }, [
+                    _vm._v("Переверните телефон в вертикальное положение")
+                  ]),
+                  _vm._v(" "),
+                  _c("h4", [_vm._v("Спасибо! 👌")])
+                ]
+              )
+            ]
+          )
+        : _vm._e(),
       _vm._v(" "),
       _vm.public_access == 0
         ? _c(

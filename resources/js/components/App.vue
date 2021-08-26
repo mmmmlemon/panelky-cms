@@ -4,17 +4,30 @@
 
     <div class="container col-12 vh-100">
         <!-- навигация -->
-        <Nav v-if="public_access == 1 && settings.about === 1"/>
+        <Nav v-if="public_access == 1 && settings.about === 1 && (isMobile && screenOrientation === 'horizontal') === false"/>
         <!-- кнопка навигации в верхнем углу экрана -->
-        <NavButton v-if="public_access == 1 && settings.side_nav === 1"/>
+        <NavButton v-if="public_access == 1 && settings.side_nav === 1 && (isMobile && screenOrientation === 'horizontal') === false"/>
         <!-- кнопка "Наверх" -->
         <NavScroll v-if="public_access == 1" :navScrollStyle="navScrollStyle"/>
 
         <Cookies v-if="settings.cookies === 1" :cookiesMessage="settings.cookies_message"/>
 
         <!-- пока не загрузился список проектов, не показывать router-view -->
-        <router-view v-if="public_access == 1">
+
+        <router-view v-if="public_access == 1 && (isMobile && screenOrientation === 'horizontal') === false">
         </router-view>
+        <div v-else-if="isMobile && screenOrientation === 'horizontal'" 
+            class="row h-100 d-flex text-center justify-content-center goUpAnim m-1">
+            <div class="textVertical text-center fadeInAnim">
+                <h1 class="font2-5rem">Внимание!</h1>
+                <hr>
+                <i class="bi bi-phone font2-5rem"></i>
+                <p class="font1-2rem fadeInAnim">Переверните телефон в вертикальное положение</p>
+                
+                <h4>Спасибо! 👌</h4>
+
+            </div>
+        </div>
         
         <!-- сообщение - сайт недоступен -->
         <div class="row h-100 d-flex text-center justify-content-center goUpAnim m-1" v-if="public_access == 0">
@@ -34,6 +47,9 @@
 export default {
     //хуки
     created(){
+        
+        this.setScreenOrientation();
+        window.addEventListener("resize", this.setScreenOrientation);
         //проверяем статус сайта
         axios.get('/api/getAccessStatus').then(response => {
             this.public_access = response.data;
@@ -101,6 +117,14 @@ export default {
         fullProjectList: function(){
             return this.$store.state.GlobalStates.fullProjectList;
         },
+
+        screenOrientation: function(){
+            return this.$store.state.GlobalStates.screenOrientation;
+        },
+
+        isMobile(){
+            return this.$isMobileOnly;
+        }
     },
 
     //методы
@@ -140,6 +164,18 @@ export default {
                 document.body.style.overflow = 'visible'; 
             }
         },
+
+        setScreenOrientation(){
+            let width = window.innerWidth;
+            let height = window.innerHeight;
+
+            if(width > height){
+                this.$store.commit('setState', {state: 'screenOrientation', value: 'horizontal'});
+            }
+            else if (height > width){
+                 this.$store.commit('setState', {state: 'screenOrientation', value: 'vertical'});
+            }
+        }
     }
 }
 </script>
