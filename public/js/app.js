@@ -6779,6 +6779,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   created: function created() {
     window.addEventListener("resize", this.setSlidePositionOnWindowResize);
@@ -71392,10 +71398,23 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "d-block text-center" }, [
-              _c("div", {
-                staticClass: "slideImage",
-                style: { backgroundImage: "url(" + slide.media_url + ")" }
-              }),
+              _c(
+                "div",
+                {
+                  staticClass: "slideImage",
+                  style: { backgroundImage: "url(" + slide.media_url + ")" }
+                },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "slideFullscreenButton vertical",
+                      attrs: { target: "_blank", href: slide.media_url }
+                    },
+                    [_c("i", { staticClass: "bi bi-arrows-fullscreen" })]
+                  )
+                ]
+              ),
               _vm._v(" "),
               slide.commentary !== null
                 ? _c(
@@ -71481,6 +71500,15 @@ var render = function() {
                   style: { backgroundImage: "url(" + slide.media_url + ")" }
                 },
                 [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "slideFullscreenButton horizontal",
+                      attrs: { target: "_blank", href: slide.media_url }
+                    },
+                    [_c("i", { staticClass: "bi bi-arrows-fullscreen" })]
+                  ),
+                  _vm._v(" "),
                   slide.commentary !== null
                     ? _c(
                         "div",

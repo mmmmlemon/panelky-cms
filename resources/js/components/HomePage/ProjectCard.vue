@@ -23,7 +23,7 @@
 
         <!-- "точки" для слайдов -->
         <div class="col-12 sliderMenu fadeInAnimSlow" v-if="numOfSlides !== 0 && visible === true"
-        v-bind:class="{'font1vw': screenOrientation === 'horizontal', 'font2vh': screenOrientation === 'vertical'}">
+            v-bind:class="{'font1vw': screenOrientation === 'horizontal', 'font2vh': screenOrientation === 'vertical'}">
             <div class="row justify-content-center">
                 <a class="m-1 slideButton pointer" @click="changeCurrentSlidePosition(0)" 
                     v-if="(project.slides.horizontal.length > 0 && screenOrientation === 'horizontal') ||
@@ -154,6 +154,9 @@
             <div class="d-block text-center">
                <!-- изображение -->
                <div class="slideImage" v-bind:style="{backgroundImage: 'url(' + slide.media_url + ')'}">
+                   <a class="slideFullscreenButton vertical" target="_blank" :href="slide.media_url">
+                       <i class="bi bi-arrows-fullscreen"></i>
+                    </a>
                </div>
                <!-- кнопка показать\скрыть комментарий -->
                <b class="btn-block slideShowCommentaryButton" v-if="slide.commentary !== null" @click="toggleSlideCommentaryVisibility">
@@ -179,6 +182,9 @@
             <div class="d-block text-center" >
                <!-- изображение -->
                <div class="slideImage" v-bind:style="{backgroundImage: 'url(' + slide.media_url + ')'}">
+                    <a class="slideFullscreenButton horizontal" target="_blank" :href="slide.media_url">
+                       <i class="bi bi-arrows-fullscreen"></i>
+                    </a>
                    <!-- текст комментария -->
                    <div v-if="slide.commentary !== null" class="slideTextHorizontal unclickable d-flex align-items-center text-center justify-content-center w-100">
                         <h4>{{slide.commentary}}</h4>

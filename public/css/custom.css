@@ -288,6 +288,22 @@ hr {
     border-radius: 15px;
 }
 
+.slideFullscreenButton{
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.slideFullscreenButton.vertical{
+    position: relative;
+    top: 1%;
+}
+
+.slideFullscreenButton.horizontal{
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
 .deleteSlide{
     transition: color 0.5s ease-in-out;
 }
@@ -429,7 +445,15 @@ hr {
     position: absolute;
     top: 5px;
     left: 25px;
+    font-size: 1.2rem;
+    padding-top:5px;
+    border-radius: 100%;
+    width: 2rem;
+    height: 2rem;
+    background-color: rgba(0,0,0, 0.6);
 }
+
+
 
 .pointer{
     cursor: pointer;
