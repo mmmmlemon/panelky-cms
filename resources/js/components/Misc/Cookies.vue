@@ -1,9 +1,9 @@
 // Cookies
 // окно предпупреждения о Cookies
 <template>
-    <div class="row justify-content-left">
+    <div class="row justify-content-left zIndex7">
         <transition name="cookies">
-            <div v-if="cookiesVisible === true && cookiesMessage !== null" class="d-none d-md-block pointerNone col-5 cookiesCard p-3 m-3 text-center">
+            <div v-if="cookiesVisible === true && cookiesMessage !== null" class="d-none d-md-block pointerNone col-5 cookiesCard p-3 m-3 text-center zIndex7">
                 <h5>Этот сайт использует Cookies</h5>
                 <hr class="m-1" style="background-color: black;">
                 <div v-html="cookiesMessage"></div>
@@ -18,7 +18,7 @@
             </div>
         </transition>
         <transition name="cookies">
-            <div v-if="cookiesVisible === true && cookiesMessage !== null" class="d-block d-md-none pointerNone col-12 cookiesCard mobile p-3 text-center">
+            <div v-if="cookiesVisible === true && cookiesMessage !== null" class="d-block d-md-none pointerNone col-12 cookiesCard mobile p-3 text-center zIndex7">
                 <h5>Этот сайт использует Cookies</h5>
                 <hr class="m-1" style="background-color: black;">
                 <div v-html="cookiesMessage"></div>

@@ -50,7 +50,7 @@
     <div class="row justify-content-center mt-5">
             <div class="col-12">
                 <h5 class="text-center mt-5" v-if="projectSlidesHorizontal != 0">Горизонтальные слайды</h5>
-                <h6 class="text-center mt-1">{{projectSlidesHorizontal.length}} / {{this.slots}}</h6>
+                <h6 class="text-center mt-1" v-if="projectSlidesHorizontal != 0">{{projectSlidesHorizontal.length}} / {{this.slots}}</h6>
                 <hr v-if="projectSlidesHorizontal != 0">
                 <draggable v-model="projectSlidesHorizontal" handle=".handle" v-bind="dragOptions" class="row justify-content-center">
                     <div v-for="(slide, index) in projectSlidesHorizontal" 
@@ -102,7 +102,7 @@
                 </div>
 
                 <h5 class="text-center mt-5" v-if="projectSlidesVertical != 0">Вертикальные слайды</h5>
-                <h6 class="text-center mt-1">{{projectSlidesVertical.length}} / {{this.slots}}</h6>
+                <h6 class="text-center mt-1" v-if="projectSlidesVertical != 0">{{projectSlidesVertical.length}} / {{this.slots}}</h6>
                 <hr v-if="projectSlidesVertical != 0">
                 <draggable v-model="projectSlidesVertical" handle=".handle" v-bind="dragOptions" class="row justify-content-center mt-5">
                     <div v-for="(slide, index) in projectSlidesVertical" v-bind:key="'verticalSlide_'+index" class="col-6 col-md-2 m-2 text-center fadeInAnim">

@@ -77,7 +77,7 @@
                 <br>
                 <!-- подробное описание -->
                 <p v-if="project.project_desc !== null"
-                    class="unclickable text-center font1-2vw">
+                    class="unclickable text-center font1vw">
                     {{project.project_desc}}
                 </p>
                 <hr>

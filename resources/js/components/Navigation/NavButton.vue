@@ -34,13 +34,12 @@
                         <hr>
                     </div>
                     <!-- список проектов -->
-                    <div v-for="project in fullProjectList.home" :key="project.slug" class="col-12 text-center">
-                        <h6>
+                    <div v-for="(project, index) in fullProjectList.home" :key="project.slug" class="col-12 text-center">
+                        <h6 class="m-0" v-bind:class="{'mt-3': index > 0}">
                             <a v-on:click="closeNavMenu()" :href="`#${project.slug}`">{{project.project_title}}</a>
                         </h6>
-                        <br>
                     </div>
-                    <div class="col-12" v-if="fullProjectList !== -1 && fullProjectList.other.length > 0">
+                    <div class="col-12 mt-3" v-if="fullProjectList !== -1 && fullProjectList.other.length > 0">
                         <h6 class="text-center">
                             <a v-on:click="closeNavMenu()" :href="`#other`">Другие проекты</a>
                         </h6>

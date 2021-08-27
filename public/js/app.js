@@ -7225,7 +7225,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -67860,13 +67859,15 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _c("h6", { staticClass: "text-center mt-1" }, [
-            _vm._v(
-              _vm._s(_vm.projectSlidesHorizontal.length) +
-                " / " +
-                _vm._s(this.slots)
-            )
-          ]),
+          _vm.projectSlidesHorizontal != 0
+            ? _c("h6", { staticClass: "text-center mt-1" }, [
+                _vm._v(
+                  _vm._s(_vm.projectSlidesHorizontal.length) +
+                    " / " +
+                    _vm._s(this.slots)
+                )
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _vm.projectSlidesHorizontal != 0 ? _c("hr") : _vm._e(),
           _vm._v(" "),
@@ -68076,13 +68077,15 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _c("h6", { staticClass: "text-center mt-1" }, [
-            _vm._v(
-              _vm._s(_vm.projectSlidesVertical.length) +
-                " / " +
-                _vm._s(this.slots)
-            )
-          ]),
+          _vm.projectSlidesVertical != 0
+            ? _c("h6", { staticClass: "text-center mt-1" }, [
+                _vm._v(
+                  _vm._s(_vm.projectSlidesVertical.length) +
+                    " / " +
+                    _vm._s(this.slots)
+                )
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _vm.projectSlidesVertical != 0 ? _c("hr") : _vm._e(),
           _vm._v(" "),
@@ -71178,7 +71181,7 @@ var render = function() {
                     _vm.project.project_desc !== null
                       ? _c(
                           "p",
-                          { staticClass: "unclickable text-center font1-2vw" },
+                          { staticClass: "unclickable text-center font1vw" },
                           [
                             _vm._v(
                               "\n                " +
@@ -71554,7 +71557,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "row justify-content-left" },
+    { staticClass: "row justify-content-left zIndex7" },
     [
       _c("transition", { attrs: { name: "cookies" } }, [
         _vm.cookiesVisible === true && _vm.cookiesMessage !== null
@@ -71562,7 +71565,7 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "d-none d-md-block pointerNone col-5 cookiesCard p-3 m-3 text-center"
+                  "d-none d-md-block pointerNone col-5 cookiesCard p-3 m-3 text-center zIndex7"
               },
               [
                 _c("h5", [_vm._v("Этот сайт использует Cookies")]),
@@ -71601,7 +71604,7 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "d-block d-md-none pointerNone col-12 cookiesCard mobile p-3 text-center"
+                  "d-block d-md-none pointerNone col-12 cookiesCard mobile p-3 text-center zIndex7"
               },
               [
                 _c("h5", [_vm._v("Этот сайт использует Cookies")]),
@@ -71905,7 +71908,10 @@ var render = function() {
                           ])
                         : _vm._e(),
                       _vm._v(" "),
-                      _vm._l(_vm.fullProjectList.home, function(project) {
+                      _vm._l(_vm.fullProjectList.home, function(
+                        project,
+                        index
+                      ) {
                         return _c(
                           "div",
                           {
@@ -71913,29 +71919,34 @@ var render = function() {
                             staticClass: "col-12 text-center"
                           },
                           [
-                            _c("h6", [
-                              _c(
-                                "a",
-                                {
-                                  attrs: { href: "#" + project.slug },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.closeNavMenu()
+                            _c(
+                              "h6",
+                              {
+                                staticClass: "m-0",
+                                class: { "mt-3": index > 0 }
+                              },
+                              [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#" + project.slug },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.closeNavMenu()
+                                      }
                                     }
-                                  }
-                                },
-                                [_vm._v(_vm._s(project.project_title))]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("br")
+                                  },
+                                  [_vm._v(_vm._s(project.project_title))]
+                                )
+                              ]
+                            )
                           ]
                         )
                       }),
                       _vm._v(" "),
                       _vm.fullProjectList !== -1 &&
                       _vm.fullProjectList.other.length > 0
-                        ? _c("div", { staticClass: "col-12" }, [
+                        ? _c("div", { staticClass: "col-12 mt-3" }, [
                             _c("h6", { staticClass: "text-center" }, [
                               _c(
                                 "a",
