@@ -8,11 +8,13 @@
         'fadeInAnim': projectSlidesHorizontal.length < slots || projectSlidesVertical.length < slots}">
         <!-- изображение -->
         <div class="mb-3 slideForm" >
-            <h6>Скриншот, gif или короткое видео проекта</h6>
-            <input type="file" class="form-control-file" ref="media" @change="handleMedia"
-                    accept="image/jpeg, image/png, image/gif, video/mp4,video/x-m4v,video/*">
+            <h6>Скриншот или gif</h6>
+            <input type="file" id="slideMedia" class="form-control-file" ref="media" @change="handleMedia"
+                    accept="image/jpeg, image/png, image/gif" style="display: none;">
+            <label v-if="slideMedia !== undefined">{{this.slideMedia.name}}</label><br v-if="slideMedia !== undefined">
+            <a v-if="slideMedia !== undefined" class="mr-2 pointer" v-on:click="deleteMedia">Убрать файл</a>
+            <input type="button" value="Выбрать файл" onclick="document.getElementById('slideMedia').click();" />
             <div v-if="errors && errors.slideMedia" class="text-danger">{{errors.slideMedia[0] }}</div>
-            <a class="btn btn-sm btn-light mt-3" v-if="slideMedia !== undefined">Удалить медиа</a>
         </div>
 
         <!-- видимость -->
@@ -366,6 +368,10 @@ export default {
         handleMedia(){
             this.slideMedia = this.$refs.media.files[0];
         },
+
+        deleteMedia(){
+            this.slideMedia = undefined;
+        }
     }
 }
 </script>

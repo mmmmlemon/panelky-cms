@@ -68,7 +68,7 @@
                             <input type="file" ref="icon" id="icon" name="icon" class="form-control-file" v-on:change="handleFileUpload('icon')"
                                     accept="image/jpeg, image/png" style="display: none;">
                             <label>{{this.previousIconName}}</label><br v-if="previousIconName !== undefined">
-                            <a v-if="this.previousIconName" class="mr-2" v-on:click="deleteFile('icon')">Убрать файл</a>
+                            <a v-if="this.previousIconName" class="mr-2 pointer" v-on:click="deleteFile('icon')">Убрать файл</a>
                             <input type="button" value="Выбрать файл" onclick="document.getElementById('icon').click();" />
                             <div v-if="errors && errors.icon" class="text-danger">{{ errors.projectIcon[0] }}</div>
                         </div>
@@ -78,7 +78,7 @@
                             <input type="file" ref="image" id="image" name="image" class="form-control-file" v-on:change="handleFileUpload('image')"
                                     accept="image/jpeg, image/png" style="display: none;">
                             <label>{{this.previousImageName}}</label><br v-if="previousIconName !== undefined">
-                            <a v-if="this.previousImageName" class="mr-2" v-on:click="deleteFile('image')">Убрать файл</a>
+                            <a v-if="this.previousImageName" class="mr-2 pointer" v-on:click="deleteFile('image')">Убрать файл</a>
                             <input type="button" value="Выбрать файл" onclick="document.getElementById('image').click();" />
           
                             <div v-if="errors && errors.image" class="text-danger">{{ errors.projectImage[0] }}</div>

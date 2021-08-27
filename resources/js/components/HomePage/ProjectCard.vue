@@ -217,13 +217,14 @@ export default {
                 this.classForImage = 'projectImageVertical';
             }
         };
-
-        let headerCardVisiblity = this.$parent.settings.site_owner;
-        if(headerCardVisiblity === 0){
-            if(this.project.id === this.$parent.fullProjectList.home[0].id)
-            { this.setVisible = true; }
-        }
-
+        
+        if(this.$parent.settings !== undefined){
+            let headerCardVisiblity = this.$parent.settings.site_owner;
+            if(headerCardVisiblity === 0){
+                if(this.project.id === this.$parent.fullProjectList.home[0].id)
+                { this.setVisible = true; }
+            }
+        } 
     },
 
     beforeDestroy() {

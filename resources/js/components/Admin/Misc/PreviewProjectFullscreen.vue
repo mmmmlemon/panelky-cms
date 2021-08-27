@@ -85,7 +85,7 @@ export default {
 
         //свернуть превью на полный экран
         closeFullscreenPreview: function(){
-            this.$parent.previewMode = false;
+            this.$parent.currentTab = this.$parent.previousTab;
         },
         //сменить ориентацию в превью на полный экран
         changeOrientation(){

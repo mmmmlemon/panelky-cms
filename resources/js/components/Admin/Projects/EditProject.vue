@@ -6,36 +6,36 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-9">
                     <h4>{{currentProject.project_title}}</h4>
-                    <h5>Редактирование проекта </h5>
+                    <h5>Редактирование проекта{{tabTitle}}</h5>
                     <hr>
                     <!-- вкладки -->
                     <div class="col-12 mb-4">
                         <ul class="nav nav-fill">
                             <!-- общее -->
                             <li class="nav-item mr-2 mt-1">
-                                <button class="btn btn-block btn-sm" v-on:click="showBasicForm" 
-                                        v-bind:class="{'btn-light': basicFormActive === true, 'btn-outline-light': basicFormActive === false}">
+                                <button class="btn btn-block btn-sm" v-on:click="changeTab('edit')" 
+                                        v-bind:class="{'btn-light': currentTab === 'edit', 'btn-outline-light': currentTab !== 'edit'}">
                                     Общее
                                 </button>
                             </li>
                             <!-- изображения -->
                             <li class="nav-item mr-2 mt-1">
-                                <button class="btn btn-block btn-sm" v-on:click="showImageForm"
-                                        v-bind:class="{'btn-light': imageFormActive === true, 'btn-outline-light': imageFormActive === false}">
+                                <button class="btn btn-block btn-sm" v-on:click="changeTab('images')"
+                                        v-bind:class="{'btn-light': currentTab === 'images', 'btn-outline-light': currentTab !== 'images'}">
                                     Изображения
                                 </button>
                             </li>
                             <!-- карточки -->
                             <li class="nav-item mr-2 mt-1">
-                                <button class="btn btn-block btn-sm" v-on:click="showCardForm"
-                                        v-bind:class="{'btn-light': slideFormActive === true, 'btn-outline-light': slideFormActive === false}">
+                                <button class="btn btn-block btn-sm" v-on:click="changeTab('slides')"
+                                        v-bind:class="{'btn-light': currentTab === 'slides', 'btn-outline-light': currentTab !== 'slides'}">
                                     Слайды
                                 </button>
                             </li>
                             <!-- изображения -->
                             <li class="nav-item mr-2 mt-1">
-                                <button class="btn btn-block btn-sm" v-on:click="showPreview"
-                                        v-bind:class="{'btn-light': previewMode === true, 'btn-outline-light': previewMode === false}">
+                                <button class="btn btn-block btn-sm" v-on:click="changeTab('preview')"
+                                        v-bind:class="{'btn-light': currentTab === 'preview', 'btn-outline-light': currentTab !== 'preview'}">
                                     Превью
                                 </button>
                             </li>
@@ -43,10 +43,12 @@
                     </div>
                 </div>
             </div>
+
             <div class="row justify-content-center">
-                <div class="col-12 col-md-8" v-bind:class="{'col-5': previewMode === false, 'col-12 col-md-8': previewMode === true}" v-if="previewMode == false">
+                <div class="col-12 col-md-8" v-bind:class="{'col-5': currentTab !== 'preview', 'col-12 col-md-8': currentTab === 'preview'}" 
+                    v-if="currentTab !== 'preview'">
                     <!-- основная форма -->
-                    <form @submit.prevent="submitBasic" class="fadeInAnim" method="POST" v-if="basicFormActive === true">
+                    <form @submit.prevent="submitBasic" class="fadeInAnim" method="POST" v-if="currentTab === 'edit'">
                         <input type="text" v-model="currentProject.id" class="invisible">
                         <!-- Название проекта -->
                         <div class="mb-3">
@@ -83,8 +85,9 @@
                             Сохранить
                         </button>
                     </form> 
+
                     <!-- форма для картинок -->
-                    <form @submit.prevent="submitImages" class="fadeInAnim" method="POST" action="/admin/saveProjectImages" v-if="imageFormActive === true">
+                    <form @submit.prevent="submitImages" class="fadeInAnim" method="POST" action="/admin/saveProjectImages" v-if="currentTab === 'images'">
                         <!-- Лого\иконка -->
                         <div class="mb-3">
                             <h6>Логотип проекта</h6>
@@ -109,13 +112,14 @@
                             Загрузить и сохранить
                         </button>
                     </form>
+
                     <!-- форма для слайдов -->
-                    <EditProjectSlides v-if="slideFormActive === true" :projectId="currentProject.id" :projectSlug="currentProject.slug"/>
+                    <EditProjectSlides v-if="currentTab === 'slides'" :projectId="currentProject.id" :projectSlug="currentProject.slug"/>
 
                 </div>
 
                 <!-- превью -->
-                <div class="col-12"  v-if="currentProject !== -1 && currentProject !== false && previewMode === true">
+                <div class="col-12"  v-if="currentProject !== -1 && currentProject !== false && currentTab === 'preview'">
                     <div class="row justify-content-center">
                         <div class="col-10">
                             <PreviewProjectFullscreen type="full" :currentProject="currentProject"/>
@@ -147,14 +151,12 @@ export default {
     //данные
     data: () => {
         return {
-            basicFormActive: false,
-            imageFormActive: false,
-            slideFormActive: false,
             projectIcon: undefined,
             projectImage: undefined,
             errors: {},
             saved: false,
-            previewMode: false,
+            previousTab: undefined,
+            currentTab: 'edit',
         }
     },
 
@@ -162,38 +164,31 @@ export default {
         //текущий проект
         currentProject: function(){
             return this.$store.state.AdminStates.currentProject;
+        },
+
+        tabTitle:function(){
+            switch(this.currentTab){
+                case 'edit':
+                    return '';
+                    break;
+                case 'images':
+                    return ' - изменить/удалить изображения';
+                    break;
+                case 'slides':
+                    return ' - добавить/удалить слайды';
+                    break;
+                default:
+                    return '';
+            }
         }
     },
 
     //методы
     methods: {
-        //показать общую форму
-        showBasicForm: function(){
-            this.basicFormActive = true;
-            this.imageFormActive = false;
-            this.slideFormActive = false;
-            this.previewMode = false;
-        },
 
-        //показать форму для картинок
-        showImageForm: function(){
-            this.basicFormActive = false;
-            this.imageFormActive = true;
-            this.slideFormActive = false;
-            this.previewMode = false;
-        },
-
-        //показать форму для карточек
-        showCardForm: function(){
-            this.basicFormActive = false;
-            this.imageFormActive = false;
-            this.slideFormActive = true;
-            this.previewMode = false;
-        },
-
-        //показать превью
-        showPreview: function(){
-            this.previewMode = true;
+        changeTab(value){
+            this.previousTab = this.currentTab;
+            this.currentTab = value;
         },
 
         //отправить основную форму
@@ -270,7 +265,9 @@ export default {
                      }
                 }
             })
-        }
+        },
+
+        
     },
 }
 </script>

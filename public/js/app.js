@@ -2847,40 +2847,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-//
-//
-//
-//
-//
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: {
-    slideIndex: {
-      "default": undefined,
-      type: Number
-    }
-  },
-  computed: {
-    slideCommentary: function slideCommentary() {
-      if (slideIndex !== undefined) {
-        return this.$parent.projectSlidesHorizontal[slideIndex];
-      }
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/LinkItem.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/LinkItem.vue?vue&type=script&lang=js& ***!
@@ -3471,7 +3437,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     //свернуть превью на полный экран
     closeFullscreenPreview: function closeFullscreenPreview() {
-      this.$parent.previewMode = false;
+      this.$parent.currentTab = this.$parent.previousTab;
     },
     //сменить ориентацию в превью на полный экран
     changeOrientation: function changeOrientation() {
@@ -4223,6 +4189,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   beforeMount: function beforeMount() {
@@ -4239,48 +4209,43 @@ __webpack_require__.r(__webpack_exports__);
   //данные
   data: function data() {
     return {
-      basicFormActive: false,
-      imageFormActive: false,
-      slideFormActive: false,
       projectIcon: undefined,
       projectImage: undefined,
       errors: {},
       saved: false,
-      previewMode: false
+      previousTab: undefined,
+      currentTab: 'edit'
     };
   },
   computed: {
     //текущий проект
     currentProject: function currentProject() {
       return this.$store.state.AdminStates.currentProject;
+    },
+    tabTitle: function tabTitle() {
+      switch (this.currentTab) {
+        case 'edit':
+          return '';
+          break;
+
+        case 'images':
+          return ' - изменить/удалить изображения';
+          break;
+
+        case 'slides':
+          return ' - добавить/удалить слайды';
+          break;
+
+        default:
+          return '';
+      }
     }
   },
   //методы
   methods: {
-    //показать общую форму
-    showBasicForm: function showBasicForm() {
-      this.basicFormActive = true;
-      this.imageFormActive = false;
-      this.slideFormActive = false;
-      this.previewMode = false;
-    },
-    //показать форму для картинок
-    showImageForm: function showImageForm() {
-      this.basicFormActive = false;
-      this.imageFormActive = true;
-      this.slideFormActive = false;
-      this.previewMode = false;
-    },
-    //показать форму для карточек
-    showCardForm: function showCardForm() {
-      this.basicFormActive = false;
-      this.imageFormActive = false;
-      this.slideFormActive = true;
-      this.previewMode = false;
-    },
-    //показать превью
-    showPreview: function showPreview() {
-      this.previewMode = true;
+    changeTab: function changeTab(value) {
+      this.previousTab = this.currentTab;
+      this.currentTab = value;
     },
     //отправить основную форму
     submitBasic: function submitBasic() {
@@ -4380,6 +4345,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -4767,6 +4734,9 @@ __webpack_require__.r(__webpack_exports__);
     //записать файл в projectIcon или в projectImage
     handleMedia: function handleMedia() {
       this.slideMedia = this.$refs.media.files[0];
+    },
+    deleteMedia: function deleteMedia() {
+      this.slideMedia = undefined;
     }
   }
 });
@@ -6525,6 +6495,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   props: {
@@ -6805,11 +6776,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
 
-    var headerCardVisiblity = this.$parent.settings.site_owner;
+    if (this.$parent.settings !== undefined) {
+      var headerCardVisiblity = this.$parent.settings.site_owner;
 
-    if (headerCardVisiblity === 0) {
-      if (this.project.id === this.$parent.fullProjectList.home[0].id) {
-        this.setVisible = true;
+      if (headerCardVisiblity === 0) {
+        if (this.project.id === this.$parent.fullProjectList.home[0].id) {
+          this.setVisible = true;
+        }
       }
     }
   },
@@ -7413,12 +7386,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Admin_Misc_LinkItem_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/Admin/Misc/LinkItem.vue */ "./resources/js/components/Admin/Misc/LinkItem.vue");
 /* harmony import */ var _components_Admin_Misc_ContactItem_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/Admin/Misc/ContactItem.vue */ "./resources/js/components/Admin/Misc/ContactItem.vue");
 /* harmony import */ var _components_Admin_Projects_EditProjectSlides_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/Admin/Projects/EditProjectSlides.vue */ "./resources/js/components/Admin/Projects/EditProjectSlides.vue");
-/* harmony import */ var _components_Admin_Misc_EditSlideCommentary_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/Admin/Misc/EditSlideCommentary.vue */ "./resources/js/components/Admin/Misc/EditSlideCommentary.vue");
-/* harmony import */ var _components_Misc_Error_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/Misc/Error.vue */ "./resources/js/components/Misc/Error.vue");
-/* harmony import */ var _components_Misc_Cookies_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/Misc/Cookies.vue */ "./resources/js/components/Misc/Cookies.vue");
-/* harmony import */ var _components_Navigation_Nav_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/Navigation/Nav.vue */ "./resources/js/components/Navigation/Nav.vue");
-/* harmony import */ var _components_Navigation_NavButton__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/Navigation/NavButton */ "./resources/js/components/Navigation/NavButton.vue");
-/* harmony import */ var _components_Navigation_NavScroll__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/Navigation/NavScroll */ "./resources/js/components/Navigation/NavScroll.vue");
+/* harmony import */ var _components_Misc_Error_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/Misc/Error.vue */ "./resources/js/components/Misc/Error.vue");
+/* harmony import */ var _components_Misc_Cookies_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/Misc/Cookies.vue */ "./resources/js/components/Misc/Cookies.vue");
+/* harmony import */ var _components_Navigation_Nav_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/Navigation/Nav.vue */ "./resources/js/components/Navigation/Nav.vue");
+/* harmony import */ var _components_Navigation_NavButton__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/Navigation/NavButton */ "./resources/js/components/Navigation/NavButton.vue");
+/* harmony import */ var _components_Navigation_NavScroll__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/Navigation/NavScroll */ "./resources/js/components/Navigation/NavScroll.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -7476,21 +7448,19 @@ vue__WEBPACK_IMPORTED_MODULE_3__.default.component('LinkItem', _components_Admin
 
 vue__WEBPACK_IMPORTED_MODULE_3__.default.component('ContactItem', _components_Admin_Misc_ContactItem_vue__WEBPACK_IMPORTED_MODULE_19__.default);
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('EditProjectSlides', _components_Admin_Projects_EditProjectSlides_vue__WEBPACK_IMPORTED_MODULE_20__.default);
-
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('EditSlideCommentary', _components_Admin_Misc_EditSlideCommentary_vue__WEBPACK_IMPORTED_MODULE_21__.default); //Misc
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('EditProjectSlides', _components_Admin_Projects_EditProjectSlides_vue__WEBPACK_IMPORTED_MODULE_20__.default); //Misc
 
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Error', _components_Misc_Error_vue__WEBPACK_IMPORTED_MODULE_22__.default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Error', _components_Misc_Error_vue__WEBPACK_IMPORTED_MODULE_21__.default);
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Cookies', _components_Misc_Cookies_vue__WEBPACK_IMPORTED_MODULE_23__.default); //Navigation 
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Cookies', _components_Misc_Cookies_vue__WEBPACK_IMPORTED_MODULE_22__.default); //Navigation 
 
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Nav', _components_Navigation_Nav_vue__WEBPACK_IMPORTED_MODULE_24__.default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('Nav', _components_Navigation_Nav_vue__WEBPACK_IMPORTED_MODULE_23__.default);
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('NavButton', _components_Navigation_NavButton__WEBPACK_IMPORTED_MODULE_25__.default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('NavButton', _components_Navigation_NavButton__WEBPACK_IMPORTED_MODULE_24__.default);
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.component('NavScroll', _components_Navigation_NavScroll__WEBPACK_IMPORTED_MODULE_26__.default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('NavScroll', _components_Navigation_NavScroll__WEBPACK_IMPORTED_MODULE_25__.default);
 vue__WEBPACK_IMPORTED_MODULE_3__.default.directive('scroll', {
   inserted: function inserted(el, binding) {
     var f = function f(evt) {
@@ -61636,45 +61606,6 @@ component.options.__file = "resources/js/components/Admin/Misc/DeleteModal.vue"
 
 /***/ }),
 
-/***/ "./resources/js/components/Admin/Misc/EditSlideCommentary.vue":
-/*!********************************************************************!*\
-  !*** ./resources/js/components/Admin/Misc/EditSlideCommentary.vue ***!
-  \********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _EditSlideCommentary_vue_vue_type_template_id_162eac98___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditSlideCommentary.vue?vue&type=template&id=162eac98& */ "./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=template&id=162eac98&");
-/* harmony import */ var _EditSlideCommentary_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditSlideCommentary.vue?vue&type=script&lang=js& */ "./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
-  _EditSlideCommentary_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
-  _EditSlideCommentary_vue_vue_type_template_id_162eac98___WEBPACK_IMPORTED_MODULE_0__.render,
-  _EditSlideCommentary_vue_vue_type_template_id_162eac98___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/Admin/Misc/EditSlideCommentary.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
 /***/ "./resources/js/components/Admin/Misc/LinkItem.vue":
 /*!*********************************************************!*\
   !*** ./resources/js/components/Admin/Misc/LinkItem.vue ***!
@@ -63097,22 +63028,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************!*\
-  !*** ./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditSlideCommentary_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./EditSlideCommentary.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditSlideCommentary_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
-
-/***/ }),
-
 /***/ "./resources/js/components/Admin/Misc/LinkItem.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/Admin/Misc/LinkItem.vue?vue&type=script&lang=js& ***!
@@ -63755,23 +63670,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteModal_vue_vue_type_template_id_68e06aec___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteModal_vue_vue_type_template_id_68e06aec___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DeleteModal.vue?vue&type=template&id=68e06aec& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/DeleteModal.vue?vue&type=template&id=68e06aec&");
-
-
-/***/ }),
-
-/***/ "./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=template&id=162eac98&":
-/*!***************************************************************************************************!*\
-  !*** ./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=template&id=162eac98& ***!
-  \***************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditSlideCommentary_vue_vue_type_template_id_162eac98___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditSlideCommentary_vue_vue_type_template_id_162eac98___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditSlideCommentary_vue_vue_type_template_id_162eac98___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./EditSlideCommentary.vue?vue&type=template&id=162eac98& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=template&id=162eac98&");
 
 
 /***/ }),
@@ -65460,31 +65358,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=template&id=162eac98&":
-/*!******************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/EditSlideCommentary.vue?vue&type=template&id=162eac98& ***!
-  \******************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ render),
-/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div")
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/LinkItem.vue?vue&type=template&id=9e04f9d6&":
 /*!*******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Admin/Misc/LinkItem.vue?vue&type=template&id=9e04f9d6& ***!
@@ -66685,7 +66558,7 @@ var render = function() {
                       ? _c(
                           "a",
                           {
-                            staticClass: "mr-2",
+                            staticClass: "mr-2 pointer",
                             on: {
                               click: function($event) {
                                 return _vm.deleteFile("icon")
@@ -66738,7 +66611,7 @@ var render = function() {
                       ? _c(
                           "a",
                           {
-                            staticClass: "mr-2",
+                            staticClass: "mr-2 pointer",
                             on: {
                               click: function($event) {
                                 return _vm.deleteFile("image")
@@ -67077,7 +66950,9 @@ var render = function() {
             _c("div", { staticClass: "col-12 col-md-9" }, [
               _c("h4", [_vm._v(_vm._s(_vm.currentProject.project_title))]),
               _vm._v(" "),
-              _c("h5", [_vm._v("Редактирование проекта ")]),
+              _c("h5", [
+                _vm._v("Редактирование проекта" + _vm._s(_vm.tabTitle))
+              ]),
               _vm._v(" "),
               _c("hr"),
               _vm._v(" "),
@@ -67089,10 +66964,14 @@ var render = function() {
                       {
                         staticClass: "btn btn-block btn-sm",
                         class: {
-                          "btn-light": _vm.basicFormActive === true,
-                          "btn-outline-light": _vm.basicFormActive === false
+                          "btn-light": _vm.currentTab === "edit",
+                          "btn-outline-light": _vm.currentTab !== "edit"
                         },
-                        on: { click: _vm.showBasicForm }
+                        on: {
+                          click: function($event) {
+                            return _vm.changeTab("edit")
+                          }
+                        }
                       },
                       [
                         _vm._v(
@@ -67108,10 +66987,14 @@ var render = function() {
                       {
                         staticClass: "btn btn-block btn-sm",
                         class: {
-                          "btn-light": _vm.imageFormActive === true,
-                          "btn-outline-light": _vm.imageFormActive === false
+                          "btn-light": _vm.currentTab === "images",
+                          "btn-outline-light": _vm.currentTab !== "images"
                         },
-                        on: { click: _vm.showImageForm }
+                        on: {
+                          click: function($event) {
+                            return _vm.changeTab("images")
+                          }
+                        }
                       },
                       [
                         _vm._v(
@@ -67127,10 +67010,14 @@ var render = function() {
                       {
                         staticClass: "btn btn-block btn-sm",
                         class: {
-                          "btn-light": _vm.slideFormActive === true,
-                          "btn-outline-light": _vm.slideFormActive === false
+                          "btn-light": _vm.currentTab === "slides",
+                          "btn-outline-light": _vm.currentTab !== "slides"
                         },
-                        on: { click: _vm.showCardForm }
+                        on: {
+                          click: function($event) {
+                            return _vm.changeTab("slides")
+                          }
+                        }
                       },
                       [
                         _vm._v(
@@ -67146,10 +67033,14 @@ var render = function() {
                       {
                         staticClass: "btn btn-block btn-sm",
                         class: {
-                          "btn-light": _vm.previewMode === true,
-                          "btn-outline-light": _vm.previewMode === false
+                          "btn-light": _vm.currentTab === "preview",
+                          "btn-outline-light": _vm.currentTab !== "preview"
                         },
-                        on: { click: _vm.showPreview }
+                        on: {
+                          click: function($event) {
+                            return _vm.changeTab("preview")
+                          }
+                        }
                       },
                       [
                         _vm._v(
@@ -67164,18 +67055,18 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row justify-content-center" }, [
-            _vm.previewMode == false
+            _vm.currentTab !== "preview"
               ? _c(
                   "div",
                   {
                     staticClass: "col-12 col-md-8",
                     class: {
-                      "col-5": _vm.previewMode === false,
-                      "col-12 col-md-8": _vm.previewMode === true
+                      "col-5": _vm.currentTab !== "preview",
+                      "col-12 col-md-8": _vm.currentTab === "preview"
                     }
                   },
                   [
-                    _vm.basicFormActive === true
+                    _vm.currentTab === "edit"
                       ? _c(
                           "form",
                           {
@@ -67446,7 +67337,7 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.imageFormActive === true
+                    _vm.currentTab === "images"
                       ? _c(
                           "form",
                           {
@@ -67571,7 +67462,7 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.slideFormActive === true
+                    _vm.currentTab === "slides"
                       ? _c("EditProjectSlides", {
                           attrs: {
                             projectId: _vm.currentProject.id,
@@ -67586,7 +67477,7 @@ var render = function() {
             _vm._v(" "),
             _vm.currentProject !== -1 &&
             _vm.currentProject !== false &&
-            _vm.previewMode === true
+            _vm.currentTab === "preview"
               ? _c("div", { staticClass: "col-12" }, [
                   _c("div", { staticClass: "row justify-content-center" }, [
                     _c(
@@ -67665,28 +67556,44 @@ var render = function() {
       },
       [
         _c("div", { staticClass: "mb-3 slideForm" }, [
-          _c("h6", [_vm._v("Скриншот, gif или короткое видео проекта")]),
+          _c("h6", [_vm._v("Скриншот или gif")]),
           _vm._v(" "),
           _c("input", {
             ref: "media",
             staticClass: "form-control-file",
+            staticStyle: { display: "none" },
             attrs: {
               type: "file",
-              accept:
-                "image/jpeg, image/png, image/gif, video/mp4,video/x-m4v,video/*"
+              id: "slideMedia",
+              accept: "image/jpeg, image/png, image/gif"
             },
             on: { change: _vm.handleMedia }
+          }),
+          _vm._v(" "),
+          _vm.slideMedia !== undefined
+            ? _c("label", [_vm._v(_vm._s(this.slideMedia.name))])
+            : _vm._e(),
+          _vm.slideMedia !== undefined ? _c("br") : _vm._e(),
+          _vm._v(" "),
+          _vm.slideMedia !== undefined
+            ? _c(
+                "a",
+                { staticClass: "mr-2 pointer", on: { click: _vm.deleteMedia } },
+                [_vm._v("Убрать файл")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("input", {
+            attrs: {
+              type: "button",
+              value: "Выбрать файл",
+              onclick: "document.getElementById('slideMedia').click();"
+            }
           }),
           _vm._v(" "),
           _vm.errors && _vm.errors.slideMedia
             ? _c("div", { staticClass: "text-danger" }, [
                 _vm._v(_vm._s(_vm.errors.slideMedia[0]))
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.slideMedia !== undefined
-            ? _c("a", { staticClass: "btn btn-sm btn-light mt-3" }, [
-                _vm._v("Удалить медиа")
               ])
             : _vm._e()
         ]),
@@ -70822,8 +70729,8 @@ var render = function() {
             "d-block d-md-block col-12 textVertical fadeInAnim m-5 goUpCardAnim"
         },
         [
-          _c("h3", { staticClass: "text-center mb-5 pointerNone" }, [
-            _vm._v("Другие мои проекты")
+          _c("h3", { staticClass: "text-center pointerNone mb-5" }, [
+            _vm._v("Другие проекты")
           ]),
           _vm._v(" "),
           _c(
