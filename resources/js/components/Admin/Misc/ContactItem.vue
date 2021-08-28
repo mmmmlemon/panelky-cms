@@ -8,7 +8,7 @@
             </div>
 
             <!-- список соц. сетей на выбор -->
-            <div class="col-md-3 text-center">
+            <div class="col-md-3 text-center mt-md-0 mt-3">
                 <div class="dropdown">
                 <h6>&nbsp;</h6>
                     <button class="btn btn-light btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -26,7 +26,7 @@
             </div>
 
             <!-- поле для email/юзернейма в соц.сети или номера телефона -->
-            <div class="col-12 col-md-4 mb-3">
+            <div class="col-12 col-md-4 mb-3 mt-md-0 mt-3">
                 <h6 v-html="tooltipTitle"></h6>
                 <input type="text" class="form-control" v-model="contact.contact_insertion" required v-on:keydown="toggleEdit(true)">
                 <div v-if="errors && errors.contact_url" class="text-danger goUpAnim">{{ errors.contact_url[0]}}</div>
@@ -38,7 +38,7 @@
             </div>
 
             <!-- кнопки -->
-            <div class="col-12 col-md-3 mb-5 mb-md-3">
+            <div class="col-12 col-md-3 mb-5 mb-md-3 mt-md-0 mt-3">
                 <h6>&nbsp;</h6>
                 <!-- кнопка переместить ссылку -->
                 <div class="btn btn-light fadeInAnim handle" title="Переместить" v-if="edit === false">
@@ -64,14 +64,6 @@
 </template>
 <script>
 export default {
-    created(){
-        
-        // for(let i = 0; i <= this.socialMediaLibrary.length; i++)
-        // {
-        //     console.log(this.socialMediaLibrary[i])
-        // }
-    },
-
     //данные
     data: () => {
         return {

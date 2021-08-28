@@ -22,10 +22,10 @@
             <form method="POST" @submit.prevent="submit()">
                 <div class="row justify-content-center">
                     <!-- иконка соц.сети -->
-                    <div class="col-12 col-md-2 text-center" v-html="iconClass">   
+                    <div class="col-12 col-md-2 text-center mt-md-0 mt-3" v-html="iconClass">   
                     </div>
                     <!-- список соц. сетей на выбор -->
-                    <div class="col-md-3 text-center">
+                    <div class="col-md-3 text-center mt-md-0 mt-3">
                         <div class="dropdown">
                         <h6>&nbsp;</h6>
                             <button class="btn btn-light btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <!-- поле для email/юзернейма в соц.сети или номера телефона -->
-                    <div class="col-12 col-md-4 mb-3">
+                    <div class="col-12 col-md-4 mb-3 mt-md-0 mt-3">
                         <h6 v-html="tooltipTitle"></h6>
                         <input type="text" class="form-control" v-model="newContact.contact_url" required>
                         <div v-if="errors && errors.contact_url" class="text-danger goUpAnim">{{ errors.contact_url[0]}}</div>

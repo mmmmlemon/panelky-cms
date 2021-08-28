@@ -9,7 +9,7 @@
                 <h4>{{link.link_title}}</h4>
             </div>
             <div class="col-12 col-md-3 mb-3">
-                <h6>Ресурс</h6>
+                <h6>Сайт</h6>
                 <input type="text" class="form-control" placeholder="Twitter" 
                         v-model="link.link_title" 
                         v-on:keydown="toggleEdit(true)" required>

@@ -2465,11 +2465,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  created: function created() {// for(let i = 0; i <= this.socialMediaLibrary.length; i++)
-    // {
-    //     console.log(this.socialMediaLibrary[i])
-    // }
-  },
   //данные
   data: function data() {
     return {
@@ -4665,7 +4660,6 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this3.errors = error.response.data.errors || {};
-          console.log(_this3.errors);
         }
       });
     },
@@ -4694,9 +4688,7 @@ __webpack_require__.r(__webpack_exports__);
             }
           }
         }
-      })["catch"](function (error) {
-        console.log(error.errors);
-      });
+      })["catch"](function (error) {});
     },
     //редактировать слайд
     editSlide: function editSlide(slideIndex, editMode) {
@@ -4727,9 +4719,7 @@ __webpack_require__.r(__webpack_exports__);
           _this5.slideEditId = undefined;
           _this5.slideEditComment = undefined;
         }
-      })["catch"](function (error) {
-        console.log(error.errors);
-      });
+      })["catch"](function (error) {});
     },
     //записать файл в projectIcon или в projectImage
     handleMedia: function handleMedia() {
@@ -7114,7 +7104,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
 //
 //
 //
@@ -64459,11 +64448,11 @@ var render = function() {
           [
             _c("div", { staticClass: "row justify-content-center" }, [
               _c("div", {
-                staticClass: "col-12 col-md-2 text-center",
+                staticClass: "col-12 col-md-2 text-center mt-md-0 mt-3",
                 domProps: { innerHTML: _vm._s(_vm.iconClass) }
               }),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-3 text-center" }, [
+              _c("div", { staticClass: "col-md-3 text-center mt-md-0 mt-3" }, [
                 _c("div", { staticClass: "dropdown" }, [
                   _c("h6", [_vm._v(" ")]),
                   _vm._v(" "),
@@ -64523,7 +64512,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-12 col-md-4 mb-3" }, [
+              _c("div", { staticClass: "col-12 col-md-4 mb-3 mt-md-0 mt-3" }, [
                 _c("h6", { domProps: { innerHTML: _vm._s(_vm.tooltipTitle) } }),
                 _vm._v(" "),
                 _c("input", {
@@ -64732,7 +64721,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-12 col-md-3 mb-3" }, [
-                _c("h6", [_vm._v("Ресурс")]),
+                _c("h6", [_vm._v("Сайт")]),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -64935,7 +64924,7 @@ var render = function() {
             domProps: { innerHTML: _vm._s(_vm.iconClass) }
           }),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-3 text-center" }, [
+          _c("div", { staticClass: "col-md-3 text-center mt-md-0 mt-3" }, [
             _c("div", { staticClass: "dropdown" }, [
               _c("h6", [_vm._v(" ")]),
               _vm._v(" "),
@@ -64987,7 +64976,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-12 col-md-4 mb-3" }, [
+          _c("div", { staticClass: "col-12 col-md-4 mb-3 mt-md-0 mt-3" }, [
             _c("h6", { domProps: { innerHTML: _vm._s(_vm.tooltipTitle) } }),
             _vm._v(" "),
             _c("input", {
@@ -65041,65 +65030,69 @@ var render = function() {
               : _vm._e()
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-12 col-md-3 mb-5 mb-md-3" }, [
-            _c("h6", [_vm._v(" ")]),
-            _vm._v(" "),
-            _vm.edit === false
-              ? _c(
-                  "div",
-                  {
-                    staticClass: "btn btn-light fadeInAnim handle",
-                    attrs: { title: "Переместить" }
-                  },
-                  [_c("i", { staticClass: "bi bi-arrows-move" })]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.edit === false
-              ? _c(
-                  "div",
-                  {
-                    staticClass: "btn btn-light ml-2 fadeInAnim",
-                    attrs: { title: "Удалить ссылку" },
-                    on: { click: _vm.deleteContact }
-                  },
-                  [_c("i", { staticClass: "bi bi-trash-fill" })]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.edit !== false
-              ? _c(
-                  "div",
-                  {
-                    staticClass: "btn btn-light ml-2 mb-1 goUpAnim",
-                    attrs: { title: "Отменить изменения" },
-                    on: {
-                      click: function($event) {
-                        return _vm.toggleEdit(false)
+          _c(
+            "div",
+            { staticClass: "col-12 col-md-3 mb-5 mb-md-3 mt-md-0 mt-3" },
+            [
+              _c("h6", [_vm._v(" ")]),
+              _vm._v(" "),
+              _vm.edit === false
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "btn btn-light fadeInAnim handle",
+                      attrs: { title: "Переместить" }
+                    },
+                    [_c("i", { staticClass: "bi bi-arrows-move" })]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.edit === false
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "btn btn-light ml-2 fadeInAnim",
+                      attrs: { title: "Удалить ссылку" },
+                      on: { click: _vm.deleteContact }
+                    },
+                    [_c("i", { staticClass: "bi bi-trash-fill" })]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.edit !== false
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "btn btn-light ml-2 mb-1 goUpAnim",
+                      attrs: { title: "Отменить изменения" },
+                      on: {
+                        click: function($event) {
+                          return _vm.toggleEdit(false)
+                        }
                       }
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "bi bi-x" }),
-                    _vm._v("\n                Отмена\n            ")
-                  ]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.edit !== false
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-light ml-2 goUpAnim",
-                    attrs: { title: "Сохранить изменения" }
-                  },
-                  [
-                    _c("i", { staticClass: "bi bi-save" }),
-                    _vm._v("\n                Сохранить\n            ")
-                  ]
-                )
-              : _vm._e()
-          ])
+                    },
+                    [
+                      _c("i", { staticClass: "bi bi-x" }),
+                      _vm._v("\n                Отмена\n            ")
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.edit !== false
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-light ml-2 goUpAnim",
+                      attrs: { title: "Сохранить изменения" }
+                    },
+                    [
+                      _c("i", { staticClass: "bi bi-save" }),
+                      _vm._v("\n                Сохранить\n            ")
+                    ]
+                  )
+                : _vm._e()
+            ]
+          )
         ]
       )
     ]
@@ -65400,7 +65393,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-12 col-md-3 mb-3" }, [
-            _c("h6", [_vm._v("Ресурс")]),
+            _c("h6", [_vm._v("Сайт")]),
             _vm._v(" "),
             _c("input", {
               directives: [
@@ -65835,9 +65828,11 @@ var render = function() {
                 "div",
                 { staticClass: "row justify-content-center zIndex3" },
                 [
-                  _c("ProjectCard", {
-                    attrs: { project: _vm.currentProject, isVisible: true }
-                  }),
+                  _vm.type === "full"
+                    ? _c("ProjectCard", {
+                        attrs: { project: _vm.currentProject, isVisible: true }
+                      })
+                    : _vm._e(),
                   _vm._v(" "),
                   _c(
                     "button",
@@ -65909,13 +65904,15 @@ var render = function() {
                 "div",
                 { staticClass: "row h-100 justify-content-center" },
                 [
-                  _c("ProjectCard", {
-                    attrs: {
-                      project: _vm.currentProject,
-                      type: _vm.orientation,
-                      isVisible: true
-                    }
-                  })
+                  _vm.type === "full"
+                    ? _c("ProjectCard", {
+                        attrs: {
+                          project: _vm.currentProject,
+                          type: _vm.orientation,
+                          isVisible: true
+                        }
+                      })
+                    : _vm._e()
                 ],
                 1
               )
@@ -67503,7 +67500,7 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "col-12 p-3 text-center unclickable zeroOpacity",
+        staticClass: "col-12 p-3 text-center unclickable zeroOpacity zIndex-1",
         class: { blinkAnim: _vm.saved }
       },
       [_c("h5", [_vm._v("Изменения сохранены")])]
@@ -69988,7 +69985,9 @@ var render = function() {
       _vm.public_access == 1 &&
       (_vm.isMobile && _vm.screenOrientation === "horizontal") === false
         ? _c("router-view")
-        : _vm.isMobile && _vm.screenOrientation === "horizontal"
+        : _vm.isMobile &&
+          _vm.screenOrientation === "horizontal" &&
+          _vm.public_access == 1
         ? _c(
             "div",
             {
@@ -70756,18 +70755,22 @@ var render = function() {
                 [
                   project.project_icon !== null
                     ? _c("div", { staticClass: "card-body text-center" }, [
-                        _c("h4", { staticClass: "card-title text-center" }, [
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: project.project_url,
-                                target: "_blank"
-                              }
-                            },
-                            [_c("b", [_vm._v(_vm._s(project.project_title))])]
-                          )
-                        ]),
+                        _c(
+                          "h4",
+                          { staticClass: "card-title text-center wordBreak" },
+                          [
+                            _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href: project.project_url,
+                                  target: "_blank"
+                                }
+                              },
+                              [_c("b", [_vm._v(_vm._s(project.project_title))])]
+                            )
+                          ]
+                        ),
                         _vm._v(" "),
                         _c("img", {
                           staticClass: "projectLogo",
@@ -71830,7 +71833,7 @@ var render = function() {
                               "h6",
                               {
                                 staticClass: "m-0",
-                                class: { "mt-3": index > 0 }
+                                class: { "mt-4": index > 0 }
                               },
                               [
                                 _c(
@@ -71853,7 +71856,7 @@ var render = function() {
                       _vm._v(" "),
                       _vm.fullProjectList !== -1 &&
                       _vm.fullProjectList.other.length > 0
-                        ? _c("div", { staticClass: "col-12 mt-3" }, [
+                        ? _c("div", { staticClass: "col-12 mt-4" }, [
                             _c("h6", { staticClass: "text-center" }, [
                               _c(
                                 "a",
@@ -71867,17 +71870,14 @@ var render = function() {
                                 },
                                 [_vm._v("Другие проекты")]
                               )
-                            ])
+                            ]),
+                            _vm._v(" "),
+                            _c("hr")
                           ])
                         : _vm._e(),
                       _vm._v(" "),
                       _vm.links !== false && _vm.links != -1
                         ? _c("div", { staticClass: "col-12" }, [
-                            _vm.fullProjectList != -1 &&
-                            _vm.fullProjectList.home !== false
-                              ? _c("hr")
-                              : _vm._e(),
-                            _vm._v(" "),
                             _c("h6", { staticClass: "text-center" }, [
                               _c(
                                 "a",
@@ -71900,10 +71900,7 @@ var render = function() {
                       _vm.links !== false && _vm.links !== -1
                         ? _c(
                             "div",
-                            {
-                              staticClass:
-                                "d-none d-md-block col-12 text-center"
-                            },
+                            { staticClass: "d-none col-12 text-center" },
                             [
                               _vm._l(_vm.links, function(link, index) {
                                 return _c(
@@ -71962,7 +71959,7 @@ var render = function() {
                               )
                             ]),
                             _vm._v(" "),
-                            _c("hr")
+                            _vm.about === 1 ? _c("hr") : _vm._e()
                           ])
                         : _vm._e(),
                       _vm._v(" "),

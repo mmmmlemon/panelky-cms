@@ -35,19 +35,18 @@
                     </div>
                     <!-- список проектов -->
                     <div v-for="(project, index) in fullProjectList.home" :key="project.slug" class="col-12 text-center">
-                        <h6 class="m-0" v-bind:class="{'mt-3': index > 0}">
+                        <h6 class="m-0" v-bind:class="{'mt-4': index > 0}">
                             <a v-on:click="closeNavMenu()" :href="`#${project.slug}`">{{project.project_title}}</a>
                         </h6>
                     </div>
-                    <div class="col-12 mt-3" v-if="fullProjectList !== -1 && fullProjectList.other.length > 0">
+                    <div class="col-12 mt-4" v-if="fullProjectList !== -1 && fullProjectList.other.length > 0">
                         <h6 class="text-center">
                             <a v-on:click="closeNavMenu()" :href="`#other`">Другие проекты</a>
                         </h6>
-                    
+                        <hr>
                     </div>
                     <!-- ссылки -->
                     <div class="col-12" v-if="links !== false && links != -1">
-                        <hr v-if="fullProjectList != -1 && fullProjectList.home !== false">
                         <h6 class="text-center">
                             <a href="/#links" v-on:click="closeNavMenu()">
                                 <b>Ссылки</b>
@@ -56,7 +55,7 @@
                         <hr>
                     </div>
                     <!-- список ссылок -->
-                    <div class="d-none d-md-block col-12 text-center" v-if="links !== false && links !== -1">
+                    <div class="d-none col-12 text-center" v-if="links !== false && links !== -1">
                         <h6 v-for="(link, index) in links" :key="link.slug" class="mb-3" v-bind:class="{'invisible': index > 2}">
                             <a v-on:click="closeNavMenu()" target="_blank" :href="link.link_url">
                                 {{link.link_title}}
@@ -69,7 +68,7 @@
                         <h6 class="text-center mb-3">
                             <a v-on:click="closeNavMenu()" href="#contacts"><b>Контакты</b></a>
                         </h6>
-                        <hr>
+                        <hr v-if="about === 1">
                     </div>
                     <!-- о сайте -->
                     <div class="col-12" v-if="about ===  1">

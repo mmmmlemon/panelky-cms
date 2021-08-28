@@ -16,7 +16,7 @@
 
         <router-view v-if="public_access == 1 && (isMobile && screenOrientation === 'horizontal') === false">
         </router-view>
-        <div v-else-if="isMobile && screenOrientation === 'horizontal'" 
+        <div v-else-if="isMobile && screenOrientation === 'horizontal' && public_access == 1" 
             class="row h-100 d-flex text-center justify-content-center goUpAnim m-1">
             <div class="textVertical text-center fadeInAnim">
                 <h1 class="font2-5rem">Внимание!</h1>

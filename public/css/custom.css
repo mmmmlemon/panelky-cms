@@ -473,6 +473,9 @@ hr {
 .zIndex-1 {
     z-index: -1;
 }
+.zIndex1 {
+    z-index: 1;
+}
 .zIndex3 {
     z-index: 3;
 }

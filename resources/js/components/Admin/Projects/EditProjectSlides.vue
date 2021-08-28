@@ -297,7 +297,6 @@ export default {
             }).catch(error => {
                 if(error.response.status === 422){ 
                     this.errors = error.response.data.errors || {};
-                    console.log(this.errors);
                 }
             })
         },
@@ -327,7 +326,6 @@ export default {
                     }
                 }
             }).catch(error => {
-                console.log(error.errors);
             });
         },
 
@@ -360,7 +358,6 @@ export default {
                     this.slideEditComment = undefined;
                 }
             }).catch(error => {
-                console.log(error.errors);
             })
         },
 

@@ -24,7 +24,7 @@
                         <h4>{{newLink.link_title}}</h4>
                     </div>
                     <div class="col-12 col-md-3 mb-3">
-                        <h6>Ресурс</h6>
+                        <h6>Сайт</h6>
                         <input type="text" class="form-control" placeholder="Twitter" v-model="newLink.link_title" required>
                         <div v-if="errors && errors.link_title" class="text-danger goUpAnim">{{ errors.link_title[0] }}</div>
                     </div>

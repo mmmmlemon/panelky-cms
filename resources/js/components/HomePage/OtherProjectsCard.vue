@@ -16,7 +16,7 @@
                     <!-- если у прое,кта есть лого -->
                     <div class="card-body text-center" v-if="project.project_icon !== null">
                         <!-- заголовок -->
-                        <h4 class="card-title text-center">
+                        <h4 class="card-title text-center wordBreak">
                             <a :href="project.project_url" target="_blank">
                                 <b>{{project.project_title}}</b>
                             </a>  

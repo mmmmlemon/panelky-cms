@@ -130,7 +130,7 @@
                
             </div>
             <!-- сообщение о сохранении настроек -->
-            <div class="col-12 p-3 text-center unclickable zeroOpacity" v-bind:class="{ blinkAnim: saved }">
+            <div class="col-12 p-3 text-center unclickable zeroOpacity zIndex-1" v-bind:class="{ blinkAnim: saved }">
                 <h5>Изменения сохранены</h5>
             </div>
         </div>

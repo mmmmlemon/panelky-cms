@@ -45,7 +45,7 @@
         <!-- ПОЛНОЕ ПРЕВЬЮ (в EditProject.vue) -->
         <div v-if="type==='full'" class="row justify-content-center zIndex3">
             <!-- карточка проекта -->
-            <ProjectCard :project="currentProject" :isVisible="true"/>
+            <ProjectCard v-if="type==='full'" :project="currentProject" :isVisible="true"/>
             <!-- кнопка развернуть на весь экран -->
             <button class="btn btn-light fullscreenButton" title="Развернуть на полный экран" v-on:click="showFullscreenPreview">
                 <i class="bi bi-arrows-fullscreen"></i>
@@ -74,7 +74,7 @@
             </div>
   
             <div class="row h-100 justify-content-center">
-                <ProjectCard :project="currentProject" :type="orientation" :isVisible="true"/>
+                <ProjectCard v-if="type==='full'"  :project="currentProject" :type="orientation" :isVisible="true"/>
             </div>
         </div>
     </div>
