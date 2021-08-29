@@ -64264,7 +64264,7 @@ var render = function() {
         [
           _vm.aboutSiteText !== -1 && _vm.aboutSiteText !== false
             ? _c("div", {
-                staticClass: "textVertical goUpAnim text-center",
+                staticClass: "textVertical goUpAnim text-center p-4 p-md-0",
                 domProps: { innerHTML: _vm._s(_vm.aboutSiteText) }
               })
             : _vm._e()
@@ -70351,7 +70351,7 @@ var render = function() {
           attrs: { id: "links" }
         },
         [
-          _c("div", { staticClass: "div-12 textVertical" }, [
+          _c("div", { staticClass: "col-12 col-md-5 textVertical" }, [
             _c(
               "div",
               {

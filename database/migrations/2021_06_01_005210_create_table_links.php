@@ -21,6 +21,23 @@ class CreateTableLinks extends Migration
             $table->integer('order')->default(0);
             $table->timestamps();
         });
+
+        $data = [
+            [
+                'slug' => 'github',
+                'link_title' => 'GitHub',
+                'link_url' => 'https://github.com',
+                'order' => 0
+            ],
+            [
+            'slug' => 'kofi',
+            'link_title' => 'Ko-Fi',
+            'link_url' => 'https://ko-fi.com',
+            'order' => -1,
+            ]
+        ];
+
+        DB::table('links')->insert($data);
     }
 
     /**

@@ -12,6 +12,10 @@ html {
 box-sizing: inherit;
 }
 
+.whatsAppColor{
+    color: #25D366;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -42,6 +46,10 @@ h2 {
 
 h6 {
     color: white;
+}
+
+p {
+    font-size: 1.2rem;
 }
 
 a, a:hover {

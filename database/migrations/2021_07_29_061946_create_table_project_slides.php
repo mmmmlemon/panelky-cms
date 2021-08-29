@@ -18,7 +18,10 @@ class CreateTableProjectSlides extends Migration
             $table->string('media_url', 500);
             $table->string('commentary', 500)->nullable();
             $table->integer('project_id');
+            $table->enum('visibility', ['horizontal', 'vertical'])->default('horizontal');
+            $table->integer('order')->default(0);
             $table->timestamps();
+            
         });
     }
 

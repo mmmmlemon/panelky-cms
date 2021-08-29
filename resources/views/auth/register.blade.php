@@ -28,7 +28,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-11 text-center mt-5 borderUnderline">
-                <h1>Register</h1>
+                <h1>Регистрация</h1>
             </div>
 
             <form class="col-12 col-md-6" method="POST" action="{{ route('register') }}">
@@ -37,7 +37,7 @@
                 {{-- Username --}}
                 <div class="form-group col-12">
                     <h5 class="text-center mt-5">
-                        {{ __('Username') }}
+                        Имя пользователя
                     </h5>
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
@@ -55,7 +55,7 @@
                 {{-- E-Mail --}}
                 <div class="form-group col-12">
                     <h5 class="text-center mt-1">
-                        {{ __('E-Mail') }}
+                        E-Mail
                     </h5>
                     <div class="input-group mb-1">
                         <div class="input-group-prepend">
@@ -74,7 +74,7 @@
                 {{-- Password --}}
                 <div class="form-group col-12">
                     <h5 class="text-center mt-1">
-                        {{ __('Password') }}
+                        Пароль
                     </h5>
                     <div class="input-group mb-1">
                         <div class="input-group-prepend">
@@ -93,7 +93,7 @@
                 {{-- Confirm password --}}
                 <div class="form-group col-12">
                     <h5 class="text-center mt-1">
-                        {{ __('Confirm password') }}
+                        Пароль (повторить)
                     </h5>
                     <div class="input-group mb-1">
                         <div class="input-group-prepend">
@@ -112,7 +112,7 @@
                 <div class="form-group row mb-0">
                     <div class="col-12">
                         <button type="submit" class="btn btn-outline-light btn-lg btn-block">
-                            {{ __('Register') }}
+                            Зарегестрировать
                         </button>
                     </div>
                 </div>
