@@ -21,10 +21,10 @@ use App\Http\Controllers\TestController;
 Auth::routes();
 
 // тесты
-Route::get('/saveJson', [TestController::class, 'saveJson'])->where('any', '.*');
-Route::get('/readJson', [TestController::class, 'readJson'])->where('any', '.*');
-Route::post('/submitForm', [TestController::class, 'submitForm'])->where('any', '.*');
-Route::get('/newProject', [TestController::class, 'addNewProject'])->where('any', '.*');
+// Route::get('/saveJson', [TestController::class, 'saveJson'])->where('any', '.*');
+// Route::get('/readJson', [TestController::class, 'readJson'])->where('any', '.*');
+// Route::post('/submitForm', [TestController::class, 'submitForm'])->where('any', '.*');
+// Route::get('/newProject', [TestController::class, 'addNewProject'])->where('any', '.*');
 
 //админ
 Route::post('/admin/saveSiteOwnerInfo', [AdminController::class, 'saveSiteOwnerInfo']);

@@ -54,7 +54,7 @@
                     Отмена
                 </div>
                 <!-- кнопка удалить ссылку -->
-                <button class="btn btn-light ml-2 goUpAnim" title="Сохранить изменения" v-if="edit !== false">
+                <button class="btn btn-light ml-2 mb-1 goUpAnim" title="Сохранить изменения" v-if="edit !== false">
                     <i class="bi bi-save"></i>
                     Сохранить
                 </button>

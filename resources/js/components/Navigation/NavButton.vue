@@ -2,7 +2,7 @@
 //кнопка навигации с боковым меню
 <template>
     <transition name="navMenu">
-        <div v-if="visible === true && (links != -1 && links != false || fullProjectList != -1 && fullProjectList != false)">
+        <div v-if="visible === true">
             <!-- кнопка меню -->
             <!-- видна только на десктопе -->
             <button v-on:click="showNavMenu()" class="d-block navButton zIndex3 fadeInAnim">
@@ -47,6 +47,7 @@
                     </div>
                     <!-- ссылки -->
                     <div class="col-12" v-if="links !== false && links != -1">
+                        <hr v-if="fullProjectList !== -1 && fullProjectList.other.length === 0">
                         <h6 class="text-center">
                             <a href="/#links" v-on:click="closeNavMenu()">
                                 <b>Ссылки</b>

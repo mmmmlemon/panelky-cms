@@ -31,7 +31,7 @@
                 <div v-for="(contact, index) in contacts" v-bind:key="index" class="col-6 col-md-3 m-0 p-0 mt-3 contactIcon"
                         :style="`transition: all 0.8s  ease-out; transition-delay: ${index/5}s; font-size: 2.5rem;`"
                         v-bind:class="{'zeroOpacity unclickable': contactsVisible === false}">
-                    <a v-if="contact.contact_type === 'email'"  :href="'mailto:'+contact.contact_type">
+                    <a v-if="contact.contact_type === 'email'"  :href="'mailto:'+contact.contact_url">
                         <i class="goUpAnim fas fa-at" :style="`animation-duration: ${index/5}s;`"></i>
                     </a>
                     <a v-else :href="contact.contact_url" target="_blank">
