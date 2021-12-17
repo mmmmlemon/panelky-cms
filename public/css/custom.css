@@ -71,6 +71,7 @@ hr {
 /* styles */
 .zeroOpacity {
     opacity: 0;
+    pointer-events: none;
 }
 
 .halfOpacity {
@@ -495,8 +496,6 @@ hr {
     z-index: 7 !important;
 
 }
-
-
 .cookiesCard{
     z-index: 5;
     color: black;
@@ -520,4 +519,53 @@ hr {
 .cookiesCard a{
     color: black;
     font-weight: bold;
+}
+
+.calculatorCard{
+    background-color: rgba(255,255,255, 0.15);
+    border-radius: 15px;
+    cursor: pointer;
+    height: 5rem !important;
+    margin: 5px;
+    transition: all 0.2s ease-in-out;
+}
+
+.calculatorCard.selected{
+    transform: translateY(-3px);
+}
+
+.calculatorCard.personal.selected{
+    background-color:rgba(211, 190, 121, 0.589);
+    
+}
+
+.calculatorCard.landing.selected{
+    background-color:rgba(121, 211, 155, 0.589);
+}
+
+.calculatorCard.telegram.selected{
+    background-color:rgba(72, 195, 226, 0.589);
+}
+
+.calculatorCard.special.selected{
+    background-color:rgba(226, 72, 136, 0.589);
+}
+
+.calculatorCard h4{
+    margin-top: 8%;
+}
+
+.calculatorPrices{
+    transition: opacity 0.2s ease-in-out;
+}
+
+.calculatorCardLarge{
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.calculatorCardLarge.selected{
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-bottom-color: white;
 }

@@ -10,6 +10,12 @@
                 Главная
             </router-link>
         </li>
+        <!-- Калькулятор -->
+        <li class="nav-item">
+            <router-link class="nav-link active" aria-current="page" to="/calculator">
+                Заказать проект
+            </router-link>
+        </li>
         <!-- О сайте -->
         <li class="nav-item">
             <router-link class="nav-link active" aria-current="page" to="/about">
