@@ -6341,147 +6341,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Calculator.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Calculator.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  // данные
-  data: function data() {
-    return {
-      transparentWhiteColor: 'rgba(255,255,255, 0.15)',
-      selectedProduct: null,
-      currentTitle: null,
-      listOfProducts: ['businessCard', 'landing', 'telegram', 'special'],
-      lorem: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis odio libero repellat. Eveniet obcaecati rerum laboriosam corporis blanditiis, consectetur eius quas illum voluptatibus enim sed autem, deserunt nobis pariatur. Deserunt.\n                       Provident blanditiis culpa qui et quaerat quibusdam quasi, aut atque rerum cum, placeat ducimus ex enim delectus? Blanditiis beatae odit facilis modi unde est eum hic aliquam, officia tempora corrupti?\n                       Nulla itaque cupiditate in illo magnam ipsam, debitis fugiat similique sunt neque molestias quidem assumenda qui dolorem perferendis modi doloribus adipisci quod deserunt omnis, sit saepe eveniet veniam? Eligendi, ducimus."
-    };
-  },
-  computed: {
-    orderTypesInfo: function orderTypesInfo() {
-      return this.$store.state.GlobalStates.orderTypesInfo;
-    },
-    productDescription: function productDescription() {
-      return {
-        'businessCard': this.lorem,
-        'landing': this.lorem,
-        'telegram': this.lorem,
-        'special': this.lorem
-      };
-    },
-    productTitle: function productTitle() {
-      return {
-        'businessCard': 'Сайт-визитка',
-        'landing': 'Лендинг',
-        'telegram': 'Telegram-бот',
-        'special': 'Что-то особенное'
-      };
-    },
-    productIcon: function productIcon() {
-      return {
-        'businessCard': 'bi-card-heading',
-        'landing': 'bi-list-nested',
-        'telegram': 'bi-telegram',
-        'special': 'bi-gift'
-      };
-    },
-    productPriceRange: function productPriceRange() {
-      return {
-        'businessCard': 'от 30.000 до 45.000 ₽',
-        'landing': 'от 40.000 до 70.000 ₽',
-        'telegram': 'от 15.000 до 25.000 ₽',
-        'special': 'от 15.000 до 100.000 ₽'
-      };
-    }
-  },
-  // методы
-  methods: {
-    selectProduct: function selectProduct(productType) {
-      this.selectedProduct = productType;
-    },
-    makeOrder: function makeOrder(productType) {
-      alert("мммммммм заказики..... 😳😳");
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/HomePage.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/HomePage.vue?vue&type=script&lang=js& ***!
@@ -7716,6 +7575,147 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RequestProject.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RequestProject.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  // данные
+  data: function data() {
+    return {
+      transparentWhiteColor: 'rgba(255,255,255, 0.15)',
+      selectedProduct: null,
+      currentTitle: null,
+      listOfProducts: ['businessCard', 'landing', 'telegram', 'special'],
+      lorem: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis odio libero repellat. Eveniet obcaecati rerum laboriosam corporis blanditiis, consectetur eius quas illum voluptatibus enim sed autem, deserunt nobis pariatur. Deserunt.\n                       Provident blanditiis culpa qui et quaerat quibusdam quasi, aut atque rerum cum, placeat ducimus ex enim delectus? Blanditiis beatae odit facilis modi unde est eum hic aliquam, officia tempora corrupti?\n                       Nulla itaque cupiditate in illo magnam ipsam, debitis fugiat similique sunt neque molestias quidem assumenda qui dolorem perferendis modi doloribus adipisci quod deserunt omnis, sit saepe eveniet veniam? Eligendi, ducimus."
+    };
+  },
+  computed: {
+    orderTypesInfo: function orderTypesInfo() {
+      return this.$store.state.GlobalStates.orderTypesInfo;
+    },
+    productDescription: function productDescription() {
+      return {
+        'businessCard': this.lorem,
+        'landing': this.lorem,
+        'telegram': this.lorem,
+        'special': this.lorem
+      };
+    },
+    productTitle: function productTitle() {
+      return {
+        'businessCard': 'Сайт-визитка',
+        'landing': 'Лендинг',
+        'telegram': 'Telegram-бот',
+        'special': 'Что-то особенное'
+      };
+    },
+    productIcon: function productIcon() {
+      return {
+        'businessCard': 'bi-card-heading',
+        'landing': 'bi-list-nested',
+        'telegram': 'bi-telegram',
+        'special': 'bi-gift'
+      };
+    },
+    productPriceRange: function productPriceRange() {
+      return {
+        'businessCard': 'от 30.000 до 45.000 ₽',
+        'landing': 'от 40.000 до 70.000 ₽',
+        'telegram': 'от 15.000 до 25.000 ₽',
+        'special': 'от 15.000 до 100.000 ₽'
+      };
+    }
+  },
+  // методы
+  methods: {
+    selectProduct: function selectProduct(productType) {
+      this.selectedProduct = productType;
+    },
+    makeOrder: function makeOrder(productType) {
+      alert("мммммммм заказики..... 😳😳");
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/test.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/test.vue?vue&type=script&lang=js& ***!
@@ -7961,7 +7961,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_App_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/App.vue */ "./resources/js/components/App.vue");
 /* harmony import */ var _components_HomePage_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/HomePage.vue */ "./resources/js/components/HomePage.vue");
 /* harmony import */ var _components_About_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/About.vue */ "./resources/js/components/About.vue");
-/* harmony import */ var _components_Calculator_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Calculator.vue */ "./resources/js/components/Calculator.vue");
+/* harmony import */ var _components_RequestProject_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/RequestProject.vue */ "./resources/js/components/RequestProject.vue");
 /* harmony import */ var _components_AppAdmin_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/AppAdmin.vue */ "./resources/js/components/AppAdmin.vue");
 /* harmony import */ var _components_Admin_SiteOwnerSettings_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/Admin/SiteOwnerSettings.vue */ "./resources/js/components/Admin/SiteOwnerSettings.vue");
 /* harmony import */ var _components_Admin_SiteOwner_SiteOwnerInfo_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/Admin/SiteOwner/SiteOwnerInfo.vue */ "./resources/js/components/Admin/SiteOwner/SiteOwnerInfo.vue");
@@ -8020,7 +8020,7 @@ var routes = [//user side
     component: _components_About_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
     path: '/requestProject',
-    component: _components_Calculator_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _components_RequestProject_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   }]
 }, {
   path: '/test',
@@ -62817,45 +62817,6 @@ component.options.__file = "resources/js/components/AppAdmin.vue"
 
 /***/ }),
 
-/***/ "./resources/js/components/Calculator.vue":
-/*!************************************************!*\
-  !*** ./resources/js/components/Calculator.vue ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _Calculator_vue_vue_type_template_id_625bc6ad___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Calculator.vue?vue&type=template&id=625bc6ad& */ "./resources/js/components/Calculator.vue?vue&type=template&id=625bc6ad&");
-/* harmony import */ var _Calculator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Calculator.vue?vue&type=script&lang=js& */ "./resources/js/components/Calculator.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Calculator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Calculator_vue_vue_type_template_id_625bc6ad___WEBPACK_IMPORTED_MODULE_0__.render,
-  _Calculator_vue_vue_type_template_id_625bc6ad___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/Calculator.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
 /***/ "./resources/js/components/HomePage.vue":
 /*!**********************************************!*\
   !*** ./resources/js/components/HomePage.vue ***!
@@ -63281,6 +63242,45 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/Navigation/NavScroll.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/RequestProject.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/RequestProject.vue ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _RequestProject_vue_vue_type_template_id_0e8657b5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RequestProject.vue?vue&type=template&id=0e8657b5& */ "./resources/js/components/RequestProject.vue?vue&type=template&id=0e8657b5&");
+/* harmony import */ var _RequestProject_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RequestProject.vue?vue&type=script&lang=js& */ "./resources/js/components/RequestProject.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _RequestProject_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _RequestProject_vue_vue_type_template_id_0e8657b5___WEBPACK_IMPORTED_MODULE_0__.render,
+  _RequestProject_vue_vue_type_template_id_0e8657b5___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/RequestProject.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -63772,22 +63772,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Calculator.vue?vue&type=script&lang=js&":
-/*!*************************************************************************!*\
-  !*** ./resources/js/components/Calculator.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Calculator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Calculator.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Calculator.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Calculator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
 /***/ "./resources/js/components/HomePage.vue?vue&type=script&lang=js&":
 /*!***********************************************************************!*\
   !*** ./resources/js/components/HomePage.vue?vue&type=script&lang=js& ***!
@@ -63961,6 +63945,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NavScroll_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./NavScroll.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Navigation/NavScroll.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NavScroll_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/RequestProject.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/RequestProject.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestProject_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RequestProject.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RequestProject.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestProject_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -64456,23 +64456,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Calculator.vue?vue&type=template&id=625bc6ad&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/components/Calculator.vue?vue&type=template&id=625bc6ad& ***!
-  \*******************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Calculator_vue_vue_type_template_id_625bc6ad___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Calculator_vue_vue_type_template_id_625bc6ad___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Calculator_vue_vue_type_template_id_625bc6ad___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Calculator.vue?vue&type=template&id=625bc6ad& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Calculator.vue?vue&type=template&id=625bc6ad&");
-
-
-/***/ }),
-
 /***/ "./resources/js/components/HomePage.vue?vue&type=template&id=fa44bb0e&":
 /*!*****************************************************************************!*\
   !*** ./resources/js/components/HomePage.vue?vue&type=template&id=fa44bb0e& ***!
@@ -64656,6 +64639,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavScroll_vue_vue_type_template_id_32c22c40___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavScroll_vue_vue_type_template_id_32c22c40___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./NavScroll.vue?vue&type=template&id=32c22c40& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Navigation/NavScroll.vue?vue&type=template&id=32c22c40&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/RequestProject.vue?vue&type=template&id=0e8657b5&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/RequestProject.vue?vue&type=template&id=0e8657b5& ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestProject_vue_vue_type_template_id_0e8657b5___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestProject_vue_vue_type_template_id_0e8657b5___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestProject_vue_vue_type_template_id_0e8657b5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RequestProject.vue?vue&type=template&id=0e8657b5& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RequestProject.vue?vue&type=template&id=0e8657b5&");
 
 
 /***/ }),
@@ -70787,207 +70787,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Calculator.vue?vue&type=template&id=625bc6ad&":
-/*!**********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Calculator.vue?vue&type=template&id=625bc6ad& ***!
-  \**********************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ render),
-/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm.orderTypesInfo !== -1
-    ? _c(
-        "div",
-        { staticClass: "row h-100 justify-content-center fadeInAnim" },
-        [
-          _c(
-            "div",
-            { staticClass: "col-12 col-md-10 mt-2" },
-            [
-              _c("div", { staticClass: "row justify-content-center mt-2" }, [
-                _c("div", { staticClass: "col-11 col-md-8" }, [
-                  _c(
-                    "div",
-                    { staticClass: "row justify-content-center" },
-                    [
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _vm._l(_vm.orderTypesInfo, function (orderType, index) {
-                        return _c(
-                          "div",
-                          {
-                            key: index,
-                            staticClass:
-                              "col-12 text-center col-md-4 mt-3 calculatorCard",
-                            class: {
-                              selected:
-                                _vm.selectedProduct === orderType.order_type,
-                            },
-                            style: {
-                              backgroundColor:
-                                _vm.selectedProduct === orderType.order_type
-                                  ? orderType.color_style
-                                  : _vm.transparentWhiteColor,
-                            },
-                            on: {
-                              click: function ($event) {
-                                return _vm.selectProduct(orderType.order_type)
-                              },
-                            },
-                          },
-                          [
-                            _c("h4", { staticClass: "text-center" }, [
-                              _vm._v(_vm._s(orderType.order_name)),
-                            ]),
-                          ]
-                        )
-                      }),
-                    ],
-                    2
-                  ),
-                ]),
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.orderTypesInfo, function (orderType) {
-                return _c(
-                  "div",
-                  {
-                    key: orderType.order_type,
-                    staticClass: "row justify-content-center calculatorPrices",
-                  },
-                  [
-                    _c(
-                      "transition",
-                      { attrs: { name: "productDescription" } },
-                      [
-                        _vm.selectedProduct == orderType.order_type
-                          ? _c(
-                              "div",
-                              { staticClass: "col-8 text-center mt-5" },
-                              [
-                                _c("div", { staticClass: "fs-2 mb-3" }, [
-                                  _c("h3", [
-                                    _c("i", {
-                                      class: orderType.order_bootstrap_icon,
-                                    }),
-                                    _vm._v(" " + _vm._s(orderType.order_name)),
-                                  ]),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "fs-2 mb-3 col-12" }, [
-                                  _c("p", [
-                                    _vm._v(_vm._s(orderType.order_desc)),
-                                  ]),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "fs-2 mb-3 col-12" }, [
-                                  _c("h4", [_c("b", [_vm._v("Цена *")])]),
-                                  _vm._v(" "),
-                                  _c("h2", [
-                                    _vm._v(_vm._s(orderType.price_range)),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h4", { staticClass: "mt-5" }, [
-                                    _c("b", [_vm._v("Срок разработки *")]),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h2", [
-                                    _vm._v(_vm._s(orderType.time_range)),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "h6",
-                                    { staticStyle: { "font-size": "0.7rem" } },
-                                    [
-                                      _vm._v(
-                                        "* примерный средний ценник и сроки разработки, "
-                                      ),
-                                      _c("br"),
-                                      _vm._v(
-                                        "окончательная цена и срок разработки могут варьироваться в зависимости от сложности проекта"
-                                      ),
-                                    ]
-                                  ),
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "row justify-content-center" },
-                                  [
-                                    _vm.selectedProduct == orderType.order_type
-                                      ? _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "col-8 text-center mt-4",
-                                          },
-                                          [
-                                            _c(
-                                              "button",
-                                              {
-                                                staticClass:
-                                                  "btn btn-light btn-lg",
-                                                attrs: { type: "button" },
-                                                on: {
-                                                  click: function ($event) {
-                                                    return _vm.makeOrder()
-                                                  },
-                                                },
-                                              },
-                                              [
-                                                _c("i", {
-                                                  staticClass: "bi bi-cart",
-                                                }),
-                                                _vm._v(
-                                                  " Заказать\n                            "
-                                                ),
-                                              ]
-                                            ),
-                                          ]
-                                        )
-                                      : _vm._e(),
-                                  ]
-                                ),
-                              ]
-                            )
-                          : _vm._e(),
-                      ]
-                    ),
-                  ],
-                  1
-                )
-              }),
-            ],
-            2
-          ),
-        ]
-      )
-    : _vm._e()
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12 mt-2" }, [
-      _c("h3", { staticClass: "text-center" }, [_vm._v("Я хочу...")]),
-    ])
-  },
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/HomePage.vue?vue&type=template&id=fa44bb0e&":
 /*!********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/HomePage.vue?vue&type=template&id=fa44bb0e& ***!
@@ -72802,6 +72601,207 @@ var render = function () {
   )
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RequestProject.vue?vue&type=template&id=0e8657b5&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RequestProject.vue?vue&type=template&id=0e8657b5& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.orderTypesInfo !== -1
+    ? _c(
+        "div",
+        { staticClass: "row h-100 justify-content-center fadeInAnim" },
+        [
+          _c(
+            "div",
+            { staticClass: "col-12 col-md-10 mt-2" },
+            [
+              _c("div", { staticClass: "row justify-content-center mt-2" }, [
+                _c("div", { staticClass: "col-11 col-md-8" }, [
+                  _c(
+                    "div",
+                    { staticClass: "row justify-content-center" },
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _vm._l(_vm.orderTypesInfo, function (orderType, index) {
+                        return _c(
+                          "div",
+                          {
+                            key: index,
+                            staticClass:
+                              "col-12 text-center col-md-4 mt-3 calculatorCard",
+                            class: {
+                              selected:
+                                _vm.selectedProduct === orderType.order_type,
+                            },
+                            style: {
+                              backgroundColor:
+                                _vm.selectedProduct === orderType.order_type
+                                  ? orderType.color_style
+                                  : _vm.transparentWhiteColor,
+                            },
+                            on: {
+                              click: function ($event) {
+                                return _vm.selectProduct(orderType.order_type)
+                              },
+                            },
+                          },
+                          [
+                            _c("h4", { staticClass: "text-center" }, [
+                              _vm._v(_vm._s(orderType.order_name)),
+                            ]),
+                          ]
+                        )
+                      }),
+                    ],
+                    2
+                  ),
+                ]),
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.orderTypesInfo, function (orderType) {
+                return _c(
+                  "div",
+                  {
+                    key: orderType.order_type,
+                    staticClass: "row justify-content-center calculatorPrices",
+                  },
+                  [
+                    _c(
+                      "transition",
+                      { attrs: { name: "productDescription" } },
+                      [
+                        _vm.selectedProduct == orderType.order_type
+                          ? _c(
+                              "div",
+                              { staticClass: "col-8 text-center mt-5" },
+                              [
+                                _c("div", { staticClass: "fs-2 mb-3" }, [
+                                  _c("h3", [
+                                    _c("i", {
+                                      class: orderType.order_bootstrap_icon,
+                                    }),
+                                    _vm._v(" " + _vm._s(orderType.order_name)),
+                                  ]),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "fs-2 mb-3 col-12" }, [
+                                  _c("p", [
+                                    _vm._v(_vm._s(orderType.order_desc)),
+                                  ]),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "fs-2 mb-3 col-12" }, [
+                                  _c("h4", [_c("b", [_vm._v("Цена *")])]),
+                                  _vm._v(" "),
+                                  _c("h2", [
+                                    _vm._v(_vm._s(orderType.price_range)),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("h4", { staticClass: "mt-5" }, [
+                                    _c("b", [_vm._v("Срок разработки *")]),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("h2", [
+                                    _vm._v(_vm._s(orderType.time_range)),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "h6",
+                                    { staticStyle: { "font-size": "0.7rem" } },
+                                    [
+                                      _vm._v(
+                                        "* примерный средний ценник и сроки разработки, "
+                                      ),
+                                      _c("br"),
+                                      _vm._v(
+                                        "окончательная цена и срок разработки могут варьироваться в зависимости от сложности проекта"
+                                      ),
+                                    ]
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "row justify-content-center" },
+                                  [
+                                    _vm.selectedProduct == orderType.order_type
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "col-8 text-center mt-4",
+                                          },
+                                          [
+                                            _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "btn btn-light btn-lg",
+                                                attrs: { type: "button" },
+                                                on: {
+                                                  click: function ($event) {
+                                                    return _vm.makeOrder()
+                                                  },
+                                                },
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass: "bi bi-cart",
+                                                }),
+                                                _vm._v(
+                                                  " Заказать\n                            "
+                                                ),
+                                              ]
+                                            ),
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                  ]
+                                ),
+                              ]
+                            )
+                          : _vm._e(),
+                      ]
+                    ),
+                  ],
+                  1
+                )
+              }),
+            ],
+            2
+          ),
+        ]
+      )
+    : _vm._e()
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 mt-2" }, [
+      _c("h3", { staticClass: "text-center" }, [_vm._v("Я хочу...")]),
+    ])
+  },
+]
 render._withStripped = true
 
 

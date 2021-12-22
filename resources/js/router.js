@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 import App from './components/App.vue';
 import HomePage from './components/HomePage.vue';
 import About from './components/About.vue';
-import Calculator from './components/Calculator.vue';
+import RequestProject from './components/RequestProject.vue';
 
 import AppAdmin from './components/AppAdmin.vue';
 import SiteOwnerSettings from './components/Admin/SiteOwnerSettings.vue';
@@ -49,7 +49,7 @@ const routes = [
             },
             {
                 path: '/requestProject',
-                component: Calculator
+                component: RequestProject
             }
         ]
     },
