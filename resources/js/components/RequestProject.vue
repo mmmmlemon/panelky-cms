@@ -70,7 +70,34 @@
 <script>
 export default {
 
+    created(){
+        this.$parent.currentTab = 'requestProject';
+    },
 
+    beforeMount(){
+        if(this.order !== 1)
+        { 
+            axios.get('/api/getHomeSettings').then(response => {
+                if(response.data.about !== 1){
+                    window.location.href="/"; 
+                }
+                else{
+                    if(this.aboutSiteText === -1){
+                        this.$store.dispatch('getAboutSiteText');
+                    }  
+                }
+            }).catch(error => {
+                //
+            });
+
+        }
+        else
+        { 
+            if(this.aboutSiteText === -1){
+                this.$store.dispatch('getAboutSiteText');
+            }   
+        }   
+    },
 
     // данные
     data(){
@@ -87,6 +114,10 @@ export default {
     },
     computed: {
         
+        order(){
+            return this.$parent.settings.order;
+        },
+
         orderTypesInfo(){
             return this.$store.state.GlobalStates.orderTypesInfo;
         },

@@ -7656,6 +7656,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  created: function created() {
+    this.$parent.currentTab = 'requestProject';
+  },
+  beforeMount: function beforeMount() {
+    var _this = this;
+
+    if (this.order !== 1) {
+      axios.get('/api/getHomeSettings').then(function (response) {
+        if (response.data.about !== 1) {
+          window.location.href = "/";
+        } else {
+          if (_this.aboutSiteText === -1) {
+            _this.$store.dispatch('getAboutSiteText');
+          }
+        }
+      })["catch"](function (error) {//
+      });
+    } else {
+      if (this.aboutSiteText === -1) {
+        this.$store.dispatch('getAboutSiteText');
+      }
+    }
+  },
   // данные
   data: function data() {
     return {
@@ -7667,6 +7690,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {
+    order: function order() {
+      return this.$parent.settings.order;
+    },
     orderTypesInfo: function orderTypesInfo() {
       return this.$store.state.GlobalStates.orderTypesInfo;
     },
