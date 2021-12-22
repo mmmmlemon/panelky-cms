@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cookie;
 use App\Models\Settings;
+use App\Models\Order;
 use App\Models\Project;
 use App\Models\ProjectSlide;
 use App\Models\Contact;
@@ -30,6 +31,17 @@ class APIController extends Controller
         ];
 
         return response()->json($response, 200);
+    }
+
+    // ЗАКАЗЫ
+    // getOrderTypesInfo
+    // получить информацию о возможных вариантах заказа
+    public function getOrderTypesInfo(){
+
+        $orderList = Order::select('id', 'order_name', 'order_desc', 'order_bootstrap_icon', 'price_range', 'time_range', 'order_type', 'color_style')->get();
+
+        return response()->json($orderList, 200);
+
     }
 
     //ПРОЕКТЫ

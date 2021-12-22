@@ -16,12 +16,14 @@ class CreateTableOrders extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('order_type');
             $table->string('order_name');
             $table->string('order_bootstrap_icon')->nullable();
             $table->longText('order_desc');
             $table->string('price_range')->nullable();
             $table->string('time_range')->nullable();
             $table->boolean('visibility')->default(1);
+            $table->string('color_style')->nullable();
         });
     }
 
@@ -32,6 +34,6 @@ class CreateTableOrders extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_orders');
+        Schema::dropIfExists('orders');
     }
 }

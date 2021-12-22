@@ -532,6 +532,7 @@ hr {
 
 .calculatorCard.selected{
     transform: translateY(-3px);
+    background-color: rgba(255, 255, 255, 0.397);
 }
 
 .calculatorCard.personal.selected{
@@ -562,10 +563,4 @@ hr {
 .calculatorCardLarge{
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-}
-
-.calculatorCardLarge.selected{
-    border-bottom-style: solid;
-    border-bottom-width: 3px;
-    border-bottom-color: white;
 }

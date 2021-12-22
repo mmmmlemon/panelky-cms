@@ -6036,6 +6036,11 @@ __webpack_require__.r(__webpack_exports__);
               _this.settings.cookies = 0;
             }
           }); //если нужно показать карточку о владельце сайта, то получаем информацию о владельце
+          // TODO: ДОБАВИТЬ orders в настройки сайта
+
+          if (true) {
+            _this.$store.dispatch('getOrderTypesInfo');
+          }
 
           if (_this.settings.site_owner === 1) {
             //получить информацию о владельце сайта
@@ -6379,18 +6384,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   // данные
   data: function data() {
     return {
+      transparentWhiteColor: 'rgba(255,255,255, 0.15)',
       selectedProduct: null,
       currentTitle: null,
-      view: '',
       listOfProducts: ['businessCard', 'landing', 'telegram', 'special'],
       lorem: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis odio libero repellat. Eveniet obcaecati rerum laboriosam corporis blanditiis, consectetur eius quas illum voluptatibus enim sed autem, deserunt nobis pariatur. Deserunt.\n                       Provident blanditiis culpa qui et quaerat quibusdam quasi, aut atque rerum cum, placeat ducimus ex enim delectus? Blanditiis beatae odit facilis modi unde est eum hic aliquam, officia tempora corrupti?\n                       Nulla itaque cupiditate in illo magnam ipsam, debitis fugiat similique sunt neque molestias quidem assumenda qui dolorem perferendis modi doloribus adipisci quod deserunt omnis, sit saepe eveniet veniam? Eligendi, ducimus."
     };
   },
   computed: {
+    orderTypesInfo: function orderTypesInfo() {
+      return this.$store.state.GlobalStates.orderTypesInfo;
+    },
     productDescription: function productDescription() {
       return {
         'businessCard': this.lorem,
@@ -6426,8 +6445,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   // методы
   methods: {
-    selectProduct: function selectProduct(productType, viewType) {
-      this.view = viewType;
+    selectProduct: function selectProduct(productType) {
       this.selectedProduct = productType;
     },
     makeOrder: function makeOrder(productType) {
@@ -8076,6 +8094,8 @@ var GlobalStates = {
     },
     //информация о владельце сайта
     siteOwnerInfo: -1,
+    // информация о вариантах заказа
+    orderTypesInfo: -1,
     //полный список проектов для главной страницы
     fullProjectList: -1,
     //ссылки
@@ -8234,6 +8254,22 @@ var GlobalStates = {
           context.commit('setState', {
             state: 'aboutSiteText',
             value: false
+          });
+        }
+      });
+    },
+    // getOrderTypesInfo
+    getOrderTypesInfo: function getOrderTypesInfo(context) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getOrderTypesInfo').then(function (response) {
+        if (response.data !== false) {
+          context.commit('setState', {
+            state: 'orderTypesInfo',
+            value: response.data
+          });
+        } else {
+          context.commit('setState', {
+            state: 'orderTypesInfo',
+            value: null
           });
         }
       });
@@ -70647,195 +70683,174 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "row h-100 justify-content-center fadeInAnim" },
-    [
-      _c(
+  return _vm.orderTypesInfo !== -1
+    ? _c(
         "div",
-        { staticClass: "col-12 col-md-10 mt-2" },
+        { staticClass: "row h-100 justify-content-center fadeInAnim" },
         [
-          _c("div", { staticClass: "row justify-content-center mt-5" }, [
-            _c("div", { staticClass: "col-11 col-md-8" }, [
-              _c("div", { staticClass: "row justify-content-center" }, [
-                _vm._m(0),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "col-12 text-center col-md-4 mt-3 calculatorCard personal",
-                    class: { selected: _vm.selectedProduct === "businessCard" },
-                    on: {
-                      click: function ($event) {
-                        return _vm.selectProduct("businessCard", "v-a")
-                      },
-                    },
-                  },
-                  [
-                    _c("h4", { staticClass: "text-center" }, [
-                      _vm._v("Сайт-визитку"),
-                    ]),
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "col-12 col-md-4 text-center mt-3 calculatorCard landing",
-                    class: { selected: _vm.selectedProduct === "landing" },
-                    on: {
-                      click: function ($event) {
-                        return _vm.selectProduct("landing", "v-a")
-                      },
-                    },
-                  },
-                  [
-                    _c("h4", { staticClass: "text-center" }, [
-                      _vm._v("Лендинг"),
-                    ]),
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "col-12 col-md-4 text-center mt-3 calculatorCard telegram",
-                    class: { selected: _vm.selectedProduct === "telegram" },
-                    on: {
-                      click: function ($event) {
-                        return _vm.selectProduct("telegram", "v-b")
-                      },
-                    },
-                  },
-                  [
-                    _c("h4", { staticClass: "text-center" }, [
-                      _vm._v("Telegram-бот"),
-                    ]),
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "col-12 col-md-4 text-center mt-3 calculatorCard special",
-                    class: { selected: _vm.selectedProduct === "special" },
-                    on: {
-                      click: function ($event) {
-                        return _vm.selectProduct("special", "v-b")
-                      },
-                    },
-                  },
-                  [
-                    _c("h4", { staticClass: "text-center" }, [
-                      _vm._v("Что-то особенное"),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _vm._l(_vm.listOfProducts, function (product, index) {
-            return _c(
-              "div",
-              {
-                key: index,
-                staticClass: "row justify-content-center calculatorPrices",
-              },
-              [
-                _c("transition", { attrs: { name: "productDescription" } }, [
-                  _vm.selectedProduct == _vm.listOfProducts[index]
-                    ? _c("div", { staticClass: "col-8 text-center mt-5" }, [
-                        _c("div", { staticClass: "fs-2 mb-3" }, [
-                          _c("h3", [
-                            _c("i", {
-                              class:
-                                "bi" +
-                                " " +
-                                _vm.productIcon[_vm.listOfProducts[index]],
-                            }),
-                            _vm._v(
-                              " " +
-                                _vm._s(
-                                  _vm.productTitle[_vm.listOfProducts[index]]
-                                )
-                            ),
-                          ]),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "fs-2 mb-3 col-12" }, [
-                          _c("p", [
-                            _vm._v(
-                              _vm._s(
-                                _vm.productDescription[
-                                  _vm.listOfProducts[index]
-                                ]
-                              )
-                            ),
-                          ]),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "fs-2 mb-3 col-12" }, [
-                          _c("h4", [_c("b", [_vm._v("Цена *")])]),
-                          _vm._v(" "),
-                          _c("h2", [
-                            _vm._v(
-                              "≈ " +
-                                _vm._s(
-                                  _vm.productPriceRange[
-                                    _vm.listOfProducts[index]
-                                  ]
-                                )
-                            ),
-                          ]),
-                          _vm._v(" "),
-                          _c("h6", { staticStyle: { "font-size": "0.7rem" } }, [
-                            _vm._v("* примерный средний ценник, "),
-                            _c("br"),
-                            _vm._v(
-                              " окончательная цена может варьироваться в зависимости от сложности проекта"
-                            ),
-                          ]),
-                        ]),
-                      ])
-                    : _vm._e(),
-                ]),
-                _vm._v(" "),
-                _c("transition", { attrs: { name: "productDescription" } }, [
-                  _vm.selectedProduct == _vm.listOfProducts[index]
-                    ? _c("div", { staticClass: "col-8 text-center mt-4" }, [
-                        _c(
-                          "button",
+          _c(
+            "div",
+            { staticClass: "col-12 col-md-10 mt-2" },
+            [
+              _c("div", { staticClass: "row justify-content-center mt-2" }, [
+                _c("div", { staticClass: "col-11 col-md-8" }, [
+                  _c(
+                    "div",
+                    { staticClass: "row justify-content-center" },
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _vm._l(_vm.orderTypesInfo, function (orderType, index) {
+                        return _c(
+                          "div",
                           {
-                            staticClass: "btn btn-light btn-lg",
-                            attrs: { type: "button" },
+                            key: index,
+                            staticClass:
+                              "col-12 text-center col-md-4 mt-3 calculatorCard",
+                            class: {
+                              selected:
+                                _vm.selectedProduct === orderType.order_type,
+                            },
+                            style: {
+                              backgroundColor:
+                                _vm.selectedProduct === orderType.order_type
+                                  ? orderType.color_style
+                                  : _vm.transparentWhiteColor,
+                            },
                             on: {
                               click: function ($event) {
-                                return _vm.makeOrder()
+                                return _vm.selectProduct(orderType.order_type)
                               },
                             },
                           },
                           [
-                            _c("i", { staticClass: "bi bi-cart" }),
-                            _vm._v(" Заказать"),
+                            _c("h4", { staticClass: "text-center" }, [
+                              _vm._v(_vm._s(orderType.order_name)),
+                            ]),
                           ]
-                        ),
-                      ])
-                    : _vm._e(),
+                        )
+                      }),
+                    ],
+                    2
+                  ),
                 ]),
-              ],
-              1
-            )
-          }),
-        ],
-        2
-      ),
-    ]
-  )
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.orderTypesInfo, function (orderType) {
+                return _c(
+                  "div",
+                  {
+                    key: orderType.order_type,
+                    staticClass: "row justify-content-center calculatorPrices",
+                  },
+                  [
+                    _c(
+                      "transition",
+                      { attrs: { name: "productDescription" } },
+                      [
+                        _vm.selectedProduct == orderType.order_type
+                          ? _c(
+                              "div",
+                              { staticClass: "col-8 text-center mt-5" },
+                              [
+                                _c("div", { staticClass: "fs-2 mb-3" }, [
+                                  _c("h3", [
+                                    _c("i", {
+                                      class: orderType.order_bootstrap_icon,
+                                    }),
+                                    _vm._v(" " + _vm._s(orderType.order_name)),
+                                  ]),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "fs-2 mb-3 col-12" }, [
+                                  _c("p", [
+                                    _vm._v(_vm._s(orderType.order_desc)),
+                                  ]),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "fs-2 mb-3 col-12" }, [
+                                  _c("h4", [_c("b", [_vm._v("Цена *")])]),
+                                  _vm._v(" "),
+                                  _c("h2", [
+                                    _vm._v(_vm._s(orderType.price_range)),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("h4", { staticClass: "mt-5" }, [
+                                    _c("b", [_vm._v("Срок разработки *")]),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("h2", [
+                                    _vm._v(_vm._s(orderType.time_range)),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "h6",
+                                    { staticStyle: { "font-size": "0.7rem" } },
+                                    [
+                                      _vm._v(
+                                        "* примерный средний ценник и сроки разработки, "
+                                      ),
+                                      _c("br"),
+                                      _vm._v(
+                                        "окончательная цена и срок разработки могут варьироваться в зависимости от сложности проекта"
+                                      ),
+                                    ]
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "row justify-content-center" },
+                                  [
+                                    _vm.selectedProduct == orderType.order_type
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "col-8 text-center mt-4",
+                                          },
+                                          [
+                                            _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "btn btn-light btn-lg",
+                                                attrs: { type: "button" },
+                                                on: {
+                                                  click: function ($event) {
+                                                    return _vm.makeOrder()
+                                                  },
+                                                },
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass: "bi bi-cart",
+                                                }),
+                                                _vm._v(
+                                                  " Заказать\n                            "
+                                                ),
+                                              ]
+                                            ),
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                  ]
+                                ),
+                              ]
+                            )
+                          : _vm._e(),
+                      ]
+                    ),
+                  ],
+                  1
+                )
+              }),
+            ],
+            2
+          ),
+        ]
+      )
+    : _vm._e()
 }
 var staticRenderFns = [
   function () {

@@ -12,6 +12,8 @@ const GlobalStates = {
         navMenuStyle: {'right':'-500px', 'opacity':'0'},
         //информация о владельце сайта
         siteOwnerInfo: -1,
+        // информация о вариантах заказа
+        orderTypesInfo: -1,
         //полный список проектов для главной страницы
         fullProjectList: -1,
         //ссылки
@@ -129,6 +131,17 @@ const GlobalStates = {
                 }
                 else
                 { context.commit('setState', { state: 'aboutSiteText', value: false}) }
+            })
+        },
+
+        // getOrderTypesInfo
+        getOrderTypesInfo(context){
+            axios.get('/api/getOrderTypesInfo').then(response => {
+                if(response.data !== false){
+                    context.commit('setState', { state: 'orderTypesInfo', value: response.data});
+                }
+                else
+                { context.commit('setState', { state: 'orderTypesInfo', value: null}); }
             })
         }
     }

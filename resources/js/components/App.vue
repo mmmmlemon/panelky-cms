@@ -72,6 +72,12 @@ export default {
                         }
                     });
                     //если нужно показать карточку о владельце сайта, то получаем информацию о владельце
+
+                    // TODO: ДОБАВИТЬ orders в настройки сайта
+                    if(true){
+                        this.$store.dispatch('getOrderTypesInfo');
+                    }
+
                     if(this.settings.site_owner === 1){
                         //получить информацию о владельце сайта
                         this.$store.dispatch('getSiteOwnerInfo');

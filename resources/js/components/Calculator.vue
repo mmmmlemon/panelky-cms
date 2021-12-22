@@ -1,15 +1,22 @@
 //Calculator
 //страница калькулятора цена
 <template>
-    <div class="row h-100 justify-content-center fadeInAnim">
+    <div class="row h-100 justify-content-center fadeInAnim" v-if="orderTypesInfo !== -1">
         <div class="col-12 col-md-10 mt-2">
-            <div class="row justify-content-center mt-5">
+            <div class="row justify-content-center mt-2">
                 <div class="col-11 col-md-8">
                     <div class="row justify-content-center">
                             <div class="col-12 mt-2">
                                 <h3 class="text-center">Я хочу...</h3>
                             </div>
-                            <div class="col-12 text-center col-md-4 mt-3 calculatorCard personal" 
+
+                            <div v-for="(orderType, index) of orderTypesInfo" v-bind:key="index" class="col-12 text-center col-md-4 mt-3 calculatorCard"
+                                 v-bind:class="{'selected': selectedProduct === orderType.order_type}" @click="selectProduct(orderType.order_type)"
+                                    :style="{backgroundColor: selectedProduct === orderType.order_type ? orderType.color_style : transparentWhiteColor}">
+                                <h4 class="text-center">{{orderType.order_name}}</h4>
+                            </div>
+
+                            <!-- <div class="col-12 text-center col-md-4 mt-3 calculatorCard personal" 
                                 v-bind:class="{'selected': selectedProduct === 'businessCard'}" @click="selectProduct('businessCard', 'v-a')">
                                 <h4 class="text-center">Сайт-визитку</h4>
                             </div>
@@ -24,32 +31,36 @@
                             <div class="col-12 col-md-4 text-center mt-3 calculatorCard special"
                                 v-bind:class="{'selected': selectedProduct === 'special'}" @click="selectProduct('special', 'v-b')">
                                 <h4 class="text-center">Что-то особенное</h4>
-                            </div>
+                            </div> -->
                     </div>
                 </div>
               
             </div>
-                <div v-for="(product, index) of listOfProducts" v-bind:key="index" class="row justify-content-center calculatorPrices">
+                <div v-for="(orderType) of orderTypesInfo" v-bind:key="orderType.order_type" class="row justify-content-center calculatorPrices">
                     <transition name="productDescription">
-                        <div class="col-8 text-center mt-5" v-if="selectedProduct == listOfProducts[index]">
+                        <div class="col-8 text-center mt-5" v-if="selectedProduct == orderType.order_type">
                             <div class="fs-2 mb-3">
-                                <h3><i :class="'bi' + ' ' + productIcon[listOfProducts[index]]"></i> {{productTitle[listOfProducts[index]]}}</h3>
+                                <h3><i :class="orderType.order_bootstrap_icon"></i> {{orderType.order_name}}</h3>
                             </div>
                             <div class="fs-2 mb-3 col-12">
-                            <p>{{productDescription[listOfProducts[index]]}}</p>
+                            <p>{{orderType.order_desc}}</p>
                             </div>
                             <div class="fs-2 mb-3 col-12">
                             <h4><b>Цена *</b></h4>
-                            <h2>≈ {{productPriceRange[listOfProducts[index]]}}</h2>
-                            <h6 style="font-size: 0.7rem">* примерный средний ценник, <br> окончательная цена может варьироваться в зависимости от сложности проекта</h6>
+                            <h2>{{orderType.price_range}}</h2>
+                            <h4 class="mt-5"><b>Срок разработки *</b></h4>
+                            <h2>{{orderType.time_range}}</h2>
+                            <h6 style="font-size: 0.7rem">* примерный средний ценник и сроки разработки, <br>окончательная цена и срок разработки могут варьироваться в зависимости от сложности проекта</h6>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-8 text-center mt-4" v-if="selectedProduct == orderType.order_type">
+                                <button type="button" class="btn btn-light btn-lg" @click="makeOrder()">
+                                    <i class="bi bi-cart"></i> Заказать
+                                </button>
+                            </div>
                             </div>
                         </div>
-                    </transition>
-                    <transition name="productDescription">
-                        <div class="col-8 text-center mt-4" v-if="selectedProduct == listOfProducts[index]">
-                            <button type="button" class="btn btn-light btn-lg" @click="makeOrder()">
-                                <i class="bi bi-cart"></i> Заказать</button>
-                        </div>
+               
                     </transition>
 
                 </div>
@@ -64,9 +75,9 @@ export default {
     // данные
     data(){
         return{
+            transparentWhiteColor: 'rgba(255,255,255, 0.15)',
             selectedProduct: null,
             currentTitle: null,
-            view: '',
             listOfProducts: ['businessCard', 'landing', 'telegram', 'special'],
             lorem: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis odio libero repellat. Eveniet obcaecati rerum laboriosam corporis blanditiis, consectetur eius quas illum voluptatibus enim sed autem, deserunt nobis pariatur. Deserunt.
                        Provident blanditiis culpa qui et quaerat quibusdam quasi, aut atque rerum cum, placeat ducimus ex enim delectus? Blanditiis beatae odit facilis modi unde est eum hic aliquam, officia tempora corrupti?
@@ -76,6 +87,10 @@ export default {
     },
     computed: {
         
+        orderTypesInfo(){
+            return this.$store.state.GlobalStates.orderTypesInfo;
+        },
+
         productDescription(){
            return  {
                 'businessCard': this.lorem,
@@ -116,8 +131,7 @@ export default {
 
     // методы
     methods: {
-        selectProduct(productType, viewType){
-            this.view = viewType;
+        selectProduct(productType){
             this.selectedProduct = productType;
         },
 
