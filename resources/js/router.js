@@ -48,7 +48,7 @@ const routes = [
                 component: About
             },
             {
-                path: '/calculator',
+                path: '/requestProject',
                 component: Calculator
             }
         ]

@@ -69,7 +69,14 @@
                         <h6 class="text-center mb-3">
                             <a v-on:click="closeNavMenu()" href="#contacts"><b>Контакты</b></a>
                         </h6>
-                        <hr v-if="about === 1">
+                        <hr v-if="order === 1 || about === 1">
+                    </div>
+                    <!-- заказать проект -->
+                    <div class="col-12" v-if="order ===  1">
+                        <h6 class="text-center">
+                            <router-link to="/requestProject"><b @click="closeNavMenu()">Заказать проект</b></router-link>
+                        </h6>
+                         <hr v-if="about === 1">
                     </div>
                     <!-- о сайте -->
                     <div class="col-12" v-if="about ===  1">
@@ -105,6 +112,9 @@
             },
             screenOrientation: function(){
                 return this.$store.state.GlobalStates.screenOrientation;
+            },
+            order(){
+                return this.$parent.settings.order;
             },
             about: function(){
                 return this.$parent.settings.about;

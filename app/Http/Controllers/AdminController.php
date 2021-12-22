@@ -430,6 +430,7 @@ class AdminController extends Controller
         $settings = Settings::get()[0];
         
         $settings->side_nav = $request->side_nav;
+        $settings->order = $request->order;
         $settings->about = $request->about;
         $settings->site_owner = $request->site_owner;
         $settings->projects = $request->projects;

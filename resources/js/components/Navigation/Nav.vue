@@ -10,14 +10,14 @@
                 Главная
             </router-link>
         </li>
-        <!-- Калькулятор -->
-        <li class="nav-item">
-            <router-link class="nav-link active" aria-current="page" to="/calculator">
+        <!-- Заказать проект -->
+        <li class="nav-item" v-if="order === 1">
+            <router-link class="nav-link active" aria-current="page" to="/requestProject">
                 Заказать проект
             </router-link>
         </li>
         <!-- О сайте -->
-        <li class="nav-item">
+        <li class="nav-item" v-if="about === 1">
             <router-link class="nav-link active" aria-current="page" to="/about">
                 О сайте
             </router-link>
@@ -28,6 +28,14 @@
 
 <script>
 export default {
+    computed: {
+        about(){
+            return this.$parent.settings.about;   
+        },
 
+        order(){
+            return this.$parent.settings.order;
+        }
+    }
 }
 </script>

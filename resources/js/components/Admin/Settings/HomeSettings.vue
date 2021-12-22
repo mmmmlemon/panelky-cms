@@ -27,6 +27,24 @@
                                 </div>
                             </div>
 
+                            <div class="col-12 col-md-8 text-center font14pt form-check mt-3">
+                                <div class="btn-group col-12 col-md-10" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn" 
+                                            v-bind:class="{'btn-light': order === 1, 'btn-outline-light': order === 0}"
+                                            v-on:click="toggleValue('order', 1)">
+                                        <i class="bi bi-check2 fadeInAnim" v-if="order=== 1"></i>
+                                        Раздел "Заказать проект"
+                                    </button>
+                                    <button type="button" class="btn"
+                                            v-bind:class="{'btn-light': order === 0, 'btn-outline-light': order === 1}"
+                                            v-on:click="toggleValue('order', 0)">
+                                        <i class="bi bi-check2 fadeInAnim" v-if="order === 0"></i>
+                                        Без раздела "Заказать проект"
+                                    </button>
+                                </div>
+                            </div>
+
+
                             <!-- о себе -->
                             <div class="col-12 col-md-8 text-center font14pt form-check mt-3">
                                 <div class="btn-group col-12 col-md-10" role="group" aria-label="Basic example">
@@ -142,6 +160,7 @@ export default {
         //получить настройки
         axios.get('/api/getHomeSettings').then(response => {
             this.side_nav = response.data.side_nav;
+            this.order = response.data.order;
             this.about = response.data.about;
             this.site_owner = response.data.site_owner;
             this.projects = response.data.projects;
@@ -159,6 +178,8 @@ export default {
         return {
             //боковая навигация, вкл\выкл
             side_nav: -1,
+            // заказать проект, вкл/выкл
+            order: 1,
             //о сайте, вкл\выкл
             about: 1,
             //карточка приветствия, вкл\выкл
@@ -181,6 +202,9 @@ export default {
             switch(data){
                 case 'side_nav':
                     this.side_nav = value;
+                    break;
+                case 'order':
+                    this.order = value;
                     break;
                 case 'about':
                     this.about = value;
@@ -207,6 +231,7 @@ export default {
             this.saved = false;
             let formData = new FormData();
             formData.append('side_nav', this.side_nav);
+            formData.append('order', this.order);
             formData.append('about', this.about);
             formData.append('site_owner', this.site_owner);
             formData.append('projects', this.projects);

@@ -4,7 +4,7 @@
 
     <div class="container col-12 vh-100">
         <!-- навигация -->
-        <Nav v-if="public_access == 1 && settings.about === 1 && (isMobile && screenOrientation === 'horizontal') === false"/>
+        <Nav v-if="public_access == 1 && (settings.about === 1 || settings.order === 1) && (isMobile && screenOrientation === 'horizontal') === false"/>
         <!-- кнопка навигации в верхнем углу экрана -->
         <NavButton v-if="public_access == 1 && settings.side_nav === 1 && (isMobile && screenOrientation === 'horizontal') === false"/>
         <!-- кнопка "Наверх" -->
@@ -74,7 +74,7 @@ export default {
                     //если нужно показать карточку о владельце сайта, то получаем информацию о владельце
 
                     // TODO: ДОБАВИТЬ orders в настройки сайта
-                    if(true){
+                    if(this.settings.order === 1){
                         this.$store.dispatch('getOrderTypesInfo');
                     }
 

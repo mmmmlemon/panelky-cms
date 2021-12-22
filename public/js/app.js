@@ -5598,6 +5598,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
@@ -5606,6 +5624,7 @@ __webpack_require__.r(__webpack_exports__);
     //получить настройки
     axios.get('/api/getHomeSettings').then(function (response) {
       _this.side_nav = response.data.side_nav;
+      _this.order = response.data.order;
       _this.about = response.data.about;
       _this.site_owner = response.data.site_owner;
       _this.projects = response.data.projects;
@@ -5621,6 +5640,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       //боковая навигация, вкл\выкл
       side_nav: -1,
+      // заказать проект, вкл/выкл
+      order: 1,
       //о сайте, вкл\выкл
       about: 1,
       //карточка приветствия, вкл\выкл
@@ -5641,6 +5662,10 @@ __webpack_require__.r(__webpack_exports__);
       switch (data) {
         case 'side_nav':
           this.side_nav = value;
+          break;
+
+        case 'order':
+          this.order = value;
           break;
 
         case 'about':
@@ -5674,6 +5699,7 @@ __webpack_require__.r(__webpack_exports__);
       this.saved = false;
       var formData = new FormData();
       formData.append('side_nav', this.side_nav);
+      formData.append('order', this.order);
       formData.append('about', this.about);
       formData.append('site_owner', this.site_owner);
       formData.append('projects', this.projects);
@@ -6038,7 +6064,7 @@ __webpack_require__.r(__webpack_exports__);
           }); //если нужно показать карточку о владельце сайта, то получаем информацию о владельце
           // TODO: ДОБАВИТЬ orders в настройки сайта
 
-          if (true) {
+          if (_this.settings.order === 1) {
             _this.$store.dispatch('getOrderTypesInfo');
           }
 
@@ -7459,7 +7485,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  computed: {
+    about: function about() {
+      return this.$parent.settings.about;
+    },
+    order: function order() {
+      return this.$parent.settings.order;
+    }
+  }
+});
 
 /***/ }),
 
@@ -7474,6 +7509,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -7580,6 +7622,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     screenOrientation: function screenOrientation() {
       return this.$store.state.GlobalStates.screenOrientation;
+    },
+    order: function order() {
+      return this.$parent.settings.order;
     },
     about: function about() {
       return this.$parent.settings.about;
@@ -7974,7 +8019,7 @@ var routes = [//user side
     path: '/about',
     component: _components_About_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
-    path: '/calculator',
+    path: '/requestProject',
     component: _components_Calculator_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   }]
 }, {
@@ -69502,6 +69547,81 @@ var render = function () {
                                 {
                                   staticClass: "btn",
                                   class: {
+                                    "btn-light": _vm.order === 1,
+                                    "btn-outline-light": _vm.order === 0,
+                                  },
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.toggleValue("order", 1)
+                                    },
+                                  },
+                                },
+                                [
+                                  _vm.order === 1
+                                    ? _c("i", {
+                                        staticClass: "bi bi-check2 fadeInAnim",
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(
+                                    '\n                                    Раздел "Заказать проект"\n                                '
+                                  ),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
+                                    "btn-light": _vm.order === 0,
+                                    "btn-outline-light": _vm.order === 1,
+                                  },
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.toggleValue("order", 0)
+                                    },
+                                  },
+                                },
+                                [
+                                  _vm.order === 0
+                                    ? _c("i", {
+                                        staticClass: "bi bi-check2 fadeInAnim",
+                                      })
+                                    : _vm._e(),
+                                  _vm._v(
+                                    '\n                                    Без раздела "Заказать проект"\n                                '
+                                  ),
+                                ]
+                              ),
+                            ]
+                          ),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "col-12 col-md-8 text-center font14pt form-check mt-3",
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "btn-group col-12 col-md-10",
+                              attrs: {
+                                role: "group",
+                                "aria-label": "Basic example",
+                              },
+                            },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
                                     "btn-light": _vm.about === 1,
                                     "btn-outline-light": _vm.about === 0,
                                   },
@@ -70355,7 +70475,7 @@ var render = function () {
     { staticClass: "container col-12 vh-100" },
     [
       _vm.public_access == 1 &&
-      _vm.settings.about === 1 &&
+      (_vm.settings.about === 1 || _vm.settings.order === 1) &&
       (_vm.isMobile && _vm.screenOrientation === "horizontal") === false
         ? _c("Nav")
         : _vm._e(),
@@ -72277,37 +72397,41 @@ var render = function () {
         1
       ),
       _vm._v(" "),
-      _c(
-        "li",
-        { staticClass: "nav-item" },
-        [
-          _c(
-            "router-link",
-            {
-              staticClass: "nav-link active",
-              attrs: { "aria-current": "page", to: "/calculator" },
-            },
-            [_vm._v("\n            Заказать проект\n        ")]
-          ),
-        ],
-        1
-      ),
+      _vm.order === 1
+        ? _c(
+            "li",
+            { staticClass: "nav-item" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "nav-link active",
+                  attrs: { "aria-current": "page", to: "/requestProject" },
+                },
+                [_vm._v("\n            Заказать проект\n        ")]
+              ),
+            ],
+            1
+          )
+        : _vm._e(),
       _vm._v(" "),
-      _c(
-        "li",
-        { staticClass: "nav-item" },
-        [
-          _c(
-            "router-link",
-            {
-              staticClass: "nav-link active",
-              attrs: { "aria-current": "page", to: "/about" },
-            },
-            [_vm._v("\n            О сайте\n        ")]
-          ),
-        ],
-        1
-      ),
+      _vm.about === 1
+        ? _c(
+            "li",
+            { staticClass: "nav-item" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "nav-link active",
+                  attrs: { "aria-current": "page", to: "/about" },
+                },
+                [_vm._v("\n            О сайте\n        ")]
+              ),
+            ],
+            1
+          )
+        : _vm._e(),
     ]
   )
 }
@@ -72572,6 +72696,39 @@ var render = function () {
                                 [_c("b", [_vm._v("Контакты")])]
                               ),
                             ]),
+                            _vm._v(" "),
+                            _vm.order === 1 || _vm.about === 1
+                              ? _c("hr")
+                              : _vm._e(),
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.order === 1
+                        ? _c("div", { staticClass: "col-12" }, [
+                            _c(
+                              "h6",
+                              { staticClass: "text-center" },
+                              [
+                                _c(
+                                  "router-link",
+                                  { attrs: { to: "/requestProject" } },
+                                  [
+                                    _c(
+                                      "b",
+                                      {
+                                        on: {
+                                          click: function ($event) {
+                                            return _vm.closeNavMenu()
+                                          },
+                                        },
+                                      },
+                                      [_vm._v("Заказать проект")]
+                                    ),
+                                  ]
+                                ),
+                              ],
+                              1
+                            ),
                             _vm._v(" "),
                             _vm.about === 1 ? _c("hr") : _vm._e(),
                           ])

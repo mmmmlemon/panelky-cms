@@ -333,6 +333,7 @@ class APIController extends Controller
         $homeSettings = [
             'side_nav' => $settings->side_nav,
             'about' => $settings->about,
+            'order' => $settings->order,
             'site_owner' => $settings->site_owner,
             'projects' => $settings->projects,
             'footer' => $settings->footer,
