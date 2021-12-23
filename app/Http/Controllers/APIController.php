@@ -367,6 +367,8 @@ class APIController extends Controller
 
         return response()->json($settings->about_site_text, 200);
     }
+
+ 
 }
 
 

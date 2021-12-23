@@ -57,6 +57,8 @@ Route::post('/admin/setNewOrderForContacts', [AdminController::class, 'setNewOrd
 Route::get('/admin/getCookiesMessage', [AdminController::class, 'getCookiesMessage']);
 Route::post('/admin/saveCookiesMessage', [AdminController::class, 'saveCookiesMessage']);
 Route::post('/admin/addNewOrderType', [AdminController::class, 'addNewOrderType']);
+Route::get('/admin/getOrderType/{slug}', [AdminController::class, 'getOrderType']);
+Route::post('/admin/saveOrderType/{slug}', [AdminController::class, 'saveOrderType']);
 
 
 Route::get('/admin', [AdminController::class, 'index']);

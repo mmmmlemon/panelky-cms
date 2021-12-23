@@ -3964,7 +3964,140 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  beforeMount: function beforeMount() {
+    var _this = this;
+
+    this.$parent.currentTab = 'orderTypes';
+    var slug = this.$route.params.slug;
+    axios.get('/admin/getOrderType/' + slug).then(function (response) {
+      _this.orderType = response.data;
+    });
+  },
+  data: function data() {
+    return {
+      orderType: null,
+      saved: false
+    };
+  },
+  methods: {
+    // отправить форму
+    submit: function submit() {
+      var _this2 = this;
+
+      //добавление всех полей в js-форму
+      var formData = new FormData();
+
+      if (this.orderType !== null) {
+        formData.append('order_type', this.orderType.order_type);
+        formData.append('order_name', this.orderType.order_name);
+        formData.append('order_desc', this.orderType.order_desc);
+        formData.append('order_bootstrap_icon', this.orderType.order_bootstrap_icon);
+        formData.append('price_range', this.orderType.price_range);
+        formData.append('time_range', this.orderType.time_range);
+        formData.append('color_style', this.orderType.color_style);
+      } //отправка запроса
+
+
+      axios.post('/admin/saveOrderType/' + this.orderType.order_type, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (response) {
+        _this2.saved = true; //редирект во вкладку "Управление проектами"
+
+        window.location.href = "/admin/orderTypes";
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          _this2.saved = false;
+          _this2.errors = error.response.data.errors || {};
+        }
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -8380,7 +8513,7 @@ var routes = [//user side
       path: '/admin/orderTypes/add',
       component: _components_Admin_OrderTypes_OrderTypesAdd__WEBPACK_IMPORTED_MODULE_25__["default"]
     }, {
-      path: '/admin/orderTypes/edit',
+      path: '/admin/orderTypes/edit/:slug',
       component: _components_Admin_OrderTypes_OrderTypesEdit__WEBPACK_IMPORTED_MODULE_26__["default"]
     }]
   }, {
@@ -67587,16 +67720,311 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _vm.orderType != null
+    ? _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col-12 col-md-3" }, [
+          _c(
+            "form",
+            {
+              attrs: { method: "POST" },
+              on: {
+                submit: function ($event) {
+                  $event.preventDefault()
+                  return _vm.submit.apply(null, arguments)
+                },
+              },
+            },
+            [
+              _c("input", {
+                staticClass: "invisible",
+                attrs: { type: "text" },
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _c("h6", [_vm._v("Наименование")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.orderType.order_name,
+                      expression: "orderType.order_name",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    placeholder:
+                      "Интернет-магазин, лендинг, сайт-визитка и т.п",
+                    required: "",
+                  },
+                  domProps: { value: _vm.orderType.order_name },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.orderType, "order_name", $event.target.value)
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _c("h6", [_vm._v("Bootstrap-иконка (класс)")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.orderType.order_bootstrap_icon,
+                      expression: "orderType.order_bootstrap_icon",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "bi bi-email" },
+                  domProps: { value: _vm.orderType.order_bootstrap_icon },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.orderType,
+                        "order_bootstrap_icon",
+                        $event.target.value
+                      )
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _c("h6", [_vm._v("Краткое описание")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.orderType.order_desc,
+                      expression: "orderType.order_desc",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    rows: "4",
+                    placeholder: "Краткое описание сути заказа",
+                  },
+                  domProps: { value: _vm.orderType.order_desc },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.orderType, "order_desc", $event.target.value)
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _c("h6", [_vm._v("Ценник")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.orderType.price_range,
+                      expression: "orderType.price_range",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "≈ от 1 до 100 ₽" },
+                  domProps: { value: _vm.orderType.price_range },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.orderType,
+                        "price_range",
+                        $event.target.value
+                      )
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _c("h6", [_vm._v("Время разработки")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.orderType.time_range,
+                      expression: "orderType.time_range",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "≈ от 1 до 100 дней" },
+                  domProps: { value: _vm.orderType.time_range },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.orderType, "time_range", $event.target.value)
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "mb-3" },
+                [
+                  _c("h6", [_vm._v("Цвет карточки")]),
+                  _vm._v(" "),
+                  _c("v-input-colorpicker", {
+                    attrs: { mode: "hsla", "swatches-max-height": "200" },
+                    model: {
+                      value: _vm.orderType.color_style,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.orderType, "color_style", $$v)
+                      },
+                      expression: "orderType.color_style",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-lg btn-block btn-outline-light",
+                  attrs: { disabled: _vm.saved === true },
+                },
+                [
+                  _vm._v(
+                    "\n                Добавить новый тип заказов\n            "
+                  ),
+                ]
+              ),
+            ]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12 col-md-3" }, [
+          _c("h6", [_vm._v("Превью")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "row justify-content-center calculatorPrices text-center",
+            },
+            [
+              _c("div", { staticClass: "fs-2 mb-3" }, [
+                _vm.orderType.order_name != null &&
+                _vm.orderType.order_name != ""
+                  ? _c("h3", { staticClass: "fadeInAnim" }, [
+                      _c("i", { class: _vm.orderType.order_bootstrap_icon }),
+                      _vm._v(
+                        " \n                    " +
+                          _vm._s(_vm.orderType.order_name) +
+                          "\n                "
+                      ),
+                    ])
+                  : _vm._e(),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "fs-2 mb-3 col-12" }, [
+                _vm.orderType.order_desc != null &&
+                _vm.orderType.order_desc != ""
+                  ? _c("p", { staticClass: "fadeInAnim" }, [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.orderType.order_desc) +
+                          "\n                "
+                      ),
+                    ])
+                  : _vm._e(),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "fs-2 mb-3 col-12" }, [
+                _vm.orderType.price_range != null &&
+                _vm.orderType.price_range != ""
+                  ? _c("h4", { staticClass: "fadeInAnim" }, [
+                      _c("b", [_vm._v("Цена *")]),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.orderType.price_range != null &&
+                _vm.orderType.price_range != ""
+                  ? _c("h2", { staticClass: "fadeInAnim" }, [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.orderType.price_range) +
+                          "\n                "
+                      ),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.orderType.time_range != null
+                  ? _c("h4", { staticClass: "mt-5 fadeInAnim" }, [
+                      _c("b", [_vm._v("Срок разработки *")]),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.orderType.time_range != null &&
+                _vm.orderType.time_range != ""
+                  ? _c("h2", { staticClass: "fadeInAnim" }, [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.orderType.time_range) +
+                          "\n                "
+                      ),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                (_vm.orderType.price_range != null &&
+                  _vm.orderType.price_range != "") ||
+                (_vm.orderType.time_range != null &&
+                  _vm.orderType.time_range != "")
+                  ? _c(
+                      "h6",
+                      {
+                        staticClass: "fadeInAnim",
+                        staticStyle: { "font-size": "0.7rem" },
+                      },
+                      [
+                        _vm._v(
+                          "\n                        * примерный средний ценник и сроки разработки, "
+                        ),
+                        _c("br"),
+                        _vm._v(
+                          "окончательная цена и срок разработки могут \n                        варьироваться в зависимости от сложности проекта\n                "
+                        ),
+                      ]
+                    )
+                  : _vm._e(),
+              ]),
+            ]
+          ),
+        ]),
+      ])
+    : _vm._e()
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("h3", [_vm._v("OrderTypesEdit")])])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -67643,16 +68071,24 @@ var render = function () {
                     "div",
                     { staticClass: "row justify-content-center" },
                     [
-                      _c("router-link", { attrs: { to: "/admin/edit/" } }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-light mr-3",
-                            attrs: { title: "Редактировать" },
+                      _c(
+                        "router-link",
+                        {
+                          attrs: {
+                            to: "/admin/orderTypes/edit/" + item.order_type,
                           },
-                          [_c("i", { staticClass: "bi bi-pencil-fill" })]
-                        ),
-                      ]),
+                        },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-light mr-3",
+                              attrs: { title: "Редактировать" },
+                            },
+                            [_c("i", { staticClass: "bi bi-pencil-fill" })]
+                          ),
+                        ]
+                      ),
                       _vm._v(" "),
                       _vm._m(0, true),
                     ],

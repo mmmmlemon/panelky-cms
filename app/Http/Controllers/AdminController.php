@@ -718,4 +718,32 @@ class AdminController extends Controller
 
     }
 
+    // getOrderType
+    // получить тип заказа 
+    public function getOrderType($slug){
+
+        $order = Order::where('order_type', $slug)->get()[0];
+
+        return response()->json($order);
+
+    }
+
+    // saveOrderType
+    // изменить тип заказа
+    public function saveOrderType(Request $request){
+
+        $order = Order::where('order_type', $request->order_type)->get()[0];
+
+        $order->order_name = $request->order_name;
+        $order->order_desc = $request->order_desc;
+        $order->order_bootstrap_icon = $request->order_bootstrap_icon;
+        $order->time_range = $request->time_range;
+        $order->price_range = $request->price_range;
+        $order->color_style = $request->color_style;
+
+        $order->save();
+
+        return response()->json(true, 200);
+    }
+
 }

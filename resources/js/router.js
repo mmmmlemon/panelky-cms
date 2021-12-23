@@ -80,7 +80,7 @@ const routes = [
                         component: OrderTypesAdd,
                     },
                     {
-                        path: '/admin/orderTypes/edit',
+                        path: '/admin/orderTypes/edit/:slug',
                         component: OrderTypesEdit,
                     }
                 ]
