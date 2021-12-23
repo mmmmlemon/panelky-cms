@@ -153,6 +153,8 @@ const AdminStates = {
         currentTab: -1,
         //список проектов для HomeProjects.vue
         projectsList: -1,
+        // список вариантов заказов
+        ordersList: -1,
         //slug текущего выбранного проекта в HomeProjects.vue
         currentProjectSlug: -1, 
         //текущий выбранный проект (HomeProject.vue, EditProject.vue)

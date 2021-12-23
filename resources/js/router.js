@@ -10,6 +10,7 @@ import RequestProject from './components/RequestProject.vue';
 
 import AppAdmin from './components/AppAdmin.vue';
 import SiteOwnerSettings from './components/Admin/SiteOwnerSettings.vue';
+import OrderTypesSettings from './components/Admin/OrderTypesSettings.vue';
 import SiteOwnerInfo from './components/Admin/SiteOwner/SiteOwnerInfo.vue';
 import SiteOwnerAbout from './components/Admin/SiteOwner/SiteOwnerAbout.vue';
 import Projects from './components/Admin/Projects.vue';
@@ -25,6 +26,9 @@ import BasicSettings from './components/Admin/Settings/BasicSettings.vue';
 import HomeSettings from './components/Admin/Settings/HomeSettings.vue';
 import DesignSettings from './components/Admin/Settings/DesignSettings.vue';
 import CookiesSettings from './components/Admin/Settings/CookiesSettings.vue';
+import OrderTypesList from './components/Admin/OrderTypes/OrderTypesList';
+import OrderTypesAdd from './components/Admin/OrderTypes/OrderTypesAdd';
+import OrderTypesEdit from './components/Admin/OrderTypes/OrderTypesEdit';
 
 import test from './components/test.vue';
 
@@ -62,6 +66,25 @@ const routes = [
         path:'/admin',
         component: AppAdmin,
         children: [
+            {   
+                // order types
+                path: '/admin/orderTypes',
+                component: OrderTypesSettings,
+                children: [
+                    {
+                        path: '/admin/orderTypes',
+                        component: OrderTypesList,
+                    },
+                    {
+                        path: '/admin/orderTypes/add',
+                        component: OrderTypesAdd,
+                    },
+                    {
+                        path: '/admin/orderTypes/edit',
+                        component: OrderTypesEdit,
+                    }
+                ]
+            },
             {
                 //admin home
                 path: '/admin/siteOwner',

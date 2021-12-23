@@ -56,6 +56,7 @@ Route::post('/admin/deleteContact', [AdminController::class, 'deleteContact']);
 Route::post('/admin/setNewOrderForContacts', [AdminController::class, 'setNewOrderForContacts']);
 Route::get('/admin/getCookiesMessage', [AdminController::class, 'getCookiesMessage']);
 Route::post('/admin/saveCookiesMessage', [AdminController::class, 'saveCookiesMessage']);
+Route::post('/admin/addNewOrderType', [AdminController::class, 'addNewOrderType']);
 
 
 Route::get('/admin', [AdminController::class, 'index']);

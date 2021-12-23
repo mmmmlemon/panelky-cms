@@ -525,8 +525,9 @@ hr {
     background-color: rgba(255,255,255, 0.15);
     border-radius: 15px;
     cursor: pointer;
-    height: 5rem !important;
+    /* height: 5rem !important; */
     margin: 5px;
+    padding: 10px;
     transition: all 0.2s ease-in-out;
 }
 
@@ -553,7 +554,7 @@ hr {
 }
 
 .calculatorCard h4{
-    margin-top: 8%;
+    margin-top: 4%;
 }
 
 .calculatorPrices{

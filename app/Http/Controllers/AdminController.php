@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use File;
 use App\Models\Settings;
 use App\Models\Project;
+use App\Models\Order;
 use App\Models\ProjectSlide;
 use App\Models\Contact;
 use App\Models\SocialMediaLibrary;
@@ -685,6 +686,36 @@ class AdminController extends Controller
         $settings->cookies_message = $request->cookiesMessage;
         $settings->save();
         return response()->json(true, 200);
+    }
+
+    // addNewOrderType
+    // добавить новый тип заказа
+    public function addNewOrderType(Request $request){
+        
+        $this->validate($request, [
+            'order_name' => 'required|string|max:255',
+            'order_desc' => 'required|string|max:1555',
+            'order_bootstrap_icon' => 'string|max:255',
+            'price_range' => 'string|max:255',
+            'time_range' => 'string|max:255',
+            'color_style' => 'string|max:255',
+        ]);
+
+        $order = new Order;
+
+        $order->order_type = Str::slug($request->order_name);
+        $order->order_name = $request->order_name;
+        $order->order_desc = $request->order_desc;
+        $order->order_bootstrap_icon = $request->order_bootstrap_icon;
+        $order->price_range = $request->price_range;
+        $order->time_range = $request->time_range;
+        $order->color_style = $request->color_style;
+
+        $order->save();
+
+        return response()->json(true, 200);
+        
+
     }
 
 }

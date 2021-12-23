@@ -58,6 +58,14 @@
                             Владелец сайта
                         </router-link>
                     </li>
+                    <!-- Варианты заказов -->
+                    <li class="nav-item mr-2 mb-1">
+                        <router-link v-bind:class="{'btn-light': currentTab === 'orderTypes', 
+                                                    'btn-outline-light': currentTab !== 'orderTypes'}"
+                                                    to="/admin/orderTypes" class="btn btn-block font14pt" aria-current="page">
+                            Заказы
+                        </router-link>
+                    </li>
                     <!-- Проекты -->
                     <li class="nav-item mr-2 mb-1">
                         <router-link v-bind:class="{'btn-light': currentTab === 'projects', 

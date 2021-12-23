@@ -43,14 +43,14 @@
                                 <h3><i :class="orderType.order_bootstrap_icon"></i> {{orderType.order_name}}</h3>
                             </div>
                             <div class="fs-2 mb-3 col-12">
-                            <p>{{orderType.order_desc}}</p>
+                                <p>{{orderType.order_desc}}</p>
                             </div>
                             <div class="fs-2 mb-3 col-12">
-                            <h4><b>Цена *</b></h4>
-                            <h2>{{orderType.price_range}}</h2>
-                            <h4 class="mt-5"><b>Срок разработки *</b></h4>
-                            <h2>{{orderType.time_range}}</h2>
-                            <h6 style="font-size: 0.7rem">* примерный средний ценник и сроки разработки, <br>окончательная цена и срок разработки могут варьироваться в зависимости от сложности проекта</h6>
+                                <h4><b>Цена *</b></h4>
+                                <h2>{{orderType.price_range}}</h2>
+                                <h4 class="mt-5"><b>Срок разработки *</b></h4>
+                                <h2>{{orderType.time_range}}</h2>
+                                <h6 style="font-size: 0.7rem">* примерный средний ценник и сроки разработки, <br>окончательная цена и срок разработки могут варьироваться в зависимости от сложности проекта</h6>
                             </div>
                             <div class="row justify-content-center">
                                 <div class="col-8 text-center mt-4" v-if="selectedProduct == orderType.order_type">
