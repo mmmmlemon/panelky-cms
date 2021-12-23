@@ -2971,6 +2971,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //данные
   computed: {
@@ -3054,6 +3076,24 @@ __webpack_require__.r(__webpack_exports__);
           var errors = error.response.data;
 
           _this3.$store.dispatch('setErrors', error.response.data.message);
+        }
+      });
+    },
+    // удалить заказ
+    deleteOrder: function deleteOrder() {
+      var _this4 = this;
+
+      var order_type = this.deleteModalInfo.order_type;
+      var formData = new FormData();
+      formData.append('order_type', order_type);
+      axios.post('/admin/deleteOrder', formData).then(function (response) {// TODO
+        // this.$store.dispatch('getContacts');
+        // this.$store.dispatch('setDeleteModalInfo', undefined);
+      })["catch"](function (error) {
+        if (error.response.status === 422 || error.response.status === 500) {
+          var errors = error.response.data;
+
+          _this4.$store.dispatch('setErrors', error.response.data.message);
         }
       });
     }
@@ -4157,6 +4197,17 @@ __webpack_require__.r(__webpack_exports__);
     return {
       ordersList: null
     };
+  },
+  methods: {
+    //удалить заказ
+    deleteOrder: function deleteOrder(index) {
+      var order = this.ordersList[index];
+      this.$store.dispatch('setDeleteModalInfo', {
+        type: 'order',
+        order_title: order.order_name,
+        order_type: order.order_type
+      });
+    }
   }
 });
 
@@ -66516,11 +66567,82 @@ var render = function () {
                 ]
               )
             : _vm._e(),
+          _vm._v(" "),
+          _vm.deleteModalInfo.type === "order"
+            ? _c(
+                "div",
+                {
+                  staticClass:
+                    "col-11 col-md-4 transparentCard deleteModalCard m-1",
+                },
+                [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("h4", { staticClass: "card-title" }, [
+                      _vm._v("Удаление типа заказа"),
+                    ]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("h5", { staticClass: "card-text" }, [
+                      _vm._v("Вы действительно хотите тип заказа "),
+                      _c("b", [
+                        _vm._v(_vm._s(_vm.deleteModalInfo.order_title)),
+                      ]),
+                      _vm._v("? Это действие нельзя будет отменить."),
+                    ]),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "d-grid gap-2 d-md-block" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          attrs: { type: "button" },
+                          on: { click: _vm.cancel },
+                        },
+                        [
+                          _vm._m(6),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Нет, не хочу")]),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger",
+                          attrs: { type: "button" },
+                          on: { click: _vm.deleteOrder },
+                        },
+                        [
+                          _vm._m(7),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Да, удалить")]),
+                        ]
+                      ),
+                    ]),
+                  ]),
+                ]
+              )
+            : _vm._e(),
         ]),
       ])
     : _vm._e()
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "bi bi-x" })])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "bi bi-trash-fill" })])
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -68090,7 +68212,19 @@ var render = function () {
                         ]
                       ),
                       _vm._v(" "),
-                      _vm._m(0, true),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-light ml-3",
+                          attrs: { title: "Удалить" },
+                          on: {
+                            click: function ($event) {
+                              return _vm.deleteOrder(index)
+                            },
+                          },
+                        },
+                        [_c("i", { staticClass: "bi bi-trash-fill" })]
+                      ),
                     ],
                     1
                   ),
@@ -68103,18 +68237,7 @@ var render = function () {
       ])
     : _vm._e()
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-light ml-3", attrs: { title: "Удалить" } },
-      [_c("i", { staticClass: "bi bi-trash-fill" })]
-    )
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

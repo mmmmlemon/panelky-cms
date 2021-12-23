@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <!-- удаление ссылок -->
+            <!-- удаление контактов -->
             <div class="col-11 col-md-4 transparentCard deleteModalCard m-1" v-if="deleteModalInfo.type === 'contact'">
                 <div class="card-body">
                     <h4 class="card-title">Удаление контакта</h4>
@@ -64,6 +64,28 @@
                         </button>
                         <!-- удаление -->
                         <button class="btn btn-danger" type="button" v-on:click="deleteContact">
+                            <span><i class="bi bi-trash-fill"></i></span>
+                            <span>Да, удалить</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- удаление заказов-->
+            <div class="col-11 col-md-4 transparentCard deleteModalCard m-1" v-if="deleteModalInfo.type === 'order'">
+                <div class="card-body">
+                    <h4 class="card-title">Удаление типа заказа</h4>
+                    <hr>
+                    <h5 class="card-text">Вы действительно хотите тип заказа <b>{{deleteModalInfo.order_title}}</b>? Это действие нельзя будет отменить.</h5>
+                    <br>
+                    <!-- кнопки -->
+                    <div class="d-grid gap-2 d-md-block">
+                        <!-- отмена -->
+                        <button class="btn btn-secondary" type="button" v-on:click="cancel">
+                            <span><i class="bi bi-x"></i></span>
+                            <span>Нет, не хочу</span>
+                        </button>
+                        <!-- удаление -->
+                        <button class="btn btn-danger" type="button" v-on:click="deleteOrder">
                             <span><i class="bi bi-trash-fill"></i></span>
                             <span>Да, удалить</span>
                         </button>
@@ -152,6 +174,25 @@ export default {
             axios.post('/admin/deleteContact', formData).then(response => {
                 this.$store.dispatch('getContacts');
                 this.$store.dispatch('setDeleteModalInfo', undefined);
+            }).catch(error => {
+                if(error.response.status === 422 || error.response.status === 500){ 
+                        var errors = error.response.data;
+                        this.$store.dispatch('setErrors', error.response.data.message);
+                     }
+            });
+        },
+
+        // удалить заказ
+        deleteOrder(){
+            let order_type = this.deleteModalInfo.order_type;
+
+            let formData = new FormData();
+            formData.append('order_type', order_type);
+
+            axios.post('/admin/deleteOrder', formData).then(response => {
+                // TODO
+                // this.$store.dispatch('getContacts');
+                // this.$store.dispatch('setDeleteModalInfo', undefined);
             }).catch(error => {
                 if(error.response.status === 422 || error.response.status === 500){ 
                         var errors = error.response.data;

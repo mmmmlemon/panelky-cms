@@ -746,4 +746,16 @@ class AdminController extends Controller
         return response()->json(true, 200);
     }
 
+    // deleteOrder
+    // удалить тип заказа
+    public function deleteOrder(Request $request){
+        
+        $order = Order::where('order_type', $request->order_type)->get()[0];
+
+        $order->delete();
+
+        return response()->json(true, 200);
+
+    }
+
 }

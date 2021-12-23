@@ -17,7 +17,7 @@
                             </button>
                         </router-link>
                         <!-- удалить -->
-                        <button class="btn btn-light ml-3" title="Удалить">
+                        <button class="btn btn-light ml-3" title="Удалить" @click="deleteOrder(index)">
                             <i class="bi bi-trash-fill"></i>
                         </button>
                     </div>
@@ -43,6 +43,14 @@ export default {
     data() {
         return {
             ordersList: null,
+        }
+    },
+
+    methods: {
+        //удалить заказ
+        deleteOrder(index){
+            let order = this.ordersList[index];
+            this.$store.dispatch('setDeleteModalInfo', {type: 'order', order_title: order.order_name, order_type: order.order_type});
         }
     }
 }

@@ -58,7 +58,9 @@ Route::get('/admin/getCookiesMessage', [AdminController::class, 'getCookiesMessa
 Route::post('/admin/saveCookiesMessage', [AdminController::class, 'saveCookiesMessage']);
 Route::post('/admin/addNewOrderType', [AdminController::class, 'addNewOrderType']);
 Route::get('/admin/getOrderType/{slug}', [AdminController::class, 'getOrderType']);
+// TO DO ИСПРАВИТЬ SLUG
 Route::post('/admin/saveOrderType/{slug}', [AdminController::class, 'saveOrderType']);
+Route::post('/admin/deleteOrder', [AdminController::class, 'deleteOrder']);
 
 
 Route::get('/admin', [AdminController::class, 'index']);
