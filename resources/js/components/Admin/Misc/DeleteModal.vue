@@ -190,9 +190,8 @@ export default {
             formData.append('order_type', order_type);
 
             axios.post('/admin/deleteOrder', formData).then(response => {
-                // TODO
-                // this.$store.dispatch('getContacts');
-                // this.$store.dispatch('setDeleteModalInfo', undefined);
+                this.$store.dispatch('getOrderTypesList');
+                this.$store.dispatch('setDeleteModalInfo', undefined);
             }).catch(error => {
                 if(error.response.status === 422 || error.response.status === 500){ 
                         var errors = error.response.data;

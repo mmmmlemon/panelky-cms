@@ -1,7 +1,7 @@
 // OrderTypesList.vue
 
 <template>
-    <div class="row justify-content-center fadeInAnim" v-if="ordersList !== null">
+    <div class="row justify-content-center fadeInAnim" v-if="ordersList !== undefined">
         <div class="col-12 col-md-10 mb-2">
             <div class="row justify-content-center mt-3">
                 <div v-for="(item, index) of ordersList" v-bind:key="index" 
@@ -34,15 +34,19 @@ export default {
     },
 
     mounted(){
-        //получить список типов заказов
-        axios.get('/api/getOrderTypesInfo').then(response => {
-            this.ordersList = response.data;
-        })
+        // //получить список типов заказов
+        // axios.get('/api/getOrderTypesInfo').then(response => {
+        //     this.ordersList = response.data;
+        // })
+
+        this.$store.dispatch('getOrderTypesList');
+
     },
 
-    data() {
-        return {
-            ordersList: null,
+
+    computed:{
+        ordersList(){
+            return this.$store.state.AdminStates.ordersList;
         }
     },
 

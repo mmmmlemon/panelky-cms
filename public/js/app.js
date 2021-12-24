@@ -3086,9 +3086,10 @@ __webpack_require__.r(__webpack_exports__);
       var order_type = this.deleteModalInfo.order_type;
       var formData = new FormData();
       formData.append('order_type', order_type);
-      axios.post('/admin/deleteOrder', formData).then(function (response) {// TODO
-        // this.$store.dispatch('getContacts');
-        // this.$store.dispatch('setDeleteModalInfo', undefined);
+      axios.post('/admin/deleteOrder', formData).then(function (response) {
+        _this4.$store.dispatch('getOrderTypesList');
+
+        _this4.$store.dispatch('setDeleteModalInfo', undefined);
       })["catch"](function (error) {
         if (error.response.status === 422 || error.response.status === 500) {
           var errors = error.response.data;
@@ -4186,17 +4187,16 @@ __webpack_require__.r(__webpack_exports__);
     this.$parent.currentTab = 'orderTypes';
   },
   mounted: function mounted() {
-    var _this = this;
-
-    //получить список типов заказов
-    axios.get('/api/getOrderTypesInfo').then(function (response) {
-      _this.ordersList = response.data;
-    });
+    // //получить список типов заказов
+    // axios.get('/api/getOrderTypesInfo').then(response => {
+    //     this.ordersList = response.data;
+    // })
+    this.$store.dispatch('getOrderTypesList');
   },
-  data: function data() {
-    return {
-      ordersList: null
-    };
+  computed: {
+    ordersList: function ordersList() {
+      return this.$store.state.AdminStates.ordersList;
+    }
   },
   methods: {
     //удалить заказ
@@ -8912,6 +8912,23 @@ var AdminStates = {
         } else {
           context.commit('setState', {
             state: 'projectsList',
+            value: false
+          });
+        }
+      });
+    },
+    //getProjectsList
+    //получить список проектов из БД (Админка)
+    getOrderTypesList: function getOrderTypesList(context) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/getOrderTypesInfo').then(function (response) {
+        if (response.data !== false) {
+          context.commit('setState', {
+            state: 'ordersList',
+            value: response.data
+          });
+        } else {
+          context.commit('setState', {
+            state: 'ordersList',
             value: false
           });
         }
@@ -68169,7 +68186,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.ordersList !== null
+  return _vm.ordersList !== undefined
     ? _c("div", { staticClass: "row justify-content-center fadeInAnim" }, [
         _c("div", { staticClass: "col-12 col-md-10 mb-2" }, [
           _c(

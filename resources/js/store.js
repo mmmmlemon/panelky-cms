@@ -200,6 +200,18 @@ const AdminStates = {
             });
         },
 
+        
+        //getProjectsList
+        //получить список проектов из БД (Админка)
+        getOrderTypesList(context){
+            axios.get('/api/getOrderTypesInfo').then(response => {
+                if(response.data !== false)
+                { context.commit('setState', {state: 'ordersList', value: response.data}); }
+                else
+                { context.commit('setState', {state: 'ordersList', value: false}); }
+            });
+        },
+
         //setCurrentProjectSlug
         //установить текукщий выбранный проект в списке проектов (Админка)
         setCurrentProjectSlug(context, value){            
