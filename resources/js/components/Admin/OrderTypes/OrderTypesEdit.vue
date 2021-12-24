@@ -11,40 +11,40 @@
                     <h6>Наименование</h6>
                     <!-- наименовение -->
                     <input type="text" v-model="orderType.order_name" placeholder="Интернет-магазин, лендинг, сайт-визитка и т.п" class="form-control" required>
-                    <!-- <div v-if="errors && errors.order_name" class="text-danger goUpAnim">{{ errors.order_name[0] }}</div> -->
+                    <div v-if="errors && errors.order_name" class="text-danger goUpAnim">{{ errors.order_name[0] }}</div>
                 </div>
                 <!-- Bootstrap-иконка -->
                 <div class="mb-3">
                     <h6>Bootstrap-иконка (класс)</h6>
                     <input type="text" v-model="orderType.order_bootstrap_icon" placeholder="bi bi-email" class="form-control">
-                    <!-- <div v-if="errors && errors.order_bootstrap_icon" class="text-danger goUpAnim">{{ errors.order_bootstrap_icon[0] }}</div> -->
+                    <div v-if="errors && errors.order_bootstrap_icon" class="text-danger goUpAnim">{{ errors.order_bootstrap_icon[0] }}</div>
                 </div>
                 <!-- Краткое описание заказа -->
                 <div class="mb-3">
                     <h6>Краткое описание</h6>
                     <textarea type="text" rows="4" v-model="orderType.order_desc" placeholder="Краткое описание сути заказа" class="form-control"></textarea>
-                    <!-- <div v-if="errors && errors.order_bootstrap_icon" class="text-danger goUpAnim">{{ errors.order_bootstrap_icon[0] }}</div> -->
+                    <div v-if="errors && errors.order_desc" class="text-danger goUpAnim">{{ errors.order_desc[0] }}</div>
                 </div>
                 <!-- Ценник -->
                 <div class="mb-3">
                     <h6>Ценник</h6>
                     <input type="text" v-model="orderType.price_range" placeholder="≈ от 1 до 100 ₽" class="form-control">
-                    <!-- <div v-if="errors && errors.order_bootstrap_icon" class="text-danger goUpAnim">{{ errors.order_bootstrap_icon[0] }}</div> -->
+                    <div v-if="errors && errors.price_range" class="text-danger goUpAnim">{{ errors.price_range[0] }}</div>
                 </div>
                 <!-- Время -->
                 <div class="mb-3">
                     <h6>Время разработки</h6>
                     <input type="text" v-model="orderType.time_range" placeholder="≈ от 1 до 100 дней" class="form-control">
-                    <!-- <div v-if="errors && errors.order_bootstrap_icon" class="text-danger goUpAnim">{{ errors.order_bootstrap_icon[0] }}</div> -->
+                    <div v-if="errors && errors.time_range" class="text-danger goUpAnim">{{ errors.time_range[0] }}</div>
                 </div>
                 <!-- Цвет подсветки -->
                 <div class="mb-3">
                     <h6>Цвет карточки</h6>
                       <v-input-colorpicker  v-model="orderType.color_style" mode="hsla" swatches-max-height="200"/>
-                    <!-- <div v-if="errors && errors.order_bootstrap_icon" class="text-danger goUpAnim">{{ errors.order_bootstrap_icon[0] }}</div> -->
+                    <div v-if="errors && errors.color_style" class="text-danger goUpAnim">{{ errors.color_style[0] }}</div>
                 </div>
                 <button class="btn btn-lg btn-block btn-outline-light" :disabled="saved === true">
-                    Добавить новый тип заказов
+                    Сохранить изменения
                 </button>
             </form>
         </div>
@@ -100,6 +100,7 @@ export default {
         return {
             orderType: null,
             saved: false,
+            errors: null,
         }
     },
 
@@ -122,7 +123,7 @@ export default {
             }
 
             //отправка запроса
-            axios.post('/admin/saveOrderType/'+ this.orderType.order_type, formData, {
+            axios.post('/admin/saveOrderType/', formData, {
                 headers: {'Content-Type': 'multipart/form-data'} }).then(response => {
                     this.saved = true;
 
@@ -130,10 +131,12 @@ export default {
                     window.location.href="/admin/orderTypes";
                   
                 }).catch(error => {
-                    if(error.response.status === 422){
-                        this.saved = false;
+                  if(error.response.status === 422){ 
+                  if(error.response.status === 422 || error.response.status === 500){ 
+                        var errors = error.response.data;
                         this.errors = error.response.data.errors || {};
-                    }
+                     }
+                }
             });
 
         }

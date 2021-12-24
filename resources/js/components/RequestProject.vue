@@ -71,7 +71,7 @@ export default {
         if(this.order !== 1)
         { 
             axios.get('/api/getHomeSettings').then(response => {
-                if(response.data.about !== 1){
+                if(response.data.order !== 1){
                     window.location.href="/"; 
                 }
                 else{

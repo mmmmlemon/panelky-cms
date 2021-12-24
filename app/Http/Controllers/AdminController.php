@@ -695,15 +695,23 @@ class AdminController extends Controller
         $this->validate($request, [
             'order_name' => 'required|string|max:255',
             'order_desc' => 'required|string|max:1555',
-            'order_bootstrap_icon' => 'string|max:255',
-            'price_range' => 'string|max:255',
-            'time_range' => 'string|max:255',
-            'color_style' => 'string|max:255',
+            'order_bootstrap_icon' => 'string|max:255|nullable',
+            'price_range' => 'string|max:255|nullable',
+            'time_range' => 'string|max:255|nullable',
+            'color_style' => 'string|max:255|nullable',
         ]);
 
         $order = new Order;
 
-        $order->order_type = Str::slug($request->order_name);
+        $order_type = Str::slug($request->order_name);
+
+        $checkOrderTypeUniqueness = count(Order::where('order_type', $order_type)->get());
+
+        if($checkOrderTypeUniqueness > 0){
+            $order_type = $order_type . strval(rand(0,9999));
+        }
+
+        $order->order_type = $order_type;
         $order->order_name = $request->order_name;
         $order->order_desc = $request->order_desc;
         $order->order_bootstrap_icon = $request->order_bootstrap_icon;
@@ -731,6 +739,15 @@ class AdminController extends Controller
     // saveOrderType
     // изменить тип заказа
     public function saveOrderType(Request $request){
+
+        $this->validate($request, [
+            'order_name' => 'required|string|max:255',
+            'order_desc' => 'required|string|max:1555',
+            'order_bootstrap_icon' => 'string|max:255|nullable',
+            'price_range' => 'string|max:255|nullable',
+            'time_range' => 'string|max:255|nullable',
+            'color_style' => 'string|max:255|nullable',
+        ]);
 
         $order = Order::where('order_type', $request->order_type)->get()[0];
 

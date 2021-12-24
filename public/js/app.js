@@ -4100,7 +4100,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       orderType: null,
-      saved: false
+      saved: false,
+      errors: null
     };
   },
   methods: {
@@ -4122,7 +4123,7 @@ __webpack_require__.r(__webpack_exports__);
       } //отправка запроса
 
 
-      axios.post('/admin/saveOrderType/' + this.orderType.order_type, formData, {
+      axios.post('/admin/saveOrderType/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -4132,8 +4133,10 @@ __webpack_require__.r(__webpack_exports__);
         window.location.href = "/admin/orderTypes";
       })["catch"](function (error) {
         if (error.response.status === 422) {
-          _this2.saved = false;
-          _this2.errors = error.response.data.errors || {};
+          if (error.response.status === 422 || error.response.status === 500) {
+            var errors = error.response.data;
+            _this2.errors = error.response.data.errors || {};
+          }
         }
       });
     }
@@ -8149,7 +8152,7 @@ __webpack_require__.r(__webpack_exports__);
 
     if (this.order !== 1) {
       axios.get('/api/getHomeSettings').then(function (response) {
-        if (response.data.about !== 1) {
+        if (response.data.order !== 1) {
           window.location.href = "/";
         } else {
           if (_this.aboutSiteText === -1) {
@@ -8527,9 +8530,6 @@ var routes = [//user side
     }, {
       path: '/admin/orderTypes/add',
       component: _components_Admin_OrderTypes_OrderTypesAdd__WEBPACK_IMPORTED_MODULE_25__["default"]
-    }, {
-      path: '/admin/orderTypes/edit/:slug',
-      component: _components_Admin_OrderTypes_OrderTypesEdit__WEBPACK_IMPORTED_MODULE_26__["default"]
     }]
   }, {
     //admin home
@@ -8593,6 +8593,9 @@ var routes = [//user side
     //edit project
     path: '/admin/edit/:slug',
     component: _components_Admin_Projects_EditProject_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
+  }, {
+    path: '/admin/editOrder/:slug',
+    component: _components_Admin_OrderTypes_OrderTypesEdit__WEBPACK_IMPORTED_MODULE_26__["default"]
   }]
 }, // 404
 {
@@ -67872,6 +67875,12 @@ var render = function () {
                     },
                   },
                 }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.order_name
+                  ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                      _vm._v(_vm._s(_vm.errors.order_name[0])),
+                    ])
+                  : _vm._e(),
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "mb-3" }, [
@@ -67902,6 +67911,12 @@ var render = function () {
                     },
                   },
                 }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.order_bootstrap_icon
+                  ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                      _vm._v(_vm._s(_vm.errors.order_bootstrap_icon[0])),
+                    ])
+                  : _vm._e(),
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "mb-3" }, [
@@ -67932,6 +67947,12 @@ var render = function () {
                     },
                   },
                 }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.order_desc
+                  ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                      _vm._v(_vm._s(_vm.errors.order_desc[0])),
+                    ])
+                  : _vm._e(),
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "mb-3" }, [
@@ -67962,6 +67983,12 @@ var render = function () {
                     },
                   },
                 }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.price_range
+                  ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                      _vm._v(_vm._s(_vm.errors.price_range[0])),
+                    ])
+                  : _vm._e(),
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "mb-3" }, [
@@ -67988,6 +68015,12 @@ var render = function () {
                     },
                   },
                 }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.time_range
+                  ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                      _vm._v(_vm._s(_vm.errors.time_range[0])),
+                    ])
+                  : _vm._e(),
               ]),
               _vm._v(" "),
               _c(
@@ -68006,6 +68039,12 @@ var render = function () {
                       expression: "orderType.color_style",
                     },
                   }),
+                  _vm._v(" "),
+                  _vm.errors && _vm.errors.color_style
+                    ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                        _vm._v(_vm._s(_vm.errors.color_style[0])),
+                      ])
+                    : _vm._e(),
                 ],
                 1
               ),
@@ -68016,11 +68055,7 @@ var render = function () {
                   staticClass: "btn btn-lg btn-block btn-outline-light",
                   attrs: { disabled: _vm.saved === true },
                 },
-                [
-                  _vm._v(
-                    "\n                Добавить новый тип заказов\n            "
-                  ),
-                ]
+                [_vm._v("\n                Сохранить изменения\n            ")]
               ),
             ]
           ),
@@ -68179,7 +68214,7 @@ var render = function () {
                             "router-link",
                             {
                               attrs: {
-                                to: "/admin/orderTypes/edit/" + item.order_type,
+                                to: "/admin/editOrder/" + item.order_type,
                               },
                             },
                             [

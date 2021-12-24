@@ -79,10 +79,7 @@ const routes = [
                         path: '/admin/orderTypes/add',
                         component: OrderTypesAdd,
                     },
-                    {
-                        path: '/admin/orderTypes/edit/:slug',
-                        component: OrderTypesEdit,
-                    }
+                 
                 ]
             },
             {
@@ -166,6 +163,10 @@ const routes = [
                 //edit project
                 path:'/admin/edit/:slug',
                 component: EditProject,
+            },
+            {
+                path: '/admin/editOrder/:slug',
+                component: OrderTypesEdit,
             }
         ]
     },

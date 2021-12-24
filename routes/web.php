@@ -59,7 +59,7 @@ Route::post('/admin/saveCookiesMessage', [AdminController::class, 'saveCookiesMe
 Route::post('/admin/addNewOrderType', [AdminController::class, 'addNewOrderType']);
 Route::get('/admin/getOrderType/{slug}', [AdminController::class, 'getOrderType']);
 // TO DO ИСПРАВИТЬ SLUG
-Route::post('/admin/saveOrderType/{slug}', [AdminController::class, 'saveOrderType']);
+Route::post('/admin/saveOrderType', [AdminController::class, 'saveOrderType']);
 Route::post('/admin/deleteOrder', [AdminController::class, 'deleteOrder']);
 
 
