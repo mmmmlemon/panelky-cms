@@ -4182,15 +4182,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   beforeMount: function beforeMount() {
     this.$parent.currentTab = 'orderTypes';
   },
   mounted: function mounted() {
-    // //получить список типов заказов
-    // axios.get('/api/getOrderTypesInfo').then(response => {
-    //     this.ordersList = response.data;
-    // })
     this.$store.dispatch('getOrderTypesList');
   },
   computed: {
@@ -6544,7 +6548,6 @@ __webpack_require__.r(__webpack_exports__);
               _this.settings.cookies = 0;
             }
           }); //если нужно показать карточку о владельце сайта, то получаем информацию о владельце
-          // TODO: ДОБАВИТЬ orders в настройки сайта
 
           if (_this.settings.order === 1) {
             _this.$store.dispatch('getOrderTypesInfo');
@@ -8137,14 +8140,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   created: function created() {
     this.$parent.currentTab = 'requestProject';
@@ -8163,11 +8158,13 @@ __webpack_require__.r(__webpack_exports__);
         }
       })["catch"](function (error) {//
       });
-    } else {
-      if (this.aboutSiteText === -1) {
-        this.$store.dispatch('getAboutSiteText');
-      }
-    }
+    } else {// 
+    } // получение почты
+
+
+    axios.get('/api/getEmail').then(function (response) {
+      _this.emails = response.data.emails;
+    });
   },
   // данные
   data: function data() {
@@ -8175,8 +8172,7 @@ __webpack_require__.r(__webpack_exports__);
       transparentWhiteColor: 'rgba(255,255,255, 0.15)',
       selectedProduct: null,
       currentTitle: null,
-      listOfProducts: ['businessCard', 'landing', 'telegram', 'special'],
-      lorem: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis odio libero repellat. Eveniet obcaecati rerum laboriosam corporis blanditiis, consectetur eius quas illum voluptatibus enim sed autem, deserunt nobis pariatur. Deserunt.\n                       Provident blanditiis culpa qui et quaerat quibusdam quasi, aut atque rerum cum, placeat ducimus ex enim delectus? Blanditiis beatae odit facilis modi unde est eum hic aliquam, officia tempora corrupti?\n                       Nulla itaque cupiditate in illo magnam ipsam, debitis fugiat similique sunt neque molestias quidem assumenda qui dolorem perferendis modi doloribus adipisci quod deserunt omnis, sit saepe eveniet veniam? Eligendi, ducimus."
+      emails: null
     };
   },
   computed: {
@@ -8185,38 +8181,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     orderTypesInfo: function orderTypesInfo() {
       return this.$store.state.GlobalStates.orderTypesInfo;
-    },
-    productDescription: function productDescription() {
-      return {
-        'businessCard': this.lorem,
-        'landing': this.lorem,
-        'telegram': this.lorem,
-        'special': this.lorem
-      };
-    },
-    productTitle: function productTitle() {
-      return {
-        'businessCard': 'Сайт-визитка',
-        'landing': 'Лендинг',
-        'telegram': 'Telegram-бот',
-        'special': 'Что-то особенное'
-      };
-    },
-    productIcon: function productIcon() {
-      return {
-        'businessCard': 'bi-card-heading',
-        'landing': 'bi-list-nested',
-        'telegram': 'bi-telegram',
-        'special': 'bi-gift'
-      };
-    },
-    productPriceRange: function productPriceRange() {
-      return {
-        'businessCard': 'от 30.000 до 45.000 ₽',
-        'landing': 'от 40.000 до 70.000 ₽',
-        'telegram': 'от 15.000 до 25.000 ₽',
-        'special': 'от 15.000 до 100.000 ₽'
-      };
     }
   },
   // методы
@@ -68186,71 +68150,106 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.ordersList !== undefined
+  return _vm.ordersList !== -1
     ? _c("div", { staticClass: "row justify-content-center fadeInAnim" }, [
-        _c("div", { staticClass: "col-12 col-md-10 mb-2" }, [
-          _c(
-            "div",
-            { staticClass: "row justify-content-center mt-3" },
-            _vm._l(_vm.ordersList, function (item, index) {
-              return _c(
+        _vm.ordersList.length > 0
+          ? _c("div", { staticClass: "col-12 col-md-10 mb-2" }, [
+              _c(
                 "div",
-                {
-                  key: index,
-                  staticClass: "col-11 col-md-3 text-center calculatorCard",
-                },
-                [
-                  _c("h4", [_vm._v(_vm._s(item.order_name))]),
+                { staticClass: "row justify-content-center mt-3" },
+                _vm._l(_vm.ordersList, function (item, index) {
+                  return _c(
+                    "div",
+                    {
+                      key: index,
+                      staticClass: "col-11 col-md-3 text-center calculatorCard",
+                    },
+                    [
+                      _c("h4", [_vm._v(_vm._s(item.order_name))]),
+                      _vm._v(" "),
+                      _c("h3", [_c("i", { class: item.order_bootstrap_icon })]),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "row justify-content-center" },
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              attrs: {
+                                to: "/admin/orderTypes/edit/" + item.order_type,
+                              },
+                            },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-light mr-3",
+                                  attrs: { title: "Редактировать" },
+                                },
+                                [_c("i", { staticClass: "bi bi-pencil-fill" })]
+                              ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-light ml-3",
+                              attrs: { title: "Удалить" },
+                              on: {
+                                click: function ($event) {
+                                  return _vm.deleteOrder(index)
+                                },
+                              },
+                            },
+                            [_c("i", { staticClass: "bi bi-trash-fill" })]
+                          ),
+                        ],
+                        1
+                      ),
+                    ]
+                  )
+                }),
+                0
+              ),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.ordersList.length === 0
+          ? _c(
+              "div",
+              {
+                staticClass: "row justify-content-center text-center goUpAnim",
+              },
+              [
+                _c("div", { staticClass: "col-12" }, [
+                  _c("h3", [_vm._v("Нет типов заказов")]),
                   _vm._v(" "),
-                  _c("h3", [_c("i", { class: item.order_bootstrap_icon })]),
+                  _c("i", {
+                    staticClass: "bi bi-file-earmark-check font1-8rem",
+                  }),
                   _vm._v(" "),
                   _c("hr"),
                   _vm._v(" "),
                   _c(
-                    "div",
-                    { staticClass: "row justify-content-center" },
+                    "h5",
                     [
+                      _vm._v("Их можно добавить в разделе  "),
                       _c(
                         "router-link",
-                        {
-                          attrs: {
-                            to: "/admin/orderTypes/edit/" + item.order_type,
-                          },
-                        },
-                        [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-light mr-3",
-                              attrs: { title: "Редактировать" },
-                            },
-                            [_c("i", { staticClass: "bi bi-pencil-fill" })]
-                          ),
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-light ml-3",
-                          attrs: { title: "Удалить" },
-                          on: {
-                            click: function ($event) {
-                              return _vm.deleteOrder(index)
-                            },
-                          },
-                        },
-                        [_c("i", { staticClass: "bi bi-trash-fill" })]
+                        { attrs: { to: "/admin/orderTypes/add" } },
+                        [_c("b", [_vm._v("Добавить новый тип заказа")])]
                       ),
                     ],
                     1
                   ),
-                ]
-              )
-            }),
-            0
-          ),
-        ]),
+                ]),
+              ]
+            )
+          : _vm._e(),
       ])
     : _vm._e()
 }
@@ -74360,171 +74359,242 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.orderTypesInfo !== -1
+  return _vm.orderTypesInfo !== -1 && _vm.order !== undefined
     ? _c(
         "div",
         { staticClass: "row h-100 justify-content-center fadeInAnim" },
         [
-          _c(
-            "div",
-            { staticClass: "col-12 col-md-10 mt-2" },
-            [
-              _c("div", { staticClass: "row justify-content-center mt-2" }, [
-                _c("div", { staticClass: "col-11 col-md-8" }, [
+          _vm.orderTypesInfo.length > 0
+            ? _c(
+                "div",
+                { staticClass: "col-12 col-md-10 mt-2" },
+                [
                   _c(
                     "div",
-                    { staticClass: "row justify-content-center" },
+                    { staticClass: "row justify-content-center mt-2" },
                     [
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _vm._l(_vm.orderTypesInfo, function (orderType, index) {
-                        return _c(
+                      _c("div", { staticClass: "col-11 col-md-8" }, [
+                        _c(
                           "div",
-                          {
-                            key: index,
-                            staticClass:
-                              "col-12 text-center col-md-4 mt-3 calculatorCard",
-                            class: {
-                              selected:
-                                _vm.selectedProduct === orderType.order_type,
-                            },
-                            style: {
-                              backgroundColor:
-                                _vm.selectedProduct === orderType.order_type
-                                  ? orderType.color_style
-                                  : _vm.transparentWhiteColor,
-                            },
-                            on: {
-                              click: function ($event) {
-                                return _vm.selectProduct(orderType.order_type)
-                              },
-                            },
-                          },
+                          { staticClass: "row justify-content-center" },
                           [
-                            _c("h4", { staticClass: "text-center" }, [
-                              _vm._v(_vm._s(orderType.order_name)),
-                            ]),
+                            _vm._m(0),
+                            _vm._v(" "),
+                            _vm._l(
+                              _vm.orderTypesInfo,
+                              function (orderType, index) {
+                                return _c(
+                                  "div",
+                                  {
+                                    key: index,
+                                    staticClass:
+                                      "col-12 text-center col-md-4 mt-3 calculatorCard",
+                                    class: {
+                                      selected:
+                                        _vm.selectedProduct ===
+                                        orderType.order_type,
+                                    },
+                                    style: {
+                                      backgroundColor:
+                                        _vm.selectedProduct ===
+                                        orderType.order_type
+                                          ? orderType.color_style
+                                          : _vm.transparentWhiteColor,
+                                    },
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.selectProduct(
+                                          orderType.order_type
+                                        )
+                                      },
+                                    },
+                                  },
+                                  [
+                                    _c("h4", { staticClass: "text-center" }, [
+                                      _vm._v(_vm._s(orderType.order_name)),
+                                    ]),
+                                  ]
+                                )
+                              }
+                            ),
+                          ],
+                          2
+                        ),
+                      ]),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.orderTypesInfo, function (orderType) {
+                    return _c(
+                      "div",
+                      {
+                        key: orderType.order_type,
+                        staticClass:
+                          "row justify-content-center calculatorPrices",
+                      },
+                      [
+                        _c(
+                          "transition",
+                          { attrs: { name: "productDescription" } },
+                          [
+                            _vm.selectedProduct == orderType.order_type
+                              ? _c(
+                                  "div",
+                                  { staticClass: "col-8 text-center mt-5" },
+                                  [
+                                    _c("div", { staticClass: "fs-2 mb-3" }, [
+                                      _c("h3", [
+                                        _c("i", {
+                                          class: orderType.order_bootstrap_icon,
+                                        }),
+                                        _vm._v(
+                                          " " + _vm._s(orderType.order_name)
+                                        ),
+                                      ]),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "fs-2 mb-3 col-12" },
+                                      [
+                                        _c("p", [
+                                          _vm._v(_vm._s(orderType.order_desc)),
+                                        ]),
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "fs-2 mb-3 col-12" },
+                                      [
+                                        _c("h4", [_c("b", [_vm._v("Цена *")])]),
+                                        _vm._v(" "),
+                                        _c("h2", [
+                                          _vm._v(_vm._s(orderType.price_range)),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("h4", { staticClass: "mt-5" }, [
+                                          _c("b", [
+                                            _vm._v("Время разработки *"),
+                                          ]),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("h2", [
+                                          _vm._v(_vm._s(orderType.time_range)),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "h6",
+                                          {
+                                            staticStyle: {
+                                              "font-size": "0.7rem",
+                                            },
+                                          },
+                                          [
+                                            _vm._v(
+                                              "* примерный средний ценник и время разработки, "
+                                            ),
+                                            _c("br"),
+                                            _vm._v(
+                                              "окончательная цена и срок разработки могут варьироваться в зависимости от сложности проекта и вносимых правок"
+                                            ),
+                                          ]
+                                        ),
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "row justify-content-center",
+                                      },
+                                      [
+                                        _vm.selectedProduct ==
+                                        orderType.order_type
+                                          ? _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "col-8 text-center mt-4",
+                                              },
+                                              [
+                                                _c(
+                                                  "button",
+                                                  {
+                                                    staticClass:
+                                                      "btn btn-light btn-lg",
+                                                    attrs: { type: "button" },
+                                                    on: {
+                                                      click: function ($event) {
+                                                        return _vm.makeOrder()
+                                                      },
+                                                    },
+                                                  },
+                                                  [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "bi bi-forward",
+                                                    }),
+                                                    _vm._v(
+                                                      " Заказать\n                        "
+                                                    ),
+                                                  ]
+                                                ),
+                                              ]
+                                            )
+                                          : _vm._e(),
+                                      ]
+                                    ),
+                                  ]
+                                )
+                              : _vm._e(),
                           ]
-                        )
+                        ),
+                      ],
+                      1
+                    )
+                  }),
+                ],
+                2
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.orderTypesInfo.length === 0
+            ? _c(
+                "div",
+                {
+                  staticClass:
+                    "row justify-content-center text-center goUpAnim mt-5",
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "col-12" },
+                    [
+                      _c("h4", [_vm._v("Хотите заказать разработку проекта?")]),
+                      _vm._v(" "),
+                      _c("h5", [
+                        _vm._v(
+                          "Напишите мне письмо на мою почту с деталями вашего проекта и я свяжусь с вами как только смогу."
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("h5", [_vm._v("Спасибо!")]),
+                      _vm._v(" "),
+                      _vm._l(_vm.emails, function (email, index) {
+                        return _c("h3", { key: index, staticClass: "mt-5" }, [
+                          _c("b", { staticClass: "pointer" }, [
+                            _vm._v(_vm._s(email.contact_url)),
+                          ]),
+                        ])
                       }),
                     ],
                     2
                   ),
-                ]),
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.orderTypesInfo, function (orderType) {
-                return _c(
-                  "div",
-                  {
-                    key: orderType.order_type,
-                    staticClass: "row justify-content-center calculatorPrices",
-                  },
-                  [
-                    _c(
-                      "transition",
-                      { attrs: { name: "productDescription" } },
-                      [
-                        _vm.selectedProduct == orderType.order_type
-                          ? _c(
-                              "div",
-                              { staticClass: "col-8 text-center mt-5" },
-                              [
-                                _c("div", { staticClass: "fs-2 mb-3" }, [
-                                  _c("h3", [
-                                    _c("i", {
-                                      class: orderType.order_bootstrap_icon,
-                                    }),
-                                    _vm._v(" " + _vm._s(orderType.order_name)),
-                                  ]),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "fs-2 mb-3 col-12" }, [
-                                  _c("p", [
-                                    _vm._v(_vm._s(orderType.order_desc)),
-                                  ]),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "fs-2 mb-3 col-12" }, [
-                                  _c("h4", [_c("b", [_vm._v("Цена *")])]),
-                                  _vm._v(" "),
-                                  _c("h2", [
-                                    _vm._v(_vm._s(orderType.price_range)),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h4", { staticClass: "mt-5" }, [
-                                    _c("b", [_vm._v("Срок разработки *")]),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h2", [
-                                    _vm._v(_vm._s(orderType.time_range)),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "h6",
-                                    { staticStyle: { "font-size": "0.7rem" } },
-                                    [
-                                      _vm._v(
-                                        "* примерный средний ценник и сроки разработки, "
-                                      ),
-                                      _c("br"),
-                                      _vm._v(
-                                        "окончательная цена и срок разработки могут варьироваться в зависимости от сложности проекта"
-                                      ),
-                                    ]
-                                  ),
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "row justify-content-center" },
-                                  [
-                                    _vm.selectedProduct == orderType.order_type
-                                      ? _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "col-8 text-center mt-4",
-                                          },
-                                          [
-                                            _c(
-                                              "button",
-                                              {
-                                                staticClass:
-                                                  "btn btn-light btn-lg",
-                                                attrs: { type: "button" },
-                                                on: {
-                                                  click: function ($event) {
-                                                    return _vm.makeOrder()
-                                                  },
-                                                },
-                                              },
-                                              [
-                                                _c("i", {
-                                                  staticClass: "bi bi-cart",
-                                                }),
-                                                _vm._v(
-                                                  " Заказать\n                            "
-                                                ),
-                                              ]
-                                            ),
-                                          ]
-                                        )
-                                      : _vm._e(),
-                                  ]
-                                ),
-                              ]
-                            )
-                          : _vm._e(),
-                      ]
-                    ),
-                  ],
-                  1
-                )
-              }),
-            ],
-            2
-          ),
+                ]
+              )
+            : _vm._e(),
         ]
       )
     : _vm._e()
@@ -74535,7 +74605,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12 mt-2" }, [
-      _c("h3", { staticClass: "text-center" }, [_vm._v("Я хочу...")]),
+      _c("h3", { staticClass: "text-center" }, [_vm._v("Мне нужен")]),
     ])
   },
 ]

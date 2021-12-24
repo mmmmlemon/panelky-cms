@@ -1,8 +1,8 @@
 // OrderTypesList.vue
 
 <template>
-    <div class="row justify-content-center fadeInAnim" v-if="ordersList !== undefined">
-        <div class="col-12 col-md-10 mb-2">
+    <div class="row justify-content-center fadeInAnim" v-if="ordersList !== -1">
+        <div class="col-12 col-md-10 mb-2" v-if="ordersList.length > 0">
             <div class="row justify-content-center mt-3">
                 <div v-for="(item, index) of ordersList" v-bind:key="index" 
                     class="col-11 col-md-3 text-center calculatorCard">
@@ -24,6 +24,14 @@
                 </div>
             </div>
         </div>
+        <div class="row justify-content-center text-center goUpAnim" v-if="ordersList.length === 0">
+               <div class="col-12">
+                    <h3>Нет типов заказов</h3>
+                    <i class="bi bi-file-earmark-check font1-8rem"></i>
+                    <hr>
+                    <h5>Их можно добавить в разделе  <router-link to="/admin/orderTypes/add"><b>Добавить новый тип заказа</b></router-link></h5>
+                </div>
+        </div>
     </div>
 
 </template>
@@ -34,13 +42,7 @@ export default {
     },
 
     mounted(){
-        // //получить список типов заказов
-        // axios.get('/api/getOrderTypesInfo').then(response => {
-        //     this.ordersList = response.data;
-        // })
-
         this.$store.dispatch('getOrderTypesList');
-
     },
 
 

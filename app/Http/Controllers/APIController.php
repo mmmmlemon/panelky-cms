@@ -252,12 +252,12 @@ class APIController extends Controller
     //получить E-mail
     public function getEmail()
     {
-        $email = Settings::get()[0]->contact_email;
+        $emails = Contact::select('contact_url')->where('contact_type', 'email')->get();
 
-        if($email == '')
-        { $email = null; }
+        if(count($emails) === 0)
+        { $emails = null; }
 
-        return response()->json(['email'=>$email], 200);
+        return response()->json(['emails'=>$emails], 200);
     }
 
     //getContacts

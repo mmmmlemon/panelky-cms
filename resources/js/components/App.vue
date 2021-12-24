@@ -73,7 +73,6 @@ export default {
                     });
                     //если нужно показать карточку о владельце сайта, то получаем информацию о владельце
 
-                    // TODO: ДОБАВИТЬ orders в настройки сайта
                     if(this.settings.order === 1){
                         this.$store.dispatch('getOrderTypesInfo');
                     }
