@@ -496,44 +496,55 @@ class AdminController extends Controller
         if($request->hasFile('slideMedia'))
         {   
             // сохраняем медиа файл
-            $mediaFile = $request->slideMedia;
-            $filename = md5(time().rand(0,9)).".".$mediaFile->getClientOriginalExtension();
-            $path = "public/projectsSlideMedia/".$filename;
-            Storage::put($path, file_get_contents($mediaFile));
+            // $mediaFile = $request->slideMedia;
+            // $filename = md5(time().rand(0,9)).".".$mediaFile->getClientOriginalExtension();
+            // $path = "public/projectsSlideMedia/".$filename;
+            // Storage::put($path, file_get_contents($mediaFile));
 
-            // сохраняем запись в БД
-            // если слайд вертикальный или горизонтальный
-            if($request->slideVisibility != 'all')
-            {
-                $slide = new ProjectSlide;
-                $slide->media_url = "storage/projectsSlideMedia/".$filename;
-                $slide->visibility = $request->slideVisibility;
-                $slide->commentary = $request->slideComment;
-                $slide->project_id = $request->projectId;
-                $slide->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->min('order') - 1;
-                $slide->save();
-            } 
-            // если слайд горизонтальный\вертикальный, то сохраняем две записи
-            else {
-                $slideHorizontal = new ProjectSlide;
-                $slideHorizontal->media_url = "storage/projectsSlideMedia/".$filename;
-                $slideHorizontal->visibility = 'horizontal';
-                $slideHorizontal->commentary = $request->slideComment;
-                $slideHorizontal->project_id = $request->projectId;
-                $slideHorizontal->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->min('order') - 1;
-                $slideHorizontal->save();
+            $file = $request->file('file');
 
-                $slideVertical = new ProjectSlide;
-                $slideVertical->media_url = "storage/projectsSlideMedia/".$filename;
-                $slideVertical->visibility = 'vertical';
-                $slideVertical->commentary = $request->slideComment;
-                $slideVertical->project_id = $request->projectId;
-                $slideVertical->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->min('order') - 1;
-                $slideVertical->save();
+            $path = Storage::disk('local')->path("public/temp/{$file->getClientOriginalName()}");
+    
+            File::append($path, $file->get());
+            if($request->has('is_last') && $request->boolean('is_last')){
+                $name = basename($path, '.part');
+                // сохраняем запись в БД
+                // если слайд вертикальный или горизонтальный
+                if($request->slideVisibility != 'all')
+                {
+                    $slide = new ProjectSlide;
+                    $slide->media_url = "storage/projectsSlideMedia/". $name;
+                    $slide->visibility = $request->slideVisibility;
+                    $slide->commentary = $request->slideComment;
+                    $slide->project_id = $request->projectId;
+                    $slide->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->min('order') - 1;
+                    $slide->save();
+                } 
+                // если слайд горизонтальный\вертикальный, то сохраняем две записи
+                else {
+                    $slideHorizontal = new ProjectSlide;
+                    $slideHorizontal->media_url = "storage/projectsSlideMedia/". $name;
+                    $slideHorizontal->visibility = 'horizontal';
+                    $slideHorizontal->commentary = $request->slideComment;
+                    $slideHorizontal->project_id = $request->projectId;
+                    $slideHorizontal->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->min('order') - 1;
+                    $slideHorizontal->save();
+
+                    $slideVertical = new ProjectSlide;
+                    $slideVertical->media_url = "storage/projectsSlideMedia/". $name;
+                    $slideVertical->visibility = 'vertical';
+                    $slideVertical->commentary = $request->slideComment;
+                    $slideVertical->project_id = $request->projectId;
+                    $slideVertical->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->min('order') - 1;
+                    $slideVertical->save();
+                }
+                File::move($path, base_path("/storage/app/public/projectsSlideMedia/{$name}"));
             }
+
+          
         }
 
-        return response()->json(true, 200);
+        return response()->json(['uploaded' => true]);
     }
 
     //deleteProjectSlide

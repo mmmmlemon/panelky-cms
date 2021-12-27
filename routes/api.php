@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\APIController;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,7 @@ use App\Http\Controllers\APIController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 
 Route::get('/getSiteOwnerInfo', [APIController::class, 'getSiteOwnerInfo']);
 Route::get('/getOrderTypesInfo', [APIController::class, 'getOrderTypesInfo']);

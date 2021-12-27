@@ -8,9 +8,9 @@
         'fadeInAnim': projectSlidesHorizontal.length < slots || projectSlidesVertical.length < slots}">
         <!-- изображение -->
         <div class="mb-3 slideForm" >
-            <h6>Скриншот или gif</h6>
+            <h6>Скриншот, gif или mp4</h6>
             <input type="file" id="slideMedia" class="form-control-file" ref="media" @change="handleMedia"
-                    accept="image/jpeg, image/png, image/gif" style="display: none;">
+                    accept="image/jpeg, image/png, image/gif, video/mp4" style="display: none;">
             <label v-if="slideMedia !== undefined">{{this.slideMedia.name}}</label><br v-if="slideMedia !== undefined">
             <a v-if="slideMedia !== undefined" class="mr-2 pointer" v-on:click="deleteMedia">Убрать файл</a>
             <input type="button" value="Выбрать файл" onclick="document.getElementById('slideMedia').click();" />
@@ -44,7 +44,7 @@
             <textarea type="text" v-model="slideComment" placeholder="Комментарий к слайду, отображается под слайдом" class="form-control"></textarea>
             <div v-if="errors && errors.slideComment" class="text-danger goUpAnim">{{ errors.slideComment[0] }}</div>
         </div>
-        <button class="btn btn-lg btn-block btn-outline-light slideForm" :disabled="slideMedia === undefined">
+        <button class="btn btn-lg btn-block btn-outline-light slideForm" :disabled="slideMedia === undefined" v-bind:class="{'zeroOpacity unclickable': saved === true}">
             Загрузить и сохранить
         </button>
     </form>
@@ -159,6 +159,7 @@
 <script>
 export default {
 
+    // хуки
     mounted(){
         if(this.projectSlidesVertical.length < this.slots && this.projectSlidesHorizontal.length < this.slots){
             this.slideVisibility = 'all';
@@ -168,6 +169,15 @@ export default {
             this.slideVisibility = 'vertical';
         } else {
             this.slideVisibility = null;
+        }
+    },
+
+    // для загрузки файлов по чанкам
+    watch: {
+        chunks(n, o) {
+            if (n.length > 0) {
+                this.upload();
+            }
         }
     },
 
@@ -183,6 +193,12 @@ export default {
             slideEditComment: undefined,
             slideEditMode: undefined,
             slots: 7,
+            // файл
+            file: null,
+            // чанки
+            chunks: [],
+            // кол-во загруженных чанков
+            uploaded: 0
         }
     },
 
@@ -192,6 +208,45 @@ export default {
     },
 
     computed: {
+
+        // прогресс загрузки файла
+        // progress() {
+        //     if(this.file != null){
+        //         return Math.floor((this.uploaded * 100) / this.file.size);
+        //     }
+        // },
+
+        // форма для отправки файла
+        formData() {
+                let formData = new FormData;
+                formData.set('is_last', this.chunks.length === 1);
+                formData.set('file', this.chunks[0], `${this.slideMedia.name}.part`);
+                if(this.projectId !== null)
+                { formData.append('projectId', this.projectId); }
+                if(this.slideMedia !== undefined)
+                { formData.append('slideMedia', this.slideMedia); }
+                if(this.slideVisibility !== undefined)
+                { formData.append('slideVisibility', this.slideVisibility); }
+                if(this.slideComment !== undefined)
+                { formData.append('slideComment', this.slideComment); }
+                return formData;
+        },
+
+        // конфигурация POST-запроса на отправку файла
+        config() {
+            return {
+                method: 'POST',
+                data: this.formData,
+                url: '/admin/saveProjectSlide',
+                headers: {
+                    'Content-Type': 'application/octet-stream'
+                },
+                onUploadProgress: event => {
+                    this.uploaded += event.loaded;
+                }
+            };
+        },
+
         // горизонтальные слайды
         projectSlidesHorizontal:{
             get(){
@@ -250,7 +305,7 @@ export default {
     // методы
     methods: {
         // сохранить слайд
-        submitSlide(){
+        submitSlideOld(){
             this.saved = false;
 
             let formData = new FormData();
@@ -299,6 +354,58 @@ export default {
                     this.errors = error.response.data.errors || {};
                 }
             })
+        },
+
+        submitSlide(){
+             this.createChunks();
+        },
+
+        upload() {
+            this.saved = true;
+            axios(this.config).then(response => {
+                this.chunks.shift();
+
+                if(response.data.uploaded === true){
+                    this.saved = false;
+                    this.projectIcon = undefined;
+                    this.projectImage = undefined;
+                    this.slideComment = undefined;
+                    this.$refs.media.value = null;
+                    this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
+                    
+                    // выбираем ориентацию слайда в форме в зависимости от того
+                    // сколько осталось свободных слотов
+                    if(this.slideVisibility === 'horizontal'){
+                        if(this.projectSlidesHorizontal.length + 1 >= this.slots){
+                            this.slideVisibility = 'vertical';
+                        }
+                    } else if (this.slideVisibility === 'vertical'){
+                        if(this.projectSlidesVertical.length + 1 >= this.slots){
+                            this.slideVisibility = 'horizontal';
+                        }
+                    } else if (this.slideVisibility === 'all'){
+                        if(this.projectSlidesVertical.length + 1 >= this.slots && this.projectSlidesHorizontal.length + 1 >= this.slots){
+                            this.slideVisibility = null;
+                        } else if (this.projectSlidesVertical.length + 1 >= this.slots && this.projectSlidesHorizontal.length + 1 <= this.slots){
+                            this.slideVisibility = 'horizontal';
+                        } else if (this.projectSlidesVertical.length + 1 <= this.slots && this.projectSlidesHorizontal.length + 1 >= this.slots){
+                            this.slideVisibility = 'vertical';
+                        }
+                    }
+                    this.deleteMedia();
+                    // this.slideMedia = undefined;
+                }
+            }).catch(error => {});
+        },
+
+        createChunks() {
+            let size = 10000000, chunks = Math.ceil(this.slideMedia.size / size);
+
+            for (let i = 0; i < chunks; i++) {
+                this.chunks.push(this.slideMedia.slice(
+                    i * size, Math.min(i * size + size, this.slideMedia.size), this.slideMedia.type
+                ));
+            }
         },
 
         //удалить слайд

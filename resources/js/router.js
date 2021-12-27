@@ -30,7 +30,8 @@ import OrderTypesList from './components/Admin/OrderTypes/OrderTypesList';
 import OrderTypesAdd from './components/Admin/OrderTypes/OrderTypesAdd';
 import OrderTypesEdit from './components/Admin/OrderTypes/OrderTypesEdit';
 
-import test from './components/test.vue';
+import ChunkTest from './components/ChunkTest.vue';
+
 
 import PageNotFound from './components/Misc/PageNotFound.vue';
 
@@ -38,6 +39,7 @@ import PageNotFound from './components/Misc/PageNotFound.vue';
 const routes = [
     //user side
     {   
+        
         path:'/',
         component: App,
 
@@ -59,7 +61,7 @@ const routes = [
     },
     {
         path:'/test',
-        component: test,
+        component: ChunkTest,
     },
     //admin side
     {

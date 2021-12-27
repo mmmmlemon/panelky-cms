@@ -6,6 +6,8 @@ use Storage;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use Illuminate\Support\Str;
+use File;
+
 
 //TestController
 //контроллер для тестирования функционала сайта
@@ -74,5 +76,20 @@ class TestController extends Controller
         $project->save();
 
         return response()->json(null, 400);
+    }
+
+    public function chunkUploadTest(Request $request){
+        $file = $request->file('file');
+
+        $path = Storage::disk('local')->path("public/temp/{$file->getClientOriginalName()}");
+
+        File::append($path, $file->get());
+        if($request->has('is_last') && $request->boolean('is_last')){
+            $name = basename($path, '.part');
+
+            File::move($path, base_path("/storage/app/public/{$name}"));
+        }
+
+        return response()->json(['uploaded' => true]);
     }
 }
