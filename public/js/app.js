@@ -5207,6 +5207,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   // хуки
   mounted: function mounted() {
@@ -7696,6 +7702,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   created: function created() {
     window.addEventListener("resize", this.setSlidePositionOnWindowResize);
@@ -7703,6 +7723,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var _this = this;
 
+    // document.querySelectorAll("video").forEach(vid => vid.pause());
     this.setVisible = this.isVisible; // определяем подходящий класс для скриншота проекта
 
     var projectImage = new Image();
@@ -7820,6 +7841,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         } else if (this.screenOrientation === 'horizontal') {
           this.slidePosition = this.numOfSlides.horizontal;
         }
+      } // если в текущем слайде видеоролик, то запустить его воспроизведение и поставить на паузу все остальные
+
+
+      var currentSlideHorizontal = this.project.slides.horizontal[this.slidePosition - 1];
+      var currentSlideVertical = this.project.slides.horizontal[this.slidePosition - 1];
+      document.querySelectorAll("video").forEach(function (vid) {
+        return vid.pause();
+      });
+
+      if (currentSlideHorizontal.media_type === "video" && currentSlideVertical === 'video') {
+        var slideVideoHorizontal = document.getElementById("video_".concat(currentSlideHorizontal.id));
+        slideVideoHorizontal.currentTime = 0;
+        slideVideoHorizontal.play();
+        var slideVideoVertical = document.getElementById("video_".concat(currentSlideVertical.id));
+        slideVideoVertical.currentTime = 0;
+        slideVideoVertical.play();
       }
     },
     // перейти к следующему слайду
@@ -7833,6 +7870,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else {
         this.slideAnimation = "goLeftSlideAnim";
         this.slidePosition = 0;
+      } // если в текущем слайде видеоролик, то запустить его воспроизведение и поставить на паузу все остальные
+
+
+      if (this.slidePosition !== 0) {
+        var currentSlideHorizontal = this.project.slides.horizontal[this.slidePosition - 1];
+        var currentSlideVertical = this.project.slides.vertical[this.slidePosition - 1];
+        document.querySelectorAll("video").forEach(function (vid) {
+          return vid.pause();
+        });
+
+        if (currentSlideHorizontal.media_type === "video" || currentSlideVertical === 'video') {
+          var slideVideoHorizontal = document.getElementById("video_".concat(currentSlideHorizontal.id));
+          slideVideoHorizontal.currentTime = 0;
+          slideVideoHorizontal.muted = true;
+          slideVideoHorizontal.play();
+          var slideVideoVertical = document.getElementById("video_".concat(currentSlideVertical.id));
+          slideVideoVertical.currentTime = 0;
+          slideVideoVertical.muted = true;
+          slideVideoVertical.play();
+        }
+      } else {
+        slideVideoHorizontal.currentTime = 0;
+        slideVideoHorizontal.muted = true;
+        slideVideoHorizontal.pause();
       }
     },
     // переключить на выбранный слайд при нажатии на "точку"
@@ -70148,10 +70209,24 @@ var render = function () {
                   staticClass: "col-8 col-md-2 text-center m-2 fadeInAnim",
                 },
                 [
-                  _c("img", {
-                    staticClass: "slideEditImage",
-                    attrs: { src: slide.media_url },
-                  }),
+                  slide.media_url === "image"
+                    ? _c("img", {
+                        staticClass: "slideEditImage",
+                        attrs: { src: slide.media_url },
+                      })
+                    : _c(
+                        "video",
+                        {
+                          staticClass: "slideEditImage",
+                          attrs: { controls: "", muted: "" },
+                          domProps: { muted: true },
+                        },
+                        [
+                          _c("source", {
+                            attrs: { src: slide.media_url, type: "video/mp4" },
+                          }),
+                        ]
+                      ),
                   _vm._v(" "),
                   _c("h3", { staticClass: "slideEditImageNum" }, [
                     _vm._v(_vm._s(index + 1)),
@@ -70366,10 +70441,24 @@ var render = function () {
                   staticClass: "col-6 col-md-2 m-2 text-center fadeInAnim",
                 },
                 [
-                  _c("img", {
-                    staticClass: "slideEditImage",
-                    attrs: { src: slide.media_url },
-                  }),
+                  slide.media_type === "image"
+                    ? _c("img", {
+                        staticClass: "slideEditImage",
+                        attrs: { src: slide.media_url },
+                      })
+                    : _c(
+                        "video",
+                        {
+                          staticClass: "slideEditImage",
+                          attrs: { controls: "", muted: "" },
+                          domProps: { muted: true },
+                        },
+                        [
+                          _c("source", {
+                            attrs: { src: slide.media_url, type: "video/mp4" },
+                          }),
+                        ]
+                      ),
                   _vm._v(" "),
                   _c("h3", { staticClass: "slideEditImageNum" }, [
                     _vm._v(_vm._s(index + 1)),
@@ -73789,23 +73878,46 @@ var render = function () {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "d-block text-center" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "slideImage",
-                  style: { backgroundImage: "url(" + slide.media_url + ")" },
-                },
-                [
-                  _c(
-                    "a",
+              slide.media_type === "image"
+                ? _c(
+                    "div",
                     {
-                      staticClass: "slideFullscreenButton vertical",
-                      attrs: { target: "_blank", href: slide.media_url },
+                      staticClass: "slideImage",
+                      style: {
+                        backgroundImage: "url(" + slide.media_url + ")",
+                      },
                     },
-                    [_c("i", { staticClass: "bi bi-arrows-fullscreen" })]
-                  ),
-                ]
-              ),
+                    [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "slideFullscreenButton vertical",
+                          attrs: { target: "_blank", href: slide.media_url },
+                        },
+                        [_c("i", { staticClass: "bi bi-arrows-fullscreen" })]
+                      ),
+                    ]
+                  )
+                : _c("div", { staticClass: "slideImage" }, [
+                    _c(
+                      "video",
+                      {
+                        staticClass: "backgroundVideo",
+                        attrs: {
+                          muted: "",
+                          autoplay: "",
+                          loop: "",
+                          id: "video_" + slide.id,
+                        },
+                        domProps: { muted: true },
+                      },
+                      [
+                        _c("source", {
+                          attrs: { src: slide.media_url, type: "video/mp4" },
+                        }),
+                      ]
+                    ),
+                  ]),
               _vm._v(" "),
               slide.commentary !== null
                 ? _c(
@@ -73884,34 +73996,70 @@ var render = function () {
           },
           [
             _c("div", { staticClass: "d-block text-center" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "slideImage",
-                  style: { backgroundImage: "url(" + slide.media_url + ")" },
-                },
-                [
-                  _c(
-                    "a",
+              slide.media_type === "image"
+                ? _c(
+                    "div",
                     {
-                      staticClass: "slideFullscreenButton horizontal",
-                      attrs: { target: "_blank", href: slide.media_url },
+                      staticClass: "slideImage",
+                      style: {
+                        backgroundImage: "url(" + slide.media_url + ")",
+                      },
                     },
-                    [_c("i", { staticClass: "bi bi-arrows-fullscreen" })]
-                  ),
-                  _vm._v(" "),
-                  slide.commentary !== null
-                    ? _c(
-                        "div",
+                    [
+                      _c(
+                        "a",
                         {
-                          staticClass:
-                            "slideTextHorizontal unclickable d-flex align-items-center text-center justify-content-center w-100",
+                          staticClass: "slideFullscreenButton horizontal",
+                          attrs: { target: "_blank", href: slide.media_url },
                         },
-                        [_c("h4", [_vm._v(_vm._s(slide.commentary))])]
-                      )
-                    : _vm._e(),
-                ]
-              ),
+                        [_c("i", { staticClass: "bi bi-arrows-fullscreen" })]
+                      ),
+                      _vm._v(" "),
+                      slide.commentary !== null
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "slideTextHorizontal unclickable d-flex align-items-center text-center justify-content-center w-100",
+                            },
+                            [_c("h4", [_vm._v(_vm._s(slide.commentary))])]
+                          )
+                        : _vm._e(),
+                    ]
+                  )
+                : _c("div", { staticClass: "slideImage" }, [
+                    _c(
+                      "video",
+                      {
+                        staticClass: "backgroundVideo",
+                        attrs: {
+                          autoplay: "",
+                          loop: "",
+                          id: "video_" + slide.id,
+                        },
+                      },
+                      [
+                        _c("source", {
+                          attrs: { src: slide.media_url, type: "video/mp4" },
+                        }),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    slide.commentary !== null
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "slideTextHorizontalVideo unclickable d-flex align-items-center text-center justify-content-center w-100",
+                          },
+                          [
+                            _c("h4", { staticClass: "commentaryVideo" }, [
+                              _vm._v(_vm._s(slide.commentary)),
+                            ]),
+                          ]
+                        )
+                      : _vm._e(),
+                  ]),
             ]),
           ]
         )

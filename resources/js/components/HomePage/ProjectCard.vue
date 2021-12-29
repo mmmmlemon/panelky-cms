@@ -153,10 +153,15 @@
 
             <div class="d-block text-center">
                <!-- изображение -->
-               <div class="slideImage" v-bind:style="{backgroundImage: 'url(' + slide.media_url + ')'}">
+               <div v-if="slide.media_type === 'image'" class="slideImage" v-bind:style="{backgroundImage: 'url(' + slide.media_url + ')'}">
                    <a class="slideFullscreenButton vertical" target="_blank" :href="slide.media_url">
                        <i class="bi bi-arrows-fullscreen"></i>
                     </a>
+               </div>
+               <div v-else class="slideImage">
+                    <video muted autoplay loop class="backgroundVideo" :id="`video_${slide.id}`">
+                        <source :src="slide.media_url" type="video/mp4" />
+                    </video>
                </div>
                <!-- кнопка показать\скрыть комментарий -->
                <b class="btn-block slideShowCommentaryButton" v-if="slide.commentary !== null" @click="toggleSlideCommentaryVisibility">
@@ -181,13 +186,22 @@
                             [''+slideAnimation]: (index + 1) === slidePosition}">
             <div class="d-block text-center" >
                <!-- изображение -->
-               <div class="slideImage" v-bind:style="{backgroundImage: 'url(' + slide.media_url + ')'}">
+               <div v-if="slide.media_type === 'image'" class="slideImage" v-bind:style="{backgroundImage: 'url(' + slide.media_url + ')'}">
                     <a class="slideFullscreenButton horizontal" target="_blank" :href="slide.media_url">
                        <i class="bi bi-arrows-fullscreen"></i>
                     </a>
                    <!-- текст комментария -->
                    <div v-if="slide.commentary !== null" class="slideTextHorizontal unclickable d-flex align-items-center text-center justify-content-center w-100">
                         <h4>{{slide.commentary}}</h4>
+                   </div>
+               </div>
+               <div v-else class="slideImage">
+                    <video autoplay loop class="backgroundVideo" :id="`video_${slide.id}`">
+                        <source :src="slide.media_url" type="video/mp4" />
+                    </video>
+                   <!-- текст комментария -->
+                   <div v-if="slide.commentary !== null" class="slideTextHorizontalVideo unclickable d-flex align-items-center text-center justify-content-center w-100">
+                        <h4 class="commentaryVideo">{{slide.commentary}}</h4>
                    </div>
                </div>
             </div>
@@ -204,6 +218,9 @@ export default {
     },
 
     mounted(){
+
+        // document.querySelectorAll("video").forEach(vid => vid.pause());
+
         this.setVisible = this.isVisible;
 
         // определяем подходящий класс для скриншота проекта
@@ -321,6 +338,20 @@ export default {
                 else if (this.screenOrientation === 'horizontal')
                 { this.slidePosition = this.numOfSlides.horizontal; }
             }
+
+            // если в текущем слайде видеоролик, то запустить его воспроизведение и поставить на паузу все остальные
+            var currentSlideHorizontal = this.project.slides.horizontal[this.slidePosition - 1];
+            var currentSlideVertical = this.project.slides.horizontal[this.slidePosition - 1];
+            document.querySelectorAll("video").forEach(vid => vid.pause());
+            if(currentSlideHorizontal.media_type === "video" &&  currentSlideVertical === 'video'){
+                var slideVideoHorizontal = document.getElementById(`video_${currentSlideHorizontal .id}`);
+                slideVideoHorizontal.currentTime = 0;
+                slideVideoHorizontal.play();
+
+                var slideVideoVertical = document.getElementById(`video_${currentSlideVertical .id}`);
+                slideVideoVertical.currentTime = 0;
+                slideVideoVertical.play();
+            }
         },
 
         // перейти к следующему слайду
@@ -336,6 +367,30 @@ export default {
                 this.slideAnimation = "goLeftSlideAnim";
                 this.slidePosition = 0;
             }
+
+            // если в текущем слайде видеоролик, то запустить его воспроизведение и поставить на паузу все остальные
+            if(this.slidePosition !== 0){
+                var currentSlideHorizontal = this.project.slides.horizontal[this.slidePosition - 1];
+                var currentSlideVertical = this.project.slides.vertical[this.slidePosition - 1];
+                document.querySelectorAll("video").forEach(vid => vid.pause());
+                if(currentSlideHorizontal.media_type === "video" || currentSlideVertical === 'video'){
+                    var slideVideoHorizontal = document.getElementById(`video_${currentSlideHorizontal .id}`);
+                    slideVideoHorizontal.currentTime = 0;
+                    slideVideoHorizontal.muted = true;
+                    slideVideoHorizontal.play();
+
+                    var slideVideoVertical = document.getElementById(`video_${currentSlideVertical .id}`);
+                    slideVideoVertical.currentTime = 0;
+                    slideVideoVertical.muted = true;
+                    slideVideoVertical.play();
+                }
+            } else {
+                slideVideoHorizontal.currentTime = 0;
+                slideVideoHorizontal.muted = true;
+                slideVideoHorizontal.pause();
+        }
+        
+            
         },
 
         // переключить на выбранный слайд при нажатии на "точку"

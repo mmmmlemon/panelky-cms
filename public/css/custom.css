@@ -422,6 +422,15 @@ hr {
     border-radius: 15px;
 }
 
+.slideTextHorizontalVideo{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 15%;
+    padding: 2rem;
+    border-radius: 15px;
+}
+
 .slideTextVertical{
     position: absolute;
     bottom: 0;
@@ -564,4 +573,16 @@ hr {
 .calculatorCardLarge{
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+}
+
+.backgroundVideo{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+
+}
+
+.commentaryVideo{
+    text-shadow: 0 1px 0 rg;
 }

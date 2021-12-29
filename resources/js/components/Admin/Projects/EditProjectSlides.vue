@@ -58,7 +58,10 @@
                     <div v-for="(slide, index) in projectSlidesHorizontal" 
                          v-bind:key="'horizontalSlide_'+index" 
                          class="col-8 col-md-2 text-center m-2 fadeInAnim">
-                        <img :src="slide.media_url" class="slideEditImage">
+                        <img v-if="slide.media_url === 'image'" :src="slide.media_url" class="slideEditImage">
+                        <video v-else class="slideEditImage" controls muted>
+                            <source :src="slide.media_url" type="video/mp4" />
+                        </video>
                         <h3 class="slideEditImageNum">{{index+1}}</h3>
                         <!-- кнопки под слайдами -->
                         <div class="row justify-content-center mt-2">
@@ -108,7 +111,10 @@
                 <hr v-if="projectSlidesVertical != 0">
                 <draggable v-model="projectSlidesVertical" handle=".handle" v-bind="dragOptions" class="row justify-content-center mt-5">
                     <div v-for="(slide, index) in projectSlidesVertical" v-bind:key="'verticalSlide_'+index" class="col-6 col-md-2 m-2 text-center fadeInAnim">
-                        <img :src="slide.media_url" class="slideEditImage">
+                        <img v-if="slide.media_type === 'image'" :src="slide.media_url" class="slideEditImage">
+                        <video v-else class="slideEditImage" controls muted>
+                            <source :src="slide.media_url" type="video/mp4" />
+                        </video>
                         <h3 class="slideEditImageNum">{{index+1}}</h3>
                         <!-- кнопки под слайдами -->
                         <div class="row justify-content-center mt-2">
