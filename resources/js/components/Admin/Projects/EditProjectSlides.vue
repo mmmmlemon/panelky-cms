@@ -175,8 +175,38 @@ export default {
     // для загрузки файлов по чанкам
     watch: {
         chunks(n, o) {
+          
             if (n.length > 0) {
                 this.upload();
+            }
+
+            if(n.length === 0){
+                this.slideMedia = undefined;
+                            this.projectIcon = undefined;
+                    this.projectImage = undefined;
+                    this.slideComment = undefined;
+                    this.$refs.media.value = null;
+                    this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
+                    
+                    // выбираем ориентацию слайда в форме в зависимости от того
+                    // сколько осталось свободных слотов
+                    if(this.slideVisibility === 'horizontal'){
+                        if(this.projectSlidesHorizontal.length + 1 >= this.slots){
+                            this.slideVisibility = 'vertical';
+                        }
+                    } else if (this.slideVisibility === 'vertical'){
+                        if(this.projectSlidesVertical.length + 1 >= this.slots){
+                            this.slideVisibility = 'horizontal';
+                        }
+                    } else if (this.slideVisibility === 'all'){
+                        if(this.projectSlidesVertical.length + 1 >= this.slots && this.projectSlidesHorizontal.length + 1 >= this.slots){
+                            this.slideVisibility = null;
+                        } else if (this.projectSlidesVertical.length + 1 >= this.slots && this.projectSlidesHorizontal.length + 1 <= this.slots){
+                            this.slideVisibility = 'horizontal';
+                        } else if (this.projectSlidesVertical.length + 1 <= this.slots && this.projectSlidesHorizontal.length + 1 >= this.slots){
+                            this.slideVisibility = 'vertical';
+                        }
+                    }
             }
         }
     },
@@ -198,7 +228,8 @@ export default {
             // чанки
             chunks: [],
             // кол-во загруженных чанков
-            uploaded: 0
+            uploaded: 0,
+            generatedFileName: undefined,
         }
     },
 
@@ -220,7 +251,7 @@ export default {
         formData() {
                 let formData = new FormData;
                 formData.set('is_last', this.chunks.length === 1);
-                formData.set('file', this.chunks[0], `${this.slideMedia.name}.part`);
+                formData.set('file', this.chunks[0], `${this.generatedFileName}.part`);
                 if(this.projectId !== null)
                 { formData.append('projectId', this.projectId); }
                 if(this.slideMedia !== undefined)
@@ -357,7 +388,9 @@ export default {
         },
 
         submitSlide(){
-             this.createChunks();
+            
+            this.generatedFileName =  `${Math.floor(Math.random(999,999999) * 10000)}_${this.slideMedia.name}`;
+            this.createChunks();
         },
 
         upload() {
@@ -367,33 +400,6 @@ export default {
 
                 if(response.data.uploaded === true){
                     this.saved = false;
-                    this.projectIcon = undefined;
-                    this.projectImage = undefined;
-                    this.slideComment = undefined;
-                    this.$refs.media.value = null;
-                    this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
-                    
-                    // выбираем ориентацию слайда в форме в зависимости от того
-                    // сколько осталось свободных слотов
-                    if(this.slideVisibility === 'horizontal'){
-                        if(this.projectSlidesHorizontal.length + 1 >= this.slots){
-                            this.slideVisibility = 'vertical';
-                        }
-                    } else if (this.slideVisibility === 'vertical'){
-                        if(this.projectSlidesVertical.length + 1 >= this.slots){
-                            this.slideVisibility = 'horizontal';
-                        }
-                    } else if (this.slideVisibility === 'all'){
-                        if(this.projectSlidesVertical.length + 1 >= this.slots && this.projectSlidesHorizontal.length + 1 >= this.slots){
-                            this.slideVisibility = null;
-                        } else if (this.projectSlidesVertical.length + 1 >= this.slots && this.projectSlidesHorizontal.length + 1 <= this.slots){
-                            this.slideVisibility = 'horizontal';
-                        } else if (this.projectSlidesVertical.length + 1 <= this.slots && this.projectSlidesHorizontal.length + 1 >= this.slots){
-                            this.slideVisibility = 'vertical';
-                        }
-                    }
-                    this.deleteMedia();
-                    // this.slideMedia = undefined;
                 }
             }).catch(error => {});
         },

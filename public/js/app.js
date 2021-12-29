@@ -5226,6 +5226,37 @@ __webpack_require__.r(__webpack_exports__);
       if (n.length > 0) {
         this.upload();
       }
+
+      if (n.length === 0) {
+        this.slideMedia = undefined;
+        this.projectIcon = undefined;
+        this.projectImage = undefined;
+        this.slideComment = undefined;
+        this.$refs.media.value = null;
+        this.$store.dispatch('getProject', {
+          value: this.projectSlug,
+          type: 'full'
+        }); // выбираем ориентацию слайда в форме в зависимости от того
+        // сколько осталось свободных слотов
+
+        if (this.slideVisibility === 'horizontal') {
+          if (this.projectSlidesHorizontal.length + 1 >= this.slots) {
+            this.slideVisibility = 'vertical';
+          }
+        } else if (this.slideVisibility === 'vertical') {
+          if (this.projectSlidesVertical.length + 1 >= this.slots) {
+            this.slideVisibility = 'horizontal';
+          }
+        } else if (this.slideVisibility === 'all') {
+          if (this.projectSlidesVertical.length + 1 >= this.slots && this.projectSlidesHorizontal.length + 1 >= this.slots) {
+            this.slideVisibility = null;
+          } else if (this.projectSlidesVertical.length + 1 >= this.slots && this.projectSlidesHorizontal.length + 1 <= this.slots) {
+            this.slideVisibility = 'horizontal';
+          } else if (this.projectSlidesVertical.length + 1 <= this.slots && this.projectSlidesHorizontal.length + 1 >= this.slots) {
+            this.slideVisibility = 'vertical';
+          }
+        }
+      }
     }
   },
   // данные
@@ -5245,7 +5276,8 @@ __webpack_require__.r(__webpack_exports__);
       // чанки
       chunks: [],
       // кол-во загруженных чанков
-      uploaded: 0
+      uploaded: 0,
+      generatedFileName: undefined
     };
   },
   props: {
@@ -5267,7 +5299,7 @@ __webpack_require__.r(__webpack_exports__);
     formData: function formData() {
       var formData = new FormData();
       formData.set('is_last', this.chunks.length === 1);
-      formData.set('file', this.chunks[0], "".concat(this.slideMedia.name, ".part"));
+      formData.set('file', this.chunks[0], "".concat(this.generatedFileName, ".part"));
 
       if (this.projectId !== null) {
         formData.append('projectId', this.projectId);
@@ -5434,6 +5466,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     submitSlide: function submitSlide() {
+      this.generatedFileName = "".concat(Math.floor(Math.random(999, 999999) * 10000), "_").concat(this.slideMedia.name);
       this.createChunks();
     },
     upload: function upload() {
@@ -5445,38 +5478,6 @@ __webpack_require__.r(__webpack_exports__);
 
         if (response.data.uploaded === true) {
           _this5.saved = false;
-          _this5.projectIcon = undefined;
-          _this5.projectImage = undefined;
-          _this5.slideComment = undefined;
-          _this5.$refs.media.value = null;
-
-          _this5.$store.dispatch('getProject', {
-            value: _this5.projectSlug,
-            type: 'full'
-          }); // выбираем ориентацию слайда в форме в зависимости от того
-          // сколько осталось свободных слотов
-
-
-          if (_this5.slideVisibility === 'horizontal') {
-            if (_this5.projectSlidesHorizontal.length + 1 >= _this5.slots) {
-              _this5.slideVisibility = 'vertical';
-            }
-          } else if (_this5.slideVisibility === 'vertical') {
-            if (_this5.projectSlidesVertical.length + 1 >= _this5.slots) {
-              _this5.slideVisibility = 'horizontal';
-            }
-          } else if (_this5.slideVisibility === 'all') {
-            if (_this5.projectSlidesVertical.length + 1 >= _this5.slots && _this5.projectSlidesHorizontal.length + 1 >= _this5.slots) {
-              _this5.slideVisibility = null;
-            } else if (_this5.projectSlidesVertical.length + 1 >= _this5.slots && _this5.projectSlidesHorizontal.length + 1 <= _this5.slots) {
-              _this5.slideVisibility = 'horizontal';
-            } else if (_this5.projectSlidesVertical.length + 1 <= _this5.slots && _this5.projectSlidesHorizontal.length + 1 >= _this5.slots) {
-              _this5.slideVisibility = 'vertical';
-            }
-          }
-
-          _this5.deleteMedia(); // this.slideMedia = undefined;
-
         }
       })["catch"](function (error) {});
     },

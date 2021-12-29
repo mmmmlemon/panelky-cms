@@ -502,12 +502,23 @@ class AdminController extends Controller
             // Storage::put($path, file_get_contents($mediaFile));
 
             $file = $request->file('file');
-
+            $fileExtenstion = $file->getClientOriginalExtension();
+            
             $path = Storage::disk('local')->path("public/temp/{$file->getClientOriginalName()}");
-    
+            
             File::append($path, $file->get());
+
+
+
             if($request->has('is_last') && $request->boolean('is_last')){
                 $name = basename($path, '.part');
+
+                File::move($path, base_path("/storage/app/public/projectsSlideMedia/{$name}"));
+
+                $fileExtenstion = File::extension(base_path("/storage/app/public/projectsSlideMedia/{$name}"));
+
+                $mediaType = ($fileExtenstion == 'mp4') ? 'video' : 'image';
+   
                 // сохраняем запись в БД
                 // если слайд вертикальный или горизонтальный
                 if($request->slideVisibility != 'all')
@@ -517,6 +528,8 @@ class AdminController extends Controller
                     $slide->visibility = $request->slideVisibility;
                     $slide->commentary = $request->slideComment;
                     $slide->project_id = $request->projectId;
+                    $slide->media_type = ($fileExtenstion == 'mp4') ? 'video' : 'image';
+
                     $slide->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->min('order') - 1;
                     $slide->save();
                 } 
@@ -527,6 +540,7 @@ class AdminController extends Controller
                     $slideHorizontal->visibility = 'horizontal';
                     $slideHorizontal->commentary = $request->slideComment;
                     $slideHorizontal->project_id = $request->projectId;
+                    $slideHorizontal->media_type = $mediaType;
                     $slideHorizontal->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->min('order') - 1;
                     $slideHorizontal->save();
 
@@ -535,10 +549,11 @@ class AdminController extends Controller
                     $slideVertical->visibility = 'vertical';
                     $slideVertical->commentary = $request->slideComment;
                     $slideVertical->project_id = $request->projectId;
+                    $slideVertical->media_type = $mediaType;
                     $slideVertical->order = ProjectSlide::where('project_id', $request->projectId)->orderBy('order', 'desc')->min('order') - 1;
                     $slideVertical->save();
                 }
-                File::move($path, base_path("/storage/app/public/projectsSlideMedia/{$name}"));
+
             }
 
           
