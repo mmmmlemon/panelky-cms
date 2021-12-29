@@ -44,8 +44,11 @@
             <textarea type="text" v-model="slideComment" placeholder="Комментарий к слайду, отображается под слайдом" class="form-control"></textarea>
             <div v-if="errors && errors.slideComment" class="text-danger goUpAnim">{{ errors.slideComment[0] }}</div>
         </div>
-        <button class="btn btn-lg btn-block btn-outline-light slideForm" :disabled="slideMedia === undefined" v-bind:class="{'zeroOpacity unclickable': saved === true}">
-            Загрузить и сохранить
+        <button class="btn btn-lg btn-block btn-outline-light slideForm" 
+                :disabled="slideMedia === undefined || saved === true">
+            <span v-if="saved === false">Загрузить и сохранить</span>  
+            <span v-else class="blinkAnimLoad">Загружается слайд... <i class="bi bi-arrow-clockwise"></i></span>
+            
         </button>
     </form>
     <!-- превью слайдов -->
@@ -180,39 +183,39 @@ export default {
 
     // для загрузки файлов по чанкам
     watch: {
-        chunks(n, o) {
-          
+        chunks(n) {
             if (n.length > 0) {
                 this.upload();
             }
 
             if(n.length === 0){
+                this.saved = false;
                 this.slideMedia = undefined;
-                            this.projectIcon = undefined;
-                    this.projectImage = undefined;
-                    this.slideComment = undefined;
-                    this.$refs.media.value = null;
-                    this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
+                this.projectIcon = undefined;
+                this.projectImage = undefined;
+                this.slideComment = undefined;
+                this.$refs.media.value = null;
+                this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
                     
-                    // выбираем ориентацию слайда в форме в зависимости от того
-                    // сколько осталось свободных слотов
-                    if(this.slideVisibility === 'horizontal'){
-                        if(this.projectSlidesHorizontal.length + 1 >= this.slots){
-                            this.slideVisibility = 'vertical';
-                        }
-                    } else if (this.slideVisibility === 'vertical'){
-                        if(this.projectSlidesVertical.length + 1 >= this.slots){
-                            this.slideVisibility = 'horizontal';
-                        }
-                    } else if (this.slideVisibility === 'all'){
-                        if(this.projectSlidesVertical.length + 1 >= this.slots && this.projectSlidesHorizontal.length + 1 >= this.slots){
-                            this.slideVisibility = null;
-                        } else if (this.projectSlidesVertical.length + 1 >= this.slots && this.projectSlidesHorizontal.length + 1 <= this.slots){
-                            this.slideVisibility = 'horizontal';
-                        } else if (this.projectSlidesVertical.length + 1 <= this.slots && this.projectSlidesHorizontal.length + 1 >= this.slots){
-                            this.slideVisibility = 'vertical';
-                        }
+                // выбираем ориентацию слайда в форме в зависимости от того
+                // сколько осталось свободных слотов
+                if(this.slideVisibility === 'horizontal'){
+                    if(this.projectSlidesHorizontal.length + 1 >= this.slots){
+                        this.slideVisibility = 'vertical';
                     }
+                } else if (this.slideVisibility === 'vertical'){
+                    if(this.projectSlidesVertical.length + 1 >= this.slots){
+                        this.slideVisibility = 'horizontal';
+                    }
+                } else if (this.slideVisibility === 'all'){
+                    if(this.projectSlidesVertical.length + 1 >= this.slots && this.projectSlidesHorizontal.length + 1 >= this.slots){
+                        this.slideVisibility = null;
+                    } else if (this.projectSlidesVertical.length + 1 >= this.slots && this.projectSlidesHorizontal.length + 1 <= this.slots){
+                        this.slideVisibility = 'horizontal';
+                    } else if (this.projectSlidesVertical.length + 1 <= this.slots && this.projectSlidesHorizontal.length + 1 >= this.slots){
+                        this.slideVisibility = 'vertical';
+                    }
+                }
             }
         }
     },
@@ -234,7 +237,6 @@ export default {
             // чанки
             chunks: [],
             // кол-во загруженных чанков
-            uploaded: 0,
             generatedFileName: undefined,
         }
     },
@@ -245,13 +247,60 @@ export default {
     },
 
     computed: {
+        // горизонтальные слайды
+        projectSlidesHorizontal:{
+            get(){
+                return this.$store.state.AdminStates.currentProject.slides.horizontal;
+            },
+            set(value){
+                let formData = new FormData();
+                formData.append('newOrder', JSON.stringify(value));
+                formData.append('type', 'horizontal');
 
-        // прогресс загрузки файла
-        // progress() {
-        //     if(this.file != null){
-        //         return Math.floor((this.uploaded * 100) / this.file.size);
-        //     }
-        // },
+                //обновляем стейт currentProject чтобы не было мерцания при перемещении слайда
+                let currentProject = this.$parent.currentProject;
+                currentProject.slides.horizontal = value;
+                this.$store.commit('setState', {state: 'currentProject', value: currentProject});
+
+                axios.post('/admin/setNewOrderForSlides', formData).then(response => {
+                    this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
+                    this.slidePreviewClass = '';
+                }).catch(error => {
+                    this.$store.dispatch('setErrors', error.response.data.message);
+                });
+            }   
+        },
+
+        // вертикальные слайды
+        projectSlidesVertical:{
+
+            get(){
+                return this.$store.state.AdminStates.currentProject.slides.vertical;
+            },
+            set(value){
+                let formData = new FormData();
+                formData.append('newOrder', JSON.stringify(value));
+                formData.append('type', 'vertical');
+
+                //обновляем стейт currentProject чтобы не было мерцания при перемещении слайда
+                let currentProject = this.$parent.currentProject;
+                currentProject.slides.vertical = value;
+                this.$store.commit('setState', {state: 'currentProject', value: currentProject});
+
+                axios.post('/admin/setNewOrderForSlides', formData).then(response => {
+                    this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
+                }).catch(error => {
+                    this.$store.dispatch('setErrors', error.response.data.message);
+                });
+            }  
+            
+        },
+ 
+        dragOptions() {
+            return {
+                ghostClass: "dragGhost"
+            }
+        },
 
         // форма для отправки файла
         formData() {
@@ -279,122 +328,17 @@ export default {
                     'Content-Type': 'application/octet-stream'
                 },
                 onUploadProgress: event => {
-                    this.uploaded += event.loaded;
+                    
+                    this.uploaded += event.loaded;          
                 }
             };
-        },
-
-        // горизонтальные слайды
-        projectSlidesHorizontal:{
-            get(){
-                return this.$store.state.AdminStates.currentProject.slides.horizontal;
-            },
-            set(value){
-                let formData = new FormData();
-                formData.append('newOrder', JSON.stringify(value));
-                formData.append('type', 'horizontal');
-
-                //обновляем стейт currentProject чтобы не было мерцания при перемещении слайда
-                let currentProject = this.$parent.currentProject;
-                currentProject.slides.horizontal = value;
-                this.$store.commit('setState', {state: 'currentProject', value: currentProject});
-
-                axios.post('/admin/setNewOrderForSlides', formData).then(response => {
-                    this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
-                    this.slidePreviewClass = '';
-                }).catch(error => {
-                    this.$store.dispatch('setErrors', error.response.data.message);
-                });
-            }   
-        },
-
-        projectSlidesVertical:{
-
-            get(){
-                return this.$store.state.AdminStates.currentProject.slides.vertical;
-            },
-            set(value){
-                let formData = new FormData();
-                formData.append('newOrder', JSON.stringify(value));
-                formData.append('type', 'vertical');
-
-                //обновляем стейт currentProject чтобы не было мерцания при перемещении слайда
-                let currentProject = this.$parent.currentProject;
-                currentProject.slides.vertical = value;
-                this.$store.commit('setState', {state: 'currentProject', value: currentProject});
-
-                axios.post('/admin/setNewOrderForSlides', formData).then(response => {
-                    this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
-                }).catch(error => {
-                    this.$store.dispatch('setErrors', error.response.data.message);
-                });
-            }  
-            
-        },
-
-        dragOptions() {
-            return {
-                ghostClass: "dragGhost"
-            }
         },
     },
 
     // методы
     methods: {
         // сохранить слайд
-        submitSlideOld(){
-            this.saved = false;
-
-            let formData = new FormData();
-            if(this.projectId !== null)
-            { formData.append('projectId', this.projectId); }
-            if(this.slideMedia !== undefined)
-            { formData.append('slideMedia', this.slideMedia); }
-            if(this.slideVisibility !== undefined)
-            { formData.append('slideVisibility', this.slideVisibility); }
-            if(this.slideComment !== undefined)
-            { formData.append('slideComment', this.slideComment); }
-
-            axios.post('/admin/saveProjectSlide', formData, {
-                headers: {'Content-Type':'multipart/form-data'}
-            }).then(response => {
-                this.saved = true;
-                this.projectIcon = undefined;
-                this.projectImage = undefined;
-                this.slideMedia = undefined;
-                this.slideComment = undefined;
-                this.$refs.media.value = null;
-                this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
-                
-                // выбираем ориентацию слайда в форме в зависимости от того
-                // сколько осталось свободных слотов
-                if(this.slideVisibility === 'horizontal'){
-                    if(this.projectSlidesHorizontal.length + 1 >= this.slots){
-                        this.slideVisibility = 'vertical';
-                    }
-                } else if (this.slideVisibility === 'vertical'){
-                    if(this.projectSlidesVertical.length + 1 >= this.slots){
-                        this.slideVisibility = 'horizontal';
-                    }
-                } else if (this.slideVisibility === 'all'){
-                    if(this.projectSlidesVertical.length + 1 >= this.slots && this.projectSlidesHorizontal.length + 1 >= this.slots){
-                        this.slideVisibility = null;
-                    } else if (this.projectSlidesVertical.length + 1 >= this.slots && this.projectSlidesHorizontal.length + 1 <= this.slots){
-                        this.slideVisibility = 'horizontal';
-                    } else if (this.projectSlidesVertical.length + 1 <= this.slots && this.projectSlidesHorizontal.length + 1 >= this.slots){
-                        this.slideVisibility = 'vertical';
-                    }
-                }
-
-            }).catch(error => {
-                if(error.response.status === 422){ 
-                    this.errors = error.response.data.errors || {};
-                }
-            })
-        },
-
-        submitSlide(){
-            
+        submitSlide(){  
             this.generatedFileName =  `${Math.floor(Math.random(999,999999) * 10000)}_${this.slideMedia.name}`;
             this.createChunks();
         },
@@ -404,9 +348,6 @@ export default {
             axios(this.config).then(response => {
                 this.chunks.shift();
 
-                if(response.data.uploaded === true){
-                    this.saved = false;
-                }
             }).catch(error => {});
         },
 
@@ -418,6 +359,15 @@ export default {
                     i * size, Math.min(i * size + size, this.slideMedia.size), this.slideMedia.type
                 ));
             }
+        },
+
+        //записать файл в projectIcon или в projectImage
+        handleMedia(){
+            this.slideMedia = this.$refs.media.files[0];
+        },
+
+        deleteMedia(){
+            this.slideMedia = undefined;
         },
 
         //удалить слайд
@@ -472,7 +422,7 @@ export default {
 
             axios.post('/admin/saveSlideChanges', formData).then(response => {
                 if(response.data === true){
-                     this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
+                    this.$store.dispatch('getProject', {value: this.projectSlug, type: 'full'});
                     this.slideEditId = undefined;
                     this.slideEditComment = undefined;
                 }
@@ -480,14 +430,6 @@ export default {
             })
         },
 
-        //записать файл в projectIcon или в projectImage
-        handleMedia(){
-            this.slideMedia = this.$refs.media.files[0];
-        },
-
-        deleteMedia(){
-            this.slideMedia = undefined;
-        }
     }
 }
 </script>

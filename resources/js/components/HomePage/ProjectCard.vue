@@ -196,7 +196,7 @@
                    </div>
                </div>
                <div v-else class="slideImage">
-                    <video autoplay loop class="backgroundVideo" :id="`video_${slide.id}`">
+                    <video muted autoplay loop class="backgroundVideo" :id="`video_${slide.id}`">
                         <source :src="slide.media_url" type="video/mp4" />
                     </video>
                    <!-- текст комментария -->

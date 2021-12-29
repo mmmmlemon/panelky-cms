@@ -5213,6 +5213,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   // хуки
   mounted: function mounted() {
@@ -5228,12 +5231,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   // для загрузки файлов по чанкам
   watch: {
-    chunks: function chunks(n, o) {
+    chunks: function chunks(n) {
       if (n.length > 0) {
         this.upload();
       }
 
       if (n.length === 0) {
+        this.saved = false;
         this.slideMedia = undefined;
         this.projectIcon = undefined;
         this.projectImage = undefined;
@@ -5282,7 +5286,6 @@ __webpack_require__.r(__webpack_exports__);
       // чанки
       chunks: [],
       // кол-во загруженных чанков
-      uploaded: 0,
       generatedFileName: undefined
     };
   },
@@ -5295,12 +5298,69 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    // прогресс загрузки файла
-    // progress() {
-    //     if(this.file != null){
-    //         return Math.floor((this.uploaded * 100) / this.file.size);
-    //     }
-    // },
+    // горизонтальные слайды
+    projectSlidesHorizontal: {
+      get: function get() {
+        return this.$store.state.AdminStates.currentProject.slides.horizontal;
+      },
+      set: function set(value) {
+        var _this = this;
+
+        var formData = new FormData();
+        formData.append('newOrder', JSON.stringify(value));
+        formData.append('type', 'horizontal'); //обновляем стейт currentProject чтобы не было мерцания при перемещении слайда
+
+        var currentProject = this.$parent.currentProject;
+        currentProject.slides.horizontal = value;
+        this.$store.commit('setState', {
+          state: 'currentProject',
+          value: currentProject
+        });
+        axios.post('/admin/setNewOrderForSlides', formData).then(function (response) {
+          _this.$store.dispatch('getProject', {
+            value: _this.projectSlug,
+            type: 'full'
+          });
+
+          _this.slidePreviewClass = '';
+        })["catch"](function (error) {
+          _this.$store.dispatch('setErrors', error.response.data.message);
+        });
+      }
+    },
+    // вертикальные слайды
+    projectSlidesVertical: {
+      get: function get() {
+        return this.$store.state.AdminStates.currentProject.slides.vertical;
+      },
+      set: function set(value) {
+        var _this2 = this;
+
+        var formData = new FormData();
+        formData.append('newOrder', JSON.stringify(value));
+        formData.append('type', 'vertical'); //обновляем стейт currentProject чтобы не было мерцания при перемещении слайда
+
+        var currentProject = this.$parent.currentProject;
+        currentProject.slides.vertical = value;
+        this.$store.commit('setState', {
+          state: 'currentProject',
+          value: currentProject
+        });
+        axios.post('/admin/setNewOrderForSlides', formData).then(function (response) {
+          _this2.$store.dispatch('getProject', {
+            value: _this2.projectSlug,
+            type: 'full'
+          });
+        })["catch"](function (error) {
+          _this2.$store.dispatch('setErrors', error.response.data.message);
+        });
+      }
+    },
+    dragOptions: function dragOptions() {
+      return {
+        ghostClass: "dragGhost"
+      };
+    },
     // форма для отправки файла
     formData: function formData() {
       var formData = new FormData();
@@ -5327,7 +5387,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     // конфигурация POST-запроса на отправку файла
     config: function config() {
-      var _this = this;
+      var _this3 = this;
 
       return {
         method: 'POST',
@@ -5337,154 +5397,24 @@ __webpack_require__.r(__webpack_exports__);
           'Content-Type': 'application/octet-stream'
         },
         onUploadProgress: function onUploadProgress(event) {
-          _this.uploaded += event.loaded;
+          _this3.uploaded += event.loaded;
         }
-      };
-    },
-    // горизонтальные слайды
-    projectSlidesHorizontal: {
-      get: function get() {
-        return this.$store.state.AdminStates.currentProject.slides.horizontal;
-      },
-      set: function set(value) {
-        var _this2 = this;
-
-        var formData = new FormData();
-        formData.append('newOrder', JSON.stringify(value));
-        formData.append('type', 'horizontal'); //обновляем стейт currentProject чтобы не было мерцания при перемещении слайда
-
-        var currentProject = this.$parent.currentProject;
-        currentProject.slides.horizontal = value;
-        this.$store.commit('setState', {
-          state: 'currentProject',
-          value: currentProject
-        });
-        axios.post('/admin/setNewOrderForSlides', formData).then(function (response) {
-          _this2.$store.dispatch('getProject', {
-            value: _this2.projectSlug,
-            type: 'full'
-          });
-
-          _this2.slidePreviewClass = '';
-        })["catch"](function (error) {
-          _this2.$store.dispatch('setErrors', error.response.data.message);
-        });
-      }
-    },
-    projectSlidesVertical: {
-      get: function get() {
-        return this.$store.state.AdminStates.currentProject.slides.vertical;
-      },
-      set: function set(value) {
-        var _this3 = this;
-
-        var formData = new FormData();
-        formData.append('newOrder', JSON.stringify(value));
-        formData.append('type', 'vertical'); //обновляем стейт currentProject чтобы не было мерцания при перемещении слайда
-
-        var currentProject = this.$parent.currentProject;
-        currentProject.slides.vertical = value;
-        this.$store.commit('setState', {
-          state: 'currentProject',
-          value: currentProject
-        });
-        axios.post('/admin/setNewOrderForSlides', formData).then(function (response) {
-          _this3.$store.dispatch('getProject', {
-            value: _this3.projectSlug,
-            type: 'full'
-          });
-        })["catch"](function (error) {
-          _this3.$store.dispatch('setErrors', error.response.data.message);
-        });
-      }
-    },
-    dragOptions: function dragOptions() {
-      return {
-        ghostClass: "dragGhost"
       };
     }
   },
   // методы
   methods: {
     // сохранить слайд
-    submitSlideOld: function submitSlideOld() {
-      var _this4 = this;
-
-      this.saved = false;
-      var formData = new FormData();
-
-      if (this.projectId !== null) {
-        formData.append('projectId', this.projectId);
-      }
-
-      if (this.slideMedia !== undefined) {
-        formData.append('slideMedia', this.slideMedia);
-      }
-
-      if (this.slideVisibility !== undefined) {
-        formData.append('slideVisibility', this.slideVisibility);
-      }
-
-      if (this.slideComment !== undefined) {
-        formData.append('slideComment', this.slideComment);
-      }
-
-      axios.post('/admin/saveProjectSlide', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }).then(function (response) {
-        _this4.saved = true;
-        _this4.projectIcon = undefined;
-        _this4.projectImage = undefined;
-        _this4.slideMedia = undefined;
-        _this4.slideComment = undefined;
-        _this4.$refs.media.value = null;
-
-        _this4.$store.dispatch('getProject', {
-          value: _this4.projectSlug,
-          type: 'full'
-        }); // выбираем ориентацию слайда в форме в зависимости от того
-        // сколько осталось свободных слотов
-
-
-        if (_this4.slideVisibility === 'horizontal') {
-          if (_this4.projectSlidesHorizontal.length + 1 >= _this4.slots) {
-            _this4.slideVisibility = 'vertical';
-          }
-        } else if (_this4.slideVisibility === 'vertical') {
-          if (_this4.projectSlidesVertical.length + 1 >= _this4.slots) {
-            _this4.slideVisibility = 'horizontal';
-          }
-        } else if (_this4.slideVisibility === 'all') {
-          if (_this4.projectSlidesVertical.length + 1 >= _this4.slots && _this4.projectSlidesHorizontal.length + 1 >= _this4.slots) {
-            _this4.slideVisibility = null;
-          } else if (_this4.projectSlidesVertical.length + 1 >= _this4.slots && _this4.projectSlidesHorizontal.length + 1 <= _this4.slots) {
-            _this4.slideVisibility = 'horizontal';
-          } else if (_this4.projectSlidesVertical.length + 1 <= _this4.slots && _this4.projectSlidesHorizontal.length + 1 >= _this4.slots) {
-            _this4.slideVisibility = 'vertical';
-          }
-        }
-      })["catch"](function (error) {
-        if (error.response.status === 422) {
-          _this4.errors = error.response.data.errors || {};
-        }
-      });
-    },
     submitSlide: function submitSlide() {
       this.generatedFileName = "".concat(Math.floor(Math.random(999, 999999) * 10000), "_").concat(this.slideMedia.name);
       this.createChunks();
     },
     upload: function upload() {
-      var _this5 = this;
+      var _this4 = this;
 
       this.saved = true;
       axios(this.config).then(function (response) {
-        _this5.chunks.shift();
-
-        if (response.data.uploaded === true) {
-          _this5.saved = false;
-        }
+        _this4.chunks.shift();
       })["catch"](function (error) {});
     },
     createChunks: function createChunks() {
@@ -5495,28 +5425,35 @@ __webpack_require__.r(__webpack_exports__);
         this.chunks.push(this.slideMedia.slice(i * size, Math.min(i * size + size, this.slideMedia.size), this.slideMedia.type));
       }
     },
+    //записать файл в projectIcon или в projectImage
+    handleMedia: function handleMedia() {
+      this.slideMedia = this.$refs.media.files[0];
+    },
+    deleteMedia: function deleteMedia() {
+      this.slideMedia = undefined;
+    },
     //удалить слайд
     deleteSlide: function deleteSlide(slideId, slideOrientation) {
-      var _this6 = this;
+      var _this5 = this;
 
       var formData = new FormData();
       formData.append('slideId', slideId);
       axios.post('/admin/deleteProjectSlide', formData).then(function (response) {
         if (response.data === true) {
-          _this6.$store.dispatch('getProject', {
-            value: _this6.projectSlug,
+          _this5.$store.dispatch('getProject', {
+            value: _this5.projectSlug,
             type: 'full'
           }); // выбираем ориентацию слайда в форме в зависимости от того
           // сколько осталось свободных слотов
 
 
           if (slideOrientation === 'horizontal') {
-            if (_this6.projectSlidesHorizontal.length - 1 < _this6.slots && _this6.projectSlidesVertical.length >= _this6.slots) {
-              _this6.slideVisibility = 'horizontal';
+            if (_this5.projectSlidesHorizontal.length - 1 < _this5.slots && _this5.projectSlidesVertical.length >= _this5.slots) {
+              _this5.slideVisibility = 'horizontal';
             }
           } else if (slideOrientation === 'vertical') {
-            if (_this6.projectSlidesHorizontal.length >= _this6.slots && _this6.projectSlidesVertical.length - 1 < _this6.slots) {
-              _this6.slideVisibility = 'vertical';
+            if (_this5.projectSlidesHorizontal.length >= _this5.slots && _this5.projectSlidesVertical.length - 1 < _this5.slots) {
+              _this5.slideVisibility = 'vertical';
             }
           }
         }
@@ -5536,29 +5473,22 @@ __webpack_require__.r(__webpack_exports__);
     },
     //сохранить изменения в слайде
     saveSlideChanges: function saveSlideChanges() {
-      var _this7 = this;
+      var _this6 = this;
 
       var formData = new FormData();
       formData.append('slideId', this.slideEditId);
       formData.append('slideCommentary', this.slideEditComment);
       axios.post('/admin/saveSlideChanges', formData).then(function (response) {
         if (response.data === true) {
-          _this7.$store.dispatch('getProject', {
-            value: _this7.projectSlug,
+          _this6.$store.dispatch('getProject', {
+            value: _this6.projectSlug,
             type: 'full'
           });
 
-          _this7.slideEditId = undefined;
-          _this7.slideEditComment = undefined;
+          _this6.slideEditId = undefined;
+          _this6.slideEditComment = undefined;
         }
       })["catch"](function (error) {});
-    },
-    //записать файл в projectIcon или в projectImage
-    handleMedia: function handleMedia() {
-      this.slideMedia = this.$refs.media.files[0];
-    },
-    deleteMedia: function deleteMedia() {
-      this.slideMedia = undefined;
     }
   }
 });
@@ -70152,10 +70082,18 @@ var render = function () {
           "button",
           {
             staticClass: "btn btn-lg btn-block btn-outline-light slideForm",
-            class: { "zeroOpacity unclickable": _vm.saved === true },
-            attrs: { disabled: _vm.slideMedia === undefined },
+            attrs: {
+              disabled: _vm.slideMedia === undefined || _vm.saved === true,
+            },
           },
-          [_vm._v("\n        Загрузить и сохранить\n    ")]
+          [
+            _vm.saved === false
+              ? _c("span", [_vm._v("Загрузить и сохранить")])
+              : _c("span", { staticClass: "blinkAnimLoad" }, [
+                  _vm._v("Загружается слайд... "),
+                  _c("i", { staticClass: "bi bi-arrow-clockwise" }),
+                ]),
+          ]
         ),
       ]
     ),
@@ -74033,10 +73971,12 @@ var render = function () {
                       {
                         staticClass: "backgroundVideo",
                         attrs: {
+                          muted: "",
                           autoplay: "",
                           loop: "",
                           id: "video_" + slide.id,
                         },
+                        domProps: { muted: true },
                       },
                       [
                         _c("source", {

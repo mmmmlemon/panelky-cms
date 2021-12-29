@@ -226,6 +226,10 @@
     animation: blink 5s ease-in-out;
 }
 
+.blinkAnimLoad{
+    animation: blinkshort 2s infinite ease-in-out;
+}
+
 /* анимации vue transition для HeaderCard */
 .name-enter-active {
     transition: all 0.5s ease;
