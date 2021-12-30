@@ -4,7 +4,7 @@
     font-family: "Montserrat";
     font-display: auto;
     unicode-range: U+000-5FF;
-    src: local("Montserrat"), url("../fonts/Montserrat-Regular.ttf") format('ttf');
+    src: local("Montserrat"), url("../fonts/Montserrat-Regular.ttf");
    }
 
    
