@@ -31,18 +31,20 @@
                 <div v-for="(contact, index) in contacts" v-bind:key="index" class="col-6 col-md-3 m-0 p-0 mt-3 contactIcon"
                         :style="`transition: all 0.8s  ease-out; transition-delay: ${index/5}s; font-size: 2.5rem;`"
                         v-bind:class="{'zeroOpacity unclickable': contactsVisible === false}">
-                    <a v-if="contact.contact_type === 'email'"  :href="'mailto:'+contact.contact_url">
+
+                    <a v-if="contact.contact_type === 'email' && isMobile"  :href="'mailto:'+contact.contact_url">
                         <i class="goUpAnim fas fa-at" :style="`animation-duration: ${index/5}s;`"></i>
                     </a>
+
+                    <a v-else-if="contact.contact_type === 'email' && isMobile === false"  @click="showEmail(contact.contact_url)">
+                        <i class="goUpAnim fas fa-at pointer" :style="`animation-duration: ${index/5}s;`"></i>
+                    </a>
+                   
                     <a v-else :href="contact.contact_url" target="_blank">
                         <i :class="`goUpAnim fab fa-${contact.contact_type}`"></i>
                     </a>
                 </div>
             </div>
-                <!-- <a class="font18pt mb-5" :href="'mailto:'+email.email" v-bind:class="{'zeroOpacity unclickable': 
-                    email.emailVisible === false, 'goUpAnim': email.emailVisible === true}">
-                    <b>{{email.email}}</b>
-                </a> -->
             </div> 
         
         </div>  
@@ -105,6 +107,11 @@ export default {
             }
         },
 
+        
+        isMobile(){
+            return this.$isMobileOnly;
+        }
+
 
     },
 
@@ -122,14 +129,14 @@ export default {
         //показать контакты
         showContacts(){
             this.contactsVisible = true;
-        }
+        },
 
         //показать почту по нажатию кнопки
-        // showEmail(){
-        //     if(this.email.emailVisible !== true){
-        //         this.email = this.reverseString(this.email.email);
-        //     }
-        // }
+        showEmail(email){
+           alert(email);
+        },
+        
+        
     }
 }
 </script>

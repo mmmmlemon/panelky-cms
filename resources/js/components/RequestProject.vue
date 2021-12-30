@@ -20,14 +20,14 @@
             </div>
             <div v-for="(orderType) of orderTypesInfo" v-bind:key="orderType.order_type" class="row justify-content-center calculatorPrices">
                 <transition name="productDescription">
-                    <div class="col-8 text-center mt-5" v-if="selectedProduct == orderType.order_type">
+                    <div class="col-12 col-md-8 text-center mt-5" v-if="selectedProduct == orderType.order_type">
                         <div class="fs-2 mb-3">
                             <h3><i :class="orderType.order_bootstrap_icon"></i> {{orderType.order_name}}</h3>
                         </div>
                         <div class="fs-2 mb-3 col-12">
                             <p>{{orderType.order_desc}}</p>
                         </div>
-                        <div class="fs-2 mb-3 col-12">
+                        <div class="fs-2 mb-3 col-12" v-if="orderType.price_range === '' || orderType.time_range === ''">
                             <h4><b>Цена *</b></h4>
                             <h2>{{orderType.price_range}}</h2>
                             <h4 class="mt-5"><b>Время разработки *</b></h4>

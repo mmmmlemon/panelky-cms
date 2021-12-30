@@ -31,6 +31,7 @@
                             <a :href="project.project_url" target="_blank">
                                 <b>{{project.project_title}}</b>
                             </a>
+                            <h6 class="mt-2">{{project.project_bottomText}}</h6>
                         </h4>
                      </div>
                 </div>

@@ -6959,6 +6959,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //хуки
   created: function created() {
@@ -7008,6 +7010,9 @@ __webpack_require__.r(__webpack_exports__);
       },
       set: function set() {//
       }
+    },
+    isMobile: function isMobile() {
+      return this.$isMobileOnly;
     }
   },
   //методы
@@ -7023,13 +7028,11 @@ __webpack_require__.r(__webpack_exports__);
     //показать контакты
     showContacts: function showContacts() {
       this.contactsVisible = true;
-    } //показать почту по нажатию кнопки
-    // showEmail(){
-    //     if(this.email.emailVisible !== true){
-    //         this.email = this.reverseString(this.email.email);
-    //     }
-    // }
-
+    },
+    //показать почту по нажатию кнопки
+    showEmail: function showEmail(email) {
+      alert(email);
+    }
   }
 });
 
@@ -7191,6 +7194,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -65512,7 +65516,8 @@ var render = function () {
         [
           _vm.aboutSiteText !== -1 && _vm.aboutSiteText !== false
             ? _c("div", {
-                staticClass: "textVertical goUpAnim text-center p-4 p-md-0",
+                staticClass:
+                  "col-12 col-md-5 textVertical goUpAnim text-center p-4 p-md-0",
                 domProps: { innerHTML: _vm._s(_vm.aboutSiteText) },
               })
             : _vm._e(),
@@ -72720,13 +72725,31 @@ var render = function () {
                       "s; font-size: 2.5rem;",
                   },
                   [
-                    contact.contact_type === "email"
+                    contact.contact_type === "email" && _vm.isMobile
                       ? _c(
                           "a",
                           { attrs: { href: "mailto:" + contact.contact_url } },
                           [
                             _c("i", {
                               staticClass: "goUpAnim fas fa-at",
+                              style: "animation-duration: " + index / 5 + "s;",
+                            }),
+                          ]
+                        )
+                      : contact.contact_type === "email" &&
+                        _vm.isMobile === false
+                      ? _c(
+                          "a",
+                          {
+                            on: {
+                              click: function ($event) {
+                                return _vm.showEmail(contact.contact_url)
+                              },
+                            },
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "goUpAnim fas fa-at pointer",
                               style: "animation-duration: " + index / 5 + "s;",
                             }),
                           ]
@@ -73088,6 +73111,10 @@ var render = function () {
                                   ]),
                                 ]
                               ),
+                              _vm._v(" "),
+                              _c("h6", { staticClass: "mt-2" }, [
+                                _vm._v(_vm._s(project.project_bottomText)),
+                              ]),
                             ]
                           ),
                         ]
@@ -74475,7 +74502,10 @@ var render = function () {
                             _vm.selectedProduct == orderType.order_type
                               ? _c(
                                   "div",
-                                  { staticClass: "col-8 text-center mt-5" },
+                                  {
+                                    staticClass:
+                                      "col-12 col-md-8 text-center mt-5",
+                                  },
                                   [
                                     _c("div", { staticClass: "fs-2 mb-3" }, [
                                       _c("h3", [
@@ -74498,45 +74528,54 @@ var render = function () {
                                       ]
                                     ),
                                     _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "fs-2 mb-3 col-12" },
-                                      [
-                                        _c("h4", [_c("b", [_vm._v("Цена *")])]),
-                                        _vm._v(" "),
-                                        _c("h2", [
-                                          _vm._v(_vm._s(orderType.price_range)),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("h4", { staticClass: "mt-5" }, [
-                                          _c("b", [
-                                            _vm._v("Время разработки *"),
-                                          ]),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("h2", [
-                                          _vm._v(_vm._s(orderType.time_range)),
-                                        ]),
-                                        _vm._v(" "),
-                                        _c(
-                                          "h6",
-                                          {
-                                            staticStyle: {
-                                              "font-size": "0.7rem",
-                                            },
-                                          },
+                                    orderType.price_range === "" ||
+                                    orderType.time_range === ""
+                                      ? _c(
+                                          "div",
+                                          { staticClass: "fs-2 mb-3 col-12" },
                                           [
-                                            _vm._v(
-                                              "* примерный средний ценник и время разработки, "
-                                            ),
-                                            _c("br"),
-                                            _vm._v(
-                                              "окончательная цена и срок разработки могут варьироваться в зависимости от сложности проекта и вносимых правок"
+                                            _c("h4", [
+                                              _c("b", [_vm._v("Цена *")]),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("h2", [
+                                              _vm._v(
+                                                _vm._s(orderType.price_range)
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("h4", { staticClass: "mt-5" }, [
+                                              _c("b", [
+                                                _vm._v("Время разработки *"),
+                                              ]),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("h2", [
+                                              _vm._v(
+                                                _vm._s(orderType.time_range)
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c(
+                                              "h6",
+                                              {
+                                                staticStyle: {
+                                                  "font-size": "0.7rem",
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "* примерный средний ценник и время разработки, "
+                                                ),
+                                                _c("br"),
+                                                _vm._v(
+                                                  "окончательная цена и срок разработки могут варьироваться в зависимости от сложности проекта и вносимых правок"
+                                                ),
+                                              ]
                                             ),
                                           ]
-                                        ),
-                                      ]
-                                    ),
+                                        )
+                                      : _vm._e(),
                                     _vm._v(" "),
                                     _c(
                                       "div",
