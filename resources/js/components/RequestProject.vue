@@ -2,6 +2,7 @@
 //страница калькулятора цена
 <template>
     <div class="row h-100 justify-content-center fadeInAnim" v-if="orderTypesInfo !== -1 && order !== undefined">
+        <SendEmailModal v-if="showEmailModal === true"/>
         <!-- если есть добавленные заказы -->
         <div class="col-12 col-md-10 mt-2" v-if="orderTypesInfo.length > 0">
             <div class="row justify-content-center mt-2">
@@ -35,9 +36,9 @@
                             <h6 style="font-size: 0.7rem">* примерный средний ценник и время разработки, <br>окончательная цена и срок разработки могут варьироваться в зависимости от сложности проекта и вносимых правок</h6>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="col-8 text-center mt-4" v-if="selectedProduct == orderType.order_type">
-                            <button type="button" class="btn btn-light btn-lg" @click="makeOrder()">
-                                <i class="bi bi-forward"></i> Заказать
+                            <div class="col-8 text-center mt-4 mb-4" v-if="selectedProduct == orderType.order_type">
+                            <button type="button" class="btn btn-light btn-lg" @click="toggleEmailModal()">
+                                <i class="bi bi-forward"></i> Отправить сообщение
                             </button>
                         </div>
                         </div>
@@ -60,7 +61,13 @@
     </div>
 </template>
 <script>
+import SendEmailModal from './Misc/SendEmailModal.vue'
+
 export default {
+
+    components: {
+        SendEmailModal
+    },
 
     created(){
         this.$parent.currentTab = 'requestProject';
@@ -102,6 +109,7 @@ export default {
             selectedProduct: null,
             currentTitle: null,
             emails: null,     
+            showEmailModal: false,
         }
     },
     computed: {  
@@ -122,6 +130,12 @@ export default {
 
         makeOrder(productType){
             alert("мммммммм заказики..... 😳😳");
+        },
+
+        toggleEmailModal(){
+            this.showEmailModal = !this.showEmailModal;
+            var projectTitle = this.orderTypesInfo.find(x => x.order_type === this.selectedProduct).order_name;
+            this.$store.commit('setState', {state: 'pickedProject', value: projectTitle});
         }
         
     }

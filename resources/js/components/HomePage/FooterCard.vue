@@ -3,6 +3,7 @@
 <template>
 
     <div class="row h-75 w-75 bigCard d-flex justify-content-center goUpAnim" v-if="isVisible" id="links">
+        <EmailModal v-if="showEmailModal === true" :email="emailModal"/>
         <div class="col-12 col-md-5 textVertical">
             <!-- ссылки -->
             <div class="col-12 mt-5 fadeInAnim" v-bind:class="{'zeroOpacity':links == null && links == -1}">
@@ -51,7 +52,15 @@
 
 </template>
 <script>
+
+import EmailModal from '../Misc/EmailModal.vue';
+
 export default {
+
+    components: {
+        EmailModal
+    },
+
     //хуки
     created(){
         
@@ -80,6 +89,8 @@ export default {
             // emailVisible: false,
             //видимость контактов
             contactsVisible: false,
+            showEmailModal: false,
+            emailModal: null,
         }
     },
 
@@ -133,10 +144,11 @@ export default {
 
         //показать почту по нажатию кнопки
         showEmail(email){
-           alert(email);
+           this.showEmailModal = true;
+           this.emailModal = email;
         },
-        
-        
+
+       
     }
 }
 </script>

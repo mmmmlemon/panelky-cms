@@ -47,4 +47,11 @@ class HomeController extends Controller
 
         return view('index', compact('site_title', 'style'));
     }
+
+    // sendEmailMessage
+    public function sendEmailMessage(Request $request){
+        
+        return response()->json($request, 200);
+
+    }
 }

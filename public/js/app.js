@@ -6909,6 +6909,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _Misc_EmailModal_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Misc/EmailModal.vue */ "./resources/js/components/Misc/EmailModal.vue");
 //
 //
 //
@@ -6961,7 +6962,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    EmailModal: _Misc_EmailModal_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   //хуки
   created: function created() {
     if (this.links === -1) {
@@ -6986,7 +6992,9 @@ __webpack_require__.r(__webpack_exports__);
       //видимость почты
       // emailVisible: false,
       //видимость контактов
-      contactsVisible: false
+      contactsVisible: false,
+      showEmailModal: false,
+      emailModal: null
     };
   },
   computed: {
@@ -7031,7 +7039,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     //показать почту по нажатию кнопки
     showEmail: function showEmail(email) {
-      alert(email);
+      this.showEmailModal = true;
+      this.emailModal = email;
     }
   }
 });
@@ -7737,6 +7746,51 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/EmailModal.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/EmailModal.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    email: {
+      type: String,
+      "default": null
+    }
+  },
+  methods: {
+    closeEmail: function closeEmail() {
+      this.$parent.showEmailModal = false;
+      this.$parent.emailModal = null;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/Error.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/Error.vue?vue&type=script&lang=js& ***!
@@ -7802,6 +7856,136 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/SendEmailModal.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/SendEmailModal.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  beforeCreate: function beforeCreate() {
+    var _this = this;
+
+    // получение почты
+    axios.get('/api/getEmail').then(function (response) {
+      _this.emails = response.data.emails;
+    });
+  },
+  data: function data() {
+    return {
+      emails: null,
+      messageEmail: null,
+      messageText: null,
+      messageSent: false,
+      messageSentDone: false
+    };
+  },
+  computed: {
+    pickedProject: function pickedProject() {
+      return this.$store.state.GlobalStates.pickedProject;
+    }
+  },
+  methods: {
+    close: function close() {
+      this.$parent.showEmailModal = false;
+    },
+    sendMessage: function sendMessage() {
+      var _this2 = this;
+
+      this.messageSent = true;
+      var formData = new FormData();
+
+      if (this.pickedProject != -1) {
+        formData.append('pickedProject', this.pickedProject);
+      }
+
+      formData.append('messageEmail', this.messageEmail);
+      formData.append('messageText', this.messageText);
+      axios.post('/api/sendEmailMessage', formData).then(function (response) {
+        _this2.messageSentDone = true;
+        console.log(response.data);
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -8086,6 +8270,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _Misc_SendEmailModal_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Misc/SendEmailModal.vue */ "./resources/js/components/Misc/SendEmailModal.vue");
 //
 //
 //
@@ -8147,7 +8332,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    SendEmailModal: _Misc_SendEmailModal_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   created: function created() {
     this.$parent.currentTab = 'requestProject';
   },
@@ -8179,7 +8369,8 @@ __webpack_require__.r(__webpack_exports__);
       transparentWhiteColor: 'rgba(255,255,255, 0.15)',
       selectedProduct: null,
       currentTitle: null,
-      emails: null
+      emails: null,
+      showEmailModal: false
     };
   },
   computed: {
@@ -8197,6 +8388,18 @@ __webpack_require__.r(__webpack_exports__);
     },
     makeOrder: function makeOrder(productType) {
       alert("мммммммм заказики..... 😳😳");
+    },
+    toggleEmailModal: function toggleEmailModal() {
+      var _this2 = this;
+
+      this.showEmailModal = !this.showEmailModal;
+      var projectTitle = this.orderTypesInfo.find(function (x) {
+        return x.order_type === _this2.selectedProduct;
+      }).order_name;
+      this.$store.commit('setState', {
+        state: 'pickedProject',
+        value: projectTitle
+      });
     }
   }
 });
@@ -8663,7 +8866,9 @@ var GlobalStates = {
     //aboutSiteText
     aboutSiteText: -1,
     //screenOrientation
-    screenOrientation: 'horizontal'
+    screenOrientation: 'horizontal',
+    // pickedProject
+    pickedProject: -1
   },
   mutations: {
     //установить стейт
@@ -63735,6 +63940,45 @@ component.options.__file = "resources/js/components/Misc/Cookies.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/Misc/EmailModal.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/Misc/EmailModal.vue ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _EmailModal_vue_vue_type_template_id_4a463ff9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmailModal.vue?vue&type=template&id=4a463ff9& */ "./resources/js/components/Misc/EmailModal.vue?vue&type=template&id=4a463ff9&");
+/* harmony import */ var _EmailModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmailModal.vue?vue&type=script&lang=js& */ "./resources/js/components/Misc/EmailModal.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _EmailModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EmailModal_vue_vue_type_template_id_4a463ff9___WEBPACK_IMPORTED_MODULE_0__.render,
+  _EmailModal_vue_vue_type_template_id_4a463ff9___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Misc/EmailModal.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Misc/Error.vue":
 /*!************************************************!*\
   !*** ./resources/js/components/Misc/Error.vue ***!
@@ -63809,6 +64053,45 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/Misc/PageNotFound.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Misc/SendEmailModal.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/Misc/SendEmailModal.vue ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _SendEmailModal_vue_vue_type_template_id_2018d5a1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SendEmailModal.vue?vue&type=template&id=2018d5a1& */ "./resources/js/components/Misc/SendEmailModal.vue?vue&type=template&id=2018d5a1&");
+/* harmony import */ var _SendEmailModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SendEmailModal.vue?vue&type=script&lang=js& */ "./resources/js/components/Misc/SendEmailModal.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SendEmailModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SendEmailModal_vue_vue_type_template_id_2018d5a1___WEBPACK_IMPORTED_MODULE_0__.render,
+  _SendEmailModal_vue_vue_type_template_id_2018d5a1___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Misc/SendEmailModal.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -64616,6 +64899,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Misc/EmailModal.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/Misc/EmailModal.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./EmailModal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/EmailModal.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Misc/Error.vue?vue&type=script&lang=js&":
 /*!*************************************************************************!*\
   !*** ./resources/js/components/Misc/Error.vue?vue&type=script&lang=js& ***!
@@ -64645,6 +64944,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PageNotFound_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PageNotFound.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/PageNotFound.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PageNotFound_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Misc/SendEmailModal.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/Misc/SendEmailModal.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SendEmailModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SendEmailModal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/SendEmailModal.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SendEmailModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -65374,6 +65689,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Misc/EmailModal.vue?vue&type=template&id=4a463ff9&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/Misc/EmailModal.vue?vue&type=template&id=4a463ff9& ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailModal_vue_vue_type_template_id_4a463ff9___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailModal_vue_vue_type_template_id_4a463ff9___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailModal_vue_vue_type_template_id_4a463ff9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./EmailModal.vue?vue&type=template&id=4a463ff9& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/EmailModal.vue?vue&type=template&id=4a463ff9&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Misc/Error.vue?vue&type=template&id=0ec1e5a0&":
 /*!*******************************************************************************!*\
   !*** ./resources/js/components/Misc/Error.vue?vue&type=template&id=0ec1e5a0& ***!
@@ -65404,6 +65736,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PageNotFound_vue_vue_type_template_id_1951f526___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PageNotFound_vue_vue_type_template_id_1951f526___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PageNotFound.vue?vue&type=template&id=1951f526& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/PageNotFound.vue?vue&type=template&id=1951f526&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Misc/SendEmailModal.vue?vue&type=template&id=2018d5a1&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/Misc/SendEmailModal.vue?vue&type=template&id=2018d5a1& ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SendEmailModal_vue_vue_type_template_id_2018d5a1___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SendEmailModal_vue_vue_type_template_id_2018d5a1___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SendEmailModal_vue_vue_type_template_id_2018d5a1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SendEmailModal.vue?vue&type=template&id=2018d5a1& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/SendEmailModal.vue?vue&type=template&id=2018d5a1&");
 
 
 /***/ }),
@@ -72641,6 +72990,10 @@ var render = function () {
           attrs: { id: "links" },
         },
         [
+          _vm.showEmailModal === true
+            ? _c("EmailModal", { attrs: { email: _vm.emailModal } })
+            : _vm._e(),
+          _vm._v(" "),
           _c("div", { staticClass: "col-12 col-md-5 textVertical" }, [
             _c(
               "div",
@@ -72774,7 +73127,8 @@ var render = function () {
               0
             ),
           ]),
-        ]
+        ],
+        1
       )
     : _vm._e()
 }
@@ -73869,6 +74223,64 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/EmailModal.vue?vue&type=template&id=4a463ff9&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/EmailModal.vue?vue&type=template&id=4a463ff9& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "deleteModalBody fadeInAnim" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "col-12 col-md-7 text-center p-3 transparentCard emailModalCard md-mt-5",
+        },
+        [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "col-12" }, [
+              _c("h3", { staticClass: "pointer" }, [_vm._v(_vm._s(_vm.email))]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row justify-content-center" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-lg btn-primary",
+                attrs: { type: "button" },
+                on: {
+                  click: function ($event) {
+                    return _vm.closeEmail()
+                  },
+                },
+              },
+              [_vm._v("Закрыть")]
+            ),
+          ]),
+        ]
+      ),
+    ]),
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/Error.vue?vue&type=template&id=0ec1e5a0&":
 /*!**********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/Error.vue?vue&type=template&id=0ec1e5a0& ***!
@@ -73952,6 +74364,262 @@ var render = function () {
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/SendEmailModal.vue?vue&type=template&id=2018d5a1&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Misc/SendEmailModal.vue?vue&type=template&id=2018d5a1& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "deleteModalBody fadeInAnim" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "transparentCard emailModalCard md-mt-5" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "form",
+            {
+              class: { "unclickable zeroOpacity": _vm.messageSent === true },
+              attrs: { action: "POST" },
+              on: {
+                submit: function ($event) {
+                  $event.preventDefault()
+                  return _vm.sendMessage.apply(null, arguments)
+                },
+              },
+            },
+            [
+              _c("h4", { staticClass: "card-title" }, [
+                _vm._v("Отправить сообщение"),
+              ]),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _vm.pickedProject != -1
+                ? _c("div", { staticClass: "mb-3" }, [
+                    _c("h4", [
+                      _vm._v("Тип проекта: " + _vm._s(_vm.pickedProject)),
+                    ]),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _c(
+                  "label",
+                  { staticClass: "form-label", attrs: { for: "sender_email" } },
+                  [_vm._v("Ваш контактный E-Mail*")]
+                ),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.messageEmail,
+                      expression: "messageEmail",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "email",
+                    id: "sender_email",
+                    placeholder: "myemail@mail.com",
+                    required: "",
+                  },
+                  domProps: { value: _vm.messageEmail },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.messageEmail = $event.target.value
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "mb-3" },
+                [
+                  _c("label", { staticClass: "form-label" }, [
+                    _vm._v("Ваше сообщение"),
+                  ]),
+                  _vm._v(" "),
+                  _c("vue-editor", {
+                    staticStyle: {
+                      "background-color": "white",
+                      color: "black",
+                    },
+                    model: {
+                      value: _vm.messageText,
+                      callback: function ($$v) {
+                        _vm.messageText = $$v
+                      },
+                      expression: "messageText",
+                    },
+                  }),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm.emails !== null
+                ? _c(
+                    "h6",
+                    {
+                      staticClass: "unclickable",
+                      staticStyle: { color: "black" },
+                    },
+                    [_vm._v("Контактный E-Mail:")]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm._l(_vm.emails, function (email, index) {
+                return _c(
+                  "h6",
+                  {
+                    key: index,
+                    staticClass: "pointer",
+                    staticStyle: { color: "black" },
+                  },
+                  [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(email.contact_url) +
+                        "\n                    "
+                    ),
+                  ]
+                )
+              }),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("div", { staticClass: "d-grid gap-2 d-md-block" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    on: {
+                      click: function ($event) {
+                        return _vm.close()
+                      },
+                    },
+                  },
+                  [_vm._m(0), _vm._v(" "), _c("span", [_vm._v("Отмена")])]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    attrs: {
+                      type: "submit",
+                      disabled: _vm.messageSent === true,
+                    },
+                  },
+                  [_vm._m(1), _vm._v(" "), _c("span", [_vm._v("Отправить")])]
+                ),
+              ]),
+            ],
+            2
+          ),
+        ]),
+        _vm._v(" "),
+        _vm.messageSent === true
+          ? _c(
+              "div",
+              {
+                staticClass: "card-body fadeInAnim",
+                staticStyle: {
+                  position: "absolute",
+                  top: "15%",
+                  width: "100%",
+                },
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "row justify-content-center text-center mt-5",
+                  },
+                  [
+                    _c("div", { staticClass: "col-12 mt-5" }, [
+                      _vm.messageSentDone === false
+                        ? _c("h3", [_vm._v("Отправка сообщения...")])
+                        : _c("h3", [_vm._v("Сообщение отправлено")]),
+                      _vm._v(" "),
+                      _vm.messageSentDone === true
+                        ? _c("i", {
+                            staticClass: "bi bi-envelope fadeInAnim",
+                            staticStyle: { "font-size": "3rem" },
+                          })
+                        : _vm._e(),
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function ($event) {
+                              return _vm.close()
+                            },
+                          },
+                        },
+                        [_vm._v("Понятно")]
+                      ),
+                    ]),
+                  ]
+                ),
+              ]
+            )
+          : _vm._e(),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "bi bi-x" })])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "bi bi-envelope" })])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12" }, [
+      _c("p", [
+        _vm._v("Я свяжусь с вами по указанному E-Mail'у как только смогу."),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -74426,6 +75094,8 @@ var render = function () {
         "div",
         { staticClass: "row h-100 justify-content-center fadeInAnim" },
         [
+          _vm.showEmailModal === true ? _c("SendEmailModal") : _vm._e(),
+          _vm._v(" "),
           _vm.orderTypesInfo.length > 0
             ? _c(
                 "div",
@@ -74590,7 +75260,7 @@ var render = function () {
                                               "div",
                                               {
                                                 staticClass:
-                                                  "col-8 text-center mt-4",
+                                                  "col-8 text-center mt-4 mb-4",
                                               },
                                               [
                                                 _c(
@@ -74601,7 +75271,7 @@ var render = function () {
                                                     attrs: { type: "button" },
                                                     on: {
                                                       click: function ($event) {
-                                                        return _vm.makeOrder()
+                                                        return _vm.toggleEmailModal()
                                                       },
                                                     },
                                                   },
@@ -74611,7 +75281,7 @@ var render = function () {
                                                         "bi bi-forward",
                                                     }),
                                                     _vm._v(
-                                                      " Заказать\n                        "
+                                                      " Отправить сообщение\n                        "
                                                     ),
                                                   ]
                                                 ),
@@ -74669,7 +75339,8 @@ var render = function () {
                 ]
               )
             : _vm._e(),
-        ]
+        ],
+        1
       )
     : _vm._e()
 }

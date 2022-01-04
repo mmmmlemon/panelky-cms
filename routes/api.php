@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\APIController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +41,4 @@ Route::get('/getContacts', [APIController::class, 'getContacts']);
 Route::get('/getCookiesMessage', [APIController::class, 'getCookiesMessage']);
 Route::get('/checkCookies', [APIController::class, 'checkCookies']);
 Route::post('/setCookiesAccepted', [APIController::class, 'setCookiesAccepted']);
+Route::post('/sendEmailMessage', [HomeController::class, 'sendEmailMessage']);
