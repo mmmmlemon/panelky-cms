@@ -38,7 +38,7 @@ class APIController extends Controller
     // получить информацию о возможных вариантах заказа
     public function getOrderTypesInfo(){
 
-        $orderList = Order::select('id', 'order_name', 'order_desc', 'order_bootstrap_icon', 'price_range', 'time_range', 'order_type', 'color_style')->get();
+        $orderList = Order::select('id', 'order_name', 'order_desc', 'order_bootstrap_icon', 'add_info', 'order_type', 'color_style')->get();
 
         return response()->json($orderList, 200);
 

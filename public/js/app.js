@@ -3907,20 +3907,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   beforeMount: function beforeMount() {
     this.$parent.currentTab = 'addOrderType';
@@ -3930,8 +3916,7 @@ __webpack_require__.r(__webpack_exports__);
       order_name: null,
       order_bootstrap_icon: null,
       order_desc: null,
-      price_range: null,
-      time_range: null,
+      add_info: null,
       color_style: '#878787',
       saved: false
     };
@@ -3956,12 +3941,8 @@ __webpack_require__.r(__webpack_exports__);
         formData.append('order_bootstrap_icon', this.order_bootstrap_icon);
       }
 
-      if (this.price_range !== null) {
-        formData.append('price_range', this.price_range);
-      }
-
-      if (this.time_range !== null) {
-        formData.append('time_range', this.time_range);
+      if (this.add_info !== null) {
+        formData.append('add_info', this.add_info);
       }
 
       if (this.color_style !== null) {
@@ -4065,28 +4046,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   beforeMount: function beforeMount() {
     var _this = this;
@@ -4117,8 +4076,7 @@ __webpack_require__.r(__webpack_exports__);
         formData.append('order_name', this.orderType.order_name);
         formData.append('order_desc', this.orderType.order_desc);
         formData.append('order_bootstrap_icon', this.orderType.order_bootstrap_icon);
-        formData.append('price_range', this.orderType.price_range);
-        formData.append('time_range', this.orderType.time_range);
+        formData.append('add_info', this.orderType.add_info);
         formData.append('color_style', this.orderType.color_style);
       } //отправка запроса
 
@@ -8271,10 +8229,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Misc_SendEmailModal_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Misc/SendEmailModal.vue */ "./resources/js/components/Misc/SendEmailModal.vue");
-//
-//
-//
-//
 //
 //
 //
@@ -67930,6 +67884,12 @@ var render = function () {
                 },
               },
             }),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.order_name
+              ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                  _vm._v(_vm._s(_vm.errors.order_name[0])),
+                ])
+              : _vm._e(),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "mb-3" }, [
@@ -67956,6 +67916,12 @@ var render = function () {
                 },
               },
             }),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.order_bootstrap_icon
+              ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                  _vm._v(_vm._s(_vm.errors.order_bootstrap_icon[0])),
+                ])
+              : _vm._e(),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "mb-3" }, [
@@ -67986,59 +67952,39 @@ var render = function () {
                 },
               },
             }),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.order_bootstrap_icon
+              ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                  _vm._v(_vm._s(_vm.errors.order_bootstrap_icon[0])),
+                ])
+              : _vm._e(),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "mb-3" }, [
-            _c("h6", [_vm._v("Ценник")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.price_range,
-                  expression: "price_range",
+          _c(
+            "div",
+            { staticClass: "mb-3" },
+            [
+              _c("h6", [_vm._v("Дополнительная информация")]),
+              _vm._v(" "),
+              _c("vue-editor", {
+                staticStyle: { "background-color": "white", color: "black" },
+                model: {
+                  value: _vm.add_info,
+                  callback: function ($$v) {
+                    _vm.add_info = $$v
+                  },
+                  expression: "add_info",
                 },
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "≈ от 1 до 100 ₽" },
-              domProps: { value: _vm.price_range },
-              on: {
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.price_range = $event.target.value
-                },
-              },
-            }),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mb-3" }, [
-            _c("h6", [_vm._v("Время разработки")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.time_range,
-                  expression: "time_range",
-                },
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "≈ от 1 до 100 дней" },
-              domProps: { value: _vm.time_range },
-              on: {
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.time_range = $event.target.value
-                },
-              },
-            }),
-          ]),
+              }),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.price_range
+                ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                    _vm._v(_vm._s(_vm.errors.add_info[0])),
+                  ])
+                : _vm._e(),
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "div",
@@ -68056,6 +68002,12 @@ var render = function () {
                   expression: "color_style",
                 },
               }),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.order_bootstrap_icon
+                ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                    _vm._v(_vm._s(_vm.errors.order_bootstrap_icon[0])),
+                  ])
+                : _vm._e(),
             ],
             1
           ),
@@ -68107,51 +68059,12 @@ var render = function () {
               : _vm._e(),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "fs-2 mb-3 col-12" }, [
-            _vm.price_range != null && _vm.price_range != ""
-              ? _c("h4", { staticClass: "fadeInAnim" }, [
-                  _c("b", [_vm._v("Цена *")]),
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.price_range != null && _vm.price_range != ""
-              ? _c("h2", { staticClass: "fadeInAnim" }, [
-                  _vm._v(_vm._s(_vm.price_range)),
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.time_range != null
-              ? _c("h4", { staticClass: "mt-5 fadeInAnim" }, [
-                  _c("b", [_vm._v("Срок разработки *")]),
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.time_range != null && _vm.time_range != ""
-              ? _c("h2", { staticClass: "fadeInAnim" }, [
-                  _vm._v(_vm._s(_vm.time_range)),
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            (_vm.price_range != null && _vm.price_range != "") ||
-            (_vm.time_range != null && _vm.time_range != "")
-              ? _c(
-                  "h6",
-                  {
-                    staticClass: "fadeInAnim",
-                    staticStyle: { "font-size": "0.7rem" },
-                  },
-                  [
-                    _vm._v(
-                      "\n                        * примерный средний ценник и сроки разработки, "
-                    ),
-                    _c("br"),
-                    _vm._v(
-                      "окончательная цена и срок разработки могут \n                        варьироваться в зависимости от сложности проекта\n                "
-                    ),
-                  ]
-                )
-              : _vm._e(),
-          ]),
+          _c("hr"),
+          _vm._v(" "),
+          _c("div", {
+            staticClass: "fs-2 mb-3 col-12",
+            domProps: { innerHTML: _vm._s(_vm.add_info) },
+          }),
         ]
       ),
     ]),
@@ -68181,7 +68094,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.orderType != null
-    ? _c("div", { staticClass: "row justify-content-center" }, [
+    ? _c("div", { staticClass: "row justify-content-center mt-5" }, [
         _c("div", { staticClass: "col-12 col-md-3" }, [
           _c(
             "form",
@@ -68309,73 +68222,34 @@ var render = function () {
                   : _vm._e(),
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "mb-3" }, [
-                _c("h6", [_vm._v("Ценник")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.orderType.price_range,
-                      expression: "orderType.price_range",
+              _c(
+                "div",
+                { staticClass: "mb-3" },
+                [
+                  _c("h6", [_vm._v("Дополнительная информация")]),
+                  _vm._v(" "),
+                  _c("vue-editor", {
+                    staticStyle: {
+                      "background-color": "white",
+                      color: "black",
                     },
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", placeholder: "≈ от 1 до 100 ₽" },
-                  domProps: { value: _vm.orderType.price_range },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.orderType,
-                        "price_range",
-                        $event.target.value
-                      )
+                    model: {
+                      value: _vm.orderType.add_info,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.orderType, "add_info", $$v)
+                      },
+                      expression: "orderType.add_info",
                     },
-                  },
-                }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.price_range
-                  ? _c("div", { staticClass: "text-danger goUpAnim" }, [
-                      _vm._v(_vm._s(_vm.errors.price_range[0])),
-                    ])
-                  : _vm._e(),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-3" }, [
-                _c("h6", [_vm._v("Время разработки")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.orderType.time_range,
-                      expression: "orderType.time_range",
-                    },
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", placeholder: "≈ от 1 до 100 дней" },
-                  domProps: { value: _vm.orderType.time_range },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.orderType, "time_range", $event.target.value)
-                    },
-                  },
-                }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.time_range
-                  ? _c("div", { staticClass: "text-danger goUpAnim" }, [
-                      _vm._v(_vm._s(_vm.errors.time_range[0])),
-                    ])
-                  : _vm._e(),
-              ]),
+                  }),
+                  _vm._v(" "),
+                  _vm.errors && _vm.errors.price_range
+                    ? _c("div", { staticClass: "text-danger goUpAnim" }, [
+                        _vm._v(_vm._s(_vm.errors.add_info[0])),
+                      ])
+                    : _vm._e(),
+                ],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "div",
@@ -68452,64 +68326,12 @@ var render = function () {
                   : _vm._e(),
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "fs-2 mb-3 col-12" }, [
-                _vm.orderType.price_range != null &&
-                _vm.orderType.price_range != ""
-                  ? _c("h4", { staticClass: "fadeInAnim" }, [
-                      _c("b", [_vm._v("Цена *")]),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.orderType.price_range != null &&
-                _vm.orderType.price_range != ""
-                  ? _c("h2", { staticClass: "fadeInAnim" }, [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(_vm.orderType.price_range) +
-                          "\n                "
-                      ),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.orderType.time_range != null
-                  ? _c("h4", { staticClass: "mt-5 fadeInAnim" }, [
-                      _c("b", [_vm._v("Срок разработки *")]),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.orderType.time_range != null &&
-                _vm.orderType.time_range != ""
-                  ? _c("h2", { staticClass: "fadeInAnim" }, [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(_vm.orderType.time_range) +
-                          "\n                "
-                      ),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                (_vm.orderType.price_range != null &&
-                  _vm.orderType.price_range != "") ||
-                (_vm.orderType.time_range != null &&
-                  _vm.orderType.time_range != "")
-                  ? _c(
-                      "h6",
-                      {
-                        staticClass: "fadeInAnim",
-                        staticStyle: { "font-size": "0.7rem" },
-                      },
-                      [
-                        _vm._v(
-                          "\n                        * примерный средний ценник и сроки разработки, "
-                        ),
-                        _c("br"),
-                        _vm._v(
-                          "окончательная цена и срок разработки могут \n                        варьироваться в зависимости от сложности проекта\n                "
-                        ),
-                      ]
-                    )
-                  : _vm._e(),
-              ]),
+              _c("hr"),
+              _vm._v(" "),
+              _c("div", {
+                staticClass: "fs-2 mb-3 col-12",
+                domProps: { innerHTML: _vm._s(_vm.orderType.add_info) },
+              }),
             ]
           ),
         ]),
@@ -75198,53 +75020,17 @@ var render = function () {
                                       ]
                                     ),
                                     _vm._v(" "),
-                                    orderType.price_range === "" ||
-                                    orderType.time_range === ""
-                                      ? _c(
-                                          "div",
-                                          { staticClass: "fs-2 mb-3 col-12" },
-                                          [
-                                            _c("h4", [
-                                              _c("b", [_vm._v("Цена *")]),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("h2", [
-                                              _vm._v(
-                                                _vm._s(orderType.price_range)
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("h4", { staticClass: "mt-5" }, [
-                                              _c("b", [
-                                                _vm._v("Время разработки *"),
-                                              ]),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("h2", [
-                                              _vm._v(
-                                                _vm._s(orderType.time_range)
-                                              ),
-                                            ]),
-                                            _vm._v(" "),
-                                            _c(
-                                              "h6",
-                                              {
-                                                staticStyle: {
-                                                  "font-size": "0.7rem",
-                                                },
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "* примерный средний ценник и время разработки, "
-                                                ),
-                                                _c("br"),
-                                                _vm._v(
-                                                  "окончательная цена и срок разработки могут варьироваться в зависимости от сложности проекта и вносимых правок"
-                                                ),
-                                              ]
+                                    _c("hr"),
+                                    _vm._v(" "),
+                                    orderType.add_info !== ""
+                                      ? _c("div", {
+                                          staticClass: "fs-2 mb-3 col-12",
+                                          domProps: {
+                                            innerHTML: _vm._s(
+                                              orderType.add_info
                                             ),
-                                          ]
-                                        )
+                                          },
+                                        })
                                       : _vm._e(),
                                     _vm._v(" "),
                                     _c(

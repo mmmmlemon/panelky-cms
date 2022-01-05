@@ -28,12 +28,8 @@
                         <div class="fs-2 mb-3 col-12">
                             <p>{{orderType.order_desc}}</p>
                         </div>
-                        <div class="fs-2 mb-3 col-12" v-if="orderType.price_range === '' || orderType.time_range === ''">
-                            <h4><b>Цена *</b></h4>
-                            <h2>{{orderType.price_range}}</h2>
-                            <h4 class="mt-5"><b>Время разработки *</b></h4>
-                            <h2>{{orderType.time_range}}</h2>
-                            <h6 style="font-size: 0.7rem">* примерный средний ценник и время разработки, <br>окончательная цена и срок разработки могут варьироваться в зависимости от сложности проекта и вносимых правок</h6>
+                        <hr>
+                        <div class="fs-2 mb-3 col-12" v-if="orderType.add_info !== ''" v-html="orderType.add_info">
                         </div>
                         <div class="row justify-content-center">
                             <div class="col-8 text-center mt-4 mb-4" v-if="selectedProduct == orderType.order_type">
