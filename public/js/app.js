@@ -7733,6 +7733,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mounted: function mounted() {
+    document.body.style.overflow = 'hidden';
+  },
+  beforeDestroy: function beforeDestroy() {
+    document.body.style.overflow = '';
+  },
   props: {
     email: {
       type: String,
@@ -7919,6 +7925,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     pickedProject: function pickedProject() {
       return this.$store.state.GlobalStates.pickedProject;
+    },
+    isMobile: function isMobile() {
+      return this.$isMobileOnly;
     }
   },
   methods: {
@@ -74067,7 +74076,7 @@ var render = function () {
         "div",
         {
           staticClass:
-            "col-12 col-md-7 text-center p-3 transparentCard emailModalCard md-mt-5",
+            "col-12 col-md-7 text-center p-3 transparentCard emailModalCard marginTop",
         },
         [
           _c("div", { staticClass: "card-body" }, [
@@ -74210,211 +74219,222 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "deleteModalBody fadeInAnim" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "transparentCard emailModalCard md-mt-5" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c(
-            "form",
-            {
-              class: { "unclickable zeroOpacity": _vm.messageSent === true },
-              attrs: { action: "POST" },
-              on: {
-                submit: function ($event) {
-                  $event.preventDefault()
-                  return _vm.sendMessage.apply(null, arguments)
-                },
-              },
-            },
-            [
-              _c("h4", { staticClass: "card-title" }, [
-                _vm._v("Отправить сообщение"),
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _vm.pickedProject != -1
-                ? _c("div", { staticClass: "mb-3" }, [
-                    _c("h4", [
-                      _vm._v("Тип проекта: " + _vm._s(_vm.pickedProject)),
-                    ]),
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-3" }, [
-                _c(
-                  "label",
-                  { staticClass: "form-label", attrs: { for: "sender_email" } },
-                  [_vm._v("Ваш контактный E-Mail*")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.messageEmail,
-                      expression: "messageEmail",
-                    },
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "email",
-                    id: "sender_email",
-                    placeholder: "myemail@mail.com",
-                    required: "",
-                  },
-                  domProps: { value: _vm.messageEmail },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.messageEmail = $event.target.value
-                    },
-                  },
-                }),
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "mb-3" },
-                [
-                  _c("label", { staticClass: "form-label" }, [
-                    _vm._v("Ваше сообщение"),
-                  ]),
-                  _vm._v(" "),
-                  _c("vue-editor", {
-                    staticStyle: {
-                      "background-color": "white",
-                      color: "black",
-                    },
-                    model: {
-                      value: _vm.messageText,
-                      callback: function ($$v) {
-                        _vm.messageText = $$v
-                      },
-                      expression: "messageText",
-                    },
-                  }),
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _vm.emails !== null
-                ? _c(
-                    "h6",
-                    {
-                      staticClass: "unclickable",
-                      staticStyle: { color: "black" },
-                    },
-                    [_vm._v("Контактный E-Mail:")]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm._l(_vm.emails, function (email, index) {
-                return _c(
-                  "h6",
-                  {
-                    key: index,
-                    staticClass: "pointer",
-                    staticStyle: { color: "black" },
-                  },
-                  [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(email.contact_url) +
-                        "\n                    "
-                    ),
-                  ]
-                )
-              }),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("div", { staticClass: "d-grid gap-2 d-md-block" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-secondary",
-                    on: {
-                      click: function ($event) {
-                        return _vm.close()
-                      },
-                    },
-                  },
-                  [_vm._m(0), _vm._v(" "), _c("span", [_vm._v("Отмена")])]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-success",
-                    attrs: {
-                      type: "submit",
-                      disabled: _vm.messageSent === true,
-                    },
-                  },
-                  [_vm._m(1), _vm._v(" "), _c("span", [_vm._v("Отправить")])]
-                ),
-              ]),
-            ],
-            2
-          ),
-        ]),
-        _vm._v(" "),
-        _vm.messageSent === true
-          ? _c(
-              "div",
+      _c(
+        "div",
+        {
+          staticClass: "transparentCard emailModalCard",
+          class: { "h-100 scrollableEmailModal": _vm.isMobile === true },
+        },
+        [
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "form",
               {
-                staticClass: "card-body fadeInAnim",
-                staticStyle: {
-                  position: "absolute",
-                  top: "15%",
-                  width: "100%",
+                class: { "unclickable zeroOpacity": _vm.messageSent === true },
+                attrs: { action: "POST" },
+                on: {
+                  submit: function ($event) {
+                    $event.preventDefault()
+                    return _vm.sendMessage.apply(null, arguments)
+                  },
                 },
               },
               [
+                _c("h4", { staticClass: "card-title" }, [
+                  _vm._v("Отправить сообщение"),
+                ]),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _vm.pickedProject != -1
+                  ? _c("div", { staticClass: "mb-3" }, [
+                      _c("h4", [
+                        _vm._v("Тип проекта: " + _vm._s(_vm.pickedProject)),
+                      ]),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "mb-3" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "form-label",
+                      attrs: { for: "sender_email" },
+                    },
+                    [_vm._v("Ваш контактный E-Mail*")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.messageEmail,
+                        expression: "messageEmail",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "email",
+                      id: "sender_email",
+                      placeholder: "myemail@mail.com",
+                      required: "",
+                    },
+                    domProps: { value: _vm.messageEmail },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.messageEmail = $event.target.value
+                      },
+                    },
+                  }),
+                ]),
+                _vm._v(" "),
                 _c(
                   "div",
-                  {
-                    staticClass: "row justify-content-center text-center mt-5",
-                  },
+                  { staticClass: "mb-3" },
                   [
-                    _c("div", { staticClass: "col-12 mt-5" }, [
-                      _vm.messageSentDone === false
-                        ? _c("h3", [_vm._v("Отправка сообщения...")])
-                        : _c("h3", [_vm._v("Сообщение отправлено")]),
-                      _vm._v(" "),
-                      _vm.messageSentDone === true
-                        ? _c("i", {
-                            staticClass: "bi bi-envelope fadeInAnim",
-                            staticStyle: { "font-size": "3rem" },
-                          })
-                        : _vm._e(),
+                    _c("label", { staticClass: "form-label" }, [
+                      _vm._v("Ваше сообщение"),
                     ]),
                     _vm._v(" "),
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-12" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function ($event) {
-                              return _vm.close()
+                    _c("vue-editor", {
+                      staticStyle: {
+                        "background-color": "white",
+                        color: "black",
+                      },
+                      model: {
+                        value: _vm.messageText,
+                        callback: function ($$v) {
+                          _vm.messageText = $$v
+                        },
+                        expression: "messageText",
+                      },
+                    }),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _vm.emails !== null
+                  ? _c(
+                      "h6",
+                      {
+                        staticClass: "unclickable",
+                        staticStyle: { color: "black" },
+                      },
+                      [_vm._v("Контактный E-Mail:")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.emails, function (email, index) {
+                  return _c(
+                    "h6",
+                    {
+                      key: index,
+                      staticClass: "pointer",
+                      staticStyle: { color: "black" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(email.contact_url) +
+                          "\n                    "
+                      ),
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("div", { staticClass: "d-grid gap-2 d-md-block" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      on: {
+                        click: function ($event) {
+                          return _vm.close()
+                        },
+                      },
+                    },
+                    [_vm._m(0), _vm._v(" "), _c("span", [_vm._v("Отмена")])]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: {
+                        type: "submit",
+                        disabled: _vm.messageSent === true,
+                      },
+                    },
+                    [_vm._m(1), _vm._v(" "), _c("span", [_vm._v("Отправить")])]
+                  ),
+                ]),
+              ],
+              2
+            ),
+          ]),
+          _vm._v(" "),
+          _vm.messageSent === true
+            ? _c(
+                "div",
+                {
+                  staticClass: "card-body fadeInAnim",
+                  staticStyle: {
+                    position: "absolute",
+                    top: "15%",
+                    width: "100%",
+                  },
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "row justify-content-center text-center mt-5",
+                    },
+                    [
+                      _c("div", { staticClass: "col-12 mt-5" }, [
+                        _vm.messageSentDone === false
+                          ? _c("h3", [_vm._v("Отправка сообщения...")])
+                          : _c("h3", [_vm._v("Сообщение отправлено")]),
+                        _vm._v(" "),
+                        _vm.messageSentDone === true
+                          ? _c("i", {
+                              staticClass: "bi bi-envelope fadeInAnim",
+                              staticStyle: { "font-size": "3rem" },
+                            })
+                          : _vm._e(),
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-12" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function ($event) {
+                                return _vm.close()
+                              },
                             },
                           },
-                        },
-                        [_vm._v("Понятно")]
-                      ),
-                    ]),
-                  ]
-                ),
-              ]
-            )
-          : _vm._e(),
-      ]),
+                          [_vm._v("Понятно")]
+                        ),
+                      ]),
+                    ]
+                  ),
+                ]
+              )
+            : _vm._e(),
+        ]
+      ),
     ]),
   ])
 }

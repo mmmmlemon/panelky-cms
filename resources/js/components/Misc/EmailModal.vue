@@ -2,7 +2,7 @@
 <template>
     <div class="deleteModalBody fadeInAnim">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-7 text-center p-3 transparentCard emailModalCard md-mt-5" >
+            <div class="col-12 col-md-7 text-center p-3 transparentCard emailModalCard marginTop">
                 <div class="card-body">
                     <div class="col-12">
                         <h3 class="pointer">{{email}}</h3>
@@ -17,6 +17,15 @@
 </template>
 <script>
 export default {
+
+    mounted(){
+        document.body.style.overflow = 'hidden';
+    },
+
+    beforeDestroy() {
+        document.body.style.overflow = '';
+    },
+
     props: {
         email: { type: String, default: null}
     },

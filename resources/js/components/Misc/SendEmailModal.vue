@@ -4,7 +4,7 @@
     <div class="deleteModalBody fadeInAnim">
         
         <div class="row justify-content-center">
-             <div class="transparentCard emailModalCard md-mt-5" >
+             <div class="transparentCard emailModalCard" v-bind:class="{'h-100 scrollableEmailModal': isMobile === true}">
                  <!-- форма отправки сообщения -->
                 <div class="card-body">
                     <form action="POST" @submit.prevent="sendMessage"  v-bind:class="{'unclickable zeroOpacity': messageSent === true}">
@@ -92,6 +92,10 @@ export default {
     computed: {
         pickedProject(){
             return this.$store.state.GlobalStates.pickedProject;
+        },
+
+        isMobile(){
+            return this.$isMobileOnly;
         }
     },
 
