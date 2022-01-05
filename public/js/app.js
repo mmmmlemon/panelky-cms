@@ -8140,15 +8140,16 @@ __webpack_require__.r(__webpack_exports__);
       return this.$parent.settings.about;
     },
     visible: function visible() {
-      var currentTab = this.$parent.currentTab;
-
-      switch (currentTab) {
-        case 'home':
-          return true;
-
-        case 'about':
-          return false;
-      }
+      // let currentTab = this.$parent.currentTab;
+      // switch(currentTab){
+      //     case 'home':
+      //         return true;
+      //     case 'about':
+      //         return true;
+      //     case 'requestProject':
+      //         return true;
+      // }
+      return true;
     }
   },
   //методы
@@ -65824,7 +65825,10 @@ var render = function () {
   return _vm.about === 1
     ? _c(
         "div",
-        { staticClass: "row h-100 justify-content-center fadeInAnim" },
+        {
+          staticClass:
+            "row h-100 justify-content-center fadeInAnim mt-5 md-mt-0",
+        },
         [
           _vm.aboutSiteText !== -1 && _vm.aboutSiteText !== false
             ? _c("div", {
@@ -72408,7 +72412,8 @@ var render = function () {
     [
       _vm.public_access == 1 &&
       (_vm.settings.about === 1 || _vm.settings.order === 1) &&
-      (_vm.isMobile && _vm.screenOrientation === "horizontal") === false
+      _vm.isMobile === false &&
+      _vm.screenOrientation === "horizontal"
         ? _c("Nav")
         : _vm._e(),
       _vm._v(" "),
@@ -72476,11 +72481,13 @@ var render = function () {
                 "div",
                 { staticClass: "textVertical text-center fadeInAnim" },
                 [
-                  _c("h1", { staticClass: "font2-5rem" }, [
-                    _vm._v("Сайт недоступен"),
-                  ]),
+                  _vm.public_access_message !== -1
+                    ? _c("h1", { staticClass: "font2-5rem" }, [
+                        _vm._v("Сайт недоступен"),
+                      ])
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c("hr"),
+                  _vm.public_access_message !== -1 ? _c("hr") : _vm._e(),
                   _vm._v(" "),
                   _c("i", { staticClass: "bi bi-lock font2-5rem" }),
                   _vm._v(" "),
@@ -74085,7 +74092,7 @@ var render = function () {
             ]),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "row justify-content-center" }, [
+          _c("div", { staticClass: "row justify-content-center fadeInAnim" }, [
             _c(
               "button",
               {

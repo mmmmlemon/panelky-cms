@@ -121,13 +121,17 @@
             },
 
             visible: function(){
-                let currentTab = this.$parent.currentTab;
-                switch(currentTab){
-                    case 'home':
-                        return true;
-                    case 'about':
-                        return false;
-                }
+                // let currentTab = this.$parent.currentTab;
+                // switch(currentTab){
+                //     case 'home':
+                //         return true;
+                //     case 'about':
+                //         return true;
+                //     case 'requestProject':
+                //         return true;
+                // }
+
+                return true;
             }
         },
 

@@ -8,7 +8,7 @@
                         <h3 class="pointer">{{email}}</h3>
                     </div>
                 </div>
-                <div class="row justify-content-center">
+                <div class="row justify-content-center fadeInAnim">
                     <button type="button" class="btn btn-lg btn-primary" @click="closeEmail()">Закрыть</button>
                 </div>
             </div>

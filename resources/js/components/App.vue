@@ -4,7 +4,7 @@
 
     <div class="container col-12 vh-100">
         <!-- навигация -->
-        <Nav v-if="public_access == 1 && (settings.about === 1 || settings.order === 1) && (isMobile && screenOrientation === 'horizontal') === false"/>
+        <Nav v-if="public_access == 1 && (settings.about === 1 || settings.order === 1) && isMobile === false && screenOrientation === 'horizontal'"/>
         <!-- кнопка навигации в верхнем углу экрана -->
         <NavButton v-if="public_access == 1 && settings.side_nav === 1 && (isMobile && screenOrientation === 'horizontal') === false"/>
         <!-- кнопка "Наверх" -->
@@ -32,8 +32,8 @@
         <!-- сообщение - сайт недоступен -->
         <div class="row h-100 d-flex text-center justify-content-center goUpAnim m-1" v-if="public_access == 0">
              <div class="textVertical text-center fadeInAnim">
-                <h1 class="font2-5rem">Сайт недоступен</h1>
-                <hr>
+                <h1 class="font2-5rem" v-if="public_access_message !== -1">Сайт недоступен</h1>
+                <hr v-if="public_access_message !== -1">
                 <i class="bi bi-lock font2-5rem"></i>
                 <p v-if="public_access_message !== -1" class="font1-2rem fadeInAnim">{{public_access_message}}</p>
                 
