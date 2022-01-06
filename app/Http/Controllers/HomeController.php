@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Settings;
+use App\Models\Contact;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MessageMail;
 
 class HomeController extends Controller
 {
@@ -50,8 +53,15 @@ class HomeController extends Controller
 
     // sendEmailMessage
     public function sendEmailMessage(Request $request){
+        //получить список e-mail'ов
+        $emails = Contact::select('contact_url')->where('contact_type', 'email')->get();
         
-        return response()->json($request, 200);
+        foreach($emails as $email){
+            //send email
+            Mail::to($email->contact_url)->send(new MessageMail($request->messageEmail, $request->pickedProject, $request->messageText));
+        }
+
+         return true;
 
     }
 }

@@ -51,7 +51,7 @@
                             <!-- <i v-if="messageSentDone === false" class="fas fa-spinner fa-pulse" style="font-size: 2rem;"></i> -->
                             <i v-if="messageSentDone === true" class="bi bi-envelope fadeInAnim" style="font-size: 3rem;"></i>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 fadeInAnim" v-if="messageSentDone === true">
                             <p>Я свяжусь с вами по указанному E-Mail'у как только смогу.</p>
                         </div>
                         <div class="col-12">
@@ -121,7 +121,6 @@ export default {
 
             axios.post('/api/sendEmailMessage', formData).then(response => {
                 this.messageSentDone = true;
-                console.log(response.data);
             })
 
         }
