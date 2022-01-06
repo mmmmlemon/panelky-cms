@@ -6920,7 +6920,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -7834,6 +7833,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -73214,8 +73214,7 @@ var render = function () {
           expression: "handleScroll",
         },
       ],
-      staticClass:
-        "row width90pc bigCard d-flex justify-content-center borderUnderline",
+      staticClass: "row bigCard d-flex justify-content-center borderUnderline",
       class: { "zeroOpacity unclickable": _vm.visible == false },
       staticStyle: { transition: "all 1s" },
       attrs: { id: "other" },
@@ -73244,7 +73243,7 @@ var render = function () {
                   class: {
                     "zeroOpacity unclickable": _vm.visible == false,
                     invisible: _vm.isMobile === true && index > 4,
-                    "col-2": _vm.screenOrientation === "horizontal",
+                    "col-3": _vm.screenOrientation === "horizontal",
                     "col-12": _vm.screenOrientation === "vertical",
                   },
                   style:
@@ -74224,7 +74223,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "deleteModalBody fadeInAnim" }, [
+  return _c("div", { staticClass: "deleteModalBody fadeInAnim zIndex7" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
       _c(
         "div",
@@ -74250,6 +74249,19 @@ var render = function () {
                 _c("h4", { staticClass: "card-title" }, [
                   _vm._v("Отправить сообщение"),
                 ]),
+                _vm._v(" "),
+                _c(
+                  "b",
+                  {
+                    staticClass: "emailModalCloseButton",
+                    on: {
+                      click: function ($event) {
+                        return _vm.close()
+                      },
+                    },
+                  },
+                  [_vm._v("X")]
+                ),
                 _vm._v(" "),
                 _c("hr"),
                 _vm._v(" "),

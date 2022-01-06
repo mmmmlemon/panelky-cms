@@ -137,6 +137,7 @@ hr {
     right: 5%;
     top: 2%;
     background-color: rgba(0, 0, 0, 0.0);
+    color: black;
     border-color: rgba(0, 0, 0, 0.0);
     font-size: 1.5rem; color: white;
 }
@@ -264,9 +265,22 @@ hr {
 
 .transparentCard.emailModalCard{
     background-color: rgba(255, 255, 255, 1);
+    position: absolute; 
     position: absolute;
-    top: 4.5rem;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0px;
+    margin: auto;
     color: black;
+}
+
+.emailModalCloseButton{
+    position: absolute;
+    top: 2%;
+    right: 3%;
+    cursor: pointer;
 }
 
 .scrollableEmailModal{

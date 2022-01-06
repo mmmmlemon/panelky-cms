@@ -27,8 +27,7 @@
                 </button>
                 <br><br>
             </div>
-            <div class="row justify-content-center text-center mt-2 mb-5" 
-                        >
+            <div class="row justify-content-center text-center mt-2 mb-5">
                 <div v-for="(contact, index) in contacts" v-bind:key="index" class="col-6 col-md-3 m-0 p-0 mt-3 contactIcon"
                         :style="`transition: all 0.8s  ease-out; transition-delay: ${index/5}s; font-size: 2.5rem;`"
                         v-bind:class="{'zeroOpacity unclickable': contactsVisible === false}">

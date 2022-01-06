@@ -1,7 +1,7 @@
 // EmailModal
 // модальное окно для отправки e-mail'а
 <template>
-    <div class="deleteModalBody fadeInAnim">
+    <div class="deleteModalBody fadeInAnim zIndex7">
         
         <div class="row justify-content-center">
              <div class="transparentCard emailModalCard" v-bind:class="{'h-100 scrollableEmailModal': isMobile === true}">
@@ -9,6 +9,7 @@
                 <div class="card-body">
                     <form action="POST" @submit.prevent="sendMessage"  v-bind:class="{'unclickable zeroOpacity': messageSent === true}">
                         <h4 class="card-title">Отправить сообщение</h4>
+                        <b class="emailModalCloseButton" @click="close()">X</b>
                         <hr>
                         <div class="mb-3" v-if="pickedProject != -1">
                             <h4>Тип проекта: {{pickedProject}}</h4>

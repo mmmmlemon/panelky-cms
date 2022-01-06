@@ -2,7 +2,7 @@
 //список других проектов
 <template>
 
-    <div class="row width90pc bigCard d-flex justify-content-center borderUnderline" style="transition: all 1s;" id="other" 
+    <div class="row bigCard d-flex justify-content-center borderUnderline" style="transition: all 1s;" id="other" 
             v-scroll="handleScroll" v-bind:class="{'zeroOpacity unclickable': visible == false}">
         <div class="d-block d-md-block col-12 textVertical fadeInAnim m-5 goUpCardAnim">
             <h3 class="text-center pointerNone mb-5">Другие проекты</h3>
@@ -12,7 +12,7 @@
                 <div v-for="(project, index) in projects" :key="project.slug" class="transparentCard m-1 otherProject" 
                     :style="`transition: all 0.8s  ease-out; transition-delay: ${index/5}s;`"
                     v-bind:class="{'zeroOpacity unclickable' : visible == false, 'invisible': isMobile === true && index > 4,
-                    'col-2': screenOrientation === 'horizontal', 'col-12': screenOrientation === 'vertical'}">
+                    'col-3': screenOrientation === 'horizontal', 'col-12': screenOrientation === 'vertical'}">
                     <!-- если у прое,кта есть лого -->
                     <div class="card-body text-center" v-if="project.project_icon !== null">
                         <!-- заголовок -->
