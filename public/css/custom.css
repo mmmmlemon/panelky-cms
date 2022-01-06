@@ -276,6 +276,13 @@ hr {
     color: black;
 }
 
+.transparentCard.emailModalCardSmall{
+    background-color: rgba(255, 255, 255, 1);
+    position: absolute; 
+    position: absolute;
+    color: black;
+}
+
 .emailModalCloseButton{
     position: absolute;
     top: 2%;

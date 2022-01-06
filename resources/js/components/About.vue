@@ -2,7 +2,7 @@
 //страница About
 <template>
     <div class="row h-100 justify-content-center fadeInAnim mt-5 md-mt-0" v-if="about === 1">
-       <div v-html="aboutSiteText" class="col-12 col-md-5 textVertical goUpAnim text-center p-4 p-md-0" 
+       <div v-html="aboutSiteText" class="col-12 col-md-5 goUpAnim text-center p-4 p-md-0" 
             v-if="aboutSiteText !== -1 && aboutSiteText !== false">
         </div>
     </div>
