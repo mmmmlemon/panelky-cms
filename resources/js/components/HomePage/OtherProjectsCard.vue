@@ -2,7 +2,7 @@
 //список других проектов
 <template>
 
-    <div class="row bigCard d-flex justify-content-center borderUnderline" style="transition: all 1s;" id="other" 
+    <div class="row bigCard width90pc d-flex justify-content-center borderUnderline" style="transition: all 1s;" id="other" 
             v-scroll="handleScroll" v-bind:class="{'zeroOpacity unclickable': visible == false}">
         <div class="d-block d-md-block col-12 textVertical fadeInAnim m-5 goUpCardAnim">
             <h3 class="text-center pointerNone mb-5">Другие проекты</h3>
