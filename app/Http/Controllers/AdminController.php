@@ -720,8 +720,7 @@ class AdminController extends Controller
             'order_name' => 'required|string|max:255',
             'order_desc' => 'required|string|max:1555',
             'order_bootstrap_icon' => 'string|max:255|nullable',
-            'price_range' => 'string|max:255|nullable',
-            'time_range' => 'string|max:255|nullable',
+            'add_info' => 'string|nullable',
             'color_style' => 'string|max:255|nullable',
         ]);
 
@@ -739,8 +738,7 @@ class AdminController extends Controller
         $order->order_name = $request->order_name;
         $order->order_desc = $request->order_desc;
         $order->order_bootstrap_icon = $request->order_bootstrap_icon;
-        $order->price_range = $request->price_range;
-        $order->time_range = $request->time_range;
+        $order->add_info = $request->add_info;
         $order->color_style = $request->color_style;
 
         $order->save();
@@ -768,8 +766,7 @@ class AdminController extends Controller
             'order_name' => 'required|string|max:255',
             'order_desc' => 'required|string|max:1555',
             'order_bootstrap_icon' => 'string|max:255|nullable',
-            'price_range' => 'string|max:255|nullable',
-            'time_range' => 'string|max:255|nullable',
+            'add_info' => 'string|nullable',
             'color_style' => 'string|max:255|nullable',
         ]);
 
@@ -778,8 +775,7 @@ class AdminController extends Controller
         $order->order_name = $request->order_name;
         $order->order_desc = $request->order_desc;
         $order->order_bootstrap_icon = $request->order_bootstrap_icon;
-        $order->time_range = $request->time_range;
-        $order->price_range = $request->price_range;
+        $order->add_info = $request->add_info;
         $order->color_style = $request->color_style;
 
         $order->save();

@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\APIController;
-use App\Http\Controllers\TestController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +19,6 @@ use App\Http\Controllers\TestController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
 
 Route::get('/getSiteOwnerInfo', [APIController::class, 'getSiteOwnerInfo']);
 Route::get('/getOrderTypesInfo', [APIController::class, 'getOrderTypesInfo']);
@@ -42,3 +41,4 @@ Route::get('/getContacts', [APIController::class, 'getContacts']);
 Route::get('/getCookiesMessage', [APIController::class, 'getCookiesMessage']);
 Route::get('/checkCookies', [APIController::class, 'checkCookies']);
 Route::post('/setCookiesAccepted', [APIController::class, 'setCookiesAccepted']);
+Route::post('/sendEmailMessage', [HomeController::class, 'sendEmailMessage']);

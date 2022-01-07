@@ -1,7 +1,7 @@
 // OrderTypesAdd
 // форма добавления типов заказов
 <template>
-    <div class="row justify-content-center" v-if="orderType != null">
+    <div class="row justify-content-center mt-5" v-if="orderType != null">
         <div class="col-12 col-md-3">
             <!-- основная форма -->
             <form @submit.prevent="submit" method="POST">
@@ -25,17 +25,11 @@
                     <textarea type="text" rows="4" v-model="orderType.order_desc" placeholder="Краткое описание сути заказа" class="form-control"></textarea>
                     <div v-if="errors && errors.order_desc" class="text-danger goUpAnim">{{ errors.order_desc[0] }}</div>
                 </div>
-                <!-- Ценник -->
+                <!-- Дополнительная информация -->
                 <div class="mb-3">
-                    <h6>Ценник</h6>
-                    <input type="text" v-model="orderType.price_range" placeholder="≈ от 1 до 100 ₽" class="form-control">
-                    <div v-if="errors && errors.price_range" class="text-danger goUpAnim">{{ errors.price_range[0] }}</div>
-                </div>
-                <!-- Время -->
-                <div class="mb-3">
-                    <h6>Время разработки</h6>
-                    <input type="text" v-model="orderType.time_range" placeholder="≈ от 1 до 100 дней" class="form-control">
-                    <div v-if="errors && errors.time_range" class="text-danger goUpAnim">{{ errors.time_range[0] }}</div>
+                    <h6>Дополнительная информация</h6>
+                    <vue-editor style="background-color: white; color: black;" v-model="orderType.add_info"/>
+                    <div v-if="errors && errors.price_range" class="text-danger goUpAnim">{{ errors.add_info[0] }}</div>
                 </div>
                 <!-- Цвет подсветки -->
                 <div class="mb-3">
@@ -62,24 +56,8 @@
                         {{orderType.order_desc}}
                     </p>
                 </div>
-                <div class="fs-2 mb-3 col-12">
-                    <h4 v-if="orderType.price_range != null && orderType.price_range != ''" class="fadeInAnim">
-                        <b>Цена *</b>
-                    </h4>
-                    <h2 v-if="orderType.price_range != null && orderType.price_range != ''" class="fadeInAnim">
-                        {{orderType.price_range}}
-                    </h2>
-                    <h4 class="mt-5 fadeInAnim" v-if="orderType.time_range != null">
-                        <b>Срок разработки *</b>
-                    </h4>
-                    <h2 v-if="orderType.time_range != null && orderType.time_range != ''" class="fadeInAnim">
-                        {{orderType.time_range}}
-                    </h2>
-                    <h6 v-if="orderType.price_range != null && orderType.price_range != '' || orderType.time_range != null && orderType.time_range != ''" 
-                            style="font-size: 0.7rem" class="fadeInAnim">
-                            * примерный средний ценник и сроки разработки, <br>окончательная цена и срок разработки могут 
-                            варьироваться в зависимости от сложности проекта
-                    </h6>
+                <hr>
+                <div class="fs-2 mb-3 col-12" v-html="orderType.add_info">      
                 </div>
             </div>
         </div>
@@ -117,8 +95,7 @@ export default {
                 formData.append('order_name', this.orderType.order_name); 
                 formData.append('order_desc', this.orderType.order_desc);
                 formData.append('order_bootstrap_icon', this.orderType.order_bootstrap_icon);
-                formData.append('price_range', this.orderType.price_range);
-                formData.append('time_range', this.orderType.time_range);
+                formData.append('add_info', this.orderType.add_info);
                 formData.append('color_style', this.orderType.color_style);
             }
 

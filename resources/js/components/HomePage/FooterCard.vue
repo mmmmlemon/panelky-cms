@@ -3,6 +3,7 @@
 <template>
 
     <div class="row h-75 w-75 bigCard d-flex justify-content-center goUpAnim" v-if="isVisible" id="links">
+        <EmailModal v-if="showEmailModal === true" :email="emailModal"/>
         <div class="col-12 col-md-5 textVertical">
             <!-- ссылки -->
             <div class="col-12 mt-5 fadeInAnim" v-bind:class="{'zeroOpacity':links == null && links == -1}">
@@ -26,30 +27,39 @@
                 </button>
                 <br><br>
             </div>
-            <div class="row justify-content-center text-center mt-2 mb-5" 
-                        >
+            <div class="row justify-content-center text-center mt-2 mb-5">
                 <div v-for="(contact, index) in contacts" v-bind:key="index" class="col-6 col-md-3 m-0 p-0 mt-3 contactIcon"
                         :style="`transition: all 0.8s  ease-out; transition-delay: ${index/5}s; font-size: 2.5rem;`"
                         v-bind:class="{'zeroOpacity unclickable': contactsVisible === false}">
-                    <a v-if="contact.contact_type === 'email'"  :href="'mailto:'+contact.contact_url">
+
+                    <a v-if="contact.contact_type === 'email' && isMobile"  :href="'mailto:'+contact.contact_url">
                         <i class="goUpAnim fas fa-at" :style="`animation-duration: ${index/5}s;`"></i>
                     </a>
+
+                    <a v-else-if="contact.contact_type === 'email' && isMobile === false"  @click="showEmail(contact.contact_url)">
+                        <i class="goUpAnim fas fa-at pointer" :style="`animation-duration: ${index/5}s;`"></i>
+                    </a>
+                   
                     <a v-else :href="contact.contact_url" target="_blank">
                         <i :class="`goUpAnim fab fa-${contact.contact_type}`"></i>
                     </a>
                 </div>
             </div>
-                <!-- <a class="font18pt mb-5" :href="'mailto:'+email.email" v-bind:class="{'zeroOpacity unclickable': 
-                    email.emailVisible === false, 'goUpAnim': email.emailVisible === true}">
-                    <b>{{email.email}}</b>
-                </a> -->
             </div> 
         
         </div>  
 
 </template>
 <script>
+
+import EmailModal from '../Misc/EmailModal.vue';
+
 export default {
+
+    components: {
+        EmailModal
+    },
+
     //хуки
     created(){
         
@@ -78,6 +88,8 @@ export default {
             // emailVisible: false,
             //видимость контактов
             contactsVisible: false,
+            showEmailModal: false,
+            emailModal: null,
         }
     },
 
@@ -105,6 +117,11 @@ export default {
             }
         },
 
+        
+        isMobile(){
+            return this.$isMobileOnly;
+        }
+
 
     },
 
@@ -122,14 +139,15 @@ export default {
         //показать контакты
         showContacts(){
             this.contactsVisible = true;
-        }
+        },
 
         //показать почту по нажатию кнопки
-        // showEmail(){
-        //     if(this.email.emailVisible !== true){
-        //         this.email = this.reverseString(this.email.email);
-        //     }
-        // }
+        showEmail(email){
+           this.showEmailModal = true;
+           this.emailModal = email;
+        },
+
+       
     }
 }
 </script>

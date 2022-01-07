@@ -28,6 +28,8 @@ const GlobalStates = {
         aboutSiteText: -1,
         //screenOrientation
         screenOrientation: 'horizontal',
+        // pickedProject
+        pickedProject: -1,
     },
 
     mutations: {
